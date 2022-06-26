@@ -1,0 +1,68 @@
+/* home */
+.banner-box {
+		width: 100%;
+		height: 150px;
+		background-image: url("../../static/home.jpeg");
+		background-size: 100%;
+}
+.banner {
+		width: 100%;
+		height: 100%;
+}
+.tm {
+		height: 1px;
+}
+.box-img{
+		width: 60px;
+		margin: auto;
+}
+.me-img{
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		margin: 10px auto;
+}
+.me{
+		text-align: center;
+		font-weight: 800;
+		color: #fff;
+}
+.homelist-img{
+	width: 40px;
+	height: 40px;
+	margin: auto;
+}
+.bannertm {
+		height: 35px;
+		width: 100%;
+		margin-top: -35px;
+		z-index: 1;
+}
+.content{
+	position: relative;
+}
+.homelist {
+		width: 90%;
+		margin: auto;
+		margin-top: -25px;
+		box-shadow: rgb(221, 221, 221) 1px 1px 10px;
+		background-color: #fff;
+		border-radius: 20px 20px 0px 0px;
+		display: flex;
+		height: 55px;
+		padding: 10px;
+		justify-content: space-around;
+		z-index: 2;
+}
+.list-flex {
+		display: flex;
+		justify-content: space-between;
+		padding-top: 5px;
+}
+.homelist-item{
+		width: 20%;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+}
