@@ -585,13 +585,39 @@
 	flex-direction: column;
 	justify-content: space-around;
 }
-.baidu-box{
+.login{
+	width: 100%;
+	z-index: 99;
+	transition: 2s;
+	position: fixed;
+	bottom: 0;
+	box-shadow: #BBE4FF 1px 1px 10px;
+	background-color: #F3E3D8;
+	border-radius: 20px 20px 0px 0px;
+}
+.close{
+	display: flex;
+	justify-content: space-between;
+	padding: 2px;
+	margin: 10px;
+}
+.close-title{
+	font-size: 20px;
+	font-weight: 800;
+}
+.close-btn{
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: 2px #eee solid;
+}
+.baidu-box {
 		display: flex;
 		justify-content: space-between;
 		margin: auto;
 		margin: 10px;
 }
-.baidu-item{
+.baidu-item {
 		width: 43%;
 		border-radius: 10px;
 		box-shadow: #eeeeee 1px 1px 30px;
@@ -600,12 +626,12 @@
 		padding: 10px;
 		align-items: center;
 }
-.shoulu{
+.shoulu {
 		display: flex;
 		flex-direction: column;
 		line-height: normal;
 }
-.sl-icon{
+.sl-icon {
 		background-color: #BBE4FF;
 		width: 30px;
 		height: 30px;
@@ -613,7 +639,7 @@
 		display: flex;
 		align-items: center;
 }
-.sl-icon-sg{
+.sl-icon-sg {
 		background-color: #F3E3D8;
 		width: 30px;
 		height: 30px;
@@ -621,17 +647,16 @@
 		display: flex;
 		align-items: center;
 }
-.sl-title{
+.sl-title {
 		font-weight: 200;
 		opacity: 0.8;
 }
-.sl-content{
+.sl-content {
 		font-weight: 800;
 }
 .homelist {
 		margin: 10px;
 		margin-top: -25px;
-		box-shadow: rgb(221, 221, 221) 1px 1px 10px;
 		background-color: #fff;
 		border-radius: 20px 20px 0px 0px;
 		display: flex;

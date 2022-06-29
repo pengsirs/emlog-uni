@@ -1,0 +1,18 @@
+{
+    "id": "xia-editor",
+    "name": "xia-editor富文本编辑器",
+    "version": "1.0.1",
+    "description": "根据uni自带的editor组件进行封装。",
+    "keywords": [
+        "xiaEditor"
+    ],
+    "dcloudext": {
+        "category": [
+            "uni-app前端模板",
+            "前端页面模板"
+        ]
+    },
+    "dependencies": {
+        "js-md5": "^0.7.3"
+    }
+}
