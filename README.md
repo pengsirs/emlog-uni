@@ -9,8 +9,8 @@ emlogPro小程序，适配安卓、iOS、小程序
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
+1.  导入项目到HBuilderX
+2.  修改项目内的setting.js文件
 3.  xxxx
 
 #### 使用说明
