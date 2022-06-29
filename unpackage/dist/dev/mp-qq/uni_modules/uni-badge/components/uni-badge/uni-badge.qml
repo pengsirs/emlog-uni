@@ -1,1 +1,0 @@
-<view class="uni-badge--x data-v-7c66581c"><slot/><text qq:if="{{a}}" class="{{[c, 'uni-badge', 'data-v-7c66581c']}}" style="{{d + ';' + e + ';' + f + ';' + g}}" bindtap="{{h}}">{{b}}</text></view>

@@ -12,6 +12,10 @@ const _sfc_main = {
       type: String,
       default: ""
     },
+    istop: {
+      type: String,
+      default: ""
+    },
     padding: {
       type: String,
       default: "10px"
@@ -72,24 +76,26 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $props.thumbnail ? {
     f: $props.thumbnail
   } : {}, {
-    g: common_vendor.t($props.title),
-    h: $props.title && $props.subTitle
+    g: $props.istop == "y"
+  }, $props.istop == "y" ? {} : {}, {
+    h: common_vendor.t($props.title),
+    i: $props.title && $props.subTitle
   }, $props.title && $props.subTitle ? {
-    i: common_vendor.t($props.subTitle)
+    j: common_vendor.t($props.subTitle)
   } : {}, {
-    j: common_vendor.o(($event) => $options.onClick("title")),
-    k: common_vendor.t($props.extra),
-    l: common_vendor.o(($event) => $options.onClick("extra"))
+    k: common_vendor.o(($event) => $options.onClick("title")),
+    l: common_vendor.t($props.extra),
+    m: common_vendor.o(($event) => $options.onClick("extra"))
   }) : {}, {
-    m: $props.padding,
-    n: common_vendor.o(($event) => $options.onClick("content")),
-    o: common_vendor.o(($event) => $options.onClick("actions")),
-    p: $props.isFull ? 1 : "",
-    q: $props.isShadow ? 1 : "",
-    r: $props.border ? 1 : "",
-    s: $props.isFull ? 0 : $props.margin,
-    t: $props.spacing,
-    v: $props.isShadow ? $props.shadow : ""
+    n: $props.padding,
+    o: common_vendor.o(($event) => $options.onClick("content")),
+    p: common_vendor.o(($event) => $options.onClick("actions")),
+    q: $props.isFull ? 1 : "",
+    r: $props.isShadow ? 1 : "",
+    s: $props.border ? 1 : "",
+    t: $props.isFull ? 0 : $props.margin,
+    v: $props.spacing,
+    w: $props.isShadow ? $props.shadow : ""
   });
 }
 var Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-card/components/uni-card/uni-card.vue"]]);

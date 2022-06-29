@@ -155,6 +155,208 @@ const toNumber = (val) => {
   const n2 = parseFloat(val);
   return isNaN(n2) ? val : n2;
 };
+const SLOT_DEFAULT_NAME = "d";
+const ON_SHOW = "onShow";
+const ON_HIDE = "onHide";
+const ON_LAUNCH = "onLaunch";
+const ON_ERROR = "onError";
+const ON_THEME_CHANGE = "onThemeChange";
+const ON_PAGE_NOT_FOUND = "onPageNotFound";
+const ON_UNHANDLE_REJECTION = "onUnhandledRejection";
+const ON_LOAD = "onLoad";
+const ON_READY = "onReady";
+const ON_UNLOAD = "onUnload";
+const ON_INIT = "onInit";
+const ON_SAVE_EXIT_STATE = "onSaveExitState";
+const ON_RESIZE = "onResize";
+const ON_BACK_PRESS = "onBackPress";
+const ON_PAGE_SCROLL = "onPageScroll";
+const ON_TAB_ITEM_TAP = "onTabItemTap";
+const ON_REACH_BOTTOM = "onReachBottom";
+const ON_PULL_DOWN_REFRESH = "onPullDownRefresh";
+const ON_SHARE_TIMELINE = "onShareTimeline";
+const ON_ADD_TO_FAVORITES = "onAddToFavorites";
+const ON_SHARE_APP_MESSAGE = "onShareAppMessage";
+const ON_NAVIGATION_BAR_BUTTON_TAP = "onNavigationBarButtonTap";
+const ON_NAVIGATION_BAR_SEARCH_INPUT_CLICKED = "onNavigationBarSearchInputClicked";
+const ON_NAVIGATION_BAR_SEARCH_INPUT_CHANGED = "onNavigationBarSearchInputChanged";
+const ON_NAVIGATION_BAR_SEARCH_INPUT_CONFIRMED = "onNavigationBarSearchInputConfirmed";
+const ON_NAVIGATION_BAR_SEARCH_INPUT_FOCUS_CHANGED = "onNavigationBarSearchInputFocusChanged";
+const customizeRE = /:/g;
+function customizeEvent(str) {
+  return camelize(str.replace(customizeRE, "-"));
+}
+function hasLeadingSlash(str) {
+  return str.indexOf("/") === 0;
+}
+function addLeadingSlash(str) {
+  return hasLeadingSlash(str) ? str : "/" + str;
+}
+const invokeArrayFns = (fns, arg) => {
+  let ret;
+  for (let i = 0; i < fns.length; i++) {
+    ret = fns[i](arg);
+  }
+  return ret;
+};
+function once(fn, ctx = null) {
+  let res;
+  return (...args) => {
+    if (fn) {
+      res = fn.apply(ctx, args);
+      fn = null;
+    }
+    return res;
+  };
+}
+function getValueByDataPath(obj, path) {
+  if (!isString(path)) {
+    return;
+  }
+  path = path.replace(/\[(\d+)\]/g, ".$1");
+  const parts = path.split(".");
+  let key = parts[0];
+  if (!obj) {
+    obj = {};
+  }
+  if (parts.length === 1) {
+    return obj[key];
+  }
+  return getValueByDataPath(obj[key], parts.slice(1).join("."));
+}
+const encode = encodeURIComponent;
+function stringifyQuery(obj, encodeStr = encode) {
+  const res = obj ? Object.keys(obj).map((key) => {
+    let val = obj[key];
+    if (typeof val === void 0 || val === null) {
+      val = "";
+    } else if (isPlainObject(val)) {
+      val = JSON.stringify(val);
+    }
+    return encodeStr(key) + "=" + encodeStr(val);
+  }).filter((x) => x.length > 0).join("&") : null;
+  return res ? `?${res}` : "";
+}
+class EventChannel {
+  constructor(id2, events) {
+    this.id = id2;
+    this.listener = {};
+    this.emitCache = {};
+    if (events) {
+      Object.keys(events).forEach((name) => {
+        this.on(name, events[name]);
+      });
+    }
+  }
+  emit(eventName, ...args) {
+    const fns = this.listener[eventName];
+    if (!fns) {
+      return (this.emitCache[eventName] || (this.emitCache[eventName] = [])).push(args);
+    }
+    fns.forEach((opt) => {
+      opt.fn.apply(opt.fn, args);
+    });
+    this.listener[eventName] = fns.filter((opt) => opt.type !== "once");
+  }
+  on(eventName, fn) {
+    this._addListener(eventName, "on", fn);
+    this._clearCache(eventName);
+  }
+  once(eventName, fn) {
+    this._addListener(eventName, "once", fn);
+    this._clearCache(eventName);
+  }
+  off(eventName, fn) {
+    const fns = this.listener[eventName];
+    if (!fns) {
+      return;
+    }
+    if (fn) {
+      for (let i = 0; i < fns.length; ) {
+        if (fns[i].fn === fn) {
+          fns.splice(i, 1);
+          i--;
+        }
+        i++;
+      }
+    } else {
+      delete this.listener[eventName];
+    }
+  }
+  _clearCache(eventName) {
+    const cacheArgs = this.emitCache[eventName];
+    if (cacheArgs) {
+      for (; cacheArgs.length > 0; ) {
+        this.emit.apply(this, [eventName, ...cacheArgs.shift()]);
+      }
+    }
+  }
+  _addListener(eventName, type, fn) {
+    (this.listener[eventName] || (this.listener[eventName] = [])).push({
+      fn,
+      type
+    });
+  }
+}
+const PAGE_HOOKS = [
+  ON_INIT,
+  ON_LOAD,
+  ON_SHOW,
+  ON_HIDE,
+  ON_UNLOAD,
+  ON_BACK_PRESS,
+  ON_PAGE_SCROLL,
+  ON_TAB_ITEM_TAP,
+  ON_REACH_BOTTOM,
+  ON_PULL_DOWN_REFRESH,
+  ON_SHARE_TIMELINE,
+  ON_SHARE_APP_MESSAGE,
+  ON_ADD_TO_FAVORITES,
+  ON_SAVE_EXIT_STATE,
+  ON_NAVIGATION_BAR_BUTTON_TAP,
+  ON_NAVIGATION_BAR_SEARCH_INPUT_CLICKED,
+  ON_NAVIGATION_BAR_SEARCH_INPUT_CHANGED,
+  ON_NAVIGATION_BAR_SEARCH_INPUT_CONFIRMED,
+  ON_NAVIGATION_BAR_SEARCH_INPUT_FOCUS_CHANGED
+];
+function isRootHook(name) {
+  return PAGE_HOOKS.indexOf(name) > -1;
+}
+const UniLifecycleHooks = [
+  ON_SHOW,
+  ON_HIDE,
+  ON_LAUNCH,
+  ON_ERROR,
+  ON_THEME_CHANGE,
+  ON_PAGE_NOT_FOUND,
+  ON_UNHANDLE_REJECTION,
+  ON_INIT,
+  ON_LOAD,
+  ON_READY,
+  ON_UNLOAD,
+  ON_RESIZE,
+  ON_BACK_PRESS,
+  ON_PAGE_SCROLL,
+  ON_TAB_ITEM_TAP,
+  ON_REACH_BOTTOM,
+  ON_PULL_DOWN_REFRESH,
+  ON_SHARE_TIMELINE,
+  ON_ADD_TO_FAVORITES,
+  ON_SHARE_APP_MESSAGE,
+  ON_SAVE_EXIT_STATE,
+  ON_NAVIGATION_BAR_BUTTON_TAP,
+  ON_NAVIGATION_BAR_SEARCH_INPUT_CLICKED,
+  ON_NAVIGATION_BAR_SEARCH_INPUT_CHANGED,
+  ON_NAVIGATION_BAR_SEARCH_INPUT_CONFIRMED,
+  ON_NAVIGATION_BAR_SEARCH_INPUT_FOCUS_CHANGED
+];
+const MINI_PROGRAM_PAGE_RUNTIME_HOOKS = /* @__PURE__ */ (() => {
+  return {
+    onPageScroll: 1,
+    onShareAppMessage: 1 << 1,
+    onShareTimeline: 1 << 2
+  };
+})();
 let vueApp;
 const createVueAppHooks = [];
 function onCreateVueApp(hook) {
@@ -166,40 +368,6 @@ function onCreateVueApp(hook) {
 function invokeCreateVueAppHook(app) {
   vueApp = app;
   createVueAppHooks.forEach((hook) => hook(app));
-}
-const eventChannels$1 = {};
-const eventChannelStack$1 = [];
-let id = 0;
-function initEventChannel(events, cache = true) {
-  id++;
-  const eventChannel = new qq.EventChannel(id, events);
-  if (cache) {
-    eventChannels$1[id] = eventChannel;
-    eventChannelStack$1.push(eventChannel);
-  }
-  return eventChannel;
-}
-function getEventChannel$1(id2) {
-  if (id2) {
-    const eventChannel = eventChannels$1[id2];
-    delete eventChannels$1[id2];
-    return eventChannel;
-  }
-  return eventChannelStack$1.shift();
-}
-const navigateTo = {
-  args(fromArgs) {
-    const id2 = initEventChannel(fromArgs.events).id;
-    if (fromArgs.url) {
-      fromArgs.url = fromArgs.url + (fromArgs.url.indexOf("?") === -1 ? "?" : "&") + "__id__=" + id2;
-    }
-  },
-  returnValue(fromRes) {
-    fromRes.eventChannel = getEventChannel$1();
-  }
-};
-function getBaseSystemInfo() {
-  return qq.getSystemInfoSync();
 }
 const E = function() {
 };
@@ -246,6 +414,321 @@ E.prototype = {
   }
 };
 var E$1 = E;
+const isArray = Array.isArray;
+const isObject = (val) => val !== null && typeof val === "object";
+const defaultDelimiters = ["{", "}"];
+class BaseFormatter {
+  constructor() {
+    this._caches = /* @__PURE__ */ Object.create(null);
+  }
+  interpolate(message, values, delimiters = defaultDelimiters) {
+    if (!values) {
+      return [message];
+    }
+    let tokens = this._caches[message];
+    if (!tokens) {
+      tokens = parse(message, delimiters);
+      this._caches[message] = tokens;
+    }
+    return compile$1(tokens, values);
+  }
+}
+const RE_TOKEN_LIST_VALUE = /^(?:\d)+/;
+const RE_TOKEN_NAMED_VALUE = /^(?:\w)+/;
+function parse(format, [startDelimiter, endDelimiter]) {
+  const tokens = [];
+  let position = 0;
+  let text = "";
+  while (position < format.length) {
+    let char = format[position++];
+    if (char === startDelimiter) {
+      if (text) {
+        tokens.push({ type: "text", value: text });
+      }
+      text = "";
+      let sub = "";
+      char = format[position++];
+      while (char !== void 0 && char !== endDelimiter) {
+        sub += char;
+        char = format[position++];
+      }
+      const isClosed = char === endDelimiter;
+      const type = RE_TOKEN_LIST_VALUE.test(sub) ? "list" : isClosed && RE_TOKEN_NAMED_VALUE.test(sub) ? "named" : "unknown";
+      tokens.push({ value: sub, type });
+    } else {
+      text += char;
+    }
+  }
+  text && tokens.push({ type: "text", value: text });
+  return tokens;
+}
+function compile$1(tokens, values) {
+  const compiled = [];
+  let index2 = 0;
+  const mode = isArray(values) ? "list" : isObject(values) ? "named" : "unknown";
+  if (mode === "unknown") {
+    return compiled;
+  }
+  while (index2 < tokens.length) {
+    const token = tokens[index2];
+    switch (token.type) {
+      case "text":
+        compiled.push(token.value);
+        break;
+      case "list":
+        compiled.push(values[parseInt(token.value, 10)]);
+        break;
+      case "named":
+        if (mode === "named") {
+          compiled.push(values[token.value]);
+        } else {
+          {
+            console.warn(`Type of token '${token.type}' and format of value '${mode}' don't match!`);
+          }
+        }
+        break;
+      case "unknown":
+        {
+          console.warn(`Detect 'unknown' type of token!`);
+        }
+        break;
+    }
+    index2++;
+  }
+  return compiled;
+}
+const LOCALE_ZH_HANS = "zh-Hans";
+const LOCALE_ZH_HANT = "zh-Hant";
+const LOCALE_EN = "en";
+const LOCALE_FR = "fr";
+const LOCALE_ES = "es";
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+const hasOwn = (val, key) => hasOwnProperty.call(val, key);
+const defaultFormatter = new BaseFormatter();
+function include(str, parts) {
+  return !!parts.find((part) => str.indexOf(part) !== -1);
+}
+function startsWith(str, parts) {
+  return parts.find((part) => str.indexOf(part) === 0);
+}
+function normalizeLocale(locale, messages) {
+  if (!locale) {
+    return;
+  }
+  locale = locale.trim().replace(/_/g, "-");
+  if (messages && messages[locale]) {
+    return locale;
+  }
+  locale = locale.toLowerCase();
+  if (locale === "chinese") {
+    return LOCALE_ZH_HANS;
+  }
+  if (locale.indexOf("zh") === 0) {
+    if (locale.indexOf("-hans") > -1) {
+      return LOCALE_ZH_HANS;
+    }
+    if (locale.indexOf("-hant") > -1) {
+      return LOCALE_ZH_HANT;
+    }
+    if (include(locale, ["-tw", "-hk", "-mo", "-cht"])) {
+      return LOCALE_ZH_HANT;
+    }
+    return LOCALE_ZH_HANS;
+  }
+  const lang = startsWith(locale, [LOCALE_EN, LOCALE_FR, LOCALE_ES]);
+  if (lang) {
+    return lang;
+  }
+}
+class I18n {
+  constructor({ locale, fallbackLocale, messages, watcher, formater }) {
+    this.locale = LOCALE_EN;
+    this.fallbackLocale = LOCALE_EN;
+    this.message = {};
+    this.messages = {};
+    this.watchers = [];
+    if (fallbackLocale) {
+      this.fallbackLocale = fallbackLocale;
+    }
+    this.formater = formater || defaultFormatter;
+    this.messages = messages || {};
+    this.setLocale(locale || LOCALE_EN);
+    if (watcher) {
+      this.watchLocale(watcher);
+    }
+  }
+  setLocale(locale) {
+    const oldLocale = this.locale;
+    this.locale = normalizeLocale(locale, this.messages) || this.fallbackLocale;
+    if (!this.messages[this.locale]) {
+      this.messages[this.locale] = {};
+    }
+    this.message = this.messages[this.locale];
+    if (oldLocale !== this.locale) {
+      this.watchers.forEach((watcher) => {
+        watcher(this.locale, oldLocale);
+      });
+    }
+  }
+  getLocale() {
+    return this.locale;
+  }
+  watchLocale(fn) {
+    const index2 = this.watchers.push(fn) - 1;
+    return () => {
+      this.watchers.splice(index2, 1);
+    };
+  }
+  add(locale, message, override = true) {
+    const curMessages = this.messages[locale];
+    if (curMessages) {
+      if (override) {
+        Object.assign(curMessages, message);
+      } else {
+        Object.keys(message).forEach((key) => {
+          if (!hasOwn(curMessages, key)) {
+            curMessages[key] = message[key];
+          }
+        });
+      }
+    } else {
+      this.messages[locale] = message;
+    }
+  }
+  f(message, values, delimiters) {
+    return this.formater.interpolate(message, values, delimiters).join("");
+  }
+  t(key, locale, values) {
+    let message = this.message;
+    if (typeof locale === "string") {
+      locale = normalizeLocale(locale, this.messages);
+      locale && (message = this.messages[locale]);
+    } else {
+      values = locale;
+    }
+    if (!hasOwn(message, key)) {
+      console.warn(`Cannot translate the value of keypath ${key}. Use the value of keypath as default.`);
+      return key;
+    }
+    return this.formater.interpolate(message[key], values).join("");
+  }
+}
+function watchAppLocale(appVm, i18n) {
+  if (appVm.$watchLocale) {
+    appVm.$watchLocale((newLocale) => {
+      i18n.setLocale(newLocale);
+    });
+  } else {
+    appVm.$watch(() => appVm.$locale, (newLocale) => {
+      i18n.setLocale(newLocale);
+    });
+  }
+}
+function getDefaultLocale() {
+  if (typeof index !== "undefined" && index.getLocale) {
+    return index.getLocale();
+  }
+  if (typeof global !== "undefined" && global.getLocale) {
+    return global.getLocale();
+  }
+  return LOCALE_EN;
+}
+function initVueI18n(locale, messages = {}, fallbackLocale, watcher) {
+  if (typeof locale !== "string") {
+    [locale, messages] = [
+      messages,
+      locale
+    ];
+  }
+  if (typeof locale !== "string") {
+    locale = getDefaultLocale();
+  }
+  if (typeof fallbackLocale !== "string") {
+    fallbackLocale = typeof __uniConfig !== "undefined" && __uniConfig.fallbackLocale || LOCALE_EN;
+  }
+  const i18n = new I18n({
+    locale,
+    fallbackLocale,
+    messages,
+    watcher
+  });
+  let t2 = (key, values) => {
+    if (typeof getApp !== "function") {
+      t2 = function(key2, values2) {
+        return i18n.t(key2, values2);
+      };
+    } else {
+      let isWatchedAppLocale = false;
+      t2 = function(key2, values2) {
+        const appVm = getApp().$vm;
+        if (appVm) {
+          appVm.$locale;
+          if (!isWatchedAppLocale) {
+            isWatchedAppLocale = true;
+            watchAppLocale(appVm, i18n);
+          }
+        }
+        return i18n.t(key2, values2);
+      };
+    }
+    return t2(key, values);
+  };
+  return {
+    i18n,
+    f(message, values, delimiters) {
+      return i18n.f(message, values, delimiters);
+    },
+    t(key, values) {
+      return t2(key, values);
+    },
+    add(locale2, message, override = true) {
+      return i18n.add(locale2, message, override);
+    },
+    watch(fn) {
+      return i18n.watchLocale(fn);
+    },
+    getLocale() {
+      return i18n.getLocale();
+    },
+    setLocale(newLocale) {
+      return i18n.setLocale(newLocale);
+    }
+  };
+}
+const eventChannels$1 = {};
+const eventChannelStack$1 = [];
+let id = 0;
+function initEventChannel(events, cache = true) {
+  id++;
+  const eventChannel = new qq.EventChannel(id, events);
+  if (cache) {
+    eventChannels$1[id] = eventChannel;
+    eventChannelStack$1.push(eventChannel);
+  }
+  return eventChannel;
+}
+function getEventChannel$1(id2) {
+  if (id2) {
+    const eventChannel = eventChannels$1[id2];
+    delete eventChannels$1[id2];
+    return eventChannel;
+  }
+  return eventChannelStack$1.shift();
+}
+const navigateTo = {
+  args(fromArgs) {
+    const id2 = initEventChannel(fromArgs.events).id;
+    if (fromArgs.url) {
+      fromArgs.url = fromArgs.url + (fromArgs.url.indexOf("?") === -1 ? "?" : "&") + "__id__=" + id2;
+    }
+  },
+  returnValue(fromRes) {
+    fromRes.eventChannel = getEventChannel$1();
+  }
+};
+function getBaseSystemInfo() {
+  return qq.getSystemInfoSync();
+}
 function validateProtocolFail(name, msg) {
   console.warn(`${name}: ${msg}`);
 }
@@ -710,11 +1193,17 @@ function invokePushCallback(args) {
     invokeGetPushCidCallbacks(cid, args.errMsg);
   } else if (args.type === "pushMsg") {
     onPushMessageCallbacks.forEach((callback) => {
-      callback({ type: "receive", data: normalizePushMessage(args.message) });
+      callback({
+        type: "receive",
+        data: normalizePushMessage(args.message)
+      });
     });
   } else if (args.type === "click") {
     onPushMessageCallbacks.forEach((callback) => {
-      callback({ type: "click", data: normalizePushMessage(args.message) });
+      callback({
+        type: "click",
+        data: normalizePushMessage(args.message)
+      });
     });
   }
 }
@@ -725,7 +1214,7 @@ function invokeGetPushCidCallbacks(cid2, errMsg) {
   });
   getPushCidCallbacks.length = 0;
 }
-function getPushCid(args) {
+function getPushClientid(args) {
   if (!isPlainObject(args)) {
     args = {};
   }
@@ -736,10 +1225,10 @@ function getPushCid(args) {
   getPushCidCallbacks.push((cid2, errMsg) => {
     let res;
     if (cid2) {
-      res = { errMsg: "getPushCid:ok", cid: cid2 };
+      res = { errMsg: "getPushClientid:ok", cid: cid2 };
       hasSuccess && success(res);
     } else {
-      res = { errMsg: "getPushCid:fail" + (errMsg ? " " + errMsg : "") };
+      res = { errMsg: "getPushClientid:fail" + (errMsg ? " " + errMsg : "") };
       hasFail && fail(res);
     }
     hasComplete && complete(res);
@@ -764,7 +1253,7 @@ const offPushMessage = (fn) => {
     }
   }
 };
-const SYNC_API_RE = /^\$|getLocale|setLocale|sendNativeEvent|restoreGlobal|requireGlobal|getCurrentSubNVue|getMenuButtonBoundingClientRect|^report|interceptors|Interceptor$|getSubNVueById|requireNativePlugin|upx2px|hideKeyboard|canIUse|^create|Sync$|Manager$|base64ToArrayBuffer|arrayBufferToBase64/;
+const SYNC_API_RE = /^\$|getLocale|setLocale|sendNativeEvent|restoreGlobal|requireGlobal|getCurrentSubNVue|getMenuButtonBoundingClientRect|^report|interceptors|Interceptor$|getSubNVueById|requireNativePlugin|upx2px|hideKeyboard|canIUse|^create|Sync$|Manager$|base64ToArrayBuffer|arrayBufferToBase64|getDeviceInfo|getAppBaseInfo|getWindowInfo/;
 const CONTEXT_API_RE = /^create|Manager$/;
 const CONTEXT_API_RE_EXC = ["createBLEConnection"];
 const ASYNC_API = ["createBLEConnection"];
@@ -893,7 +1382,7 @@ const getLocale = () => {
   if (app && app.$vm) {
     return app.$vm.$locale;
   }
-  return qq.getSystemInfoSync().language || "zh-Hans";
+  return normalizeLocale(qq.getSystemInfoSync().language) || LOCALE_EN;
 };
 const setLocale = (locale) => {
   const app = getApp();
@@ -931,7 +1420,7 @@ const baseApis = {
   getLocale,
   setLocale,
   onLocaleChange,
-  getPushCid,
+  getPushClientid,
   onPushMessage,
   offPushMessage,
   invokePushCallback
@@ -973,17 +1462,6 @@ function initGetProvider(providers) {
     isFunction(complete) && complete(res);
   };
 }
-function addSafeAreaInsets(fromRes, toRes) {
-  if (fromRes.safeArea) {
-    const safeArea = fromRes.safeArea;
-    toRes.safeAreaInsets = {
-      top: safeArea.top,
-      left: safeArea.left,
-      right: fromRes.windowWidth - safeArea.right,
-      bottom: fromRes.windowHeight - safeArea.bottom
-    };
-  }
-}
 const UUID_KEY = "__DC_STAT_UUID";
 let deviceId;
 function useDeviceId(global2 = qq) {
@@ -999,10 +1477,107 @@ function useDeviceId(global2 = qq) {
     toRes.deviceId = deviceId;
   };
 }
+function addSafeAreaInsets(fromRes, toRes) {
+  if (fromRes.safeArea) {
+    const safeArea = fromRes.safeArea;
+    toRes.safeAreaInsets = {
+      top: safeArea.top,
+      left: safeArea.left,
+      right: fromRes.windowWidth - safeArea.right,
+      bottom: fromRes.screenHeight - safeArea.bottom
+    };
+  }
+}
+function populateParameters(fromRes, toRes) {
+  const { brand = "", model = "", system = "", language = "", theme, version: version2, platform, fontSizeSetting, SDKVersion, pixelRatio, deviceOrientation } = fromRes;
+  let osName = "";
+  let osVersion = "";
+  {
+    osName = system.split(" ")[0] || "";
+    osVersion = system.split(" ")[1] || "";
+  }
+  let hostVersion = version2;
+  let deviceType = getGetDeviceType(fromRes, model);
+  let deviceBrand = getDeviceBrand(brand);
+  let _hostName = getHostName(fromRes);
+  let _deviceOrientation = deviceOrientation;
+  let _devicePixelRatio = pixelRatio;
+  let _SDKVersion = SDKVersion;
+  const hostLanguage = language.replace(/_/g, "-");
+  const parameters = {
+    appId: "__UNI__C022911",
+    appName: "demo1",
+    appVersion: "1.0.0",
+    appVersionCode: "100",
+    appLanguage: getAppLanguage(hostLanguage),
+    uniCompileVersion: "3.4.15",
+    uniRuntimeVersion: "3.4.15",
+    uniPlatform: "mp-qq",
+    deviceBrand,
+    deviceModel: model,
+    deviceType,
+    devicePixelRatio: _devicePixelRatio,
+    deviceOrientation: _deviceOrientation,
+    osName: osName.toLocaleLowerCase(),
+    osVersion,
+    hostTheme: theme,
+    hostVersion,
+    hostLanguage,
+    hostName: _hostName,
+    hostSDKVersion: _SDKVersion,
+    hostFontSizeSetting: fontSizeSetting,
+    windowTop: 0,
+    windowBottom: 0,
+    osLanguage: void 0,
+    osTheme: void 0,
+    ua: void 0,
+    hostPackageName: void 0,
+    browserName: void 0,
+    browserVersion: void 0
+  };
+  extend(toRes, parameters);
+}
+function getGetDeviceType(fromRes, model) {
+  let deviceType = fromRes.deviceType || "phone";
+  {
+    const deviceTypeMaps = {
+      ipad: "pad",
+      windows: "pc",
+      mac: "pc"
+    };
+    const deviceTypeMapsKeys = Object.keys(deviceTypeMaps);
+    const _model = model.toLocaleLowerCase();
+    for (let index2 = 0; index2 < deviceTypeMapsKeys.length; index2++) {
+      const _m = deviceTypeMapsKeys[index2];
+      if (_model.indexOf(_m) !== -1) {
+        deviceType = deviceTypeMaps[_m];
+        break;
+      }
+    }
+  }
+  return deviceType;
+}
+function getDeviceBrand(brand) {
+  let deviceBrand = brand;
+  if (deviceBrand) {
+    deviceBrand = deviceBrand.toLocaleLowerCase();
+  }
+  return deviceBrand;
+}
+function getAppLanguage(defaultLanguage) {
+  return getLocale ? getLocale() : defaultLanguage;
+}
+function getHostName(fromRes) {
+  const _platform = "mp-qq".split("-")[1];
+  let _hostName = fromRes.hostName || _platform;
+  _hostName = fromRes.AppPlatform;
+  return _hostName;
+}
 const getSystemInfo = {
   returnValue: (fromRes, toRes) => {
     addSafeAreaInsets(fromRes, toRes);
     useDeviceId()(fromRes, toRes);
+    populateParameters(fromRes, toRes);
   }
 };
 const getSystemInfoSync = getSystemInfo;
@@ -1057,99 +1632,6 @@ var protocols = /* @__PURE__ */ Object.freeze({
   getSystemInfoSync
 });
 var index = initUni(shims, protocols);
-const ON_SHOW$1 = "onShow";
-const ON_HIDE$1 = "onHide";
-const ON_LAUNCH$1 = "onLaunch";
-const ON_ERROR$1 = "onError";
-const ON_THEME_CHANGE$1 = "onThemeChange";
-const ON_PAGE_NOT_FOUND$1 = "onPageNotFound";
-const ON_UNHANDLE_REJECTION$1 = "onUnhandledRejection";
-const ON_LOAD$1 = "onLoad";
-const ON_READY$1 = "onReady";
-const ON_UNLOAD$1 = "onUnload";
-const ON_INIT = "onInit";
-const ON_SAVE_EXIT_STATE = "onSaveExitState";
-const ON_RESIZE$1 = "onResize";
-const ON_BACK_PRESS = "onBackPress";
-const ON_PAGE_SCROLL = "onPageScroll";
-const ON_TAB_ITEM_TAP$1 = "onTabItemTap";
-const ON_REACH_BOTTOM$1 = "onReachBottom";
-const ON_PULL_DOWN_REFRESH$1 = "onPullDownRefresh";
-const ON_SHARE_TIMELINE = "onShareTimeline";
-const ON_ADD_TO_FAVORITES$1 = "onAddToFavorites";
-const ON_SHARE_APP_MESSAGE = "onShareAppMessage";
-const ON_NAVIGATION_BAR_BUTTON_TAP = "onNavigationBarButtonTap";
-const ON_NAVIGATION_BAR_SEARCH_INPUT_CLICKED = "onNavigationBarSearchInputClicked";
-const ON_NAVIGATION_BAR_SEARCH_INPUT_CHANGED = "onNavigationBarSearchInputChanged";
-const ON_NAVIGATION_BAR_SEARCH_INPUT_CONFIRMED = "onNavigationBarSearchInputConfirmed";
-const ON_NAVIGATION_BAR_SEARCH_INPUT_FOCUS_CHANGED = "onNavigationBarSearchInputFocusChanged";
-function getValueByDataPath(obj, path) {
-  if (!isString(path)) {
-    return;
-  }
-  path = path.replace(/\[(\d+)\]/g, ".$1");
-  const parts = path.split(".");
-  let key = parts[0];
-  if (!obj) {
-    obj = {};
-  }
-  if (parts.length === 1) {
-    return obj[key];
-  }
-  return getValueByDataPath(obj[key], parts.slice(1).join("."));
-}
-const PAGE_HOOKS = [
-  ON_INIT,
-  ON_LOAD$1,
-  ON_SHOW$1,
-  ON_HIDE$1,
-  ON_UNLOAD$1,
-  ON_BACK_PRESS,
-  ON_PAGE_SCROLL,
-  ON_TAB_ITEM_TAP$1,
-  ON_REACH_BOTTOM$1,
-  ON_PULL_DOWN_REFRESH$1,
-  ON_SHARE_TIMELINE,
-  ON_SHARE_APP_MESSAGE,
-  ON_ADD_TO_FAVORITES$1,
-  ON_SAVE_EXIT_STATE,
-  ON_NAVIGATION_BAR_BUTTON_TAP,
-  ON_NAVIGATION_BAR_SEARCH_INPUT_CLICKED,
-  ON_NAVIGATION_BAR_SEARCH_INPUT_CHANGED,
-  ON_NAVIGATION_BAR_SEARCH_INPUT_CONFIRMED,
-  ON_NAVIGATION_BAR_SEARCH_INPUT_FOCUS_CHANGED
-];
-function isRootHook(name) {
-  return PAGE_HOOKS.indexOf(name) > -1;
-}
-const UniLifecycleHooks = [
-  ON_SHOW$1,
-  ON_HIDE$1,
-  ON_LAUNCH$1,
-  ON_ERROR$1,
-  ON_THEME_CHANGE$1,
-  ON_PAGE_NOT_FOUND$1,
-  ON_UNHANDLE_REJECTION$1,
-  ON_INIT,
-  ON_LOAD$1,
-  ON_READY$1,
-  ON_UNLOAD$1,
-  ON_RESIZE$1,
-  ON_BACK_PRESS,
-  ON_PAGE_SCROLL,
-  ON_TAB_ITEM_TAP$1,
-  ON_REACH_BOTTOM$1,
-  ON_PULL_DOWN_REFRESH$1,
-  ON_SHARE_TIMELINE,
-  ON_ADD_TO_FAVORITES$1,
-  ON_SHARE_APP_MESSAGE,
-  ON_SAVE_EXIT_STATE,
-  ON_NAVIGATION_BAR_BUTTON_TAP,
-  ON_NAVIGATION_BAR_SEARCH_INPUT_CLICKED,
-  ON_NAVIGATION_BAR_SEARCH_INPUT_CHANGED,
-  ON_NAVIGATION_BAR_SEARCH_INPUT_CONFIRMED,
-  ON_NAVIGATION_BAR_SEARCH_INPUT_FOCUS_CHANGED
-];
 function warn(msg, ...args) {
   console.warn(`[Vue warn] ${msg}`, ...args);
 }
@@ -4014,8 +4496,8 @@ function handleSetupResult(instance, setupResult, isSSR) {
   }
   finishComponentSetup(instance, isSSR);
 }
-let compile$1;
-const isRuntimeOnly = () => !compile$1;
+let compile;
+const isRuntimeOnly = () => !compile;
 function finishComponentSetup(instance, isSSR, skipOptions) {
   const Component2 = instance.type;
   if (!instance.render) {
@@ -4639,7 +5121,7 @@ function errorHandler(err, instance, info) {
     throw err;
   }
   {
-    app.$vm.$callHook(ON_ERROR$1, err, info);
+    app.$vm.$callHook(ON_ERROR, err, info);
   }
 }
 function mergeAsArray(to, from) {
@@ -4812,7 +5294,7 @@ function createInvoker(initialValue, instance) {
       setTimeout(invoke);
     } else {
       const res = invoke();
-      if (e2.type === "input" && isPromise(res)) {
+      if (e2.type === "input" && (isArray$1(res) || isPromise(res))) {
         return;
       }
       return res;
@@ -4911,6 +5393,10 @@ function stringify(styles) {
   }
   return ret;
 }
+function setRef(ref2, id2, opts = {}) {
+  const { $templateRefs } = getCurrentInstance();
+  $templateRefs.push({ i: id2, r: ref2, k: opts.k, f: opts.f });
+}
 const o = (value, key) => vOn(value, key);
 const f = (source, renderItem) => vFor(source, renderItem);
 const s = (value) => stringifyStyle(value);
@@ -4918,135 +5404,12 @@ const e = (target, ...sources) => extend(target, ...sources);
 const n = (value) => normalizeClass(value);
 const t = (val) => toDisplayString(val);
 const p = (props) => renderProps(props);
+const sr = (ref2, id2, opts) => setRef(ref2, id2, opts);
 function createApp$1(rootComponent, rootProps = null) {
   rootComponent && (rootComponent.mpType = "app");
   return createVueApp(rootComponent, rootProps).use(plugin);
 }
 const createSSRApp = createApp$1;
-const SLOT_DEFAULT_NAME = "d";
-const ON_SHOW = "onShow";
-const ON_HIDE = "onHide";
-const ON_LAUNCH = "onLaunch";
-const ON_ERROR = "onError";
-const ON_THEME_CHANGE = "onThemeChange";
-const ON_PAGE_NOT_FOUND = "onPageNotFound";
-const ON_UNHANDLE_REJECTION = "onUnhandledRejection";
-const ON_LOAD = "onLoad";
-const ON_READY = "onReady";
-const ON_UNLOAD = "onUnload";
-const ON_RESIZE = "onResize";
-const ON_TAB_ITEM_TAP = "onTabItemTap";
-const ON_REACH_BOTTOM = "onReachBottom";
-const ON_PULL_DOWN_REFRESH = "onPullDownRefresh";
-const ON_ADD_TO_FAVORITES = "onAddToFavorites";
-const customizeRE = /:/g;
-function customizeEvent(str) {
-  return camelize(str.replace(customizeRE, "-"));
-}
-function hasLeadingSlash(str) {
-  return str.indexOf("/") === 0;
-}
-function addLeadingSlash(str) {
-  return hasLeadingSlash(str) ? str : "/" + str;
-}
-const invokeArrayFns = (fns, arg) => {
-  let ret;
-  for (let i = 0; i < fns.length; i++) {
-    ret = fns[i](arg);
-  }
-  return ret;
-};
-function once(fn, ctx = null) {
-  let res;
-  return (...args) => {
-    if (fn) {
-      res = fn.apply(ctx, args);
-      fn = null;
-    }
-    return res;
-  };
-}
-const encode = encodeURIComponent;
-function stringifyQuery(obj, encodeStr = encode) {
-  const res = obj ? Object.keys(obj).map((key) => {
-    let val = obj[key];
-    if (typeof val === void 0 || val === null) {
-      val = "";
-    } else if (isPlainObject(val)) {
-      val = JSON.stringify(val);
-    }
-    return encodeStr(key) + "=" + encodeStr(val);
-  }).filter((x) => x.length > 0).join("&") : null;
-  return res ? `?${res}` : "";
-}
-class EventChannel {
-  constructor(id2, events) {
-    this.id = id2;
-    this.listener = {};
-    this.emitCache = {};
-    if (events) {
-      Object.keys(events).forEach((name) => {
-        this.on(name, events[name]);
-      });
-    }
-  }
-  emit(eventName, ...args) {
-    const fns = this.listener[eventName];
-    if (!fns) {
-      return (this.emitCache[eventName] || (this.emitCache[eventName] = [])).push(args);
-    }
-    fns.forEach((opt) => {
-      opt.fn.apply(opt.fn, args);
-    });
-    this.listener[eventName] = fns.filter((opt) => opt.type !== "once");
-  }
-  on(eventName, fn) {
-    this._addListener(eventName, "on", fn);
-    this._clearCache(eventName);
-  }
-  once(eventName, fn) {
-    this._addListener(eventName, "once", fn);
-    this._clearCache(eventName);
-  }
-  off(eventName, fn) {
-    const fns = this.listener[eventName];
-    if (!fns) {
-      return;
-    }
-    if (fn) {
-      for (let i = 0; i < fns.length; ) {
-        if (fns[i].fn === fn) {
-          fns.splice(i, 1);
-          i--;
-        }
-        i++;
-      }
-    } else {
-      delete this.listener[eventName];
-    }
-  }
-  _clearCache(eventName) {
-    const cacheArgs = this.emitCache[eventName];
-    if (cacheArgs) {
-      for (; cacheArgs.length > 0; ) {
-        this.emit.apply(this, [eventName, ...cacheArgs.shift()]);
-      }
-    }
-  }
-  _addListener(eventName, type, fn) {
-    (this.listener[eventName] || (this.listener[eventName] = [])).push({
-      fn,
-      type
-    });
-  }
-}
-const MINI_PROGRAM_PAGE_RUNTIME_HOOKS = /* @__PURE__ */ (() => {
-  return {
-    onPageScroll: 1,
-    onShareAppMessage: 1 << 1,
-    onShareTimeline: 1 << 2
-  };
-})();
 const eventChannels = {};
 const eventChannelStack = [];
 function getEventChannel(id2) {
@@ -5173,7 +5536,7 @@ function findHooks(vueOptions, hooks = /* @__PURE__ */ new Set()) {
   }
   return hooks;
 }
-function initHook$1(mpOptions, hook, excludes) {
+function initHook(mpOptions, hook, excludes) {
   if (excludes.indexOf(hook) === -1 && !hasOwn$1(mpOptions, hook)) {
     mpOptions[hook] = function(args) {
       return this.$vm && this.$vm.$callHook(hook, args);
@@ -5182,10 +5545,10 @@ function initHook$1(mpOptions, hook, excludes) {
 }
 const EXCLUDE_HOOKS = [ON_READY];
 function initHooks(mpOptions, hooks, excludes = EXCLUDE_HOOKS) {
-  hooks.forEach((hook) => initHook$1(mpOptions, hook, excludes));
+  hooks.forEach((hook) => initHook(mpOptions, hook, excludes));
 }
 function initUnknownHooks(mpOptions, vueOptions, excludes = EXCLUDE_HOOKS) {
-  findHooks(vueOptions).forEach((hook) => initHook$1(mpOptions, hook, excludes));
+  findHooks(vueOptions).forEach((hook) => initHook(mpOptions, hook, excludes));
 }
 function initRuntimeHooks(mpOptions, runtimeHooks) {
   if (!runtimeHooks) {
@@ -5194,7 +5557,7 @@ function initRuntimeHooks(mpOptions, runtimeHooks) {
   const hooks = Object.keys(MINI_PROGRAM_PAGE_RUNTIME_HOOKS);
   hooks.forEach((hook) => {
     if (runtimeHooks & MINI_PROGRAM_PAGE_RUNTIME_HOOKS[hook]) {
-      initHook$1(mpOptions, hook, []);
+      initHook(mpOptions, hook, []);
     }
   });
 }
@@ -5305,7 +5668,7 @@ function initAppLifecycle(appOptions, vm) {
   }
 }
 function initLocale(appVm) {
-  const locale = ref(qq.getSystemInfoSync().language || "zh-Hans");
+  const locale = ref(normalizeLocale(qq.getSystemInfoSync().language) || LOCALE_EN);
   Object.defineProperty(appVm, "$locale", {
     get() {
       return locale.value;
@@ -5673,7 +6036,7 @@ function initTriggerEvent(mpInstance) {
     return oldTriggerEvent.apply(mpInstance, [customizeEvent(event), ...args]);
   };
 }
-function initHook(name, options, isComponent) {
+function initMiniProgramHook(name, options, isComponent) {
   const oldHook = options[name];
   if (!oldHook) {
     options[name] = function() {
@@ -5687,11 +6050,11 @@ function initHook(name, options, isComponent) {
   }
 }
 Page = function(options) {
-  initHook(ON_LOAD, options);
+  initMiniProgramHook(ON_LOAD, options);
   return MPPage(options);
 };
 Component = function(options) {
-  initHook("created", options);
+  initMiniProgramHook("created", options);
   const isVueComponent = options.properties && options.properties.uP;
   if (!isVueComponent) {
     initProps(options);
@@ -6231,287 +6594,6 @@ var md5$1 = { exports: {} };
   })();
 })(md5$1);
 var md5 = md5$1.exports;
-const isArray = Array.isArray;
-const isObject = (val) => val !== null && typeof val === "object";
-const defaultDelimiters = ["{", "}"];
-class BaseFormatter {
-  constructor() {
-    this._caches = /* @__PURE__ */ Object.create(null);
-  }
-  interpolate(message, values, delimiters = defaultDelimiters) {
-    if (!values) {
-      return [message];
-    }
-    let tokens = this._caches[message];
-    if (!tokens) {
-      tokens = parse(message, delimiters);
-      this._caches[message] = tokens;
-    }
-    return compile(tokens, values);
-  }
-}
-const RE_TOKEN_LIST_VALUE = /^(?:\d)+/;
-const RE_TOKEN_NAMED_VALUE = /^(?:\w)+/;
-function parse(format, [startDelimiter, endDelimiter]) {
-  const tokens = [];
-  let position = 0;
-  let text = "";
-  while (position < format.length) {
-    let char = format[position++];
-    if (char === startDelimiter) {
-      if (text) {
-        tokens.push({ type: "text", value: text });
-      }
-      text = "";
-      let sub = "";
-      char = format[position++];
-      while (char !== void 0 && char !== endDelimiter) {
-        sub += char;
-        char = format[position++];
-      }
-      const isClosed = char === endDelimiter;
-      const type = RE_TOKEN_LIST_VALUE.test(sub) ? "list" : isClosed && RE_TOKEN_NAMED_VALUE.test(sub) ? "named" : "unknown";
-      tokens.push({ value: sub, type });
-    } else {
-      text += char;
-    }
-  }
-  text && tokens.push({ type: "text", value: text });
-  return tokens;
-}
-function compile(tokens, values) {
-  const compiled = [];
-  let index2 = 0;
-  const mode = isArray(values) ? "list" : isObject(values) ? "named" : "unknown";
-  if (mode === "unknown") {
-    return compiled;
-  }
-  while (index2 < tokens.length) {
-    const token = tokens[index2];
-    switch (token.type) {
-      case "text":
-        compiled.push(token.value);
-        break;
-      case "list":
-        compiled.push(values[parseInt(token.value, 10)]);
-        break;
-      case "named":
-        if (mode === "named") {
-          compiled.push(values[token.value]);
-        } else {
-          {
-            console.warn(`Type of token '${token.type}' and format of value '${mode}' don't match!`);
-          }
-        }
-        break;
-      case "unknown":
-        {
-          console.warn(`Detect 'unknown' type of token!`);
-        }
-        break;
-    }
-    index2++;
-  }
-  return compiled;
-}
-const LOCALE_ZH_HANS = "zh-Hans";
-const LOCALE_ZH_HANT = "zh-Hant";
-const LOCALE_EN = "en";
-const LOCALE_FR = "fr";
-const LOCALE_ES = "es";
-const hasOwnProperty = Object.prototype.hasOwnProperty;
-const hasOwn = (val, key) => hasOwnProperty.call(val, key);
-const defaultFormatter = new BaseFormatter();
-function include(str, parts) {
-  return !!parts.find((part) => str.indexOf(part) !== -1);
-}
-function startsWith(str, parts) {
-  return parts.find((part) => str.indexOf(part) === 0);
-}
-function normalizeLocale(locale, messages) {
-  if (!locale) {
-    return;
-  }
-  locale = locale.trim().replace(/_/g, "-");
-  if (messages && messages[locale]) {
-    return locale;
-  }
-  locale = locale.toLowerCase();
-  if (locale === "chinese") {
-    return LOCALE_ZH_HANS;
-  }
-  if (locale.indexOf("zh") === 0) {
-    if (locale.indexOf("-hans") > -1) {
-      return LOCALE_ZH_HANS;
-    }
-    if (locale.indexOf("-hant") > -1) {
-      return LOCALE_ZH_HANT;
-    }
-    if (include(locale, ["-tw", "-hk", "-mo", "-cht"])) {
-      return LOCALE_ZH_HANT;
-    }
-    return LOCALE_ZH_HANS;
-  }
-  const lang = startsWith(locale, [LOCALE_EN, LOCALE_FR, LOCALE_ES]);
-  if (lang) {
-    return lang;
-  }
-}
-class I18n {
-  constructor({ locale, fallbackLocale, messages, watcher, formater }) {
-    this.locale = LOCALE_EN;
-    this.fallbackLocale = LOCALE_EN;
-    this.message = {};
-    this.messages = {};
-    this.watchers = [];
-    if (fallbackLocale) {
-      this.fallbackLocale = fallbackLocale;
-    }
-    this.formater = formater || defaultFormatter;
-    this.messages = messages || {};
-    this.setLocale(locale || LOCALE_EN);
-    if (watcher) {
-      this.watchLocale(watcher);
-    }
-  }
-  setLocale(locale) {
-    const oldLocale = this.locale;
-    this.locale = normalizeLocale(locale, this.messages) || this.fallbackLocale;
-    if (!this.messages[this.locale]) {
-      this.messages[this.locale] = {};
-    }
-    this.message = this.messages[this.locale];
-    if (oldLocale !== this.locale) {
-      this.watchers.forEach((watcher) => {
-        watcher(this.locale, oldLocale);
-      });
-    }
-  }
-  getLocale() {
-    return this.locale;
-  }
-  watchLocale(fn) {
-    const index2 = this.watchers.push(fn) - 1;
-    return () => {
-      this.watchers.splice(index2, 1);
-    };
-  }
-  add(locale, message, override = true) {
-    const curMessages = this.messages[locale];
-    if (curMessages) {
-      if (override) {
-        Object.assign(curMessages, message);
-      } else {
-        Object.keys(message).forEach((key) => {
-          if (!hasOwn(curMessages, key)) {
-            curMessages[key] = message[key];
-          }
-        });
-      }
-    } else {
-      this.messages[locale] = message;
-    }
-  }
-  f(message, values, delimiters) {
-    return this.formater.interpolate(message, values, delimiters).join("");
-  }
-  t(key, locale, values) {
-    let message = this.message;
-    if (typeof locale === "string") {
-      locale = normalizeLocale(locale, this.messages);
-      locale && (message = this.messages[locale]);
-    } else {
-      values = locale;
-    }
-    if (!hasOwn(message, key)) {
-      console.warn(`Cannot translate the value of keypath ${key}. Use the value of keypath as default.`);
-      return key;
-    }
-    return this.formater.interpolate(message[key], values).join("");
-  }
-}
-function watchAppLocale(appVm, i18n) {
-  if (appVm.$watchLocale) {
-    appVm.$watchLocale((newLocale) => {
-      i18n.setLocale(newLocale);
-    });
-  } else {
-    appVm.$watch(() => appVm.$locale, (newLocale) => {
-      i18n.setLocale(newLocale);
-    });
-  }
-}
-function getDefaultLocale() {
-  if (typeof index !== "undefined" && index.getLocale) {
-    return index.getLocale();
-  }
-  if (typeof global !== "undefined" && global.getLocale) {
-    return global.getLocale();
-  }
-  return LOCALE_EN;
-}
-function initVueI18n(locale, messages = {}, fallbackLocale, watcher) {
-  if (typeof locale !== "string") {
-    [locale, messages] = [
-      messages,
-      locale
-    ];
-  }
-  if (typeof locale !== "string") {
-    locale = getDefaultLocale();
-  }
-  if (typeof fallbackLocale !== "string") {
-    fallbackLocale = typeof __uniConfig !== "undefined" && __uniConfig.fallbackLocale || LOCALE_EN;
-  }
-  const i18n = new I18n({
-    locale,
-    fallbackLocale,
-    messages,
-    watcher
-  });
-  let t2 = (key, values) => {
-    if (typeof getApp !== "function") {
-      t2 = function(key2, values2) {
-        return i18n.t(key2, values2);
-      };
-    } else {
-      let isWatchedAppLocale = false;
-      t2 = function(key2, values2) {
-        const appVm = getApp().$vm;
-        if (appVm) {
-          appVm.$locale;
-          if (!isWatchedAppLocale) {
-            isWatchedAppLocale = true;
-            watchAppLocale(appVm, i18n);
-          }
-        }
-        return i18n.t(key2, values2);
-      };
-    }
-    return t2(key, values);
-  };
-  return {
-    i18n,
-    f(message, values, delimiters) {
-      return i18n.f(message, values, delimiters);
-    },
-    t(key, values) {
-      return t2(key, values);
-    },
-    add(locale2, message, override = true) {
-      return i18n.add(locale2, message, override);
-    },
-    watch(fn) {
-      return i18n.watchLocale(fn);
-    },
-    getLocale() {
-      return i18n.getLocale();
-    },
-    setLocale(newLocale) {
-      return i18n.setLocale(newLocale);
-    }
-  };
-}
 exports._export_sfc = _export_sfc;
 exports.createSSRApp = createSSRApp;
 exports.e = e;
@@ -6524,4 +6606,5 @@ exports.o = o;
 exports.p = p;
 exports.resolveComponent = resolveComponent;
 exports.s = s;
+exports.sr = sr;
 exports.t = t;

@@ -2,7 +2,6 @@
 	<view style="height: 10vh;">
 
 	</view>
-	<uni-transition ref="ani" custom-class="transition" :mode-class="modeClass" :styles="styles" :show="show">
 		<view class="content">
 			<view class="logo-box">
 				<image class="logo" src="../../static/logo.png" mode=""></image>
@@ -12,7 +11,6 @@
 			<image class="banner" src="../../static/home.jpeg" mode="aspectFill"></image>
 			<view class="p">这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍</view>
 		</view>
-	</uni-transition>
 </template>
 
 <script>
@@ -23,8 +21,6 @@
 			}
 		},
 		onLoad() {
-			this.show = !this.show
-			this.modeClass = ['fade', 'zoom-in']
 		},
 		methods: {}
 	}
@@ -43,7 +39,9 @@
 		margin: 0px 10px;
 		min-height: 80vh;
 	}
-
+page{
+	font-size: 16px;
+}
 	.p {
 		text-indent: 30px;
 		font-weight: 300;

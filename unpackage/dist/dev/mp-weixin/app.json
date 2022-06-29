@@ -3,8 +3,11 @@
     "pages/index/index",
     "pages/xia-editor/xia-editor",
     "pages/blog-info/blog-info",
+    "pages/about/about",
     "pages/home/home",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/setting/admin",
+    "pages/about/help"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -38,6 +41,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }

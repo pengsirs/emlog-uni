@@ -3,7 +3,11 @@
     "pages/index/index",
     "pages/xia-editor/xia-editor",
     "pages/blog-info/blog-info",
-    "pages/home/home"
+    "pages/about/about",
+    "pages/home/home",
+    "pages/search/search",
+    "pages/setting/admin",
+    "pages/about/help"
   ],
   "window": {
     "navigationBarTextStyle": "black",

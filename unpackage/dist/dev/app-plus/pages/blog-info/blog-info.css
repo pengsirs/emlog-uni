@@ -1048,6 +1048,9 @@ body {
 		margin-top: 10px;
 		min-height: 100vh;
 }
+body{
+	font-size: 16px;
+}
 .xx {
 		width: 100%;
 		display: flex;

@@ -287,7 +287,9 @@
 
 <style>
 	@import "../../uni.css";
-
+page{
+	font-size: 16px;
+}
 	.login {
 		width: 100%;
 		z-index: 99;

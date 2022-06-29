@@ -13,7 +13,7 @@
 					<uni-icons color="blue" type="calendar" size="14"></uni-icons>{{data.date||"1970-01-01 00:00:00"}}
 				</view>
 			</view>
-			<mp-html :content="data.content||content"></mp-html>
+			<mp-html lazy-load="true" :content="data.content||content"></mp-html>
 			<view class="over">—— The End ——</view>
 
 			<view class="Copyright">
@@ -68,6 +68,16 @@
 			this.show = !this.show
 			this.modeClass = 'fade'
 		},
+		//	小程序分享
+		onShareAppMessage(res) {
+			if (res.from === 'button') { // 来自页面内分享按钮
+				console.log(res.target)
+			}
+			return {
+				title: data.title,
+				path: '/pages/blog-info/blog-info?id='+data.id+"&url="+this.url
+			}
+		},
 		methods: {
 			async blog(e) {
 				const res = await myRequest({
@@ -112,7 +122,9 @@
 		margin-top: 10px;
 		min-height: 100vh;
 	}
-
+page{
+	font-size: 16px;
+}
 	.xx {
 		width: 100%;
 		display: flex;

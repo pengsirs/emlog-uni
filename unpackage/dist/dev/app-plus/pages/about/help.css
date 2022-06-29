@@ -1,4 +1,7 @@
 
+body{
+		font-size: 16px;
+}
 uni-textarea{
 		background-color: #fff;
 		box-shadow: #ddd 1px 1px 10px;

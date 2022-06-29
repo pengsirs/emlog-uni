@@ -740,7 +740,7 @@
 .banner-box {
 	width: 100%;
 	height: 150px;
-	background-image: url("../../static/home.jpeg");
+	background-image: url("http://cdn.hkiii.cn//img/_2022/06/30/12/54/49/747/6483441/7812966043841394587");
 	background-size: 100%;
 }
 .banner {
@@ -790,6 +790,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
+	z-index: 2;
 }
 .searchTop{
 			position: fixed;
@@ -801,4 +802,7 @@
 }
 .content-item{
 			margin-top: 60px;
+}
+body{
+			font-size: 16px;
 }

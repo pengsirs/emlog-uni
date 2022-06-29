@@ -102,4 +102,7 @@
 		.content-item{
 			margin-top: 60px;
 		}
+		page{
+			font-size: 16px;
+		}
 </style>

@@ -33,4 +33,20 @@ const myRequest = (options) => {
     });
   });
 };
+const apiRequest = (options) => {
+  return new Promise((resolve, reject) => {
+    common_vendor.index.request({
+      url: setting.set.tenapi + options.url,
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: options.method || "POST",
+      data: options.data || {},
+      success: (res) => {
+        resolve(res);
+      }
+    });
+  });
+};
+exports.apiRequest = apiRequest;
 exports.myRequest = myRequest;

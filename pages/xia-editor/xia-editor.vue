@@ -352,6 +352,9 @@
 	opacity: 0.9;
 	color: #fff;
 }
+page{
+	font-size: 16px;
+}
 .flg-title{
 	margin-top: 30px;
 }

@@ -9,6 +9,9 @@
 </script>
 
 <style>
+	page{
+		font-size: 16px;
+	}
 	textarea{
 		background-color: #fff;
 		box-shadow: #ddd 1px 1px 10px;

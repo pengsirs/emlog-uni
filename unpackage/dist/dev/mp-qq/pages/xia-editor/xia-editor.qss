@@ -177,10 +177,10 @@
 .icon-Character-Spacing:before {
   content: "\e964";
 }
-.uni-input{
+.uni-input {
 		text-align: center;
 }
-page{
+page {
 		margin: 0;
 		padding: 0;
 }
@@ -192,9 +192,40 @@ page{
 		background-color: #06c;
 		border-radius: 5px;
 }
-.uni-input{
-	padding: 10px;
-	border: #eee 1px solid;
+.uni-input {
+		padding: 10px;
+		border: #eee 1px solid;
+}
+.flg-img{
+	width: 100%;
+	margin-top: 50px;
+}
+.flg-text{
+	text-align: center;
+	font-weight: 800;
+	margin-top: 50px;
+}
+.flg-btn{
+	margin: 10px;
+	margin-top: 40px;
+	border-radius: 10px;
+	background-color: #F17C67;
+	opacity: 0.9;
+	color: #fff;
+}
+page{
+	font-size: 16px;
+}
+.flg-title{
+	margin-top: 30px;
+}
+.flg-close{
+	margin-left: 10px;
+	opacity: 0.5;
+}
+.flg-cell{
+	text-align: center;
+	opacity: 0.3;
 }
 .wrapper {
 		padding: 5px;

@@ -97,4 +97,7 @@
 		margin: 10px;
 		box-shadow: inset 1px 1px 2px #999da4, inset -1px -1px 2px #ffffff;
 	}
+	page{
+		font-size: 16px;
+	}
 </style>

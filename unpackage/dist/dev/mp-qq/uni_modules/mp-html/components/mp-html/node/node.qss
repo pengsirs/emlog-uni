@@ -4,6 +4,63 @@
   -webkit-margin-after: 1em;
           margin-block-end: 1em;
 }
+ .rich-h1{
+  font-size:20px;
+  margin:10px 0px;
+}
+ .rich-h1:before{
+  content:"#";
+  color:green;
+}
+ .rich-h2{
+  font-size:19px;
+  margin:10px 0px;
+}
+ .rich-h2:before{
+  content:"#";
+  color:#f17c67;
+}
+ .rich-h3{
+  font-size:18px;
+  margin:10px 0px;
+}
+ .rich-h3:before{
+  content:"#";
+  color:#495a80;
+}
+ .rich-h4{
+  font-size:17px;
+  margin:10px 0px;
+}
+ .rich-h4:before{
+  content:"#";
+  color:#e9f01d;
+}
+ .rich-h5{
+  font-size:16px;
+  margin:10px 0px;
+}
+ .rich-h5:before{
+  content:"#";
+  color:#801818;
+}
+ .rich-h6{
+  font-size:15px;
+  margin:10px 0px;
+}
+ .rich-h6:before{
+  content:"#";
+  color:#483c32;
+}
+ .rich-img {
+ border-radius: 5px;
+}
+ .rich-a{
+  display:none!important;
+}
+ .aaa{
+  color:green;
+}
  .md-table, .md-blockquote {
   margin-bottom: 16px;
 }

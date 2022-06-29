@@ -44,12 +44,6 @@ const apiRequest = (options) => {
       data: options.data || {},
       success: (res) => {
         resolve(res);
-      },
-      fail: (err) => {
-        common_vendor.index.showToast({
-          title: "\u8BF7\u6C42\u63A5\u53E3\u5931\u8D25"
-        });
-        reject(err);
       }
     });
   });

@@ -23,6 +23,16 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.istop {
+  border-radius: 5px;
+  background-color: #F17C67;
+  color: #fff;
+  font-size: 12px;
+  padding: 1px 4px;
+  opacity: 0.5;
+  line-height: 16px;
+  margin-right: 5px;
+}
 .uni-card {
   margin: 10px;
   padding: 0 8px;

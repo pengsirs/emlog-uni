@@ -74,7 +74,8 @@
 					</view>
 				</view>
 			</view>
-			<view v-if="!getimg(item.description) && item.cover == ''" class="list-items" @click="toInfo(item.id,item.url)">
+			<view v-if="!getimg(item.description) && item.cover == ''" class="list-items"
+				@click="toInfo(item.id,item.url)">
 				<view class="list-box-null">
 					<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}</view>
 					<text class="desc">{{delHtmlTag(item.description)}}</text>
@@ -105,7 +106,7 @@
 		data() {
 			return {
 				dataa: [],
-				avatarUrl:'../../static/logo.png',
+				avatarUrl: '../../static/logo.png',
 				$req_time: '',
 				$sign: '',
 				page: 1,
@@ -151,10 +152,10 @@
 		onShow() {
 			var that = this
 			uni.getStorage({
-				key:"avatarUrl",
-				success: function (res) {
-						that.avatarUrl = res.data
-					}
+				key: "avatarUrl",
+				success: function(res) {
+					that.avatarUrl = res.data
+				}
 			})
 		},
 		onReachBottom() {
@@ -174,10 +175,20 @@
 			var backTopValue = scrollTop > 500 ? true : false
 			this.backTopValue = backTopValue
 		},
+		//	小程序分享
+		onShareAppMessage(res) {
+			if (res.from === 'button') { // 来自页面内分享按钮
+				console.log(res.target)
+			}
+			return {
+				title: '分享好玩的程序！',
+				path: '/pages/index/index'
+			}
+		},
 		methods: {
-			getUser(){
+			getUser() {
 				uni.switchTab({
-					url:"../home/home"
+					url: "../home/home"
 				})
 			},
 			// 打开窗口
@@ -260,7 +271,9 @@
 
 <style>
 	@import "../../uni.css";
-
+page{
+	font-size: 16px;
+}
 	.many {
 		display: flex;
 		justify-content: space-between;
@@ -326,12 +339,14 @@
 		flex-direction: column;
 		justify-content: space-between;
 	}
-.list-box-null {
+
+	.list-box-null {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 	}
+
 	.img-box {
 		width: 30%;
 	}
