@@ -63,7 +63,20 @@
 	<view class="login" :style="height">
 		<view class="close" @click="close()">
 			<view class="close-title">请选择登录方式</view>
-			<view class="close-btn"><uni-icons type="closeempty" size="30"></uni-icons></view>
+			<view class="close-btn">
+				<uni-icons type="closeempty" size="30"></uni-icons>
+			</view>
+		</view>
+		<view class="login-content">
+				该功能仅获取您的微信/QQ头像，用于前端页面展示，本程序不会储存您的个人信息，请放心使用！
+		</view>
+		<view class="login-box">
+			<view class="wx" @click="getUser('weixin')">
+				<uni-icons type="weixin" color="#04BE02" size="16"></uni-icons>微信登录
+			</view>
+			<view class="qq" @click="getUser('qq')">
+				<uni-icons type="qq" color="#66ccff" size="16"></uni-icons>QQ登录
+			</view>
 		</view>
 	</view>
 </template>
@@ -79,9 +92,9 @@
 			return {
 				shoulu: '',
 				sogo: '',
-				height:'0%',
-				avatarUrl:'../../static/logo.png',
-				nickName:"点击登录",
+				height: '0%',
+				avatarUrl: '../../static/logo.png',
+				nickName: "点击登录",
 				homelist: [{
 						img: "../../static/home/xitongshezhi.png",
 						text: "程序设置",
@@ -125,16 +138,16 @@
 		onShow() {
 			var that = this
 			uni.getStorage({
-				key:"avatarUrl",
-				success: function (res) {
-						that.avatarUrl = res.data
-					}
+				key: "avatarUrl",
+				success: function(res) {
+					that.avatarUrl = res.data
+				}
 			})
 			uni.getStorage({
-				key:"nickName",
-				success: function (res) {
-						that.nickName = res.data
-					}
+				key: "nickName",
+				success: function(res) {
+					that.nickName = res.data
+				}
 			})
 		},
 		onLoad() {
@@ -142,19 +155,19 @@
 			var that = this;
 			uni.getStorage({
 				key: 'shoulu',
-				success: function (res) {
-					that.shoulu= res.data
+				success: function(res) {
+					that.shoulu = res.data
 				},
-				fail: function(){
+				fail: function() {
 					that.baidu('/baidupages/index', 'shoulu');
 				}
 			});
 			uni.getStorage({
 				key: 'sogo',
-				success: function (res) {
-					that.sogo= res.data
+				success: function(res) {
+					that.sogo = res.data
 				},
-				fail:function(){
+				fail: function() {
 					that.baidu('/sogoupages/index', 'sogo');
 				}
 			});
@@ -163,33 +176,34 @@
 			close() {
 				this.height = "height:0%";
 			},
-			login(){
-					this.height = "height:50%"
+			login() {
+				this.height = "height:40%"
 			},
-			getUser(){
+			getUser(app) {
 				var that = this
 				uni.login({
-				  provider: 'weixin',
-				  success: function (loginRes) {
-				    console.log(loginRes.authResult);
-				    // 获取用户信息
-				    uni.getUserInfo({
-				      provider: 'weixin',
-				      success: function (infoRes) {
-						  that.avatarUrl = infoRes.userInfo.avatarUrl
-						  that.nickName = infoRes.userInfo.nickName
-						  uni.setStorage({
-						  	key:'nickName',
-							data:infoRes.userInfo.nickName
-						  })
-						  uni.setStorage({
-						  	key:'avatarUrl',
-						  	data:infoRes.userInfo.avatarUrl
-						  })
-				      }
-				    });
-				  }
+					provider: app,
+					success: function(loginRes) {
+						console.log(loginRes.authResult);
+						// 获取用户信息
+						uni.getUserInfo({
+							provider: app,
+							success: function(infoRes) {
+								that.avatarUrl = infoRes.userInfo.avatarUrl
+								that.nickName = infoRes.userInfo.nickName
+								uni.setStorage({
+									key: 'nickName',
+									data: infoRes.userInfo.nickName
+								})
+								uni.setStorage({
+									key: 'avatarUrl',
+									data: infoRes.userInfo.avatarUrl
+								})
+							}
+						});
+					}
 				});
+				this.height = "height:0%";
 			},
 			clear() {
 				uni.showModal({
@@ -203,7 +217,7 @@
 								duration: 2000
 							});
 							uni.switchTab({
-								url:"../index/index"
+								url: "../index/index"
 							})
 						} else if (res.cancel) {
 							console.log('用户点击取消');
@@ -265,7 +279,7 @@
 					key: k,
 					data: res.data.newslist[0].count
 				});
-				this[k]=res.data.newslist[0].count
+				this[k] = res.data.newslist[0].count
 			},
 		}
 	}
@@ -273,32 +287,77 @@
 
 <style>
 	@import "../../uni.css";
-.login{
-	width: 100%;
-	z-index: 99;
-	transition: 2s;
-	position: fixed;
-	bottom: 0;
-	box-shadow: #BBE4FF 1px 1px 10px;
-	background-color: #F3E3D8;
-	border-radius: 20px 20px 0px 0px;
-}
-.close{
-	display: flex;
-	justify-content: space-between;
-	padding: 2px;
-	margin: 10px;
-}
-.close-title{
-	font-size: 20px;
-	font-weight: 800;
-}
-.close-btn{
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-	border: 2px #eee solid;
-}
+
+	.login {
+		width: 100%;
+		z-index: 99;
+		transition: 2s;
+		position: fixed;
+		bottom: 0;
+		box-shadow: #BBE4FF 1px 1px 10px;
+		background-color: #F3E3D8;
+		border-radius: 20px 20px 0px 0px;
+	}
+
+	.close {
+		display: flex;
+		justify-content: space-between;
+		padding: 2px;
+		margin: 10px;
+		height: 10%;
+	}
+
+	.close-title {
+		font-size: 20px;
+		font-weight: 800;
+	}
+
+	.close-btn {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		border: 2px #eee solid;
+	}
+
+	.login-box {
+		display: flex;
+		justify-content: space-around;
+	}
+
+	.wx,
+	.qq {
+		padding: 5px 10px;
+		border-radius: 30px;
+		background-color: #fff;
+		box-shadow: #F3E3D8 1px 1px 10px;
+		width: 30%;
+		text-align: center;
+	}
+
+	.wx {
+		color: #04BE02;
+	}
+
+	.qq {
+		color: #66ccff;
+	}
+
+	.login-content {
+		height: 50%;
+		padding: 10px;
+		word-wrap: break-word;
+		opacity: 0.7;
+		text-indent: 32px;
+	}
+	/* #ifdef H5 */
+	.login-content {
+		height: 30%;
+		padding: 10px;
+		word-wrap: break-word;
+		opacity: 0.7;
+		text-indent: 32px;
+	}
+	/* #endif */
 	.baidu-box {
 		display: flex;
 		justify-content: space-between;

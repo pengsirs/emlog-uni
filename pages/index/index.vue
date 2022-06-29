@@ -176,28 +176,9 @@
 		},
 		methods: {
 			getUser(){
-				var that = this
-				uni.login({
-				  provider: 'weixin',
-				  success: function (loginRes) {
-				    console.log(loginRes.authResult);
-				    // 获取用户信息
-				    uni.getUserInfo({
-				      provider: 'weixin',
-				      success: function (infoRes) {
-						  that.avatarUrl = infoRes.userInfo.avatarUrl
-						  uni.setStorage({
-						  	key:'nickName',
-							data:infoRes.userInfo.nickName
-						  })
-						  uni.setStorage({
-						  	key:'avatarUrl',
-						  	data:infoRes.userInfo.avatarUrl
-						  })
-				      }
-				    });
-				  }
-				});
+				uni.switchTab({
+					url:"../home/home"
+				})
 			},
 			// 打开窗口
 			showDrawer(e) {
