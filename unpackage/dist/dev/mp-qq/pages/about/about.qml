@@ -1,0 +1,1 @@
+<view style="height:10vh"></view><view class="content"><view class="logo-box"><image class="logo" src="/static/logo.png" mode=""></image></view><view class="title"> 彭先生博客</view><view class="url">{{a}}</view><image class="banner" src="/static/home.jpeg" mode="aspectFill"></image><view class="p">这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍</view></view>

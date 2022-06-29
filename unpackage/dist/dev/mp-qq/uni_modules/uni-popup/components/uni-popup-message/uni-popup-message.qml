@@ -1,0 +1,1 @@
+<view class="uni-popup-message"><view class="{{['uni-popup-message__box', 'fixforpc-width', c]}}"><block qq:if="{{$slots.d}}"><slot></slot></block><block qq:else><text class="{{['uni-popup-message-text', b]}}">{{a}}</text></block></view></view>
