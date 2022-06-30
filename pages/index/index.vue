@@ -272,7 +272,7 @@
 <style>
 	@import "../../uni.css";
 page{
-	font-size: 16px;
+	font-size: 16px
 }
 	.many {
 		display: flex;
