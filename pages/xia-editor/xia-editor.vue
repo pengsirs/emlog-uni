@@ -194,7 +194,7 @@
 						title: title,
 						content: htmls,
 						excerpt: excerpt, //文章描述
-						cover:cover[0],//文章封面，默认上传的第一张
+						cover:cover[0]|| '',//文章封面，默认上传的第一张
 						sort_id: '1', //分类ID
 						author_uid: '1', //用户ID
 						post_date: YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss //发布时间
