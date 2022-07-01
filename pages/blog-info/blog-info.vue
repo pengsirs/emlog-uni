@@ -7,7 +7,7 @@
 			<view class="xx">
 				<view class="author-name">
 					<uni-icons color="green" type="person" size="14"></uni-icons>{{data.author_name||"作者"}}
-					<uni-icons color="red" type="fire" size="14"></uni-icons>{{data.views||"9999"}}
+					<uni-icons color="red" type="fire" size="14"></uni-icons>{{data.views||"暂无浏览"}}
 				</view>
 				<view class="date">
 					<uni-icons color="blue" type="calendar" size="14"></uni-icons>{{data.date||"1970-01-01 00:00:00"}}
