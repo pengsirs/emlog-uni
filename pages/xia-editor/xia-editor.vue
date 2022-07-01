@@ -175,6 +175,7 @@
 				var title = this.$data.title
 				var htmls = this.$data.htmls
 				var excerpt = this.$data.excerpt
+				var tags = this.$data.tags
 				var cover = this.$data.cover
 				var time = new Date();
 				var YYYY = time.getFullYear();
@@ -197,6 +198,7 @@
 						cover:cover[0]|| '',//文章封面，默认上传的第一张
 						sort_id: '1', //分类ID
 						author_uid: '1', //用户ID
+						tags:tags,
 						post_date: YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss //发布时间
 					}
 				})
