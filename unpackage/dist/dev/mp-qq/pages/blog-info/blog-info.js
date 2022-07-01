@@ -5,7 +5,14 @@ require("../../setting.js");
 const _sfc_main = {
   data() {
     return {
-      data: "",
+      html: '<p>1234567890</p><p>hello world<br />111<br />\u63D2\u4EF6\u5730\u5740\uFF1A<a href="https://www.emlog.net/plugin/detail/387" title="\u70B9\u6211\u53BB\u5B89\u88C5">\u70B9\u6211\u53BB\u5B89\u88C5</a><br /></p>',
+      tagStyle: {
+        blockquote: "max-width:100%;border-radius:5px;background:#eee;padding:5px;",
+        table: "width:100%;border:1px #eee solid;",
+        td: "border:1px #eee solid;text-align:center;",
+        th: "border:1px #eee solid;background-color:#ffc09f;"
+      },
+      data: {},
       haibao: "",
       url: "",
       content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:70%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:90%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:30%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:250px;width:100%;border-radius:5px;margin:10px auto;'></div>"
@@ -23,7 +30,7 @@ const _sfc_main = {
     }
     return {
       title: data.title,
-      path: "/pages/blog-info/blog-info?id=" + data.id + "&url=" + this.url
+      path: "pages/blog-info/blog-info?id=" + data.id + "&url=" + this.url
     };
   },
   methods: {
@@ -44,6 +51,7 @@ const _sfc_main = {
       res.data.data.article.content = res.data.data.article.content.replace(/\<h6/gi, '<h6 class="rich-h6" ');
       res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, "****");
       this.data = res.data.data.article;
+      console.log();
     }
   }
 };
@@ -85,8 +93,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     g: common_vendor.t($data.data.date || "1970-01-01 00:00:00"),
     h: common_vendor.p({
-      ["lazy-load"]: "true",
-      content: $data.data.content || $data.content
+      ["lozy-load"]: "true",
+      ["container-style"]: "overflow: hidden;",
+      selectable: "true",
+      ["tag-style"]: $data.tagStyle,
+      content: $data.html
     }),
     i: common_vendor.t($data.data.title),
     j: common_vendor.t($data.data.author_name || "\u4F5C\u8005"),

@@ -8,23 +8,19 @@
   },
   "compileType": "miniprogram",
   "libVersion": "",
-  "appid": "11111",
-  "projectname": "demo1",
+  "appid": "wxd2847757049a9eae",
+  "projectname": "彭先生博客",
   "condition": {
     "search": {
-      "current": -1,
       "list": []
     },
     "conversation": {
-      "current": -1,
       "list": []
     },
     "game": {
-      "current": -1,
       "list": []
     },
     "miniprogram": {
-      "current": -1,
       "list": []
     }
   }

@@ -55,7 +55,7 @@
 	z-index: 2;
 }
 page{
-	font-size: 16px;
+	font-size: 16px
 }
 .many {
 		display: flex;

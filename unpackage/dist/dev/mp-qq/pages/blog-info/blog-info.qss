@@ -10,8 +10,8 @@ page {
 		margin-top: 10px;
 		min-height: 100vh;
 }
-page{
-	font-size: 16px;
+page {
+		font-size: 16px;
 }
 .xx {
 		width: 100%;
@@ -61,7 +61,7 @@ page{
 		height: 40px;
 		background-color: #fff;
 }
-.uni-collapse-item{
+.uni-collapse-item {
 		background-color: #eee;
 		border-radius: 30px 30px 0px 0px;
 		box-shadow: #eee 1px 1px 10px;

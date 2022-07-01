@@ -13,7 +13,8 @@
 					<uni-icons color="blue" type="calendar" size="14"></uni-icons>{{data.date||"1970-01-01 00:00:00"}}
 				</view>
 			</view>
-			<mp-html lazy-load="true" :content="data.content||content"></mp-html>
+			<mp-html lozy-load="true" container-style="overflow: hidden;" selectable="true" :tag-style="tagStyle"
+				:content="html"></mp-html>
 			<view class="over">—— The End ——</view>
 
 			<view class="Copyright">
@@ -31,13 +32,13 @@
 		<view class="foot-content"></view>
 	</uni-transition>
 	<view class="footer">
-			<uni-collapse>
-				<uni-collapse-item title="文章扩展" :show-animation="true">
-					<view class="ft-content">
-						<text class="text">默认开启组件动画，使用动画效果折叠内容会有一个从上到下的动画。</text>
-					</view>
-				</uni-collapse-item>
-			</uni-collapse>
+		<uni-collapse>
+			<uni-collapse-item title="文章扩展" :show-animation="true">
+				<view class="ft-content">
+					<text class="text">默认开启组件动画，使用动画效果折叠内容会有一个从上到下的动画。</text>
+				</view>
+			</uni-collapse-item>
+		</uni-collapse>
 	</view>
 </template>
 
@@ -49,9 +50,19 @@
 	export default {
 		data() {
 			return {
-				data: "",
-				haibao:"",
-				url:'',
+				html: '<p>1234567890</p>' +
+					'<p>hello world<br />' +
+					'111<br />' +
+					'插件地址：<a href="https://www.emlog.net/plugin/detail/387" title="点我去安装">点我去安装</a><br /></p>',
+				tagStyle: {
+					blockquote: 'max-width:100%;border-radius:5px;background:#eee;padding:5px;',
+					table: 'width:100%;border:1px #eee solid;',
+					td: 'border:1px #eee solid;text-align:center;',
+					th: 'border:1px #eee solid;background-color:#ffc09f;',
+				},
+				data: {},
+				haibao: "",
+				url: '',
 				content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
 					"<div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div>" +
 					"<div style='background:#eee;height:20px;width:70%;border-radius:5px;margin-top:10px;'></div>" +
@@ -64,7 +75,7 @@
 		},
 		onLoad(option) {
 			this.blog(option.id)
-			this.url=option.url;
+			this.url = option.url;
 			this.show = !this.show
 			this.modeClass = 'fade'
 		},
@@ -75,7 +86,7 @@
 			}
 			return {
 				title: data.title,
-				path: '/pages/blog-info/blog-info?id='+data.id+"&url="+this.url
+				path: 'pages/blog-info/blog-info?id=' + data.id + "&url=" + this.url
 			}
 		},
 		methods: {
@@ -104,6 +115,7 @@
 				res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, '****');
 
 				this.data = res.data.data.article
+				console.log()
 			}
 		},
 	}
@@ -122,9 +134,11 @@
 		margin-top: 10px;
 		min-height: 100vh;
 	}
-page{
-	font-size: 16px;
-}
+
+	page {
+		font-size: 16px;
+	}
+
 	.xx {
 		width: 100%;
 		display: flex;
@@ -180,12 +194,14 @@ page{
 		height: 40px;
 		background-color: #fff;
 	}
-	.uni-collapse-item{
+
+	.uni-collapse-item {
 		background-color: #eee;
 		border-radius: 30px 30px 0px 0px;
 		box-shadow: #eee 1px 1px 10px;
 		color: #fff;
 	}
+
 	.footer {
 		position: fixed;
 		bottom: 0;

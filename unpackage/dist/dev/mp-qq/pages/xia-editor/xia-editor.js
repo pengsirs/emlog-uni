@@ -277,6 +277,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     I: common_vendor.o(($event) => $data.tags = $event),
     J: common_vendor.p({
+      type: "text",
       placeholder: "\u6587\u7AE0\u6807\u7B7E\uFF0C\u591A\u4E2A\u534A\u89D2\u9017\u53F7\u5206\u9694\uFF0C\u5982\uFF1APHP,MySQL",
       modelValue: $data.tags
     }),

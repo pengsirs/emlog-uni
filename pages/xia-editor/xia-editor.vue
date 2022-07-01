@@ -67,7 +67,7 @@
 					</uni-collapse-item>
 					<uni-collapse-item :show-animation="true" title="文章标签">
 						<view class="content">
-							<uni-easyinput v-model="tags" placeholder="文章标签，多个半角逗号分隔，如：PHP,MySQL" />
+							<uni-easyinput  type="text" v-model="tags" placeholder="文章标签，多个半角逗号分隔，如：PHP,MySQL" />
 						</view>
 					</uni-collapse-item>
 				</uni-collapse>

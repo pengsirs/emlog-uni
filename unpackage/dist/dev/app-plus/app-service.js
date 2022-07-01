@@ -5027,6 +5027,7 @@ if (uni.restoreGlobal) {
                   default: vue.withCtx(() => [
                     vue.createElementVNode("view", { class: "content" }, [
                       vue.createVNode(_component_uni_easyinput, {
+                        type: "text",
                         modelValue: $data.tags,
                         "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => $data.tags = $event),
                         placeholder: "\u6587\u7AE0\u6807\u7B7E\uFF0C\u591A\u4E2A\u534A\u89D2\u9017\u53F7\u5206\u9694\uFF0C\u5982\uFF1APHP,MySQL"
@@ -8553,7 +8554,14 @@ if (uni.restoreGlobal) {
   const _sfc_main$7 = {
     data() {
       return {
-        data: "",
+        html: '<p>1234567890</p><p>hello world<br />111<br />\u63D2\u4EF6\u5730\u5740\uFF1A<a href="https://www.emlog.net/plugin/detail/387" title="\u70B9\u6211\u53BB\u5B89\u88C5">\u70B9\u6211\u53BB\u5B89\u88C5</a><br /></p>',
+        tagStyle: {
+          blockquote: "max-width:100%;border-radius:5px;background:#eee;padding:5px;",
+          table: "width:100%;border:1px #eee solid;",
+          td: "border:1px #eee solid;text-align:center;",
+          th: "border:1px #eee solid;background-color:#ffc09f;"
+        },
+        data: {},
         haibao: "",
         url: "",
         content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:70%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:90%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:30%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:250px;width:100%;border-radius:5px;margin:10px auto;'></div>"
@@ -8567,11 +8575,11 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/blog-info/blog-info.vue:74", res.target);
+        formatAppLog("log", "at pages/blog-info/blog-info.vue:85", res.target);
       }
       return {
         title: data.title,
-        path: "/pages/blog-info/blog-info?id=" + data.id + "&url=" + this.url
+        path: "pages/blog-info/blog-info?id=" + data.id + "&url=" + this.url
       };
     },
     methods: {
@@ -8592,6 +8600,7 @@ if (uni.restoreGlobal) {
         res.data.data.article.content = res.data.data.article.content.replace(/\<h6/gi, '<h6 class="rich-h6" ');
         res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, "****");
         this.data = res.data.data.article;
+        console.log();
       }
     }
   };
@@ -8637,9 +8646,12 @@ if (uni.restoreGlobal) {
               ])
             ]),
             vue.createVNode(_component_mp_html, {
-              "lazy-load": "true",
-              content: $data.data.content || $data.content
-            }, null, 8, ["content"]),
+              "lozy-load": "true",
+              "container-style": "overflow: hidden;",
+              selectable: "true",
+              "tag-style": $data.tagStyle,
+              content: $data.html
+            }, null, 8, ["tag-style", "content"]),
             vue.createElementVNode("view", { class: "over" }, "\u2014\u2014 The End \u2014\u2014"),
             vue.createElementVNode("view", { class: "Copyright" }, [
               vue.createElementVNode("text", null, "\u7248\u6743\u58F0\u660E\uFF1A\u82E5\u65E0\u7279\u6B8A\u6CE8\u660E\uFF0C\u300A"),
@@ -8652,7 +8664,7 @@ if (uni.restoreGlobal) {
               vue.createElementVNode("text", { class: "Copyright-text" }, vue.toDisplayString($data.data.author_name || "\u4F5C\u8005"), 1),
               vue.createElementVNode("text", null, "\u300B\uFF0C\u6211\u4EEC\u5C06\u53CA\u65F6\u6E05\u7406\u5220\u9664\u5E76\u9053\u6B49\uFF0C\u8C22\u8C22\uFF01")
             ]),
-            vue.createCommentVNode(' 			<view class="tags">\n			<view>\n			<text class="tag">\u6807\u7B7E\u540D</text>\n			</view>\n			</view> ')
+            vue.createCommentVNode(' 			<view class="tags">\r\n			<view>\r\n			<text class="tag">\u6807\u7B7E\u540D</text>\r\n			</view>\r\n			</view> ')
           ]),
           vue.createElementVNode("view", { class: "foot-content" })
         ]),
