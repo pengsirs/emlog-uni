@@ -1330,7 +1330,6 @@ if (uni.restoreGlobal) {
   function resolveEasycom(component, easycom) {
     return shared.isString(component) ? easycom : component;
   }
-  const isArray = Array.isArray;
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -1381,7 +1380,7 @@ if (uni.restoreGlobal) {
   function compile(tokens, values) {
     const compiled = [];
     let index2 = 0;
-    const mode = isArray(values) ? "list" : isObject(values) ? "named" : "unknown";
+    const mode = Array.isArray(values) ? "list" : isObject(values) ? "named" : "unknown";
     if (mode === "unknown") {
       return compiled;
     }
@@ -4745,7 +4744,7 @@ if (uni.restoreGlobal) {
             title,
             content: htmls,
             excerpt,
-            cover: cover[0],
+            cover: cover[0] || "",
             sort_id: "1",
             author_uid: "1",
             post_date: YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss
@@ -5086,15 +5085,6 @@ if (uni.restoreGlobal) {
     (Comp.$wxs || (Comp.$wxs = [])).push("handler");
     (Comp.$wxsModules || (Comp.$wxsModules = {}))["handler"] = "2f992f8c";
   };
-  function getTop(e) {
-    let top;
-    top = e.touches[0].pageY;
-    if (top - e.currentTarget.offsetTop < 150)
-      top = e.currentTarget.offsetTop;
-    if (top < 30)
-      top += 70;
-    return top - 30;
-  }
   const _sfc_main$9 = {
     name: "node",
     options: {},
@@ -5143,379 +5133,29 @@ if (uni.restoreGlobal) {
       }
     },
     beforeDestroy() {
-      if (this.root._edit === this) {
-        this.root._edit = void 0;
-      }
       if (this.observer) {
         this.observer.disconnect();
       }
     },
     methods: {
-      copyCode(e) {
-        uni.showActionSheet({
-          itemList: ["\u590D\u5236\u4EE3\u7801"],
-          success: () => uni.setClipboardData({
-            data: e.currentTarget.dataset.content
-          })
-        });
-      },
-      editStart(e) {
-        if (this.opts[4]) {
-          const i = e.currentTarget.dataset.i;
-          if (!this.ctrl["e" + i]) {
-            this.$set(this.ctrl, "e" + i, 1);
-            setTimeout(() => {
-              this.root._mask.push(() => this.$set(this.ctrl, "e" + i, 0));
-            }, 50);
-            this.root._edit = this;
-            this.i = i;
-            this.cursor = this.childs[i].text.length;
-          } else {
-            this.root._mask.pop();
-            this.root._maskTap();
-            this.$set(this.ctrl, "e" + i, 2);
-            setTimeout(() => {
-              this.$set(this.ctrl, "e" + i, 3);
-            }, 50);
-          }
-        }
-      },
-      editInput(e) {
-        const i = e.target.dataset.i;
-        const value = e.detail.value.replace(/ {2,}/, ($) => {
-          let res = "\xA0";
-          for (let i2 = 1; i2 < $.length; i2++) {
-            res += "\xA0";
-          }
-          return res;
-        });
-        this.root._editVal(`${this.opts[6]}.${i}.text`, this.childs[i].text, value);
-        this.cursor = e.detail.cursor;
-      },
-      editEnd(e) {
-        const i = e.target.dataset.i;
-        this.$set(this.ctrl, "e" + i, 0);
-        this.root._setData(`${this.opts[6]}.${i}.text`, e.detail.value);
-        if (e.detail.cursor !== void 0) {
-          this.cursor = e.detail.cursor;
-        }
-      },
-      insert(node2) {
-        setTimeout(() => {
-          const childs = this.childs.slice(0);
-          if (!childs[this.i]) {
-            childs.push(node2);
-          } else if (childs[this.i].text) {
-            const text = childs[this.i].text;
-            const list = [];
-            if (this.cursor) {
-              list.push({
-                type: "text",
-                text: text.substring(0, this.cursor)
-              });
-            }
-            list.push(node2);
-            if (this.cursor < text.length) {
-              list.push({
-                type: "text",
-                text: text.substring(this.cursor)
-              });
-            }
-            childs.splice(this.i, 1, ...list);
-          } else {
-            childs.splice(parseInt(this.i) + 1, 0, node2);
-          }
-          this.root._editVal(this.opts[6], this.childs, childs, true);
-          this.i = parseInt(this.i) + 1;
-        }, 200);
-      },
-      remove(i) {
-        const arr = this.childs.slice(0);
-        const delEle = arr.splice(i, 1)[0];
-        if (delEle.name === "img" || delEle.name === "video" || delEle.name === "audio") {
-          let src = delEle.attrs.src;
-          if (delEle.src) {
-            src = delEle.src.length === 1 ? delEle.src[0] : delEle.src;
-          }
-          this.root.$emit("remove", {
-            type: delEle.name,
-            src
-          });
-        }
-        this.root._edit = void 0;
-        this.root._maskTap();
-        this.root._editVal(this.opts[6], this.childs, arr, true);
-      },
-      nodeTap(e) {
-        if (this.opts[4]) {
-          if (this.root._lock)
-            return;
-          this.root._lock = true;
-          setTimeout(() => {
-            this.root._lock = false;
-          }, 50);
-          if (this.ctrl["e" + this.i] === 3)
-            return;
-          this.root._maskTap();
-          this.root._edit = this;
-          let start = this.opts[6].lastIndexOf("children.");
-          if (start !== -1) {
-            start += 9;
-          } else {
-            start = 6;
-          }
-          const i = parseInt(this.opts[6].substring(start, this.opts[6].lastIndexOf(".children")));
-          let parent = this.$parent;
-          while (parent && parent.$options.name !== "node") {
-            parent = parent.$parent;
-          }
-          if (!parent || this.opts[6].length - parent.opts[6].length > 15)
-            return;
-          this.$set(this.ctrl, "root", 1);
-          this.root._mask.push(() => this.$set(this.ctrl, "root", 0));
-          if (this.childs.length === 1 && this.childs[0].type === "text" && !this.ctrl.e0) {
-            this.$set(this.ctrl, "e0", 1);
-            this.root._mask.push(() => this.$set(this.ctrl, "e0", 0));
-            this.i = 0;
-            this.cursor = this.childs[0].text.length;
-          }
-          const items = this.root._getItem(parent.childs[i], i !== 0, i !== parent.childs.length - 1);
-          this.root._tooltip({
-            top: getTop(e),
-            items,
-            success: (tapIndex) => {
-              if (items[tapIndex] === "\u5927\u5C0F") {
-                const style = parent.childs[i].attrs.style || "";
-                let value = style.match(/;font-size:([0-9]+)px/);
-                if (value) {
-                  value = parseInt(value[1]);
-                } else {
-                  value = 16;
-                }
-                this.root._slider({
-                  min: 10,
-                  max: 30,
-                  value,
-                  top: getTop(e),
-                  changing: (val) => {
-                    if (Math.abs(val - value) > 2) {
-                      parent.changeStyle("font-size", i, val + "px", value + "px");
-                      value = e.detail.value;
-                    }
-                  },
-                  change: (val) => {
-                    if (val !== value) {
-                      parent.changeStyle("font-size", i, val + "px", value + "px");
-                    }
-                    this.root._editVal(`${parent.opts[6]}.${i}.attrs.style`, style, parent.childs[i].attrs.style);
-                  }
-                });
-              } else if (items[tapIndex] === "\u4E0A\u79FB" || items[tapIndex] === "\u4E0B\u79FB") {
-                const arr = parent.childs.slice(0);
-                const item = arr[i];
-                if (items[tapIndex] === "\u4E0A\u79FB") {
-                  arr[i] = arr[i - 1];
-                  arr[i - 1] = item;
-                } else {
-                  arr[i] = arr[i + 1];
-                  arr[i + 1] = item;
-                }
-                this.root._editVal(parent.opts[6], parent.childs, arr, true);
-              } else if (items[tapIndex] === "\u5220\u9664") {
-                parent.remove(i);
-              } else {
-                const style = parent.childs[i].attrs.style || "";
-                let newStyle = "";
-                const item = items[tapIndex];
-                let name;
-                let value;
-                if (item === "\u659C\u4F53") {
-                  name = "font-style";
-                  value = "italic";
-                } else if (item === "\u7C97\u4F53") {
-                  name = "font-weight";
-                  value = "bold";
-                } else if (item === "\u4E0B\u5212\u7EBF") {
-                  name = "text-decoration";
-                  value = "underline";
-                } else if (item === "\u5C45\u4E2D") {
-                  name = "text-align";
-                  value = "center";
-                } else if (item === "\u7F29\u8FDB") {
-                  name = "text-indent";
-                  value = "2em";
-                }
-                if (style.includes(name + ":")) {
-                  newStyle = style.replace(new RegExp(name + ":[^;]+"), "");
-                } else {
-                  newStyle = style + ";" + name + ":" + value;
-                }
-                this.root._editVal(`${parent.opts[6]}.${i}.attrs.style`, style, newStyle, true);
-              }
-            }
-          });
-        }
-      },
-      mediaTap(e) {
-        if (this.opts[4]) {
-          const i = e.target.dataset.i;
-          const node2 = this.childs[i];
-          const items = this.root._getItem(node2);
-          this.root._edit = this;
-          this.i = i;
-          this.root._tooltip({
-            top: e.target.offsetTop - 30,
-            items,
-            success: (tapIndex) => {
-              switch (items[tapIndex]) {
-                case "\u5C01\u9762":
-                  this.root.getSrc("img", node2.attrs.poster || "").then((url2) => {
-                    this.root._editVal(`${this.opts[6]}.${i}.attrs.poster`, node2.attrs.poster, url2 instanceof Array ? url2[0] : url2, true);
-                  }).catch(() => {
-                  });
-                  break;
-                case "\u5220\u9664":
-                  this.remove(i);
-                  break;
-                case "\u5FAA\u73AF":
-                case "\u4E0D\u5FAA\u73AF":
-                  this.root._setData(`${this.opts[6]}.${i}.attrs.loop`, !node2.attrs.loop);
-                  uni.showToast({
-                    title: "\u6210\u529F"
-                  });
-                  break;
-                case "\u81EA\u52A8\u64AD\u653E":
-                case "\u4E0D\u81EA\u52A8\u64AD\u653E":
-                  this.root._setData(`${this.opts[6]}.${i}.attrs.autoplay`, !node2.attrs.autoplay);
-                  uni.showToast({
-                    title: "\u6210\u529F"
-                  });
-                  break;
-              }
-            }
-          });
-          this.root._lock = true;
-          setTimeout(() => {
-            this.root._lock = false;
-          }, 50);
-        }
-      },
-      changeStyle(name, i, value, oldVal) {
-        let style = this.childs[i].attrs.style || "";
-        if (style.includes(";" + name + ":" + oldVal)) {
-          style = style.replace(";" + name + ":" + oldVal, ";" + name + ":" + value);
-        } else {
-          style += ";" + name + ":" + value;
-        }
-        this.root._setData(`${this.opts[6]}.${i}.attrs.style`, style);
-      },
       play(e) {
         this.root.$emit("play");
       },
       imgTap(e) {
-        if (!this.opts[4]) {
-          const node2 = this.childs[e.currentTarget.dataset.i];
-          if (node2.a) {
-            this.linkTap(node2.a);
-            return;
-          }
-          if (node2.attrs.ignore)
-            return;
-          node2.attrs.src = node2.attrs.src || node2.attrs["data-src"];
-          this.root.$emit("imgtap", node2.attrs);
-          if (this.root.previewImg) {
-            uni.previewImage({
-              current: parseInt(node2.attrs.i),
-              urls: this.root.imgList
-            });
-          }
-        } else {
-          const i = e.currentTarget.dataset.i;
-          const node2 = this.childs[i];
-          const items = this.root._getItem(node2);
-          this.root._edit = this;
-          this.i = i;
-          this.root._maskTap();
-          this.$set(this.ctrl, "e" + i, 1);
-          this.root._mask.push(() => this.$set(this.ctrl, "e" + i, 0));
-          this.root._tooltip({
-            top: getTop(e),
-            items,
-            success: (tapIndex) => {
-              if (items[tapIndex] === "\u6362\u56FE") {
-                this.root.getSrc("img", node2.attrs.src || "").then((url2) => {
-                  this.root._editVal(this.opts[6] + "." + i + ".attrs.src", node2.attrs.src, url2 instanceof Array ? url2[0] : url2, true);
-                }).catch(() => {
-                });
-              } else if (items[tapIndex] === "\u5BBD\u5EA6") {
-                const style = node2.attrs.style || "";
-                let value = style.match(/max-width:([0-9]+)%/);
-                if (value) {
-                  value = parseInt(value[1]);
-                } else {
-                  value = 100;
-                }
-                this.root._slider({
-                  min: 0,
-                  max: 100,
-                  value,
-                  top: getTop(e),
-                  changing: (val) => {
-                    if (Math.abs(val - value) > 5) {
-                      this.changeStyle("max-width", i, val + "%", value + "%");
-                      value = val;
-                    }
-                  },
-                  change: (val) => {
-                    if (val !== value) {
-                      this.changeStyle("max-width", i, val + "%", value + "%");
-                      value = val;
-                    }
-                    this.root._editVal(this.opts[6] + "." + i + ".attrs.style", style, this.childs[i].attrs.style);
-                  }
-                });
-              } else if (items[tapIndex] === "\u8D85\u94FE\u63A5") {
-                this.root.getSrc("link", node2.a ? node2.a.href : "").then((url2) => {
-                  if (node2.a) {
-                    this.root._editVal(this.opts[6] + "." + i + ".a.href", node2.a.href, url2, true);
-                  } else {
-                    const link = {
-                      name: "a",
-                      attrs: {
-                        href: url2
-                      },
-                      children: [node2]
-                    };
-                    node2.a = link.attrs;
-                    this.root._editVal(this.opts[6] + "." + i, node2, link, true);
-                  }
-                  wx.showToast({
-                    title: "\u6210\u529F"
-                  });
-                }).catch(() => {
-                });
-              } else if (items[tapIndex] === "\u9884\u89C8\u56FE") {
-                this.root.getSrc("img", node2.attrs["original-src"] || "").then((url2) => {
-                  this.root._editVal(this.opts[6] + "." + i + ".attrs.original-src", node2.attrs["original-src"], url2 instanceof Array ? url2[0] : url2, true);
-                  uni.showToast({
-                    title: "\u6210\u529F"
-                  });
-                }).catch(() => {
-                });
-              } else if (items[tapIndex] === "\u5220\u9664") {
-                this.remove(i);
-              } else {
-                this.root._setData(this.opts[6] + "." + i + ".attrs.ignore", !node2.attrs.ignore);
-                uni.showToast({
-                  title: "\u6210\u529F"
-                });
-              }
-            }
+        const node2 = this.childs[e.currentTarget.dataset.i];
+        if (node2.a) {
+          this.linkTap(node2.a);
+          return;
+        }
+        if (node2.attrs.ignore)
+          return;
+        node2.attrs.src = node2.attrs.src || node2.attrs["data-src"];
+        this.root.$emit("imgtap", node2.attrs);
+        if (this.root.previewImg) {
+          uni.previewImage({
+            current: parseInt(node2.attrs.i),
+            urls: this.root.imgList
           });
-          this.root._lock = true;
-          setTimeout(() => {
-            this.root._lock = false;
-          }, 50);
         }
       },
       imgLongTap(e) {
@@ -5550,66 +5190,37 @@ if (uni.restoreGlobal) {
         const i = e.currentTarget.dataset.i;
         if (!this.childs[i].w) {
           this.$set(this.ctrl, i, e.detail.width);
-          if (this.opts[4]) {
-            const path = this.opts[6] + "." + i + ".attrs.";
-            if (e.detail.width < 150)
-              this.root._setData(path + "ignore", "T");
-            this.root._setData(path + "width", e.detail.width.toString());
-          }
         } else if (this.opts[1] && !this.ctrl[i] || this.ctrl[i] === -1) {
           this.$set(this.ctrl, i, 1);
         }
       },
       linkTap(e) {
-        if (!this.opts[4]) {
-          const node2 = e.currentTarget ? this.childs[e.currentTarget.dataset.i] : {};
-          const attrs = node2.attrs || e;
-          const href = attrs.href;
-          this.root.$emit("linktap", Object.assign({
-            innerText: this.root.getText(node2.children || [])
-          }, attrs));
-          if (href) {
-            if (href[0] === "#") {
-              this.root.navigateTo(href.substring(1)).catch(() => {
-              });
-            } else if (href.split("?")[0].includes("://")) {
-              if (this.root.copyLink) {
-                plus.runtime.openWeb(href);
-              }
-            } else {
-              uni.navigateTo({
-                url: href,
-                fail() {
-                  uni.switchTab({
-                    url: href,
-                    fail() {
-                    }
-                  });
-                }
-              });
+        const node2 = e.currentTarget ? this.childs[e.currentTarget.dataset.i] : {};
+        const attrs = node2.attrs || e;
+        const href = attrs.href;
+        this.root.$emit("linktap", Object.assign({
+          innerText: this.root.getText(node2.children || [])
+        }, attrs));
+        if (href) {
+          if (href[0] === "#") {
+            this.root.navigateTo(href.substring(1)).catch(() => {
+            });
+          } else if (href.split("?")[0].includes("://")) {
+            if (this.root.copyLink) {
+              plus.runtime.openWeb(href);
             }
-          }
-        } else {
-          const i = e.currentTarget.dataset.i;
-          const node2 = this.childs[i];
-          const items = this.root._getItem(node2);
-          this.root._tooltip({
-            top: getTop(e),
-            items,
-            success: (tapIndex) => {
-              if (items[tapIndex] === "\u66F4\u6362\u94FE\u63A5") {
-                this.root.getSrc("link", node2.attrs.href).then((url2) => {
-                  this.root._editVal(this.opts[6] + "." + i + ".attrs.href", node2.attrs.href, url2, true);
-                  uni.showToast({
-                    title: "\u6210\u529F"
-                  });
-                }).catch(() => {
+          } else {
+            uni.navigateTo({
+              url: href,
+              fail() {
+                uni.switchTab({
+                  url: href,
+                  fail() {
+                  }
                 });
-              } else {
-                this.remove(i);
               }
-            }
-          });
+            });
+          }
         }
       },
       mediaError(e) {
@@ -5642,10 +5253,9 @@ if (uni.restoreGlobal) {
   function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_node = vue.resolveComponent("node", true);
     return vue.openBlock(), vue.createElementBlock("view", {
-      onClick: _cache[12] || (_cache[12] = (...args) => $options.nodeTap && $options.nodeTap(...args)),
       id: $props.attrs.id,
       class: vue.normalizeClass("_block _" + $props.name + " " + $props.attrs.class),
-      style: vue.normalizeStyle(($data.ctrl.root ? "border:1px solid black;padding:5px;display:block;" : "") + $props.attrs.style)
+      style: vue.normalizeStyle($props.attrs.style)
     }, [
       (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.childs, (n, i) => {
         return vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: i }, [
@@ -5663,7 +5273,7 @@ if (uni.restoreGlobal) {
             key: 1,
             id: n.attrs.id,
             class: vue.normalizeClass("_img " + n.attrs.class),
-            style: vue.normalizeStyle(($data.ctrl["e" + i] ? "border:1px dashed black;padding:3px;" : "") + ($data.ctrl[i] === -1 ? "display:none;" : "") + "width:" + ($data.ctrl[i] || 1) + "px;" + n.attrs.style),
+            style: vue.normalizeStyle(($data.ctrl[i] === -1 ? "display:none;" : "") + "width:" + ($data.ctrl[i] || 1) + "px;" + n.attrs.style),
             src: n.attrs.src || ($data.ctrl.load ? n.attrs["data-src"] : ""),
             mode: !n.h ? "widthFix" : !n.w ? "heightFix" : "",
             "data-i": i,
@@ -5671,42 +5281,13 @@ if (uni.restoreGlobal) {
             onError: _cache[1] || (_cache[1] = (...args) => $options.mediaError && $options.mediaError(...args)),
             onClick: _cache[2] || (_cache[2] = vue.withModifiers((...args) => $options.imgTap && $options.imgTap(...args), ["stop"])),
             onLongpress: _cache[3] || (_cache[3] = (...args) => $options.imgLongTap && $options.imgLongTap(...args))
-          }, null, 46, ["id", "src", "mode", "data-i"])) : n.type === "text" && !$data.ctrl["e" + i] ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 2 }, [
+          }, null, 46, ["id", "src", "mode", "data-i"])) : n.text ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 2 }, [
             vue.createCommentVNode(" \u6587\u672C "),
             vue.createElementVNode("text", {
-              "data-i": i,
-              "user-select": n.us,
-              decode: !$props.opts[4],
-              onClick: _cache[4] || (_cache[4] = (...args) => $options.editStart && $options.editStart(...args))
-            }, [
-              vue.createTextVNode(vue.toDisplayString(n.text) + " ", 1),
-              !n.text ? (vue.openBlock(), vue.createElementBlock("text", {
-                key: 0,
-                style: { "color": "gray" }
-              }, vue.toDisplayString($props.opts[5] || "\u8BF7\u8F93\u5165"), 1)) : vue.createCommentVNode("v-if", true)
-            ], 8, ["data-i", "user-select", "decode"])
-          ], 2112)) : n.type === "text" && $data.ctrl["e" + i] === 1 ? (vue.openBlock(), vue.createElementBlock("text", {
-            key: 3,
-            "data-i": i,
-            style: { "border": "1px dashed black", "min-width": "50px", "width": "auto", "padding": "5px", "display": "block" },
-            onClick: _cache[5] || (_cache[5] = vue.withModifiers((...args) => $options.editStart && $options.editStart(...args), ["stop"]))
-          }, [
-            vue.createTextVNode(vue.toDisplayString(n.text) + " ", 1),
-            !n.text ? (vue.openBlock(), vue.createElementBlock("text", {
-              key: 0,
-              style: { "color": "gray" }
-            }, vue.toDisplayString($props.opts[5] || "\u8BF7\u8F93\u5165"), 1)) : vue.createCommentVNode("v-if", true)
-          ], 8, ["data-i"])) : n.type === "text" ? (vue.openBlock(), vue.createElementBlock("textarea", {
-            key: 4,
-            style: { "border": "1px dashed black", "min-width": "50px", "width": "auto", "padding": "5px" },
-            "auto-height": "",
-            maxlength: "-1",
-            focus: $data.ctrl["e" + i] === 3,
-            value: n.text,
-            "data-i": i,
-            onInput: _cache[6] || (_cache[6] = (...args) => $options.editInput && $options.editInput(...args)),
-            onBlur: _cache[7] || (_cache[7] = (...args) => $options.editEnd && $options.editEnd(...args))
-          }, null, 40, ["focus", "value", "data-i"])) : n.name === "br" ? (vue.openBlock(), vue.createElementBlock("text", { key: 5 }, "\\n")) : n.name === "a" ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 6 }, [
+              "user-select": $props.opts[4],
+              decode: ""
+            }, vue.toDisplayString(n.text), 9, ["user-select"])
+          ], 2112)) : n.name === "br" ? (vue.openBlock(), vue.createElementBlock("text", { key: 3 }, "\\n")) : n.name === "a" ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 4 }, [
             vue.createCommentVNode(" \u94FE\u63A5 "),
             vue.createElementVNode("view", {
               id: n.attrs.id,
@@ -5714,38 +5295,36 @@ if (uni.restoreGlobal) {
               "hover-class": "_hover",
               style: vue.normalizeStyle("display:inline;" + n.attrs.style),
               "data-i": i,
-              onClick: _cache[8] || (_cache[8] = vue.withModifiers((...args) => $options.linkTap && $options.linkTap(...args), ["stop"]))
+              onClick: _cache[4] || (_cache[4] = vue.withModifiers((...args) => $options.linkTap && $options.linkTap(...args), ["stop"]))
             }, [
               vue.createVNode(_component_node, {
                 name: "span",
                 childs: n.children,
-                opts: [$props.opts[0], $props.opts[1], $props.opts[2], $props.opts[3], $props.opts[4], $props.opts[5], $props.opts[6] + "." + i + ".children"],
+                opts: $props.opts,
                 style: { "display": "inherit" }
               }, null, 8, ["childs", "opts"])
             ], 14, ["id", "data-i"])
-          ], 2112)) : n.html ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 7 }, [
+          ], 2112)) : n.html ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 5 }, [
             vue.createCommentVNode(" \u89C6\u9891 "),
             vue.createElementVNode("view", {
-              "data-i": i,
-              onClick: _cache[9] || (_cache[9] = (...args) => $options.mediaTap && $options.mediaTap(...args)),
               id: n.attrs.id,
               class: vue.normalizeClass("_video " + n.attrs.class),
               style: vue.normalizeStyle(n.attrs.style),
               innerHTML: n.html,
-              onVplay: _cache[10] || (_cache[10] = vue.withModifiers((...args) => $options.play && $options.play(...args), ["stop"]))
-            }, null, 46, ["data-i", "id", "innerHTML"])
+              onVplay: _cache[5] || (_cache[5] = vue.withModifiers((...args) => $options.play && $options.play(...args), ["stop"]))
+            }, null, 46, ["id", "innerHTML"])
           ], 2112)) : n.name === "iframe" ? (vue.openBlock(), vue.createElementBlock("iframe", {
-            key: 8,
+            key: 6,
             style: vue.normalizeStyle(n.attrs.style),
             allowfullscreen: n.attrs.allowfullscreen,
             frameborder: n.attrs.frameborder,
             src: n.attrs.src
           }, null, 12, ["allowfullscreen", "frameborder", "src"])) : n.name === "embed" ? (vue.openBlock(), vue.createElementBlock("embed", {
-            key: 9,
+            key: 7,
             style: vue.normalizeStyle(n.attrs.style),
             src: n.attrs.src
-          }, null, 12, ["src"])) : n.name === "table" && (n.c || $props.opts[4]) || n.name === "li" ? (vue.openBlock(), vue.createElementBlock("view", {
-            key: 10,
+          }, null, 12, ["src"])) : n.name === "table" && n.c || n.name === "li" ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 8,
             id: n.attrs.id,
             class: vue.normalizeClass("_" + n.name + " " + n.attrs.class),
             style: vue.normalizeStyle(n.attrs.style)
@@ -5753,7 +5332,7 @@ if (uni.restoreGlobal) {
             n.name === "li" ? (vue.openBlock(), vue.createBlock(_component_node, {
               key: 0,
               childs: n.children,
-              opts: [$props.opts[0], $props.opts[1], $props.opts[2], $props.opts[3], $props.opts[4], $props.opts[5], $props.opts[6] + "." + i + ".children"]
+              opts: $props.opts
             }, null, 8, ["childs", "opts"])) : (vue.openBlock(true), vue.createElementBlock(vue.Fragment, { key: 1 }, vue.renderList(n.children, (tbody, x) => {
               return vue.openBlock(), vue.createElementBlock("view", {
                 key: x,
@@ -5763,7 +5342,7 @@ if (uni.restoreGlobal) {
                 tbody.name === "td" || tbody.name === "th" ? (vue.openBlock(), vue.createBlock(_component_node, {
                   key: 0,
                   childs: tbody.children,
-                  opts: [$props.opts[0], $props.opts[1], $props.opts[2], $props.opts[3], $props.opts[4], $props.opts[5], $props.opts[6] + "." + i + ".children." + x + ".children"]
+                  opts: $props.opts
                 }, null, 8, ["childs", "opts"])) : (vue.openBlock(true), vue.createElementBlock(vue.Fragment, { key: 1 }, vue.renderList(tbody.children, (tr, y) => {
                   return vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: y }, [
                     tr.name === "td" || tr.name === "th" ? (vue.openBlock(), vue.createElementBlock("view", {
@@ -5773,7 +5352,7 @@ if (uni.restoreGlobal) {
                     }, [
                       vue.createVNode(_component_node, {
                         childs: tr.children,
-                        opts: [$props.opts[0], $props.opts[1], $props.opts[2], $props.opts[3], $props.opts[4], $props.opts[5], $props.opts[6] + "." + i + ".children." + x + ".children." + y + ".children"]
+                        opts: $props.opts
                       }, null, 8, ["childs", "opts"])
                     ], 6)) : (vue.openBlock(), vue.createElementBlock("view", {
                       key: 1,
@@ -5788,7 +5367,7 @@ if (uni.restoreGlobal) {
                         }, [
                           vue.createVNode(_component_node, {
                             childs: td.children,
-                            opts: [$props.opts[0], $props.opts[1], $props.opts[2], $props.opts[3], $props.opts[4], $props.opts[5], $props.opts[6] + "." + i + ".children." + x + ".children." + y + ".children." + z + ".children"]
+                            opts: $props.opts
                           }, null, 8, ["childs", "opts"])
                         ], 6);
                       }), 128))
@@ -5797,21 +5376,17 @@ if (uni.restoreGlobal) {
                 }), 128))
               ], 6);
             }), 128))
-          ], 14, ["id"])) : n.attrs["data-content"] ? (vue.openBlock(), vue.createElementBlock("rich-text", {
-            key: 11,
-            nodes: [n],
-            "data-content": n.attrs["data-content"],
-            "data-lang": n.attrs["data-lang"],
-            onLongpress: _cache[11] || (_cache[11] = (...args) => $options.copyCode && $options.copyCode(...args))
-          }, null, 40, ["nodes", "data-content", "data-lang"])) : !$props.opts[4] && !n.c ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 12 }, [
+          ], 14, ["id"])) : !n.c ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 9 }, [
             vue.createCommentVNode(" \u5BCC\u6587\u672C "),
             vue.createElementVNode("rich-text", {
               id: n.attrs.id,
               style: vue.normalizeStyle(n.f + ";display:inline"),
               preview: false,
+              selectable: $props.opts[4],
+              "user-select": $props.opts[4],
               nodes: [n]
-            }, null, 12, ["id", "nodes"])
-          ], 2112)) : n.c === 2 ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 13 }, [
+            }, null, 12, ["id", "selectable", "user-select", "nodes"])
+          ], 2112)) : n.c === 2 ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 10 }, [
             vue.createCommentVNode(" \u7EE7\u7EED\u9012\u5F52 "),
             vue.createElementVNode("view", {
               id: n.attrs.id,
@@ -5825,17 +5400,17 @@ if (uni.restoreGlobal) {
                   name: n2.name,
                   attrs: n2.attrs,
                   childs: n2.children,
-                  opts: [$props.opts[0], $props.opts[1], $props.opts[2], $props.opts[3], $props.opts[4], $props.opts[5], $props.opts[6] + "." + i + ".children." + j + ".children"]
+                  opts: $props.opts
                 }, null, 8, ["style", "name", "attrs", "childs", "opts"]);
               }), 128))
             ], 14, ["id"])
           ], 2112)) : (vue.openBlock(), vue.createBlock(_component_node, {
-            key: 14,
+            key: 11,
             style: vue.normalizeStyle(n.f),
             name: n.name,
             attrs: n.attrs,
             childs: n.children,
-            opts: [$props.opts[0], $props.opts[1], $props.opts[2], $props.opts[3], $props.opts[4], $props.opts[5], $props.opts[6] + "." + i + ".children"]
+            opts: $props.opts
           }, null, 8, ["style", "name", "attrs", "childs", "opts"]))
         ], 64);
       }), 128))
@@ -5981,9 +5556,15 @@ if (uni.restoreGlobal) {
         url2 = (domain ? domain.split("://")[0] : "http") + ":" + url2;
       } else if (domain) {
         url2 = domain + url2;
+      } else {
+        url2 = plus.io.convertLocalFileSystemURL(url2);
       }
-    } else if (domain && !url2.includes("data:") && !url2.includes("://")) {
-      url2 = domain + "/" + url2;
+    } else if (!url2.includes("data:") && !url2.includes("://")) {
+      if (domain) {
+        url2 = domain + "/" + url2;
+      } else {
+        url2 = plus.io.convertLocalFileSystemURL(url2);
+      }
     }
     return url2;
   };
@@ -6185,14 +5766,13 @@ if (uni.restoreGlobal) {
       siblings.push({
         name,
         attrs: {
-          class: tagSelector[name],
-          style: this.tagStyle[name]
+          class: tagSelector[name] || "",
+          style: this.tagStyle[name] || ""
         }
       });
     }
   };
   Parser.prototype.popNode = function() {
-    const editable = this.options.editable;
     const node2 = this.stack.pop();
     let attrs = node2.attrs;
     const children = node2.children;
@@ -6305,9 +5885,7 @@ if (uni.restoreGlobal) {
       styleObj["box-sizing"] = "border-box";
     }
     if (config.blockTags[node2.name]) {
-      if (!editable) {
-        node2.name = "div";
-      }
+      node2.name = "div";
     } else if (!config.trustTags[node2.name] && !this.xml) {
       node2.name = "span";
     }
@@ -6318,9 +5896,6 @@ if (uni.restoreGlobal) {
         styleObj.height = void 0;
       }
       let str = '<video style="width:100%;height:100%"';
-      if (editable) {
-        attrs.controls = "";
-      }
       for (const item in attrs) {
         if (attrs[item]) {
           str += " " + item + '="' + attrs[item] + '"';
@@ -6335,7 +5910,7 @@ if (uni.restoreGlobal) {
       }
       str += "</video>";
       node2.html = str;
-    } else if ((node2.name === "ul" || node2.name === "ol") && (node2.c || editable)) {
+    } else if ((node2.name === "ul" || node2.name === "ol") && node2.c) {
       const types = {
         a: "lower-alpha",
         A: "upper-alpha",
@@ -6355,7 +5930,7 @@ if (uni.restoreGlobal) {
       let padding = parseFloat(attrs.cellpadding);
       let spacing = parseFloat(attrs.cellspacing);
       const border = parseFloat(attrs.border);
-      if (node2.c || editable) {
+      if (node2.c) {
         if (isNaN(padding)) {
           padding = 2;
         }
@@ -6366,7 +5941,7 @@ if (uni.restoreGlobal) {
       if (border) {
         attrs.style += ";border:" + border + "px solid gray";
       }
-      if (node2.flag && (node2.c || editable)) {
+      if (node2.flag && node2.c) {
         styleObj.display = "grid";
         if (spacing) {
           styleObj["grid-gap"] = spacing + "px";
@@ -6394,9 +5969,6 @@ if (uni.restoreGlobal) {
             if (td.name === "td" || td.name === "th") {
               while (map[row + "." + col]) {
                 col++;
-              }
-              if (editable) {
-                td.r = row;
               }
               let style = td.attrs.style || "";
               const start = style.indexOf("width") ? style.indexOf(";width") : 0;
@@ -6446,7 +6018,7 @@ if (uni.restoreGlobal) {
         }
         node2.children = cells;
       } else {
-        if (node2.c || editable) {
+        if (node2.c) {
           styleObj.display = "table";
         }
         if (!isNaN(spacing)) {
@@ -6506,19 +6078,21 @@ if (uni.restoreGlobal) {
           children.splice(i + 1, 1);
         }
       }
-    } else if (!editable && node2.c) {
-      node2.c = 2;
-      for (let i = node2.children.length; i--; ) {
-        const child = node2.children[i];
-        if (child.name && (config.inlineTags[child.name] || (child.attrs.style || "").includes("inline"))) {
-          child.c = 1;
+    } else if (node2.c) {
+      (function traversal(node3) {
+        node3.c = 2;
+        for (let i = node3.children.length; i--; ) {
+          const child = node3.children[i];
+          if (child.name && (config.inlineTags[child.name] || (child.attrs.style || "").includes("inline")) && !child.c) {
+            traversal(child);
+          }
+          if (!child.c || child.name === "table") {
+            node3.c = 1;
+          }
         }
-        if (!child.c || child.name === "table") {
-          node2.c = 1;
-        }
-      }
+      })(node2);
     }
-    if ((styleObj.display || "").includes("flex") && !(node2.c || editable)) {
+    if ((styleObj.display || "").includes("flex") && !node2.c) {
       for (let i = children.length; i--; ) {
         const item = children[i];
         if (item.f) {
@@ -6531,7 +6105,7 @@ if (uni.restoreGlobal) {
     if (flex) {
       node2.f = ";max-width:100%";
     }
-    if (children.length >= 50 && (node2.c || editable) && !(styleObj.display || "").includes("flex")) {
+    if (children.length >= 50 && node2.c && !(styleObj.display || "").includes("flex")) {
       let i = children.length - 1;
       for (let j = i; j >= -1; j--) {
         if (j === -1 || children[j].c || !children[j].name || children[j].name !== "div" && children[j].name !== "p" && children[j].name[0] !== "h" || (children[j].attrs.style || "").includes("inline")) {
@@ -8575,7 +8149,7 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/blog-info/blog-info.vue:85", res.target);
+        formatAppLog("log", "at pages/blog-info/blog-info.vue:86", res.target);
       }
       return {
         title: data.title,
@@ -8650,8 +8224,9 @@ if (uni.restoreGlobal) {
               "container-style": "overflow: hidden;",
               selectable: "true",
               "tag-style": $data.tagStyle,
-              content: $data.html
+              content: $data.data.content
             }, null, 8, ["tag-style", "content"]),
+            vue.createCommentVNode(' <rich-text :nodes="data.content"></rich-text> '),
             vue.createElementVNode("view", { class: "over" }, "\u2014\u2014 The End \u2014\u2014"),
             vue.createElementVNode("view", { class: "Copyright" }, [
               vue.createElementVNode("text", null, "\u7248\u6743\u58F0\u660E\uFF1A\u82E5\u65E0\u7279\u6B8A\u6CE8\u660E\uFF0C\u300A"),

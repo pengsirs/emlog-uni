@@ -97,7 +97,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       ["container-style"]: "overflow: hidden;",
       selectable: "true",
       ["tag-style"]: $data.tagStyle,
-      content: $data.html
+      content: $data.data.content
     }),
     i: common_vendor.t($data.data.title),
     j: common_vendor.t($data.data.author_name || "\u4F5C\u8005"),

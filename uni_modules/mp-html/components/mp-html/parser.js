@@ -214,9 +214,15 @@ Parser.prototype.getUrl = function (url) {
     } else if (domain) {
       // 否则补充整个域名
       url = domain + url
-    }
-  } else if (domain && !url.includes('data:') && !url.includes('://')) {
-    url = domain + '/' + url
+    } /* #ifdef APP-PLUS */ else {
+      url = plus.io.convertLocalFileSystemURL(url)
+    } /* #endif */
+  } else if (!url.includes('data:') && !url.includes('://')) {
+    if (domain) {
+      url = domain + '/' + url
+    } /* #ifdef APP-PLUS */ else {
+      url = plus.io.convertLocalFileSystemURL(url)
+    } /* #endif */
   }
   return url
 }
@@ -523,6 +529,11 @@ Parser.prototype.onOpenTag = function (selfClose) {
       }
     }
     attrs.style = attrs.style.substr(1) || undefined
+    // #ifdef (MP-WEIXIN || MP-QQ) && VUE3
+    if (!attrs.style) {
+      delete attrs.style
+    }
+    // #endif
   } else {
     if ((node.name === 'pre' || ((attrs.style || '').includes('white-space') && attrs.style.includes('pre'))) && this.pre !== 2) {
       this.pre = node.pre = 1
@@ -556,8 +567,8 @@ Parser.prototype.onCloseTag = function (name) {
     siblings.push({
       name,
       attrs: {
-        class: tagSelector[name],
-        style: this.tagStyle[name]
+        class: tagSelector[name] || '',
+        style: this.tagStyle[name] || ''
       }
     })
   }
@@ -568,7 +579,6 @@ Parser.prototype.onCloseTag = function (name) {
  * @private
  */
 Parser.prototype.popNode = function () {
-  const editable = this.options.editable
   const node = this.stack.pop()
   let attrs = node.attrs
   const children = node.children
@@ -722,9 +732,7 @@ Parser.prototype.popNode = function () {
 
   // #ifndef APP-PLUS-NVUE
   if (config.blockTags[node.name]) {
-    if (!editable) {
-      node.name = 'div'
-    }
+    node.name = 'div'
   } else if (!config.trustTags[node.name] && !this.xml) {
     // 未知标签转为 span，避免无法显示
     node.name = 'span'
@@ -742,9 +750,6 @@ Parser.prototype.popNode = function () {
     }
     /* #ifdef APP-PLUS */
     let str = '<video style="width:100%;height:100%"'
-    if (editable) {
-      attrs.controls = ''
-    }
     for (const item in attrs) {
       if (attrs[item]) {
         str += ' ' + item + '="' + attrs[item] + '"'
@@ -760,7 +765,7 @@ Parser.prototype.popNode = function () {
     str += '</video>'
     node.html = str
     /* #endif */
-  } else if ((node.name === 'ul' || node.name === 'ol') && (node.c || editable)) {
+  } else if ((node.name === 'ul' || node.name === 'ol') && node.c) {
     // 列表处理
     const types = {
       a: 'lower-alpha',
@@ -783,7 +788,7 @@ Parser.prototype.popNode = function () {
     let padding = parseFloat(attrs.cellpadding)
     let spacing = parseFloat(attrs.cellspacing)
     const border = parseFloat(attrs.border)
-    if ((node.c || editable)) {
+    if (node.c) {
       // padding 和 spacing 默认 2
       if (isNaN(padding)) {
         padding = 2
@@ -795,7 +800,7 @@ Parser.prototype.popNode = function () {
     if (border) {
       attrs.style += ';border:' + border + 'px solid gray'
     }
-    if (node.flag && (node.c || editable)) {
+    if (node.flag && node.c) {
       // 有 colspan 或 rowspan 且含有链接的表格通过 grid 布局实现
       styleObj.display = 'grid'
       if (spacing) {
@@ -828,11 +833,8 @@ Parser.prototype.popNode = function () {
           if (td.name === 'td' || td.name === 'th') {
             // 这个格子被上面的单元格占用，则列号++
             while (map[row + '.' + col]) {
-            col++
-          }
-          if (editable) {
-            td.r = row
-          }
+              col++
+            }
             let style = td.attrs.style || ''
             const start = style.indexOf('width') ? style.indexOf(';width') : 0
             // 提取出 td 的宽度
@@ -886,7 +888,7 @@ Parser.prototype.popNode = function () {
       node.children = cells
     } else {
       // 没有使用合并单元格的表格通过 table 布局实现
-      if ((node.c || editable)) {
+      if (node.c) {
         styleObj.display = 'table'
       }
       if (!isNaN(spacing)) {
@@ -949,22 +951,24 @@ Parser.prototype.popNode = function () {
         children.splice(i + 1, 1)
       }
     }
-  } else if (!editable && node.c ) {
-    node.c = 2
-    for (let i = node.children.length; i--;) {
-      const child = node.children[i]
-      // #ifdef (MP-WEIXIN || MP-QQ || APP-PLUS || MP-360) && VUE3
-      if (child.name && (config.inlineTags[child.name] || (child.attrs.style || '').includes('inline'))) {
-        child.c = 1
+  } else if (node.c) {
+    (function traversal (node) {
+      node.c = 2
+      for (let i = node.children.length; i--;) {
+        const child = node.children[i]
+        // #ifdef (MP-WEIXIN || MP-QQ || APP-PLUS || MP-360) && VUE3
+        if (child.name && (config.inlineTags[child.name] || (child.attrs.style || '').includes('inline')) && !child.c) {
+          traversal(child)
+        }
+        // #endif
+        if (!child.c || child.name === 'table') {
+          node.c = 1
+        }
       }
-      // #endif
-      if (!child.c || child.name === 'table') {
-        node.c = 1
-      }
-    }
+    })(node)
   }
 
-  if ((styleObj.display || '').includes('flex') && !(node.c || editable)) {
+  if ((styleObj.display || '').includes('flex') && !node.c) {
     for (let i = children.length; i--;) {
       const item = children[i]
       if (item.f) {
@@ -977,7 +981,7 @@ Parser.prototype.popNode = function () {
   const flex = parent && ((parent.attrs.style || '').includes('flex') || (parent.attrs.style || '').includes('grid'))
     // #ifdef MP-WEIXIN
     // 检查基础库版本 virtualHost 是否可用
-    && !((node.c || editable) && wx.getNFCAdapter) // eslint-disable-line
+    && !(node.c && wx.getNFCAdapter) // eslint-disable-line
     // #endif
     // #ifndef MP-WEIXIN || MP-QQ || MP-BAIDU || MP-TOUTIAO
     && !node.c // eslint-disable-line
@@ -987,7 +991,7 @@ Parser.prototype.popNode = function () {
   }
 
   // 优化长内容加载速度
-  if (children.length >= 50 && (node.c || editable) && !(styleObj.display || '').includes('flex')) {
+  if (children.length >= 50 && node.c && !(styleObj.display || '').includes('flex')) {
     let i = children.length - 1
     for (let j = i; j >= -1; j--) {
       // 合并多个块级标签
@@ -1021,8 +1025,10 @@ Parser.prototype.popNode = function () {
   }
   attrs.style = attrs.style.substr(1) || undefined
   // #ifdef (MP-WEIXIN || MP-QQ) && VUE3
-  if (!attrs.style) {
-    delete attrs.style
+  for (const key in attrs) {
+    if (!attrs[key]) {
+      delete attrs[key]
+    }
   }
   // #endif
 }
@@ -1060,9 +1066,8 @@ Parser.prototype.onText = function (text) {
   node.text = decodeEntity(text)
   if (this.hook(node)) {
     // #ifdef MP-WEIXIN
-    if (this.options.selectable === 'force' && system.includes('iOS')) {
+    if (this.options.selectable === 'force' && system.includes('iOS') && !uni.canIUse('rich-text.user-select')) {
       this.expose()
-      node.us = 'T'
     }
     // #endif
     const siblings = this.stack.length ? this.stack[this.stack.length - 1].children : this.nodes

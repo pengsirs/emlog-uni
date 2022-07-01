@@ -14,7 +14,8 @@
 				</view>
 			</view>
 			<mp-html lozy-load="true" container-style="overflow: hidden;" selectable="true" :tag-style="tagStyle"
-				:content="html"></mp-html>
+				:content="data.content"></mp-html>
+				<!-- <rich-text :nodes="data.content"></rich-text> -->
 			<view class="over">—— The End ——</view>
 
 			<view class="Copyright">
@@ -124,7 +125,6 @@
 <style>
 	page {
 		background-color: #F17C67;
-		font-size: 13px;
 	}
 
 	.content-box {
@@ -136,7 +136,7 @@
 	}
 
 	page {
-		font-size: 16px;
+		font-size: 13px;
 	}
 
 	.xx {

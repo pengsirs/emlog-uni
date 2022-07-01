@@ -99,7 +99,7 @@ const _sfc_main = {
           title,
           content: htmls,
           excerpt,
-          cover: cover[0],
+          cover: cover[0] || "",
           sort_id: "1",
           author_uid: "1",
           post_date: YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss

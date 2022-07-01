@@ -134,8 +134,10 @@ Parser.prototype.getUrl = function(url) {
     } else if (domain) {
       url = domain + url;
     }
-  } else if (domain && !url.includes("data:") && !url.includes("://")) {
-    url = domain + "/" + url;
+  } else if (!url.includes("data:") && !url.includes("://")) {
+    if (domain) {
+      url = domain + "/" + url;
+    }
   }
   return url;
 };
@@ -354,6 +356,9 @@ Parser.prototype.onOpenTag = function(selfClose) {
       }
     }
     attrs.style = attrs.style.substr(1) || void 0;
+    if (!attrs.style) {
+      delete attrs.style;
+    }
   } else {
     if ((node.name === "pre" || (attrs.style || "").includes("white-space") && attrs.style.includes("pre")) && this.pre !== 2) {
       this.pre = node.pre = 1;
@@ -379,14 +384,13 @@ Parser.prototype.onCloseTag = function(name) {
     siblings.push({
       name,
       attrs: {
-        class: tagSelector[name],
-        style: this.tagStyle[name]
+        class: tagSelector[name] || "",
+        style: this.tagStyle[name] || ""
       }
     });
   }
 };
 Parser.prototype.popNode = function() {
-  const editable = this.options.editable;
   const node = this.stack.pop();
   let attrs = node.attrs;
   const children = node.children;
@@ -499,9 +503,7 @@ Parser.prototype.popNode = function() {
     styleObj["box-sizing"] = "border-box";
   }
   if (config.blockTags[node.name]) {
-    if (!editable) {
-      node.name = "div";
-    }
+    node.name = "div";
   } else if (!config.trustTags[node.name] && !this.xml) {
     node.name = "span";
   }
@@ -511,7 +513,7 @@ Parser.prototype.popNode = function() {
     if ((styleObj.height || "").includes("auto")) {
       styleObj.height = void 0;
     }
-  } else if ((node.name === "ul" || node.name === "ol") && (node.c || editable)) {
+  } else if ((node.name === "ul" || node.name === "ol") && node.c) {
     const types = {
       a: "lower-alpha",
       A: "upper-alpha",
@@ -531,7 +533,7 @@ Parser.prototype.popNode = function() {
     let padding = parseFloat(attrs.cellpadding);
     let spacing = parseFloat(attrs.cellspacing);
     const border = parseFloat(attrs.border);
-    if (node.c || editable) {
+    if (node.c) {
       if (isNaN(padding)) {
         padding = 2;
       }
@@ -542,7 +544,7 @@ Parser.prototype.popNode = function() {
     if (border) {
       attrs.style += ";border:" + border + "px solid gray";
     }
-    if (node.flag && (node.c || editable)) {
+    if (node.flag && node.c) {
       styleObj.display = "grid";
       if (spacing) {
         styleObj["grid-gap"] = spacing + "px";
@@ -570,9 +572,6 @@ Parser.prototype.popNode = function() {
           if (td.name === "td" || td.name === "th") {
             while (map[row + "." + col]) {
               col++;
-            }
-            if (editable) {
-              td.r = row;
             }
             let style = td.attrs.style || "";
             const start = style.indexOf("width") ? style.indexOf(";width") : 0;
@@ -622,7 +621,7 @@ Parser.prototype.popNode = function() {
       }
       node.children = cells;
     } else {
-      if (node.c || editable) {
+      if (node.c) {
         styleObj.display = "table";
       }
       if (!isNaN(spacing)) {
@@ -682,19 +681,21 @@ Parser.prototype.popNode = function() {
         children.splice(i + 1, 1);
       }
     }
-  } else if (!editable && node.c) {
-    node.c = 2;
-    for (let i = node.children.length; i--; ) {
-      const child = node.children[i];
-      if (child.name && (config.inlineTags[child.name] || (child.attrs.style || "").includes("inline"))) {
-        child.c = 1;
+  } else if (node.c) {
+    (function traversal(node2) {
+      node2.c = 2;
+      for (let i = node2.children.length; i--; ) {
+        const child = node2.children[i];
+        if (child.name && (config.inlineTags[child.name] || (child.attrs.style || "").includes("inline")) && !child.c) {
+          traversal(child);
+        }
+        if (!child.c || child.name === "table") {
+          node2.c = 1;
+        }
       }
-      if (!child.c || child.name === "table") {
-        node.c = 1;
-      }
-    }
+    })(node);
   }
-  if ((styleObj.display || "").includes("flex") && !(node.c || editable)) {
+  if ((styleObj.display || "").includes("flex") && !node.c) {
     for (let i = children.length; i--; ) {
       const item = children[i];
       if (item.f) {
@@ -707,7 +708,7 @@ Parser.prototype.popNode = function() {
   if (flex) {
     node.f = ";max-width:100%";
   }
-  if (children.length >= 50 && (node.c || editable) && !(styleObj.display || "").includes("flex")) {
+  if (children.length >= 50 && node.c && !(styleObj.display || "").includes("flex")) {
     let i = children.length - 1;
     for (let j = i; j >= -1; j--) {
       if (j === -1 || children[j].c || !children[j].name || children[j].name !== "div" && children[j].name !== "p" && children[j].name[0] !== "h" || (children[j].attrs.style || "").includes("inline")) {
@@ -736,8 +737,10 @@ Parser.prototype.popNode = function() {
     }
   }
   attrs.style = attrs.style.substr(1) || void 0;
-  if (!attrs.style) {
-    delete attrs.style;
+  for (const key in attrs) {
+    if (!attrs[key]) {
+      delete attrs[key];
+    }
   }
 };
 Parser.prototype.onText = function(text) {
