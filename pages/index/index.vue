@@ -48,6 +48,15 @@
 
 		<uni-notice-bar show-icon scrollable background-color="#fff" color="#000" text="这是公告,请在管理后台设置!" />
 
+		<scroll-view scroll-x="true" style="width: 100%;white-space: nowrap;">
+			<view class="sorts">
+				<view v-for="(s,index) in sorts" :key="index" :id="'tab'+index"
+					:class="['scroll-view-item_H',current==index?'active':'']" @click="change(index)">
+					<view class="sort-item">{{s.title}}</view>
+				</view>
+			</view>
+		</scroll-view>
+
 		<view v-if="backTopValue" class="xiaohuojian" @click="xhj">
 			<image src="../../static/fanhuidingbu.png" mode=""></image>
 		</view>
@@ -116,6 +125,31 @@
 				backTopValue: false,
 				onRefresh: false,
 				status: "loading",
+				sorts: [{
+						"id": 1,
+						"title": "分类一"
+					},
+					{
+						"id": 2,
+						"title": "分类二"
+					},
+					{
+						"id": 3,
+						"title": "分类三"
+					},
+					{
+						"id": 4,
+						"title": "分类四"
+					},
+					{
+						"id": 4,
+						"title": "分类四"
+					},
+					{
+						"id": 4,
+						"title": "分类四"
+					}
+				],
 				images: [
 					"http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/167/6483441/13482961188039425428",
 					"http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/181/6483441/13482961192300838800",
@@ -142,6 +176,8 @@
 					scrollTop: 0
 				},
 				blogAll: '',
+				current: 0,
+				scrollinto: '',
 			}
 		},
 		mounted() {},
@@ -186,6 +222,15 @@
 			}
 		},
 		methods: {
+
+			change(index) {
+				if (this.current == index) return;
+				this.current = index;
+				this.scrollinto = 'tab' + index;
+			},
+			onChangeTab(e) {
+				this.change(e.detail.current)
+			},
 			getUser() {
 				uni.switchTab({
 					url: "../home/home"
@@ -269,11 +314,13 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	@import "../../uni.css";
-page{
-	font-size: 16px
-}
+
+	page {
+		font-size: 16px
+	}
+
 	.many {
 		display: flex;
 		justify-content: space-between;
@@ -288,6 +335,23 @@ page{
 		opacity: 0.7;
 	}
 
+	.sorts {
+		display: flex;
+		flex-wrap: nowrap;
+	}
+
+	.scroll-view-item_H {
+		&.active {
+			background-color: #2979ff;
+			border-radius: 20px;
+		}
+	}
+
+	.sort-item {
+		padding: 5px 10px;
+		margin: 0px 5px;
+	}
+
 	.sort {
 		border: #fff solid 1px;
 		padding: 3px;
@@ -295,6 +359,14 @@ page{
 		opacity: 0.5;
 		font-size: 16px;
 	}
+
+	::-webkit-scrollbar {
+		display: none;
+		width: 0;
+		height: 0;
+		color: transparent;
+	}
+
 
 	.right {
 		display: flex;

@@ -16,6 +16,32 @@ const _sfc_main = {
       backTopValue: false,
       onRefresh: false,
       status: "loading",
+      sorts: [
+        {
+          "id": 1,
+          "title": "\u5206\u7C7B\u4E00"
+        },
+        {
+          "id": 2,
+          "title": "\u5206\u7C7B\u4E8C"
+        },
+        {
+          "id": 3,
+          "title": "\u5206\u7C7B\u4E09"
+        },
+        {
+          "id": 4,
+          "title": "\u5206\u7C7B\u56DB"
+        },
+        {
+          "id": 4,
+          "title": "\u5206\u7C7B\u56DB"
+        },
+        {
+          "id": 4,
+          "title": "\u5206\u7C7B\u56DB"
+        }
+      ],
       images: [
         "http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/167/6483441/13482961188039425428",
         "http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/181/6483441/13482961192300838800",
@@ -62,7 +88,9 @@ const _sfc_main = {
       old: {
         scrollTop: 0
       },
-      blogAll: ""
+      blogAll: "",
+      current: 0,
+      scrollinto: ""
     };
   },
   mounted() {
@@ -106,6 +134,15 @@ const _sfc_main = {
     };
   },
   methods: {
+    change(index) {
+      if (this.current == index)
+        return;
+      this.current = index;
+      this.scrollinto = "tab" + index;
+    },
+    onChangeTab(e) {
+      this.change(e.detail.current);
+    },
     getUser() {
       common_vendor.index.switchTab({
         url: "../home/home"
@@ -255,11 +292,20 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       color: "#000",
       text: "\u8FD9\u662F\u516C\u544A,\u8BF7\u5728\u7BA1\u7406\u540E\u53F0\u8BBE\u7F6E!"
     }),
-    p: $data.backTopValue
+    p: common_vendor.f($data.sorts, (s, index, i0) => {
+      return {
+        a: common_vendor.t(s.title),
+        b: index,
+        c: "tab" + index,
+        d: common_vendor.n($data.current == index ? "active" : ""),
+        e: common_vendor.o(($event) => $options.change(index))
+      };
+    }),
+    q: $data.backTopValue
   }, $data.backTopValue ? {
-    q: common_vendor.o((...args) => $options.xhj && $options.xhj(...args))
+    r: common_vendor.o((...args) => $options.xhj && $options.xhj(...args))
   } : {}, {
-    r: common_vendor.f($data.dataa, (item, index, i0) => {
+    s: common_vendor.f($data.dataa, (item, index, i0) => {
       return common_vendor.e({
         a: $options.getimg(item.description) || item.cover
       }, $options.getimg(item.description) || item.cover ? common_vendor.e({
@@ -308,7 +354,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         B: index
       });
     }),
-    s: common_vendor.p({
+    t: common_vendor.p({
       color: "#007AFF",
       status: $data.status
     })

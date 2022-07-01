@@ -2,4 +2,28 @@
 
 
 	/*每个页面公共css */
-	/* 推送测试 */
+	/* 解决小程序和app滚动条的问题 */
+::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+		color: transparent;
+}
+
+
+
+	/* 解决H5 的问题 */
+
+
+
+
+
+
+
+
+
+
+
+

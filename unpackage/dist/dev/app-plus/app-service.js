@@ -2416,6 +2416,32 @@ if (uni.restoreGlobal) {
         backTopValue: false,
         onRefresh: false,
         status: "loading",
+        sorts: [
+          {
+            "id": 1,
+            "title": "\u5206\u7C7B\u4E00"
+          },
+          {
+            "id": 2,
+            "title": "\u5206\u7C7B\u4E8C"
+          },
+          {
+            "id": 3,
+            "title": "\u5206\u7C7B\u4E09"
+          },
+          {
+            "id": 4,
+            "title": "\u5206\u7C7B\u56DB"
+          },
+          {
+            "id": 4,
+            "title": "\u5206\u7C7B\u56DB"
+          },
+          {
+            "id": 4,
+            "title": "\u5206\u7C7B\u56DB"
+          }
+        ],
         images: [
           "http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/167/6483441/13482961188039425428",
           "http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/181/6483441/13482961192300838800",
@@ -2462,7 +2488,9 @@ if (uni.restoreGlobal) {
         old: {
           scrollTop: 0
         },
-        blogAll: ""
+        blogAll: "",
+        current: 0,
+        scrollinto: ""
       };
     },
     mounted() {
@@ -2498,7 +2526,7 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/index/index.vue:181", res.target);
+        formatAppLog("log", "at pages/index/index.vue:217", res.target);
       }
       return {
         title: "\u5206\u4EAB\u597D\u73A9\u7684\u7A0B\u5E8F\uFF01",
@@ -2506,6 +2534,15 @@ if (uni.restoreGlobal) {
       };
     },
     methods: {
+      change(index2) {
+        if (this.current == index2)
+          return;
+        this.current = index2;
+        this.scrollinto = "tab" + index2;
+      },
+      onChangeTab(e) {
+        this.change(e.detail.current);
+      },
       getUser() {
         uni.switchTab({
           url: "../home/home"
@@ -2700,6 +2737,23 @@ if (uni.restoreGlobal) {
         color: "#000",
         text: "\u8FD9\u662F\u516C\u544A,\u8BF7\u5728\u7BA1\u7406\u540E\u53F0\u8BBE\u7F6E!"
       }),
+      vue.createElementVNode("scroll-view", {
+        "scroll-x": "true",
+        style: { "width": "100%", "white-space": "nowrap" }
+      }, [
+        vue.createElementVNode("view", { class: "sorts" }, [
+          (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.sorts, (s, index2) => {
+            return vue.openBlock(), vue.createElementBlock("view", {
+              key: index2,
+              id: "tab" + index2,
+              class: vue.normalizeClass(["scroll-view-item_H", $data.current == index2 ? "active" : ""]),
+              onClick: ($event) => $options.change(index2)
+            }, [
+              vue.createElementVNode("view", { class: "sort-item" }, vue.toDisplayString(s.title), 1)
+            ], 10, ["id", "onClick"]);
+          }), 128))
+        ])
+      ]),
       $data.backTopValue ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
         class: "xiaohuojian",
@@ -8208,7 +8262,7 @@ if (uni.restoreGlobal) {
                   type: "fire",
                   size: "14"
                 }),
-                vue.createTextVNode(vue.toDisplayString($data.data.views || "9999"), 1)
+                vue.createTextVNode(vue.toDisplayString($data.data.views || "\u6682\u65E0\u6D4F\u89C8"), 1)
               ]),
               vue.createElementVNode("view", { class: "date" }, [
                 vue.createVNode(_component_uni_icons, {

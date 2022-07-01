@@ -85,7 +85,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       type: "fire",
       size: "14"
     }),
-    e: common_vendor.t($data.data.views || "9999"),
+    e: common_vendor.t($data.data.views || "\u6682\u65E0\u6D4F\u89C8"),
     f: common_vendor.p({
       color: "blue",
       type: "calendar",
