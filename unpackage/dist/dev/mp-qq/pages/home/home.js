@@ -153,7 +153,7 @@ const _sfc_main = {
               title: "\u6E05\u9664\u6210\u529F",
               duration: 2e3
             });
-            common_vendor.index.switchTab({
+            common_vendor.index.reLaunch({
               url: "../index/index"
             });
           } else if (res.cancel) {

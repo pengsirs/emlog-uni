@@ -30,6 +30,8 @@
 					<view class="iconfont icon-fengexian" @tap="insertDivider"></view>
 					<!-- 插入图片 -->
 					<view class="iconfont icon-charutupian" @tap="insertImage"></view>
+					<!-- <view class="iconfont icon-code" @tap="removeFormat">{{code}}</view> -->
+					<view class="iconfont icon--checklist" data-name="list" data-value="check"></view>
 					<!-- 标题 -->
 					<view :class="formats.header === 1 ? 'ql-active' : ''" class="iconfont icon-format-header-1"
 						data-name="header" :data-value="1"></view>
@@ -57,8 +59,8 @@
 							<view class="uni-list">
 								<view class="uni-list-cell">
 									<view class="uni-list-cell-db">
-										<picker @change="bindPickerChange" :value="sort" :range="sorts">
-											<view class="uni-input">{{sorts[sort]}}</view>
+										<picker @change="bindPickerChange" :value="sort" :range="blogSortName">
+											<view class="uni-input">{{blogSorts[sort].sortname || "请选择分类"}}</view>
 										</picker>
 									</view>
 								</view>
@@ -67,16 +69,17 @@
 					</uni-collapse-item>
 					<uni-collapse-item :show-animation="true" title="文章标签">
 						<view class="content">
-							<uni-easyinput  type="text" v-model="tags" placeholder="文章标签，多个半角逗号分隔，如：PHP,MySQL" />
+							<uni-easyinput type="text" v-model="tags" placeholder="文章标签，多个半角逗号分隔，如：PHP,MySQL" />
 						</view>
 					</uni-collapse-item>
 				</uni-collapse>
 
 				<view class="fabu" @click="fabu()">发布</view>
+
 			</view>
 		</view>
 	</view>
-	
+
 	<view>
 		<!-- 提示信息弹窗 -->
 		<uni-popup ref="message" type="message">
@@ -111,16 +114,19 @@
 		},
 		data() {
 			return {
+				blogSortName: [],
+				code: ">_",
 				readOnly: false,
 				formats: {},
 				htmls: '',
 				title: '',
 				excerpt: '',
-				sort: 0,
-				cover:[],
-				flg:false,
+				sort: 1,
+				cover: [],
+				flg: false,
 				tags: '',
-				sorts: ["未选择分类", "分类一", "分类二", "分类三"],
+				sid:'1',
+				blogSorts: [],
 			}
 		},
 		created() {},
@@ -130,7 +136,7 @@
 				key: 'apikey',
 				success: function(res) {
 					console.log('success')
-					if(set.$apikey == res.data){
+					if (set.$apikey == res.data) {
 						that.flg = true
 					}
 				},
@@ -145,9 +151,9 @@
 				key: 'apikey',
 				success: function(res) {
 					console.log('success')
-					if(set.$apikey == res.data){
+					if (set.$apikey == res.data) {
 						that.flg = true
-					}else{
+					} else {
 						that.flg = false
 					}
 				}
@@ -155,27 +161,28 @@
 			uni.stopPullDownRefresh();
 		},
 		methods: {
-			setting(){
+			setting() {
 				uni.navigateTo({
-					url:"../setting/admin"
+					url: "../setting/admin"
 				})
 			},
-			messageToggle(type,text) {
+			messageToggle(type, text) {
 				this.msgType = type
 				this.messageText = `${text}`
 				this.$refs.message.open()
 			},
 			bindPickerChange: function(e) {
-				console.log('picker发送选择改变，携带值为', e.detail.value)
+				console.log('picker发送选择改变，携带值为', this.blogSorts[e.detail.value].sid)
 				this.sort = e.detail.value
+				this.sid = this.blogSorts[e.detail.value].sid
 			},
-			change(e) {
-			},
+			change(e) {},
 			async fabu() {
 				var title = this.$data.title
 				var htmls = this.$data.htmls
 				var excerpt = this.$data.excerpt
 				var tags = this.$data.tags
+				var sid = this.$data.sid
 				var cover = this.$data.cover
 				var time = new Date();
 				var YYYY = time.getFullYear();
@@ -195,10 +202,10 @@
 						title: title,
 						content: htmls,
 						excerpt: excerpt, //文章描述
-						cover:cover[0]|| '',//文章封面，默认上传的第一张
-						sort_id: '1', //分类ID
+						cover: cover[0] || '', //文章封面，默认上传的第一张
+						sort_id: sid, //分类ID
 						author_uid: '1', //用户ID
-						tags:tags,
+						tags: tags,
 						post_date: YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss //发布时间
 					}
 				})
@@ -206,6 +213,9 @@
 					uni.showToast({
 						title: '发布成功',
 					});
+					uni.reLaunch({
+						url:"../index/index"
+					})
 				}
 				this.dataa = res.data
 				console.log(this.dataa)
@@ -256,7 +266,9 @@
 				})
 			},
 			removeFormat() {
-				this.editorCtx.removeFormat()
+				this.editorCtx.insertText({
+					text: "<pre>代码块</pre>"
+				})
 			},
 			insertDate() {
 				const date = new Date()
@@ -289,21 +301,34 @@
 									alt: data,
 									success: function() {
 										that.cover.push(data)
-										that.messageToggle('success','上传成功');
+										that.messageToggle('success', '上传成功');
 										uni.hideLoading();
 									}
 								})
 							},
-							fail: function(){
-								that.messageToggle('error','上传失败');
+							fail: function() {
+								that.messageToggle('error', '上传失败');
 								uni.hideLoading();
 							}
 						})
 					}
 				})
+			},
+			async getSorts() {
+				const res = await myRequest({
+					url: '/?rest-api=sort_list',
+					method: 'GET',
+				})
+				this.blogSorts = res.data.data.sorts
+				var arr = Object.keys(this.blogSorts)
+				for (var i = 0; i <= arr.length; i++) {
+					this.blogSortName.push(res.data.data.sorts[i].sortname)
+				}
+				console.log(this.blogSortName)
 			}
 		},
 		onLoad() {
+			this.getSorts();
 			uni.loadFontFace({
 				family: 'Pacifico',
 				source: 'url("./Pacifico.ttf")'
@@ -337,37 +362,45 @@
 		padding: 10px;
 		border: #eee 1px solid;
 	}
-.flg-img{
-	width: 100%;
-	margin-top: 50px;
-}
-.flg-text{
-	text-align: center;
-	font-weight: 800;
-	margin-top: 50px;
-}
-.flg-btn{
-	margin: 10px;
-	margin-top: 40px;
-	border-radius: 10px;
-	background-color: #F17C67;
-	opacity: 0.9;
-	color: #fff;
-}
-page{
-	font-size: 16px;
-}
-.flg-title{
-	margin-top: 30px;
-}
-.flg-close{
-	margin-left: 10px;
-	opacity: 0.5;
-}
-.flg-cell{
-	text-align: center;
-	opacity: 0.3;
-}
+
+	.flg-img {
+		width: 100%;
+		margin-top: 50px;
+	}
+
+	.flg-text {
+		text-align: center;
+		font-weight: 800;
+		margin-top: 50px;
+	}
+
+	.flg-btn {
+		margin: 10px;
+		margin-top: 40px;
+		border-radius: 10px;
+		background-color: #F17C67;
+		opacity: 0.9;
+		color: #fff;
+	}
+
+	page {
+		font-size: 16px;
+	}
+
+	.flg-title {
+		margin-top: 30px;
+	}
+
+	.flg-close {
+		margin-left: 10px;
+		opacity: 0.5;
+	}
+
+	.flg-cell {
+		text-align: center;
+		opacity: 0.3;
+	}
+
 	.wrapper {
 		padding: 5px;
 	}

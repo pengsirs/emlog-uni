@@ -1275,7 +1275,7 @@ if (uni.restoreGlobal) {
     const reg2 = /^[0-9]*$/g;
     return typeof val === "number" || reg2.test(val) ? val + "px" : val;
   };
-  const _sfc_main$n = {
+  const _sfc_main$m = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -1319,14 +1319,14 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("text", {
       style: vue.normalizeStyle({ color: $props.color, "font-size": $options.iconSize }),
       class: vue.normalizeClass(["uni-icons", ["uniui-" + $props.type, $props.customPrefix, $props.customPrefix ? $props.type : ""]]),
       onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
     }, null, 6);
   }
-  var __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-a2e81f6e"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  var __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-a2e81f6e"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   function resolveEasycom(component, easycom) {
     return shared.isString(component) ? easycom : component;
   }
@@ -1630,7 +1630,7 @@ if (uni.restoreGlobal) {
   const {
     t: t$2
   } = initVueI18n(messages$1);
-  const _sfc_main$m = {
+  const _sfc_main$l = {
     name: "UniSearchBar",
     emits: ["input", "update:modelValue", "clear", "cancel", "confirm", "blur", "focus"],
     props: {
@@ -1768,7 +1768,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$3);
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-searchbar" }, [
       vue.createElementVNode("view", {
@@ -1825,112 +1825,7 @@ if (uni.restoreGlobal) {
       }, vue.toDisplayString($options.cancelTextI18n), 1)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-180dbe05"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
-  const _sfc_main$l = {
-    name: "UniSteps",
-    emits: ["toInfo"],
-    props: {
-      direction: {
-        type: String,
-        default: "row"
-      },
-      activeColor: {
-        type: String,
-        default: "#2979FF"
-      },
-      deactiveColor: {
-        type: String,
-        default: "#B7BDC6"
-      },
-      active: {
-        type: Number,
-        default: 0
-      },
-      activeIcon: {
-        type: String,
-        default: "checkbox-filled"
-      },
-      options: {
-        type: Array,
-        default() {
-          return [];
-        }
-      }
-    },
-    data() {
-      return {};
-    },
-    methods: {
-      toInfo(e) {
-        formatAppLog("log", "at uni_modules/uni-steps/components/uni-steps/uni-steps.vue:90", this.$emit("toInfo", e));
-        this.$emit("toInfo", e);
-      }
-    }
-  };
-  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$3);
-    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-steps" }, [
-      vue.createElementVNode("view", {
-        class: vue.normalizeClass([$props.direction === "column" ? "uni-steps__column" : "uni-steps__row"])
-      }, [
-        vue.createElementVNode("view", {
-          class: vue.normalizeClass([$props.direction === "column" ? "uni-steps__column-text-container" : "uni-steps__row-text-container"])
-        }, [
-          (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.options, (item, index2) => {
-            return vue.openBlock(), vue.createElementBlock("view", {
-              key: index2,
-              class: vue.normalizeClass([$props.direction === "column" ? "uni-steps__column-text" : "uni-steps__row-text"])
-            }, [
-              vue.createElementVNode("text", {
-                style: vue.normalizeStyle({ color: index2 === $props.active ? $props.activeColor : $props.deactiveColor }),
-                onClick: ($event) => $options.toInfo(item.id),
-                class: vue.normalizeClass([$props.direction === "column" ? "uni-steps__column-title" : "uni-steps__row-title"])
-              }, vue.toDisplayString(item.title), 15, ["onClick"]),
-              vue.createElementVNode("text", {
-                style: vue.normalizeStyle({ color: $props.deactiveColor }),
-                onClick: ($event) => $options.toInfo(item.id),
-                class: vue.normalizeClass([$props.direction === "column" ? "uni-steps__column-desc" : "uni-steps__row-desc"])
-              }, vue.toDisplayString(item.date), 15, ["onClick"])
-            ], 2);
-          }), 128))
-        ], 2),
-        vue.createElementVNode("view", {
-          class: vue.normalizeClass([$props.direction === "column" ? "uni-steps__column-container" : "uni-steps__row-container"])
-        }, [
-          (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($props.options, (item, index2) => {
-            return vue.openBlock(), vue.createElementBlock("view", {
-              class: vue.normalizeClass([$props.direction === "column" ? "uni-steps__column-line-item" : "uni-steps__row-line-item"]),
-              key: index2
-            }, [
-              vue.createElementVNode("view", {
-                class: vue.normalizeClass([$props.direction === "column" ? "uni-steps__column-line" : "uni-steps__row-line", $props.direction === "column" ? "uni-steps__column-line--before" : "uni-steps__row-line--before"]),
-                style: vue.normalizeStyle({ backgroundColor: index2 <= $props.active && index2 !== 0 ? $props.activeColor : index2 === 0 ? "transparent" : $props.deactiveColor })
-              }, null, 6),
-              index2 === $props.active ? (vue.openBlock(), vue.createElementBlock("view", {
-                key: 0,
-                class: vue.normalizeClass([$props.direction === "column" ? "uni-steps__column-check" : "uni-steps__row-check"])
-              }, [
-                vue.createVNode(_component_uni_icons, {
-                  color: $props.activeColor,
-                  type: $props.activeIcon,
-                  size: "14"
-                }, null, 8, ["color", "type"])
-              ], 2)) : (vue.openBlock(), vue.createElementBlock("view", {
-                key: 1,
-                class: vue.normalizeClass([$props.direction === "column" ? "uni-steps__column-circle" : "uni-steps__row-circle"]),
-                style: vue.normalizeStyle({ backgroundColor: index2 < $props.active ? $props.activeColor : $props.deactiveColor })
-              }, null, 6)),
-              vue.createElementVNode("view", {
-                class: vue.normalizeClass([$props.direction === "column" ? "uni-steps__column-line" : "uni-steps__row-line", $props.direction === "column" ? "uni-steps__column-line--after" : "uni-steps__row-line--after"]),
-                style: vue.normalizeStyle({ backgroundColor: index2 < $props.active && index2 !== $props.options.length - 1 ? $props.activeColor : index2 === $props.options.length - 1 ? "transparent" : $props.deactiveColor })
-              }, null, 6)
-            ], 2);
-          }), 128))
-        ], 2)
-      ], 2)
-    ]);
-  }
-  var __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-1ec1e3f6"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-steps/components/uni-steps/uni-steps.vue"]]);
+  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-180dbe05"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
   const _sfc_main$k = {
     name: "UniDrawer",
     components: {},
@@ -2009,7 +1904,7 @@ if (uni.restoreGlobal) {
       ], 6)
     ], 34)) : vue.createCommentVNode("v-if", true);
   }
-  var __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-558f1882"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-drawer/components/uni-drawer/uni-drawer.vue"]]);
+  var __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-558f1882"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-drawer/components/uni-drawer/uni-drawer.vue"]]);
   const _sfc_main$j = {
     name: "UniNoticeBar",
     emits: ["click", "getmore", "close"],
@@ -2190,7 +2085,7 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ], 4)) : vue.createCommentVNode("v-if", true);
   }
-  var __easycom_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-a1596656"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-notice-bar/components/uni-notice-bar/uni-notice-bar.vue"]]);
+  var __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-a1596656"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-notice-bar/components/uni-notice-bar/uni-notice-bar.vue"]]);
   var en = {
     "uni-load-more.contentdown": "Pull up to show more",
     "uni-load-more.contentrefresh": "loading...",
@@ -2338,7 +2233,7 @@ if (uni.restoreGlobal) {
       }, vue.toDisplayString($props.status === "more" ? $options.contentdownText : $props.status === "loading" ? $options.contentrefreshText : $options.contentnomoreText), 5)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var __easycom_5 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-90d4256a"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
+  var __easycom_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-90d4256a"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
   const url = "https://www.hkiii.cn";
   const $apikey = "21afd3a75a3f465cec89a2e57997aa4f";
   const tenapi = "https://api.tianapi.com";
@@ -2416,32 +2311,7 @@ if (uni.restoreGlobal) {
         backTopValue: false,
         onRefresh: false,
         status: "loading",
-        sorts: [
-          {
-            "id": 1,
-            "title": "\u5206\u7C7B\u4E00"
-          },
-          {
-            "id": 2,
-            "title": "\u5206\u7C7B\u4E8C"
-          },
-          {
-            "id": 3,
-            "title": "\u5206\u7C7B\u4E09"
-          },
-          {
-            "id": 4,
-            "title": "\u5206\u7C7B\u56DB"
-          },
-          {
-            "id": 4,
-            "title": "\u5206\u7C7B\u56DB"
-          },
-          {
-            "id": 4,
-            "title": "\u5206\u7C7B\u56DB"
-          }
-        ],
+        blogSorts: [],
         images: [
           "http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/167/6483441/13482961188039425428",
           "http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/181/6483441/13482961192300838800",
@@ -2498,6 +2368,7 @@ if (uni.restoreGlobal) {
     onLoad() {
       this.blog(1);
       this.blogall();
+      this.getSorts();
     },
     onShow() {
       var that = this;
@@ -2526,7 +2397,7 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/index/index.vue:217", res.target);
+        formatAppLog("log", "at pages/index/index.vue:195", res.target);
       }
       return {
         title: "\u5206\u4EAB\u597D\u73A9\u7684\u7A0B\u5E8F\uFF01",
@@ -2616,16 +2487,22 @@ if (uni.restoreGlobal) {
           }
         });
         this.blogAll = [...this.blogAll, ...res.data.data.articles];
+      },
+      async getSorts() {
+        const res = await myRequest({
+          url: "/?rest-api=sort_list",
+          method: "GET"
+        });
+        this.blogSorts = res.data.data.sorts;
       }
     }
   };
   function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$3);
     const _component_uni_search_bar = resolveEasycom(vue.resolveDynamicComponent("uni-search-bar"), __easycom_0$2);
-    const _component_uni_steps = resolveEasycom(vue.resolveDynamicComponent("uni-steps"), __easycom_2$1);
-    const _component_uni_drawer = resolveEasycom(vue.resolveDynamicComponent("uni-drawer"), __easycom_3$1);
-    const _component_uni_notice_bar = resolveEasycom(vue.resolveDynamicComponent("uni-notice-bar"), __easycom_4$1);
-    const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_5);
+    const _component_uni_drawer = resolveEasycom(vue.resolveDynamicComponent("uni-drawer"), __easycom_2$1);
+    const _component_uni_notice_bar = resolveEasycom(vue.resolveDynamicComponent("uni-notice-bar"), __easycom_3$1);
+    const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_4$1);
     return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
       vue.createElementVNode("view", { class: "header" }, [
         vue.createElementVNode("view", { class: "user" }, [
@@ -2686,15 +2563,20 @@ if (uni.restoreGlobal) {
             }, [
               vue.createElementVNode("view", { class: "title" }, [
                 vue.createElementVNode("view", { class: "title-blue" }),
-                vue.createElementVNode("text", null, "\u5DF2\u52A0\u8F7D\u7684\u6587\u7AE0")
+                vue.createElementVNode("text", null, "\u6587\u7AE0\u5206\u7C7B")
               ]),
-              vue.createVNode(_component_uni_steps, {
-                onToInfo: $options.toInfo,
-                options: $data.blogAll,
-                "active-color": "#007AFF",
-                active: $data.page * 10,
-                direction: "column"
-              }, null, 8, ["onToInfo", "options", "active"])
+              vue.createElementVNode("view", { class: "sorts" }, [
+                (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.blogSorts, (s, index2) => {
+                  return vue.openBlock(), vue.createElementBlock("view", {
+                    key: index2,
+                    id: "tab" + index2,
+                    class: vue.normalizeClass(["scroll-view-item_H", $data.current == index2 ? "active" : ""]),
+                    onClick: ($event) => $options.change(index2)
+                  }, [
+                    vue.createElementVNode("view", { class: "sort-item" }, vue.toDisplayString(s.sortname), 1)
+                  ], 10, ["id", "onClick"]);
+                }), 128))
+              ])
             ])
           ]),
           _: 1
@@ -2737,23 +2619,7 @@ if (uni.restoreGlobal) {
         color: "#000",
         text: "\u8FD9\u662F\u516C\u544A,\u8BF7\u5728\u7BA1\u7406\u540E\u53F0\u8BBE\u7F6E!"
       }),
-      vue.createElementVNode("scroll-view", {
-        "scroll-x": "true",
-        style: { "width": "100%", "white-space": "nowrap" }
-      }, [
-        vue.createElementVNode("view", { class: "sorts" }, [
-          (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.sorts, (s, index2) => {
-            return vue.openBlock(), vue.createElementBlock("view", {
-              key: index2,
-              id: "tab" + index2,
-              class: vue.normalizeClass(["scroll-view-item_H", $data.current == index2 ? "active" : ""]),
-              onClick: ($event) => $options.change(index2)
-            }, [
-              vue.createElementVNode("view", { class: "sort-item" }, vue.toDisplayString(s.title), 1)
-            ], 10, ["id", "onClick"]);
-          }), 128))
-        ])
-      ]),
+      vue.createCommentVNode(' 		<scroll-view scroll-x="true" style="width: 100%;white-space: nowrap;">\n			<view class="sorts">\n				\n			</view>\n		</scroll-view> '),
       $data.backTopValue ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
         class: "xiaohuojian",
@@ -4714,16 +4580,19 @@ if (uni.restoreGlobal) {
     },
     data() {
       return {
+        blogSortName: [],
+        code: ">_",
         readOnly: false,
         formats: {},
         htmls: "",
         title: "",
         excerpt: "",
-        sort: 0,
+        sort: 1,
         cover: [],
         flg: false,
         tags: "",
-        sorts: ["\u672A\u9009\u62E9\u5206\u7C7B", "\u5206\u7C7B\u4E00", "\u5206\u7C7B\u4E8C", "\u5206\u7C7B\u4E09"]
+        sid: "1",
+        blogSorts: []
       };
     },
     created() {
@@ -4733,7 +4602,7 @@ if (uni.restoreGlobal) {
       uni.getStorage({
         key: "apikey",
         success: function(res) {
-          formatAppLog("log", "at pages/xia-editor/xia-editor.vue:132", "success");
+          formatAppLog("log", "at pages/xia-editor/xia-editor.vue:138", "success");
           if (set.$apikey == res.data) {
             that.flg = true;
           }
@@ -4748,7 +4617,7 @@ if (uni.restoreGlobal) {
       uni.getStorage({
         key: "apikey",
         success: function(res) {
-          formatAppLog("log", "at pages/xia-editor/xia-editor.vue:147", "success");
+          formatAppLog("log", "at pages/xia-editor/xia-editor.vue:153", "success");
           if (set.$apikey == res.data) {
             that.flg = true;
           } else {
@@ -4770,8 +4639,9 @@ if (uni.restoreGlobal) {
         this.$refs.message.open();
       },
       bindPickerChange: function(e) {
-        formatAppLog("log", "at pages/xia-editor/xia-editor.vue:169", "picker\u53D1\u9001\u9009\u62E9\u6539\u53D8\uFF0C\u643A\u5E26\u503C\u4E3A", e.detail.value);
+        formatAppLog("log", "at pages/xia-editor/xia-editor.vue:175", "picker\u53D1\u9001\u9009\u62E9\u6539\u53D8\uFF0C\u643A\u5E26\u503C\u4E3A", this.blogSorts[e.detail.value].sid);
         this.sort = e.detail.value;
+        this.sid = this.blogSorts[e.detail.value].sid;
       },
       change(e) {
       },
@@ -4779,6 +4649,8 @@ if (uni.restoreGlobal) {
         var title = this.$data.title;
         var htmls = this.$data.htmls;
         var excerpt = this.$data.excerpt;
+        var tags = this.$data.tags;
+        var sid = this.$data.sid;
         var cover = this.$data.cover;
         var time = new Date();
         var YYYY = time.getFullYear();
@@ -4799,8 +4671,9 @@ if (uni.restoreGlobal) {
             content: htmls,
             excerpt,
             cover: cover[0] || "",
-            sort_id: "1",
+            sort_id: sid,
             author_uid: "1",
+            tags,
             post_date: YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss
           }
         });
@@ -4808,9 +4681,12 @@ if (uni.restoreGlobal) {
           uni.showToast({
             title: "\u53D1\u5E03\u6210\u529F"
           });
+          uni.reLaunch({
+            url: "../index/index"
+          });
         }
         this.dataa = res.data;
-        formatAppLog("log", "at pages/xia-editor/xia-editor.vue:209", this.dataa);
+        formatAppLog("log", "at pages/xia-editor/xia-editor.vue:221", this.dataa);
       },
       editText(res) {
         this.$emit("editorChange", res.detail.html);
@@ -4846,19 +4722,21 @@ if (uni.restoreGlobal) {
       insertDivider() {
         this.editorCtx.insertDivider({
           success: function() {
-            formatAppLog("log", "at pages/xia-editor/xia-editor.vue:245", "insert divider success");
+            formatAppLog("log", "at pages/xia-editor/xia-editor.vue:257", "insert divider success");
           }
         });
       },
       clear() {
         this.editorCtx.clear({
           success: function(res) {
-            formatAppLog("log", "at pages/xia-editor/xia-editor.vue:252", "clear success");
+            formatAppLog("log", "at pages/xia-editor/xia-editor.vue:264", "clear success");
           }
         });
       },
       removeFormat() {
-        this.editorCtx.removeFormat();
+        this.editorCtx.insertText({
+          text: "<pre>\u4EE3\u7801\u5757</pre>"
+        });
       },
       insertDate() {
         const date = new Date();
@@ -4903,9 +4781,22 @@ if (uni.restoreGlobal) {
             });
           }
         });
+      },
+      async getSorts() {
+        const res = await myRequest({
+          url: "/?rest-api=sort_list",
+          method: "GET"
+        });
+        this.blogSorts = res.data.data.sorts;
+        var arr = Object.keys(this.blogSorts);
+        for (var i = 0; i <= arr.length; i++) {
+          this.blogSortName.push(res.data.data.sorts[i].sortname);
+        }
+        formatAppLog("log", "at pages/xia-editor/xia-editor.vue:327", this.blogSortName);
       }
     },
     onLoad() {
+      this.getSorts();
       uni.loadFontFace({
         family: "Pacifico",
         source: 'url("./Pacifico.ttf")'
@@ -4998,6 +4889,12 @@ if (uni.restoreGlobal) {
                 class: "iconfont icon-charutupian",
                 onClick: _cache[4] || (_cache[4] = (...args) => $options.insertImage && $options.insertImage(...args))
               }),
+              vue.createCommentVNode(' <view class="iconfont icon-code" @tap="removeFormat">{{code}}</view> '),
+              vue.createElementVNode("view", {
+                class: "iconfont icon--checklist",
+                "data-name": "list",
+                "data-value": "check"
+              }),
               vue.createCommentVNode(" \u6807\u9898 "),
               vue.createElementVNode("view", {
                 class: vue.normalizeClass([$data.formats.header === 1 ? "ql-active" : "", "iconfont icon-format-header-1"]),
@@ -5062,9 +4959,9 @@ if (uni.restoreGlobal) {
                             vue.createElementVNode("picker", {
                               onChange: _cache[10] || (_cache[10] = (...args) => $options.bindPickerChange && $options.bindPickerChange(...args)),
                               value: $data.sort,
-                              range: $data.sorts
+                              range: $data.blogSortName
                             }, [
-                              vue.createElementVNode("view", { class: "uni-input" }, vue.toDisplayString($data.sorts[$data.sort]), 1)
+                              vue.createElementVNode("view", { class: "uni-input" }, vue.toDisplayString($data.blogSorts[$data.sort].sortname || "\u8BF7\u9009\u62E9\u5206\u7C7B"), 1)
                             ], 40, ["value", "range"])
                           ])
                         ])
@@ -8504,7 +8401,7 @@ if (uni.restoreGlobal) {
                 title: "\u6E05\u9664\u6210\u529F",
                 duration: 2e3
               });
-              uni.switchTab({
+              uni.reLaunch({
                 url: "../index/index"
               });
             } else if (res.cancel) {

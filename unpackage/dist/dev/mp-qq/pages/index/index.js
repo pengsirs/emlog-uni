@@ -16,32 +16,7 @@ const _sfc_main = {
       backTopValue: false,
       onRefresh: false,
       status: "loading",
-      sorts: [
-        {
-          "id": 1,
-          "title": "\u5206\u7C7B\u4E00"
-        },
-        {
-          "id": 2,
-          "title": "\u5206\u7C7B\u4E8C"
-        },
-        {
-          "id": 3,
-          "title": "\u5206\u7C7B\u4E09"
-        },
-        {
-          "id": 4,
-          "title": "\u5206\u7C7B\u56DB"
-        },
-        {
-          "id": 4,
-          "title": "\u5206\u7C7B\u56DB"
-        },
-        {
-          "id": 4,
-          "title": "\u5206\u7C7B\u56DB"
-        }
-      ],
+      blogSorts: [],
       images: [
         "http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/167/6483441/13482961188039425428",
         "http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/181/6483441/13482961192300838800",
@@ -98,6 +73,7 @@ const _sfc_main = {
   onLoad() {
     this.blog(1);
     this.blogall();
+    this.getSorts();
   },
   onShow() {
     var that = this;
@@ -216,26 +192,31 @@ const _sfc_main = {
         }
       });
       this.blogAll = [...this.blogAll, ...res.data.data.articles];
+    },
+    async getSorts() {
+      const res = await api.myRequest({
+        url: "/?rest-api=sort_list",
+        method: "GET"
+      });
+      this.blogSorts = res.data.data.sorts;
     }
   }
 };
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   const _easycom_uni_search_bar2 = common_vendor.resolveComponent("uni-search-bar");
-  const _easycom_uni_steps2 = common_vendor.resolveComponent("uni-steps");
   const _easycom_uni_drawer2 = common_vendor.resolveComponent("uni-drawer");
   const _easycom_uni_notice_bar2 = common_vendor.resolveComponent("uni-notice-bar");
   const _easycom_uni_load_more2 = common_vendor.resolveComponent("uni-load-more");
-  (_easycom_uni_icons2 + _easycom_uni_search_bar2 + _easycom_uni_steps2 + _easycom_uni_drawer2 + _easycom_uni_notice_bar2 + _easycom_uni_load_more2)();
+  (_easycom_uni_icons2 + _easycom_uni_search_bar2 + _easycom_uni_drawer2 + _easycom_uni_notice_bar2 + _easycom_uni_load_more2)();
 }
 const _easycom_uni_icons = () => "../../uni_modules/uni-icons/components/uni-icons/uni-icons.js";
 const _easycom_uni_search_bar = () => "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.js";
-const _easycom_uni_steps = () => "../../uni_modules/uni-steps/components/uni-steps/uni-steps.js";
 const _easycom_uni_drawer = () => "../../uni_modules/uni-drawer/components/uni-drawer/uni-drawer.js";
 const _easycom_uni_notice_bar = () => "../../uni_modules/uni-notice-bar/components/uni-notice-bar/uni-notice-bar.js";
 const _easycom_uni_load_more = () => "../../uni_modules/uni-load-more/components/uni-load-more/uni-load-more.js";
 if (!Math) {
-  (_easycom_uni_icons + _easycom_uni_search_bar + _easycom_uni_steps + _easycom_uni_drawer + _easycom_uni_notice_bar + _easycom_uni_load_more)();
+  (_easycom_uni_icons + _easycom_uni_search_bar + _easycom_uni_drawer + _easycom_uni_notice_bar + _easycom_uni_load_more)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -261,51 +242,44 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     g: common_vendor.o(($event) => $options.getUser()),
     h: $data.avatarUrl,
-    i: common_vendor.o($options.toInfo),
-    j: common_vendor.p({
-      options: $data.blogAll,
-      ["active-color"]: "#007AFF",
-      active: $data.page * 10,
-      direction: "column"
-    }),
-    k: common_vendor.sr("showLeft", "02d9e768-3"),
-    l: common_vendor.p({
-      mode: "left",
-      width: 320
-    }),
-    m: common_vendor.f($data.images, (item, index, i0) => {
+    i: common_vendor.f($data.blogSorts, (s, index, i0) => {
       return {
-        a: item,
-        b: common_vendor.n("swiper-item" + index),
-        c: index
-      };
-    }),
-    n: common_vendor.f($data.opacity, (i, k0, i0) => {
-      return {
-        a: common_vendor.s(i)
-      };
-    }),
-    o: common_vendor.p({
-      ["show-icon"]: true,
-      scrollable: true,
-      ["background-color"]: "#fff",
-      color: "#000",
-      text: "\u8FD9\u662F\u516C\u544A,\u8BF7\u5728\u7BA1\u7406\u540E\u53F0\u8BBE\u7F6E!"
-    }),
-    p: common_vendor.f($data.sorts, (s, index, i0) => {
-      return {
-        a: common_vendor.t(s.title),
+        a: common_vendor.t(s.sortname),
         b: index,
         c: "tab" + index,
         d: common_vendor.n($data.current == index ? "active" : ""),
         e: common_vendor.o(($event) => $options.change(index))
       };
     }),
-    q: $data.backTopValue
+    j: common_vendor.sr("showLeft", "02d9e768-3"),
+    k: common_vendor.p({
+      mode: "left",
+      width: 320
+    }),
+    l: common_vendor.f($data.images, (item, index, i0) => {
+      return {
+        a: item,
+        b: common_vendor.n("swiper-item" + index),
+        c: index
+      };
+    }),
+    m: common_vendor.f($data.opacity, (i, k0, i0) => {
+      return {
+        a: common_vendor.s(i)
+      };
+    }),
+    n: common_vendor.p({
+      ["show-icon"]: true,
+      scrollable: true,
+      ["background-color"]: "#fff",
+      color: "#000",
+      text: "\u8FD9\u662F\u516C\u544A,\u8BF7\u5728\u7BA1\u7406\u540E\u53F0\u8BBE\u7F6E!"
+    }),
+    o: $data.backTopValue
   }, $data.backTopValue ? {
-    r: common_vendor.o((...args) => $options.xhj && $options.xhj(...args))
+    p: common_vendor.o((...args) => $options.xhj && $options.xhj(...args))
   } : {}, {
-    s: common_vendor.f($data.dataa, (item, index, i0) => {
+    q: common_vendor.f($data.dataa, (item, index, i0) => {
       return common_vendor.e({
         a: $options.getimg(item.description) || item.cover
       }, $options.getimg(item.description) || item.cover ? common_vendor.e({
@@ -316,13 +290,13 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         e: common_vendor.t(item.title),
         f: common_vendor.t($options.delHtmlTag(item.description)),
         g: common_vendor.t(item.sort_name),
-        h: "02d9e768-6-" + i0,
+        h: "02d9e768-5-" + i0,
         i: common_vendor.p({
           type: "fire-filled",
           size: "17"
         }),
         j: common_vendor.t(item.views),
-        k: "02d9e768-7-" + i0,
+        k: "02d9e768-6-" + i0,
         l: common_vendor.p({
           type: "chat-filled",
           size: "17"
@@ -337,13 +311,13 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         q: common_vendor.t(item.title),
         r: common_vendor.t($options.delHtmlTag(item.description)),
         s: common_vendor.t(item.sort_name),
-        t: "02d9e768-8-" + i0,
+        t: "02d9e768-7-" + i0,
         v: common_vendor.p({
           type: "fire-filled",
           size: "17"
         }),
         w: common_vendor.t(item.views),
-        x: "02d9e768-9-" + i0,
+        x: "02d9e768-8-" + i0,
         y: common_vendor.p({
           type: "chat-filled",
           size: "17"
@@ -354,7 +328,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         B: index
       });
     }),
-    t: common_vendor.p({
+    r: common_vendor.p({
       color: "#007AFF",
       status: $data.status
     })

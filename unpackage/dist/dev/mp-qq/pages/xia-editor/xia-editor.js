@@ -15,16 +15,19 @@ const _sfc_main = {
   },
   data() {
     return {
+      blogSortName: [],
+      code: ">_",
       readOnly: false,
       formats: {},
       htmls: "",
       title: "",
       excerpt: "",
-      sort: 0,
+      sort: 1,
       cover: [],
       flg: false,
       tags: "",
-      sorts: ["\u672A\u9009\u62E9\u5206\u7C7B", "\u5206\u7C7B\u4E00", "\u5206\u7C7B\u4E8C", "\u5206\u7C7B\u4E09"]
+      sid: "1",
+      blogSorts: []
     };
   },
   created() {
@@ -71,8 +74,9 @@ const _sfc_main = {
       this.$refs.message.open();
     },
     bindPickerChange: function(e) {
-      console.log("picker\u53D1\u9001\u9009\u62E9\u6539\u53D8\uFF0C\u643A\u5E26\u503C\u4E3A", e.detail.value);
+      console.log("picker\u53D1\u9001\u9009\u62E9\u6539\u53D8\uFF0C\u643A\u5E26\u503C\u4E3A", this.blogSorts[e.detail.value].sid);
       this.sort = e.detail.value;
+      this.sid = this.blogSorts[e.detail.value].sid;
     },
     change(e) {
     },
@@ -80,6 +84,8 @@ const _sfc_main = {
       var title = this.$data.title;
       var htmls = this.$data.htmls;
       var excerpt = this.$data.excerpt;
+      var tags = this.$data.tags;
+      var sid = this.$data.sid;
       var cover = this.$data.cover;
       var time = new Date();
       var YYYY = time.getFullYear();
@@ -100,14 +106,18 @@ const _sfc_main = {
           content: htmls,
           excerpt,
           cover: cover[0] || "",
-          sort_id: "1",
+          sort_id: sid,
           author_uid: "1",
+          tags,
           post_date: YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss
         }
       });
       if (res.data.msg == "ok") {
         common_vendor.index.showToast({
           title: "\u53D1\u5E03\u6210\u529F"
+        });
+        common_vendor.index.reLaunch({
+          url: "../index/index"
         });
       }
       this.dataa = res.data;
@@ -159,7 +169,9 @@ const _sfc_main = {
       });
     },
     removeFormat() {
-      this.editorCtx.removeFormat();
+      this.editorCtx.insertText({
+        text: "<pre>\u4EE3\u7801\u5757</pre>"
+      });
     },
     insertDate() {
       const date = new Date();
@@ -204,9 +216,22 @@ const _sfc_main = {
           });
         }
       });
+    },
+    async getSorts() {
+      const res = await api.myRequest({
+        url: "/?rest-api=sort_list",
+        method: "GET"
+      });
+      this.blogSorts = res.data.data.sorts;
+      var arr = Object.keys(this.blogSorts);
+      for (var i = 0; i <= arr.length; i++) {
+        this.blogSortName.push(res.data.data.sorts[i].sortname);
+      }
+      console.log(this.blogSortName);
     }
   },
   onLoad() {
+    this.getSorts();
     common_vendor.index.loadFontFace({
       family: "Pacifico",
       source: 'url("./Pacifico.ttf")'
@@ -267,10 +292,10 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       ["show-animation"]: true,
       title: "\u6587\u7AE0\u63CF\u8FF0"
     }),
-    D: common_vendor.t($data.sorts[$data.sort]),
+    D: common_vendor.t($data.blogSorts[$data.sort].sortname || "\u8BF7\u9009\u62E9\u5206\u7C7B"),
     E: common_vendor.o((...args) => $options.bindPickerChange && $options.bindPickerChange(...args)),
     F: $data.sort,
-    G: $data.sorts,
+    G: $data.blogSortName,
     H: common_vendor.p({
       ["show-animation"]: true,
       title: "\u9009\u62E9\u5206\u7C7B"

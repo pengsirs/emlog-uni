@@ -25,10 +25,14 @@
 				<scroll-view style="height: 100%;" scroll-y="true">
 					<view class="title">
 						<view class="title-blue"></view>
-						<text>已加载的文章</text>
+						<text>文章分类</text>
 					</view>
-					<uni-steps @toInfo="toInfo" :options="blogAll" active-color="#007AFF" :active="page*10"
-						direction="column" />
+					<view class="sorts">
+						<view v-for="(s,index) in blogSorts" :key="index" :id="'tab'+index"
+							:class="['scroll-view-item_H',current==index?'active':'']" @click="change(index)">
+							<view class="sort-item">{{s.sortname}}</view>
+						</view>
+					</view>
 				</scroll-view>
 			</uni-drawer>
 		</view>
@@ -48,14 +52,11 @@
 
 		<uni-notice-bar show-icon scrollable background-color="#fff" color="#000" text="这是公告,请在管理后台设置!" />
 
-		<scroll-view scroll-x="true" style="width: 100%;white-space: nowrap;">
+<!-- 		<scroll-view scroll-x="true" style="width: 100%;white-space: nowrap;">
 			<view class="sorts">
-				<view v-for="(s,index) in sorts" :key="index" :id="'tab'+index"
-					:class="['scroll-view-item_H',current==index?'active':'']" @click="change(index)">
-					<view class="sort-item">{{s.title}}</view>
-				</view>
+				
 			</view>
-		</scroll-view>
+		</scroll-view> -->
 
 		<view v-if="backTopValue" class="xiaohuojian" @click="xhj">
 			<image src="../../static/fanhuidingbu.png" mode=""></image>
@@ -125,31 +126,7 @@
 				backTopValue: false,
 				onRefresh: false,
 				status: "loading",
-				sorts: [{
-						"id": 1,
-						"title": "分类一"
-					},
-					{
-						"id": 2,
-						"title": "分类二"
-					},
-					{
-						"id": 3,
-						"title": "分类三"
-					},
-					{
-						"id": 4,
-						"title": "分类四"
-					},
-					{
-						"id": 4,
-						"title": "分类四"
-					},
-					{
-						"id": 4,
-						"title": "分类四"
-					}
-				],
+				blogSorts: [],
 				images: [
 					"http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/167/6483441/13482961188039425428",
 					"http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/181/6483441/13482961192300838800",
@@ -184,6 +161,7 @@
 		onLoad() {
 			this.blog(1);
 			this.blogall();
+			this.getSorts()
 		},
 		onShow() {
 			var that = this
@@ -309,6 +287,13 @@
 					}
 				})
 				this.blogAll = [...this.blogAll, ...res.data.data.articles]
+			},
+			async getSorts() {
+				const res = await myRequest({
+					url: '/?rest-api=sort_list',
+					method: 'GET',
+				})
+				this.blogSorts = res.data.data.sorts
 			}
 		}
 	}
@@ -336,14 +321,20 @@
 	}
 
 	.sorts {
-		display: flex;
-		flex-wrap: nowrap;
+		background-color: #eee;
+		padding: 10px;
+		margin: 10px;
+		box-shadow: #eee 1px 1px 10px;
+		border-radius: 10px;
+		opacity: 0.8;
 	}
 
 	.scroll-view-item_H {
 		&.active {
 			background-color: #2979ff;
 			border-radius: 20px;
+			opacity: 0.5;
+			color: #fff;
 		}
 	}
 
@@ -358,13 +349,6 @@
 		border-radius: 10px;
 		opacity: 0.5;
 		font-size: 16px;
-	}
-
-	::-webkit-scrollbar {
-		display: none;
-		width: 0;
-		height: 0;
-		color: transparent;
 	}
 
 

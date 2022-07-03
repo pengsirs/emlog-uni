@@ -216,7 +216,7 @@
 								title: '清除成功',
 								duration: 2000
 							});
-							uni.switchTab({
+							uni.reLaunch({
 								url: "../index/index"
 							})
 						} else if (res.cancel) {
