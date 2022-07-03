@@ -1,37 +1,37 @@
 # emlog-wxmini
 
 #### 介绍
-emlogPro小程序，适配安卓、iOS、小程序
-
-#### 软件架构
-
-
+emlogPro小程序使用uni-app开发，适配安卓、iOS、小程序
 
 #### 安装教程
 
 1.  导入项目到HBuilderX
-2.  修改项目内的setting.js文件
-3.  xxxx
+2.  修改setting.js内的配置信息
+3.  注册账号（http://tp.hkiii.cn）
+4.  联系我激活账号即可
 
-#### 使用说明
+#### 更新记录
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  2022-05-04
+	项目开始时间
+	新增文章发布
+2.  2022-06-12
+	新增文章列表和文章详情
+	文章发布支持标签
+	修复小bug
+3.  2022-06-15
+	文章发布支持上传图片到七牛云 
+4.  2022-06-17
+	新增文章发布验证
+	新增关于、反馈等页面
+5.  2022-06-25
+	新增App登录功能
+	修复bug若干
+6.  2022-07-03
+    新增文章分类
+	新增app、小程序端分享功能
+	修复小bug
+	
 
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+#### 源码下载
+>   github地址：https://github.com/pengsirs/emlog-uni

@@ -265,6 +265,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     o: common_vendor.o(($event) => $options.about()),
     p: common_vendor.p({
       type: "closeempty",
+      color: "#fff",
       size: "30"
     }),
     q: common_vendor.o(($event) => $options.close()),

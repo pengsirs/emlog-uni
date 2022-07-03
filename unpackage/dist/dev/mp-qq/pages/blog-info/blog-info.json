@@ -4,8 +4,6 @@
   "usingComponents": {
     "uni-icons": "../../uni_modules/uni-icons/components/uni-icons/uni-icons",
     "mp-html": "../../uni_modules/mp-html/components/mp-html/mp-html",
-    "uni-transition": "../../uni_modules/uni-transition/components/uni-transition/uni-transition",
-    "uni-collapse-item": "../../uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item",
-    "uni-collapse": "../../uni_modules/uni-collapse/components/uni-collapse/uni-collapse"
+    "uni-transition": "../../uni_modules/uni-transition/components/uni-transition/uni-transition"
   }
 }

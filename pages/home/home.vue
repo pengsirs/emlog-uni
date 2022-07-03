@@ -64,7 +64,7 @@
 		<view class="close" @click="close()">
 			<view class="close-title">请选择登录方式</view>
 			<view class="close-btn">
-				<uni-icons type="closeempty" size="30"></uni-icons>
+				<uni-icons type="closeempty" color="#fff" size="30"></uni-icons>
 			</view>
 		</view>
 		<view class="login-content">
@@ -296,8 +296,9 @@ page{
 		transition: 2s;
 		position: fixed;
 		bottom: 0;
+		color: #fff;
 		box-shadow: #BBE4FF 1px 1px 10px;
-		background-color: #F3E3D8;
+		background-color: #1d243c;
 		border-radius: 20px 20px 0px 0px;
 	}
 

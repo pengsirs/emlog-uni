@@ -909,10 +909,10 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.uni-collapse-item[data-v-41027c34] {
+.uni-collapse-item[data-v-e55e2a3e] {
   box-sizing: border-box;
 }
-.uni-collapse-item__title[data-v-41027c34] {
+.uni-collapse-item__title[data-v-e55e2a3e] {
   display: flex;
   width: 100%;
   box-sizing: border-box;
@@ -920,11 +920,11 @@
   align-items: center;
   transition: border-bottom-color 0.3s;
 }
-.uni-collapse-item__title-wrap[data-v-41027c34] {
+.uni-collapse-item__title-wrap[data-v-e55e2a3e] {
   width: 100%;
   flex: 1;
 }
-.uni-collapse-item__title-box[data-v-41027c34] {
+.uni-collapse-item__title-box[data-v-e55e2a3e] {
   padding: 0 15px;
   display: flex;
   width: 100%;
@@ -934,25 +934,22 @@
   align-items: center;
   height: 48px;
   line-height: 48px;
-  color: #303133;
+  color: #fff;
   font-size: 13px;
   font-weight: 500;
 }
-.uni-collapse-item__title-box.is-disabled .uni-collapse-item__title-text[data-v-41027c34] {
-  color: #999;
+.uni-collapse-item__title-box.is-disabled .uni-collapse-item__title-text[data-v-e55e2a3e] {
+  color: #fff;
 }
-.uni-collapse-item__title.uni-collapse-item-border[data-v-41027c34] {
-  border-bottom: 1px solid #ebeef5;
-}
-.uni-collapse-item__title.is-open[data-v-41027c34] {
+.uni-collapse-item__title.is-open[data-v-e55e2a3e] {
   border-bottom-color: transparent;
 }
-.uni-collapse-item__title-img[data-v-41027c34] {
+.uni-collapse-item__title-img[data-v-e55e2a3e] {
   height: 22px;
   width: 22px;
   margin-right: 10px;
 }
-.uni-collapse-item__title-text[data-v-41027c34] {
+.uni-collapse-item__title-text[data-v-e55e2a3e] {
   flex: 1;
   font-size: 14px;
   white-space: nowrap;
@@ -960,7 +957,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.uni-collapse-item__title-arrow[data-v-41027c34] {
+.uni-collapse-item__title-arrow[data-v-e55e2a3e] {
   display: flex;
   box-sizing: border-box;
   align-items: center;
@@ -970,38 +967,38 @@
   margin-right: 10px;
   transform: rotate(0deg);
 }
-.uni-collapse-item__title-arrow-active[data-v-41027c34] {
+.uni-collapse-item__title-arrow-active[data-v-e55e2a3e] {
   transform: rotate(-180deg);
 }
-.uni-collapse-item__wrap[data-v-41027c34] {
+.uni-collapse-item__wrap[data-v-e55e2a3e] {
   will-change: height;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
   height: 0;
 }
-.uni-collapse-item__wrap.is--transition[data-v-41027c34] {
+.uni-collapse-item__wrap.is--transition[data-v-e55e2a3e] {
   transition-property: height, border-bottom-width;
   transition-duration: 0.3s;
   will-change: height;
 }
-.uni-collapse-item__wrap-content[data-v-41027c34] {
+.uni-collapse-item__wrap-content[data-v-e55e2a3e] {
   position: absolute;
   font-size: 13px;
-  color: #303133;
+  color: #fff;
   border-bottom-color: transparent;
   border-bottom-style: solid;
   border-bottom-width: 0;
 }
-.uni-collapse-item__wrap-content.uni-collapse-item--border[data-v-41027c34] {
+.uni-collapse-item__wrap-content.uni-collapse-item--border[data-v-e55e2a3e] {
   border-bottom-width: 1px;
   border-bottom-color: red;
   border-bottom-color: #ebeef5;
 }
-.uni-collapse-item__wrap-content.open[data-v-41027c34] {
+.uni-collapse-item__wrap-content.open[data-v-e55e2a3e] {
   position: relative;
 }
-.uni-collapse-item--animation[data-v-41027c34] {
+.uni-collapse-item--animation[data-v-e55e2a3e] {
   transition-property: transform;
   transition-duration: 0.3s;
   transition-timing-function: ease;
@@ -1031,15 +1028,22 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.uni-collapse[data-v-275068f4] {
+.uni-collapse[data-v-39241bd6] {
   width: 100%;
   display: flex;
   flex-direction: column;
   background-color: #fff;
 }
 
-body {
-		background-color: #F17C67;
+.homelist-item{
+		padding: 5px;
+}
+.homelist{
+	text-align: center;
+}
+.ft-content{
+	display:flex;
+	justify-content: space-between;
 }
 .content-box {
 		background-color: #fff;
@@ -1050,6 +1054,7 @@ body {
 }
 body {
 		font-size: 13px;
+		background-color: #F17C67;
 }
 .xx {
 		width: 100%;
@@ -1100,9 +1105,9 @@ body {
 		background-color: #fff;
 }
 .uni-collapse-item {
-		background-color: #eee;
+		background-color: #1d243c;
 		border-radius: 30px 30px 0px 0px;
-		box-shadow: #eee 1px 1px 10px;
+		box-shadow: #555 1px 1px 10px;
 		color: #fff;
 }
 .footer {

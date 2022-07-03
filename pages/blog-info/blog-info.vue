@@ -14,7 +14,7 @@
 				</view>
 			</view>
 			<mp-html lozy-load="true" container-style="overflow: hidden;" selectable="true" :tag-style="tagStyle"
-				:content="data.content"></mp-html>
+				:content="data.content || content"></mp-html>
 				<!-- <rich-text :nodes="data.content"></rich-text> -->
 			<view class="over">—— The End ——</view>
 
@@ -32,15 +32,68 @@
 		</view>
 		<view class="foot-content"></view>
 	</uni-transition>
+	<!-- #ifdef APP-PLUS -->
 	<view class="footer">
-		<uni-collapse>
-			<uni-collapse-item title="文章扩展" :show-animation="true">
+		<uni-collapses>
+			<uni-collapse-items title="分享到" :show-animation="true">
 				<view class="ft-content">
-					<text class="text">默认开启组件动画，使用动画效果折叠内容会有一个从上到下的动画。</text>
+					<view class="homelist" @click="qq()">
+						<view class="homelist-item">
+							<uni-icons type="qq" color="#564aff" size="30"></uni-icons>
+							<view style="font-size: 12px;font-weight: 400;">QQ</view>
+						</view>
+					</view>
+					<view class="homelist" @click="weixin('WXSceneSession')">
+						<view class="homelist-item">
+							<uni-icons type="weixin" color="#42ff48" size="30"></uni-icons>
+							<view style="font-size: 12px;font-weight: 400;">微信</view>
+						</view>
+					</view>
+					<view class="homelist" @click="weixin('WXSceneTimeline')">
+						<view class="homelist-item">
+							<uni-icons type="pyq" color="#fec855" size="30"></uni-icons>
+							<view style="font-size: 12px;font-weight: 400;">朋友圈</view>
+						</view>
+					</view>
 				</view>
-			</uni-collapse-item>
-		</uni-collapse>
+			</uni-collapse-items>
+		</uni-collapses>
 	</view>
+	<!-- #endif -->
+	<!-- #ifndef APP-PLUS -->
+	<view class="footer">
+		<uni-collapses>
+			<uni-collapse-items title="文章扩展" :show-animation="true">
+				<view class="ft-content">
+					<view class="homelist" @click="zanzhu()">
+						<view class="homelist-item">
+							<uni-icons type="hand-up-filled" color="#564aff" size="30"></uni-icons>
+							<view style="font-size: 12px;font-weight: 400;">支持一下</view>
+						</view>
+					</view>
+					<view class="homelist" @click="wenti()">
+						<view class="homelist-item">
+							<uni-icons type="chat-filled" color="#fd7058" size="30"></uni-icons>
+							<view style="font-size: 12px;font-weight: 400;">问题反馈</view>
+						</view>
+					</view>
+					<view class="homelist" @click="down()">
+						<view class="homelist-item">
+							<uni-icons type="download-filled" color="#fec855" size="30"></uni-icons>
+							<view style="font-size: 12px;font-weight: 400;">附件下载</view>
+						</view>
+					</view>
+					<view class="homelist" @click="share()">
+						<view class="homelist-item">
+							<uni-icons type="paperplane-filled" color="#42ff48" size="30"></uni-icons>
+							<view style="font-size: 12px;font-weight: 400;">分享文章</view>
+						</view>
+					</view>
+				</view>
+			</uni-collapse-items>
+		</uni-collapses>
+	</view>
+	<!-- #endif -->
 </template>
 
 <script>
@@ -88,6 +141,40 @@
 			}
 		},
 		methods: {
+			// App分享
+			weixin(scene){
+				uni.share({
+					provider: "weixin",
+					scene: scene,
+					title:this.data.title,
+					type: 0,
+					href: this.url,
+					imageUrl: this.data.cover||"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+					summary: "我正在查看文章"+this.data.title+"，赶紧跟我一起来体验！",
+					success: function (res) {
+						console.log("success:" + JSON.stringify(res));
+					},
+					fail: function (err) {
+						console.log("fail:" + JSON.stringify(err));
+					}
+				});
+			},
+			qq(){
+				uni.share({
+					provider: "qq",
+					type: 0,
+					title:this.data.title,
+					summary: "我正在查看文章"+this.data.title+"，赶紧跟我一起来体验！",
+					imageUrl: this.data.cover||"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+					href: this.url,
+					success: function (res) {
+						console.log("success:" + JSON.stringify(res));
+					},
+					fail: function (err) {
+						console.log("fail:" + JSON.stringify(err));
+					}
+				});
+			},
 			async blog(e) {
 				const res = await myRequest({
 					url: '/?rest-api=article_detail',
@@ -120,10 +207,16 @@
 </script>
 
 <style>
-	page {
-		background-color: #F17C67;
+	.homelist-item{
+		padding: 5px;
 	}
-
+.homelist{
+	text-align: center;
+}
+.ft-content{
+	display:flex;
+	justify-content: space-between;
+}
 	.content-box {
 		background-color: #fff;
 		padding: 20px;
@@ -134,6 +227,7 @@
 
 	page {
 		font-size: 13px;
+		background-color: #F17C67;
 	}
 
 	.xx {
@@ -193,9 +287,9 @@
 	}
 
 	.uni-collapse-item {
-		background-color: #eee;
+		background-color: #1d243c;
 		border-radius: 30px 30px 0px 0px;
-		box-shadow: #eee 1px 1px 10px;
+		box-shadow: #555 1px 1px 10px;
 		color: #fff;
 	}
 

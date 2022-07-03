@@ -1,6 +1,6 @@
 "use strict";
-var api = require("../../api.js");
 var common_vendor = require("../../common/vendor.js");
+var api = require("../../api.js");
 require("../../setting.js");
 const _sfc_main = {
   data() {
@@ -34,6 +34,39 @@ const _sfc_main = {
     };
   },
   methods: {
+    weixin(scene) {
+      common_vendor.index.share({
+        provider: "weixin",
+        scene,
+        title: this.data.title,
+        type: 0,
+        href: this.url,
+        imageUrl: this.data.cover || "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+        summary: "\u6211\u6B63\u5728\u67E5\u770B\u6587\u7AE0" + this.data.title + "\uFF0C\u8D76\u7D27\u8DDF\u6211\u4E00\u8D77\u6765\u4F53\u9A8C\uFF01",
+        success: function(res) {
+          console.log("success:" + JSON.stringify(res));
+        },
+        fail: function(err) {
+          console.log("fail:" + JSON.stringify(err));
+        }
+      });
+    },
+    qq() {
+      common_vendor.index.share({
+        provider: "qq",
+        type: 0,
+        title: this.data.title,
+        summary: "\u6211\u6B63\u5728\u67E5\u770B\u6587\u7AE0" + this.data.title + "\uFF0C\u8D76\u7D27\u8DDF\u6211\u4E00\u8D77\u6765\u4F53\u9A8C\uFF01",
+        imageUrl: this.data.cover || "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+        href: this.url,
+        success: function(res) {
+          console.log("success:" + JSON.stringify(res));
+        },
+        fail: function(err) {
+          console.log("fail:" + JSON.stringify(err));
+        }
+      });
+    },
     async blog(e) {
       const res = await api.myRequest({
         url: "/?rest-api=article_detail",
@@ -59,17 +92,15 @@ if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   const _easycom_mp_html2 = common_vendor.resolveComponent("mp-html");
   const _easycom_uni_transition2 = common_vendor.resolveComponent("uni-transition");
-  const _easycom_uni_collapse_item2 = common_vendor.resolveComponent("uni-collapse-item");
-  const _easycom_uni_collapse2 = common_vendor.resolveComponent("uni-collapse");
-  (_easycom_uni_icons2 + _easycom_mp_html2 + _easycom_uni_transition2 + _easycom_uni_collapse_item2 + _easycom_uni_collapse2)();
+  const _component_uni_collapse_items = common_vendor.resolveComponent("uni-collapse-items");
+  const _component_uni_collapses = common_vendor.resolveComponent("uni-collapses");
+  (_easycom_uni_icons2 + _easycom_mp_html2 + _easycom_uni_transition2 + _component_uni_collapse_items + _component_uni_collapses)();
 }
 const _easycom_uni_icons = () => "../../uni_modules/uni-icons/components/uni-icons/uni-icons.js";
 const _easycom_mp_html = () => "../../uni_modules/mp-html/components/mp-html/mp-html.js";
 const _easycom_uni_transition = () => "../../uni_modules/uni-transition/components/uni-transition/uni-transition.js";
-const _easycom_uni_collapse_item = () => "../../uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.js";
-const _easycom_uni_collapse = () => "../../uni_modules/uni-collapse/components/uni-collapse/uni-collapse.js";
 if (!Math) {
-  (_easycom_uni_icons + _easycom_mp_html + _easycom_uni_transition + _easycom_uni_collapse_item + _easycom_uni_collapse)();
+  (_easycom_uni_icons + _easycom_mp_html + _easycom_uni_transition)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
@@ -97,7 +128,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       ["container-style"]: "overflow: hidden;",
       selectable: "true",
       ["tag-style"]: $data.tagStyle,
-      content: $data.data.content
+      content: $data.data.content || $data.content
     }),
     i: common_vendor.t($data.data.title),
     j: common_vendor.t($data.data.author_name || "\u4F5C\u8005"),
@@ -111,6 +142,30 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       show: _ctx.show
     }),
     o: common_vendor.p({
+      type: "hand-up-filled",
+      color: "#564aff",
+      size: "30"
+    }),
+    p: common_vendor.o(($event) => _ctx.zanzhu()),
+    q: common_vendor.p({
+      type: "chat-filled",
+      color: "#fd7058",
+      size: "30"
+    }),
+    r: common_vendor.o(($event) => _ctx.wenti()),
+    s: common_vendor.p({
+      type: "download-filled",
+      color: "#fec855",
+      size: "30"
+    }),
+    t: common_vendor.o(($event) => _ctx.down()),
+    v: common_vendor.p({
+      type: "paperplane-filled",
+      color: "#42ff48",
+      size: "30"
+    }),
+    w: common_vendor.o(($event) => _ctx.share()),
+    x: common_vendor.p({
       title: "\u6587\u7AE0\u6269\u5C55",
       ["show-animation"]: true
     })
