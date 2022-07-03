@@ -51,10 +51,6 @@
 	export default {
 		data() {
 			return {
-				html: '<p>1234567890</p>' +
-					'<p>hello world<br />' +
-					'111<br />' +
-					'插件地址：<a href="https://www.emlog.net/plugin/detail/387" title="点我去安装">点我去安装</a><br /></p>',
 				tagStyle: {
 					blockquote: 'max-width:100%;border-radius:5px;background:#eee;padding:5px;',
 					table: 'width:100%;border:1px #eee solid;',
@@ -86,8 +82,9 @@
 				console.log(res.target)
 			}
 			return {
-				title: data.title,
-				path: 'pages/blog-info/blog-info?id=' + data.id + "&url=" + this.url
+				title: this.data.title,
+				imageUrl: this.data.cover||"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+				path: 'pages/blog-info/blog-info?id=' + this.data.id + "&url=" + this.url
 			}
 		},
 		methods: {

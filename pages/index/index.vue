@@ -196,7 +196,8 @@
 			}
 			return {
 				title: '分享好玩的程序！',
-				path: '/pages/index/index'
+				imageUrl:'http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948',
+				path: 'pages/index/index'
 			}
 		},
 		methods: {

@@ -2401,7 +2401,8 @@ if (uni.restoreGlobal) {
       }
       return {
         title: "\u5206\u4EAB\u597D\u73A9\u7684\u7A0B\u5E8F\uFF01",
-        path: "/pages/index/index"
+        imageUrl: "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+        path: "pages/index/index"
       };
     },
     methods: {
@@ -7097,7 +7098,7 @@ if (uni.restoreGlobal) {
     }
   };
   const reg = /\[(\S+?)\]/g;
-  const data$1 = {
+  const data = {
     \u7B11\u8138: "\u{1F604}",
     \u751F\u75C5: "\u{1F637}",
     \u7834\u6D95\u4E3A\u7B11: "\u{1F602}",
@@ -7280,14 +7281,14 @@ if (uni.restoreGlobal) {
   }
   Emoji.prototype.onUpdate = function(content) {
     return content.replace(reg, ($, $1) => {
-      if (data$1[$1])
-        return data$1[$1];
+      if (data[$1])
+        return data[$1];
       return $;
     });
   };
   Emoji.prototype.onGetContent = function(content) {
-    for (const item in data$1) {
-      content = content.replace(new RegExp(data$1[item], "g"), "[" + item + "]");
+    for (const item in data) {
+      content = content.replace(new RegExp(data[item], "g"), "[" + item + "]");
     }
     return content;
   };
@@ -8079,7 +8080,6 @@ if (uni.restoreGlobal) {
   const _sfc_main$7 = {
     data() {
       return {
-        html: '<p>1234567890</p><p>hello world<br />111<br />\u63D2\u4EF6\u5730\u5740\uFF1A<a href="https://www.emlog.net/plugin/detail/387" title="\u70B9\u6211\u53BB\u5B89\u88C5">\u70B9\u6211\u53BB\u5B89\u88C5</a><br /></p>',
         tagStyle: {
           blockquote: "max-width:100%;border-radius:5px;background:#eee;padding:5px;",
           table: "width:100%;border:1px #eee solid;",
@@ -8100,11 +8100,12 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/blog-info/blog-info.vue:86", res.target);
+        formatAppLog("log", "at pages/blog-info/blog-info.vue:82", res.target);
       }
       return {
-        title: data.title,
-        path: "pages/blog-info/blog-info?id=" + data.id + "&url=" + this.url
+        title: this.data.title,
+        imageUrl: this.data.cover || "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+        path: "pages/blog-info/blog-info?id=" + this.data.id + "&url=" + this.url
       };
     },
     methods: {

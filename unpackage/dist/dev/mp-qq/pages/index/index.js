@@ -106,7 +106,8 @@ const _sfc_main = {
     }
     return {
       title: "\u5206\u4EAB\u597D\u73A9\u7684\u7A0B\u5E8F\uFF01",
-      path: "/pages/index/index"
+      imageUrl: "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+      path: "pages/index/index"
     };
   },
   methods: {

@@ -5,7 +5,6 @@ require("../../setting.js");
 const _sfc_main = {
   data() {
     return {
-      html: '<p>1234567890</p><p>hello world<br />111<br />\u63D2\u4EF6\u5730\u5740\uFF1A<a href="https://www.emlog.net/plugin/detail/387" title="\u70B9\u6211\u53BB\u5B89\u88C5">\u70B9\u6211\u53BB\u5B89\u88C5</a><br /></p>',
       tagStyle: {
         blockquote: "max-width:100%;border-radius:5px;background:#eee;padding:5px;",
         table: "width:100%;border:1px #eee solid;",
@@ -29,8 +28,9 @@ const _sfc_main = {
       console.log(res.target);
     }
     return {
-      title: data.title,
-      path: "pages/blog-info/blog-info?id=" + data.id + "&url=" + this.url
+      title: this.data.title,
+      imageUrl: this.data.cover || "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+      path: "pages/blog-info/blog-info?id=" + this.data.id + "&url=" + this.url
     };
   },
   methods: {
