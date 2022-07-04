@@ -31,6 +31,14 @@
 			}
 		},
 		{
+			"path": "pages/sort-info/sort-info",
+			"style": {
+				"navigationBarTitleText": "分类详情",
+				"navigationBarBackgroundColor": "#F17C67",
+				"enablePullDownRefresh":true
+			}
+		},
+		{
 			"path": "pages/home/home",
 			"style": {
 				"navigationBarTitleText": "我的",

@@ -133,10 +133,16 @@
 		onShow() {
 			var that = this;
 			uni.getStorage({
+				key: 'appData',
+				success: function(res) {
+					that.appData = res.data
+				}
+			});
+			uni.getStorage({
 				key: 'apikey',
 				success: function(res) {
 					console.log('success')
-					if (set.$apikey == res.data) {
+					if (that.appData.data.apikey == res.data) {
 						that.flg = true
 					}
 				},
@@ -151,7 +157,7 @@
 				key: 'apikey',
 				success: function(res) {
 					console.log('success')
-					if (set.$apikey == res.data) {
+					if (that.appData.data.apikey == res.data) {
 						that.flg = true
 					} else {
 						that.flg = false
@@ -192,7 +198,7 @@
 				var mm = time.getMinutes();
 				var ss = time.getSeconds();
 				var $req_time = String((time.getTime() / 1000).toFixed(0)); // unix时间戳, 单位秒
-				var md = $req_time + set.$apikey
+				var md = $req_time + this.appData.data.apikey
 				var $sign = md5(md); // MD5签名
 				const res = await myRequest({
 					url: '/?rest-api=article_post',
@@ -285,22 +291,29 @@
 						uni.showLoading({
 							title: '正在上传...'
 						});
+						console.log(res.tempFilePaths[0])
+						console.log(that.appData.data.accessKey)
+						console.log(that.appData.data.secretKey)
 						uni.uploadFile({
-							url: 'http://tp.hkiii.cn/index.php/index/index/img',
+							url: 'https://tp.hkiii.cn/index.php/index/index/img',
 							filePath: res.tempFilePaths[0],
 							name: 'file',
+							method:'POST',
+							fileType:"image",
 							formData: {
-								ak: set.$accessKey,
-								sk: set.$secretKey,
-								kj: set.$bucket
+								ak: that.appData.data.accessKey,
+								sk: that.appData.data.secretKey,
+								kj: that.appData.data.bucket,
+								ym: that.appData.data.ym,
 							},
 							success: function(res) {
 								var data = JSON.parse(res.data)
+								console.log(data.data)
 								that.editorCtx.insertImage({
-									src: data,
-									alt: data,
+									src: data.data,
+									alt: data.data,
 									success: function() {
-										that.cover.push(data)
+										that.cover.push(data.data)
 										that.messageToggle('success', '上传成功');
 										uni.hideLoading();
 									}

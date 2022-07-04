@@ -51,4 +51,20 @@ export const apiRequest = (options) => {
 			}
 		});
 	})
+};
+
+export const htRequest = (options) => {
+	return new Promise((resolve, reject) => {
+		uni.request({
+			url: set.seturl + options.url,
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			method: options.method || 'POST', 
+			data: options.data || {}, 
+			success: (res) => {
+				resolve(res);
+			}
+		});
+	})
 }

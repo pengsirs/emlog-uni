@@ -586,8 +586,8 @@
 	justify-content: space-around;
 	z-index: 2;
 }
-body{
-	font-size: 16px;
+body {
+		font-size: 16px;
 }
 .login {
 		width: 100%;

@@ -1,6 +1,5 @@
 <template>
-	<view class="centent">
-
+	<view class="centent" v-if="appData.code== '200'">
 		<view class="banner-box">
 			<view class="box-img">
 				<image class="me-img" :src="avatarUrl" mode=""></image>
@@ -59,32 +58,36 @@
 				<view class="home-a-c">></view>
 			</view>
 		</view>
-	</view>
-	<view class="login" :style="height">
-		<view class="close" @click="close()">
-			<view class="close-title">请选择登录方式</view>
-			<view class="close-btn">
-				<uni-icons type="closeempty" color="#fff" size="30"></uni-icons>
+		<view class="login" :style="height">
+			<view class="close" @click="close()">
+				<view class="close-title">请选择登录方式</view>
+				<view class="close-btn">
+					<uni-icons type="closeempty" color="#fff" size="30"></uni-icons>
+				</view>
 			</view>
-		</view>
-		<view class="login-content">
+			<view class="login-content">
 				该功能仅获取您的微信/QQ头像，用于前端页面展示，本程序不会储存您的个人信息，请放心使用！
-		</view>
-		<view class="login-box">
-			<view class="wx" @click="getUser('weixin')">
-				<uni-icons type="weixin" color="#04BE02" size="16"></uni-icons>微信登录
 			</view>
-			<view class="qq" @click="getUser('qq')">
-				<uni-icons type="qq" color="#66ccff" size="16"></uni-icons>QQ登录
+			<view class="login-box">
+				<view class="wx" @click="getUser('weixin')">
+					<uni-icons type="weixin" color="#04BE02" size="16"></uni-icons>微信登录
+				</view>
+				<view class="qq" @click="getUser('qq')">
+					<uni-icons type="qq" color="#66ccff" size="16"></uni-icons>QQ登录
+				</view>
 			</view>
 		</view>
+	</view>
+	<view class="centent" style="text-align: center;" v-if="appData.code== '201'">
+		账号未激活，请联系QQ6283354
 	</view>
 </template>
 
 <script>
 	import {
 		myRequest,
-		apiRequest
+		apiRequest,
+		htRequest
 	} from '@/api.js';
 	import set from '@/setting.js';
 	export default {
@@ -116,6 +119,7 @@
 						url: "../setting/admin"
 					}
 				],
+				appData: [],
 				opacity: ["opacity:0.1;background:#fff;", "opacity:0.125;background:#fff;",
 					"opacity:0.15;background:#fff;", "opacity:0.175;background:#fff;", "opacity:0.2;background:#fff;",
 					"opacity:0.225;background:#fff;",
@@ -138,6 +142,12 @@
 		onShow() {
 			var that = this
 			uni.getStorage({
+				key: 'appData',
+				success: function(res) {
+					that.appData = res.data
+				}
+			});
+			uni.getStorage({
 				key: "avatarUrl",
 				success: function(res) {
 					that.avatarUrl = res.data
@@ -148,11 +158,7 @@
 				success: function(res) {
 					that.nickName = res.data
 				}
-			})
-		},
-		onLoad() {
-			this.height = "height:0%";
-			var that = this;
+			});
 			uni.getStorage({
 				key: 'shoulu',
 				success: function(res) {
@@ -171,6 +177,9 @@
 					that.baidu('/sogoupages/index', 'sogo');
 				}
 			});
+		},
+		onLoad() {
+			this.height = "height:0%";
 		},
 		methods: {
 			close() {
@@ -266,12 +275,13 @@
 				}
 			},
 			async baidu(u, k) {
-				var urlNoProtocol = set.url.replace(/^https?\:\/\//i, "");
+				var that = this;
+				var urlNoProtocol = that.appData.data.blogurl.replace(/^https?\:\/\//i, "");
 				const res = await apiRequest({
 					url: u,
 					method: 'GET',
 					data: {
-						key: set.tiankey,
+						key: that.appData.data.tianapi,
 						domain: urlNoProtocol
 					}
 				})
@@ -279,7 +289,7 @@
 					key: k,
 					data: res.data.newslist[0].count
 				});
-				this[k] = res.data.newslist[0].count
+				that[k] = res.data.newslist[0].count
 			},
 		}
 	}
@@ -287,9 +297,11 @@
 
 <style>
 	@import "../../uni.css";
-page{
-	font-size: 16px;
-}
+
+	page {
+		font-size: 16px;
+	}
+
 	.login {
 		width: 100%;
 		z-index: 99;
@@ -352,6 +364,7 @@ page{
 		opacity: 0.7;
 		text-indent: 32px;
 	}
+
 	/* #ifdef H5 */
 	.login-content {
 		height: 30%;
@@ -360,6 +373,7 @@ page{
 		opacity: 0.7;
 		text-indent: 32px;
 	}
+
 	/* #endif */
 	.baidu-box {
 		display: flex;

@@ -1,7 +1,7 @@
 "use strict";
 var common_vendor = require("../../common/vendor.js");
 var api = require("../../api.js");
-var setting = require("../../setting.js");
+require("../../setting.js");
 const _sfc_main = {
   props: {
     value: {
@@ -35,10 +35,16 @@ const _sfc_main = {
   onShow() {
     var that = this;
     common_vendor.index.getStorage({
+      key: "appData",
+      success: function(res) {
+        that.appData = res.data;
+      }
+    });
+    common_vendor.index.getStorage({
       key: "apikey",
       success: function(res) {
         console.log("success");
-        if (setting.set.$apikey == res.data) {
+        if (that.appData.data.apikey == res.data) {
           that.flg = true;
         }
       },
@@ -53,7 +59,7 @@ const _sfc_main = {
       key: "apikey",
       success: function(res) {
         console.log("success");
-        if (setting.set.$apikey == res.data) {
+        if (that.appData.data.apikey == res.data) {
           that.flg = true;
         } else {
           that.flg = false;
@@ -95,7 +101,7 @@ const _sfc_main = {
       var mm = time.getMinutes();
       var ss = time.getSeconds();
       var $req_time = String((time.getTime() / 1e3).toFixed(0));
-      var md = $req_time + setting.set.$apikey;
+      var md = $req_time + this.appData.data.apikey;
       var $sign = common_vendor.md5(md);
       const res = await api.myRequest({
         url: "/?rest-api=article_post",
@@ -188,22 +194,29 @@ const _sfc_main = {
           common_vendor.index.showLoading({
             title: "\u6B63\u5728\u4E0A\u4F20..."
           });
+          console.log(res.tempFilePaths[0]);
+          console.log(that.appData.data.accessKey);
+          console.log(that.appData.data.secretKey);
           common_vendor.index.uploadFile({
-            url: "http://tp.hkiii.cn/index.php/index/index/img",
+            url: "https://tp.hkiii.cn/index.php/index/index/img",
             filePath: res.tempFilePaths[0],
             name: "file",
+            method: "POST",
+            fileType: "image",
             formData: {
-              ak: setting.set.$accessKey,
-              sk: setting.set.$secretKey,
-              kj: setting.set.$bucket
+              ak: that.appData.data.accessKey,
+              sk: that.appData.data.secretKey,
+              kj: that.appData.data.bucket,
+              ym: that.appData.data.ym
             },
             success: function(res2) {
               var data = JSON.parse(res2.data);
+              console.log(data.data);
               that.editorCtx.insertImage({
-                src: data,
-                alt: data,
+                src: data.data,
+                alt: data.data,
                 success: function() {
-                  that.cover.push(data);
+                  that.cover.push(data.data);
                   that.messageToggle("success", "\u4E0A\u4F20\u6210\u529F");
                   common_vendor.index.hideLoading();
                 }

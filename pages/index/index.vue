@@ -29,7 +29,7 @@
 					</view>
 					<view class="sorts">
 						<view v-for="(s,index) in blogSorts" :key="index" :id="'tab'+index"
-							:class="['scroll-view-item_H',current==index?'active':'']" @click="change(index)">
+							:class="['scroll-view-item_H',current==index?'active':'']" @click="change(index,s.sid)">
 							<view class="sort-item">{{s.sortname}}</view>
 						</view>
 					</view>
@@ -50,7 +50,7 @@
 		</view>
 
 
-		<uni-notice-bar show-icon scrollable background-color="#fff" color="#000" text="这是公告,请在管理后台设置!" />
+		<uni-notice-bar show-icon scrollable background-color="#fff" color="#000" :text="appData.data.gonggao" />
 
 <!-- 		<scroll-view scroll-x="true" style="width: 100%;white-space: nowrap;">
 			<view class="sorts">
@@ -109,7 +109,8 @@
 <script>
 	import {
 		myRequest,
-		apiRequest
+		apiRequest,
+		htRequest
 	} from '@/api.js';
 	import set from '@/setting.js';
 	export default {
@@ -155,16 +156,17 @@
 				blogAll: '',
 				current: 0,
 				scrollinto: '',
+				appData:''
 			}
 		},
 		mounted() {},
 		onLoad() {
 			this.blog(1);
-			this.blogall();
-			this.getSorts()
+			this.getSorts();
+			this.getData();
 		},
 		onShow() {
-			var that = this
+			var that = this;
 			uni.getStorage({
 				key: "avatarUrl",
 				success: function(res) {
@@ -201,9 +203,25 @@
 			}
 		},
 		methods: {
-
-			change(index) {
-				if (this.current == index) return;
+			async getData() {
+				var that = this;
+				const res = await htRequest({
+					url: "/index.php/index/index/get_miniapp",
+					method: 'POST',
+					data: {
+						setapi: set.setapi
+					},
+				})
+				this.appData = res.data
+				uni.setStorage({
+					key:'appData',
+					data:res.data
+				})
+			},
+			change(index,id) {
+				uni.navigateTo({
+					url:"../sort-info/sort-info?id="+id
+				})
 				this.current = index;
 				this.scrollinto = 'tab' + index;
 			},

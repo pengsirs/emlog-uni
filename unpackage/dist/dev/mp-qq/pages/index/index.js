@@ -1,7 +1,7 @@
 "use strict";
 var common_vendor = require("../../common/vendor.js");
 var api = require("../../api.js");
-require("../../setting.js");
+var setting = require("../../setting.js");
 const _sfc_main = {
   data() {
     return {
@@ -65,15 +65,16 @@ const _sfc_main = {
       },
       blogAll: "",
       current: 0,
-      scrollinto: ""
+      scrollinto: "",
+      appData: ""
     };
   },
   mounted() {
   },
   onLoad() {
     this.blog(1);
-    this.blogall();
     this.getSorts();
+    this.getData();
   },
   onShow() {
     var that = this;
@@ -111,9 +112,24 @@ const _sfc_main = {
     };
   },
   methods: {
-    change(index) {
-      if (this.current == index)
-        return;
+    async getData() {
+      const res = await api.htRequest({
+        url: "/index.php/index/index/get_miniapp",
+        method: "POST",
+        data: {
+          setapi: setting.set.setapi
+        }
+      });
+      this.appData = res.data;
+      common_vendor.index.setStorage({
+        key: "appData",
+        data: res.data
+      });
+    },
+    change(index, id) {
+      common_vendor.index.navigateTo({
+        url: "../sort-info/sort-info?id=" + id
+      });
       this.current = index;
       this.scrollinto = "tab" + index;
     },
@@ -249,7 +265,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         b: index,
         c: "tab" + index,
         d: common_vendor.n($data.current == index ? "active" : ""),
-        e: common_vendor.o(($event) => $options.change(index))
+        e: common_vendor.o(($event) => $options.change(index, s.sid))
       };
     }),
     j: common_vendor.sr("showLeft", "02d9e768-3"),
@@ -274,7 +290,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       scrollable: true,
       ["background-color"]: "#fff",
       color: "#000",
-      text: "\u8FD9\u662F\u516C\u544A,\u8BF7\u5728\u7BA1\u7406\u540E\u53F0\u8BBE\u7F6E!"
+      text: $data.appData.data.gonggao
     }),
     o: $data.backTopValue
   }, $data.backTopValue ? {

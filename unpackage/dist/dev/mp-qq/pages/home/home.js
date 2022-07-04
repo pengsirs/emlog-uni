@@ -1,7 +1,7 @@
 "use strict";
 var common_vendor = require("../../common/vendor.js");
 var api = require("../../api.js");
-var setting = require("../../setting.js");
+require("../../setting.js");
 const _sfc_main = {
   data() {
     return {
@@ -32,6 +32,7 @@ const _sfc_main = {
           url: "../setting/admin"
         }
       ],
+      appData: [],
       opacity: [
         "opacity:0.1;background:#fff;",
         "opacity:0.125;background:#fff;",
@@ -76,6 +77,12 @@ const _sfc_main = {
   onShow() {
     var that = this;
     common_vendor.index.getStorage({
+      key: "appData",
+      success: function(res) {
+        that.appData = res.data;
+      }
+    });
+    common_vendor.index.getStorage({
       key: "avatarUrl",
       success: function(res) {
         that.avatarUrl = res.data;
@@ -87,10 +94,6 @@ const _sfc_main = {
         that.nickName = res.data;
       }
     });
-  },
-  onLoad() {
-    this.height = "height:0%";
-    var that = this;
     common_vendor.index.getStorage({
       key: "shoulu",
       success: function(res) {
@@ -109,6 +112,9 @@ const _sfc_main = {
         that.baidu("/sogoupages/index", "sogo");
       }
     });
+  },
+  onLoad() {
+    this.height = "height:0%";
   },
   methods: {
     close() {
@@ -195,12 +201,13 @@ const _sfc_main = {
       }
     },
     async baidu(u, k) {
-      var urlNoProtocol = setting.set.url.replace(/^https?\:\/\//i, "");
+      var that = this;
+      var urlNoProtocol = that.appData.data.blogurl.replace(/^https?\:\/\//i, "");
       const res = await api.apiRequest({
         url: u,
         method: "GET",
         data: {
-          key: setting.set.tiankey,
+          key: that.appData.data.tianapi,
           domain: urlNoProtocol
         }
       });
@@ -208,7 +215,7 @@ const _sfc_main = {
         key: k,
         data: res.data.newslist[0].count
       });
-      this[k] = res.data.newslist[0].count;
+      that[k] = res.data.newslist[0].count;
     }
   }
 };
@@ -221,68 +228,72 @@ if (!Math) {
   _easycom_uni_icons();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
-    a: $data.avatarUrl,
-    b: common_vendor.t($data.nickName),
-    c: common_vendor.o(($event) => $options.login()),
-    d: common_vendor.f($data.opacity, (i, k0, i0) => {
+  return common_vendor.e({
+    a: $data.appData.code == "200"
+  }, $data.appData.code == "200" ? {
+    b: $data.avatarUrl,
+    c: common_vendor.t($data.nickName),
+    d: common_vendor.o(($event) => $options.login()),
+    e: common_vendor.f($data.opacity, (i, k0, i0) => {
       return {
         a: common_vendor.s(i)
       };
     }),
-    e: common_vendor.f($data.homelist, (i, k0, i0) => {
+    f: common_vendor.f($data.homelist, (i, k0, i0) => {
       return {
         a: i.img,
         b: common_vendor.t(i.text),
         c: common_vendor.o(($event) => $options.go(i.url))
       };
     }),
-    f: common_vendor.p({
+    g: common_vendor.p({
       color: "#88CFFF",
       type: "vip-filled",
       size: "30"
     }),
-    g: common_vendor.t($data.shoulu || "\u83B7\u53D6\u4E2D..."),
-    h: common_vendor.o(($event) => $options.shua("baidu")),
-    i: common_vendor.p({
+    h: common_vendor.t($data.shoulu || "\u83B7\u53D6\u4E2D..."),
+    i: common_vendor.o(($event) => $options.shua("baidu")),
+    j: common_vendor.p({
       color: "#aaa",
       type: "refreshempty",
       size: "20"
     }),
-    j: common_vendor.p({
+    k: common_vendor.p({
       color: "#E3BDA4",
       type: "color-filled",
       size: "30"
     }),
-    k: common_vendor.t($data.sogo || "\u83B7\u53D6\u4E2D..."),
-    l: common_vendor.o(($event) => $options.shua("sogo")),
-    m: common_vendor.p({
+    l: common_vendor.t($data.sogo || "\u83B7\u53D6\u4E2D..."),
+    m: common_vendor.o(($event) => $options.shua("sogo")),
+    n: common_vendor.p({
       color: "#aaa",
       type: "refreshempty",
       size: "20"
     }),
-    n: common_vendor.o(($event) => $options.clear()),
-    o: common_vendor.o(($event) => $options.about()),
-    p: common_vendor.p({
+    o: common_vendor.o(($event) => $options.clear()),
+    p: common_vendor.o(($event) => $options.about()),
+    q: common_vendor.p({
       type: "closeempty",
       color: "#fff",
       size: "30"
     }),
-    q: common_vendor.o(($event) => $options.close()),
-    r: common_vendor.p({
+    r: common_vendor.o(($event) => $options.close()),
+    s: common_vendor.p({
       type: "weixin",
       color: "#04BE02",
       size: "16"
     }),
-    s: common_vendor.o(($event) => $options.getUser("weixin")),
-    t: common_vendor.p({
+    t: common_vendor.o(($event) => $options.getUser("weixin")),
+    v: common_vendor.p({
       type: "qq",
       color: "#66ccff",
       size: "16"
     }),
-    v: common_vendor.o(($event) => $options.getUser("qq")),
-    w: common_vendor.s($data.height)
-  };
+    w: common_vendor.o(($event) => $options.getUser("qq")),
+    x: common_vendor.s($data.height)
+  } : {}, {
+    y: $data.appData.code == "201"
+  }, $data.appData.code == "201" ? {} : {});
 }
 var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/home/home.vue"]]);
 qq.createPage(MiniProgramPage);
