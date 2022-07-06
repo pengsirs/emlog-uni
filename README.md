@@ -1,7 +1,10 @@
 # emlog-wxmini
 
+
 #### 介绍
-emlogPro小程序使用uni-app开发，适配安卓、iOS、小程序
+EmlogPro官方出了Api接口，比以往的插件版Brief使用更方便，所以我另外重新写了一个程序，还叫Brief
+Brirf-5.0使用uni-app开发，适配安卓、iOS、小程序
+Rro的Api接口还不完善，所以实现的功能可能没有老版本多，等到新的接口发布，我会第一时间更新！
 
 #### 安装教程
 
@@ -38,7 +41,18 @@ emlogPro小程序使用uni-app开发，适配安卓、iOS、小程序
 8.  2022-07-07
 	修复小程序端bug
 	
-	
+#### 小程序服务器域名配置
+1. https://tp.hkiii.cn（必须，获取后台设置以及上传图片）
+2. https://api.tianapi.com（必须，调用百度查询）
+3. 您的博客域名（必须）
+
+#### 使用教程
+1. 需要申请的api接口
+	* [百度收录量](https://www.tianapi.com/apiview/203)
+	* [搜狗收录量](https://www.tianapi.com/apiview/204)
+2. 需要注册的网站
+	* [Api后台管理](https://tp.hkiii.cn) （用于管理您的程序）
+	* [Dcloud](https://dev.dcloud.net.cn/) （用于App打包）
 
 #### 源码下载
 >   github地址：https://github.com/pengsirs/emlog-uni
