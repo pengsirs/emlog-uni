@@ -5,12 +5,12 @@
     "iPad"
   ],
   "id": "__UNI__C022911",
-  "name": "demo1",
+  "name": "彭先生博客",
   "version": {
     "name": "1.0.0",
     "code": "100"
   },
-  "description": "emlog发布",
+  "description": "emlog",
   "developer": {
     "name": "",
     "email": "",
@@ -115,7 +115,7 @@
     },
     "allowsInlineMediaPlayback": true,
     "safearea": {
-      "background": "#FFFFFF",
+      "background": "#ffffff",
       "bottom": {
         "offset": "auto"
       }
@@ -123,7 +123,7 @@
     "uni-app": {
       "control": "uni-v3",
       "vueVersion": "3",
-      "compilerVersion": "3.4.7",
+      "compilerVersion": "3.4.18",
       "nvueCompiler": "uni-app",
       "renderer": "auto",
       "nvue": {
@@ -133,26 +133,41 @@
     },
     "tabBar": {
       "position": "bottom",
-      "color": "#999",
-      "selectedColor": "#007aff",
+      "color": "#7A7E83",
+      "selectedColor": "#3cc51f",
       "borderStyle": "rgba(0,0,0,0.4)",
       "blurEffect": "none",
       "fontSize": "10px",
       "iconWidth": "24px",
       "spacing": "3px",
       "height": "50px",
+      "backgroundColor": "#ffffff",
       "list": [
         {
-          "pagePath": "./pages/index/index",
+          "pagePath": "pages/index/index",
+          "iconPath": "/./static/tabbar/home.png",
+          "selectedIconPath": "/./static/tabbar/home-active.png",
           "text": "首页"
         },
         {
-          "pagePath": "./pages/xia-editor/xia-editor",
+          "pagePath": "pages/xia-editor/xia-editor",
+          "iconPath": "/./static/tabbar/love.png",
+          "selectedIconPath": "/./static/tabbar/love-active.png",
           "text": "发布"
+        },
+        {
+          "pagePath": "pages/home/home",
+          "iconPath": "/./static/tabbar/home.png",
+          "selectedIconPath": "/./static/tabbar/home-active.png",
+          "text": "我的"
         }
       ],
       "selectedIndex": 0,
-      "shown": true
+      "shown": true,
+      "child": [
+        "lauchwebview"
+      ],
+      "selected": 0
     }
   },
   "launch_path": "__uniappview.html"

@@ -14,8 +14,8 @@
 				</view>
 			</view>
 			<mp-html lozy-load="true" container-style="overflow: hidden;" selectable="true" :tag-style="tagStyle"
-				:content="data.content || content"></mp-html>
-				<!-- <rich-text :nodes="data.content"></rich-text> -->
+				:content="data.content"></mp-html>
+			<!-- <rich-text :nodes="data.content"></rich-text> -->
 			<view class="over">—— The End ——</view>
 
 			<view class="Copyright">
@@ -65,10 +65,10 @@
 		<uni-collapses>
 			<uni-collapse-items title="文章扩展" :show-animation="true">
 				<view class="ft-content">
-					<view class="homelist" @click="zanzhu()">
+					<view class="homelist" @click="home()">
 						<view class="homelist-item">
-							<uni-icons type="hand-up-filled" color="#564aff" size="30"></uni-icons>
-							<view style="font-size: 12px;font-weight: 400;">支持一下</view>
+							<uni-icons type="home-filled" color="#564aff" size="30"></uni-icons>
+							<view style="font-size: 12px;font-weight: 400;">回到首页</view>
 						</view>
 					</view>
 					<view class="homelist" @click="wenti()">
@@ -83,12 +83,12 @@
 							<view style="font-size: 12px;font-weight: 400;">附件下载</view>
 						</view>
 					</view>
-					<view class="homelist" @click="share()">
+					<button class="homelist" open-type="share">
 						<view class="homelist-item">
 							<uni-icons type="paperplane-filled" color="#42ff48" size="30"></uni-icons>
-							<view style="font-size: 12px;font-weight: 400;">分享文章</view>
+							<view style="font-size: 12px;font-weight: 400;margin-top:5px;">分享文章</view>
 						</view>
-					</view>
+					</button>
 				</view>
 			</uni-collapse-items>
 		</uni-collapses>
@@ -113,6 +113,7 @@
 				data: {},
 				haibao: "",
 				url: '',
+				arrays:[0],
 				content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
 					"<div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div>" +
 					"<div style='background:#eee;height:20px;width:70%;border-radius:5px;margin-top:10px;'></div>" +
@@ -125,6 +126,7 @@
 		},
 		onLoad(option) {
 			this.blog(option.id)
+			this.id = option.id;
 			this.url = option.url;
 			this.show = !this.show
 			this.modeClass = 'fade'
@@ -136,46 +138,65 @@
 			}
 			return {
 				title: this.data.title,
-				imageUrl: this.data.cover||"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+				imageUrl: this.data.cover ||
+					"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
 				path: 'pages/blog-info/blog-info?id=' + this.data.id + "&url=" + this.url
 			}
 		},
 		methods: {
 			// App分享
-			weixin(scene){
+			weixin(scene) {
 				uni.share({
 					provider: "weixin",
 					scene: scene,
-					title:this.data.title,
+					title: this.data.title,
 					type: 0,
 					href: this.url,
-					imageUrl: this.data.cover||"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
-					summary: "我正在查看文章"+this.data.title+"，赶紧跟我一起来体验！",
-					success: function (res) {
+					imageUrl: this.data.cover ||
+						"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+					summary: "我正在查看文章" + this.data.title + "，赶紧跟我一起来体验！",
+					success: function(res) {
 						console.log("success:" + JSON.stringify(res));
 					},
-					fail: function (err) {
+					fail: function(err) {
 						console.log("fail:" + JSON.stringify(err));
 					}
 				});
 			},
-			qq(){
+			qq() {
 				uni.share({
 					provider: "qq",
 					type: 0,
-					title:this.data.title,
-					summary: "我正在查看文章"+this.data.title+"，赶紧跟我一起来体验！",
-					imageUrl: this.data.cover||"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+					title: this.data.title,
+					summary: "我正在查看文章" + this.data.title + "，赶紧跟我一起来体验！",
+					imageUrl: this.data.cover ||
+						"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
 					href: this.url,
-					success: function (res) {
+					success: function(res) {
 						console.log("success:" + JSON.stringify(res));
 					},
-					fail: function (err) {
+					fail: function(err) {
 						console.log("fail:" + JSON.stringify(err));
 					}
 				});
 			},
+			home(){
+				uni.reLaunch({
+					url: "../index/index"
+				})
+			},
+			wenti() {
+				uni.navigateTo({
+					url: "../about/help?id=" + this.id
+				})
+			},
+			down(){
+				uni.navigateTo({
+					url:"../down/down?id=" + this.id
+				})
+			},
 			async blog(e) {
+				var arrays = this.arrays
 				const res = await myRequest({
 					url: '/?rest-api=article_detail',
 					method: 'GET',
@@ -198,7 +219,15 @@
 				res.data.data.article.content = res.data.data.article.content.replace(/\<h6/gi,
 					'<h6 class="rich-h6" ');
 				res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, '****');
-
+				// #ifndef APP-PLUS
+				arrays = res.data.data.article.content.match(/<a (.*)a>/gi) ? res.data.data.article.content.match(/<a (.*)a>/gi) : ''
+				for (var i = 0; i < arrays.length; i++) {
+					if (arrays[i].indexOf("<img") == "-1") {
+						console.log(arrays[i].indexOf("<img"))
+						res.data.data.article.content = res.data.data.article.content.replace(arrays[i], '<a class="aaa">请查看附件说明</a> ')
+					}
+				};
+				// #endif
 				this.data = res.data.data.article
 				console.log()
 			}
@@ -207,16 +236,19 @@
 </script>
 
 <style>
-	.homelist-item{
+	.homelist-item {
 		padding: 5px;
 	}
-.homelist{
-	text-align: center;
-}
-.ft-content{
-	display:flex;
-	justify-content: space-between;
-}
+
+	.homelist {
+		text-align: center;
+	}
+
+	.ft-content {
+		display: flex;
+		justify-content: space-around;
+	}
+
 	.content-box {
 		background-color: #fff;
 		padding: 20px;
@@ -251,6 +283,21 @@
 		padding: 10px;
 		border-radius: 5px;
 		opacity: 0.5;
+	}
+
+	button {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		line-height: 1;
+		border-radius: 0;
+		display: inline-block;
+		background-color: #1d243c;
+		color: #fff;
+	}
+
+	button::after {
+		border: none;
 	}
 
 	.Copyright-text {

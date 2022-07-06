@@ -66,3 +66,35 @@
 	justify-content: space-around;
 	z-index: 2;
 }
+.baidu-box {
+		display: flex;
+		justify-content: space-between;
+		margin: auto;
+		margin: 10px;
+	}
+
+	.baidu-item {
+		width: 43%;
+		border-radius: 10px;
+		box-shadow: #eeeeee 1px 1px 30px;
+		display: flex;
+		justify-content: space-between;
+		padding: 10px;
+		align-items: center;
+	}
+
+	.shoulu {
+		display: flex;
+		flex-direction: column;
+		line-height: normal;
+	}
+
+
+	.sl-title {
+		font-weight: 200;
+		opacity: 0.8;
+	}
+
+	.sl-content {
+		font-weight: 800;
+	}

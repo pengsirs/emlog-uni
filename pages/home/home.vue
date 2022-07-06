@@ -12,6 +12,10 @@
 			<view v-for="i in opacity" :style="i" class="tm"></view>
 		</view>
 		<view class="homelist">
+			<button open-type="openSetting" class="homelist-item" @click="go('setting')">
+				<image class="homelist-img" src="../../static/home/xitongshezhi.png"></image>
+				<view style="font-size: 12px;font-weight: 200;">程序设置</view>
+			</button>
 			<view class="homelist-item" v-for="i in homelist" @click="go(i.url)">
 				<image class="homelist-img" :src="i.img"></image>
 				<view style="font-size: 12px;font-weight: 200;">{{i.text}}</view>
@@ -98,11 +102,7 @@
 				height: '0%',
 				avatarUrl: '../../static/logo.png',
 				nickName: "点击登录",
-				homelist: [{
-						img: "../../static/home/xitongshezhi.png",
-						text: "程序设置",
-						url: "setting"
-					},
+				homelist: [
 					{
 						img: "../../static/home/bangzhuzhongxin.png",
 						text: "问题反馈",
@@ -301,7 +301,20 @@
 	page {
 		font-size: 16px;
 	}
-
+button{
+	margin: 0;
+	padding:0;
+	border: 0;
+	line-height: 1.5;
+	border-radius: 0;
+	display: inline-block;
+	background-color: #fff;
+	color: #000;
+	border: none;
+}
+button::after{
+	border: none;
+}
 	.login {
 		width: 100%;
 		z-index: 99;

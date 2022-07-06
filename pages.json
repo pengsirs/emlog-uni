@@ -31,6 +31,13 @@
 			}
 		},
 		{
+			"path": "pages/down/down",
+			"style": {
+				"navigationBarTitleText": "附件下载",
+				"navigationBarBackgroundColor": "#F17C67"
+			}
+		},
+		{
 			"path": "pages/sort-info/sort-info",
 			"style": {
 				"navigationBarTitleText": "分类详情",

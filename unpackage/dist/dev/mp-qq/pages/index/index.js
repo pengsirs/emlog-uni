@@ -292,11 +292,35 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       color: "#000",
       text: $data.appData.data.gonggao
     }),
-    o: $data.backTopValue
+    o: common_vendor.p({
+      color: "#04BE02",
+      type: "star-filled",
+      size: "30"
+    }),
+    p: common_vendor.t($data.shoulu || "\u83B7\u53D6\u4E2D..."),
+    q: common_vendor.o(($event) => _ctx.shua("baidu")),
+    r: common_vendor.p({
+      color: "#aaa",
+      type: "circle-filled",
+      size: "20"
+    }),
+    s: common_vendor.p({
+      color: "#66ccff",
+      type: "qq",
+      size: "30"
+    }),
+    t: common_vendor.t(_ctx.sogo || "\u83B7\u53D6\u4E2D..."),
+    v: common_vendor.o(($event) => _ctx.shua("sogo")),
+    w: common_vendor.p({
+      color: "#aaa",
+      type: "circle-filled",
+      size: "20"
+    }),
+    x: $data.backTopValue
   }, $data.backTopValue ? {
-    p: common_vendor.o((...args) => $options.xhj && $options.xhj(...args))
+    y: common_vendor.o((...args) => $options.xhj && $options.xhj(...args))
   } : {}, {
-    q: common_vendor.f($data.dataa, (item, index, i0) => {
+    z: common_vendor.f($data.dataa, (item, index, i0) => {
       return common_vendor.e({
         a: $options.getimg(item.description) || item.cover
       }, $options.getimg(item.description) || item.cover ? common_vendor.e({
@@ -307,13 +331,13 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         e: common_vendor.t(item.title),
         f: common_vendor.t($options.delHtmlTag(item.description)),
         g: common_vendor.t(item.sort_name),
-        h: "02d9e768-5-" + i0,
+        h: "02d9e768-9-" + i0,
         i: common_vendor.p({
           type: "fire-filled",
           size: "17"
         }),
         j: common_vendor.t(item.views),
-        k: "02d9e768-6-" + i0,
+        k: "02d9e768-10-" + i0,
         l: common_vendor.p({
           type: "chat-filled",
           size: "17"
@@ -328,13 +352,13 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         q: common_vendor.t(item.title),
         r: common_vendor.t($options.delHtmlTag(item.description)),
         s: common_vendor.t(item.sort_name),
-        t: "02d9e768-7-" + i0,
+        t: "02d9e768-11-" + i0,
         v: common_vendor.p({
           type: "fire-filled",
           size: "17"
         }),
         w: common_vendor.t(item.views),
-        x: "02d9e768-8-" + i0,
+        x: "02d9e768-12-" + i0,
         y: common_vendor.p({
           type: "chat-filled",
           size: "17"
@@ -345,7 +369,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         B: index
       });
     }),
-    r: common_vendor.p({
+    A: common_vendor.p({
       color: "#007AFF",
       status: $data.status
     })

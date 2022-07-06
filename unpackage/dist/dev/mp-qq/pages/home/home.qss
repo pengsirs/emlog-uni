@@ -54,8 +54,49 @@
 	justify-content: space-around;
 	z-index: 2;
 }
+.baidu-box {
+		display: flex;
+		justify-content: space-between;
+		margin: auto;
+		margin: 10px;
+}
+.baidu-item {
+		width: 43%;
+		border-radius: 10px;
+		box-shadow: #eeeeee 1px 1px 30px;
+		display: flex;
+		justify-content: space-between;
+		padding: 10px;
+		align-items: center;
+}
+.shoulu {
+		display: flex;
+		flex-direction: column;
+		line-height: normal;
+}
+.sl-title {
+		font-weight: 200;
+		opacity: 0.8;
+}
+.sl-content {
+		font-weight: 800;
+}
 page {
 		font-size: 16px;
+}
+button{
+	margin: 0;
+	padding:0;
+	border: 0;
+	line-height: 1.5;
+	border-radius: 0;
+	display: inline-block;
+	background-color: #fff;
+	color: #000;
+	border: none;
+}
+button::after{
+	border: none;
 }
 .login {
 		width: 100%;

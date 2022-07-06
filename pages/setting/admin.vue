@@ -1,4 +1,8 @@
 <template>
+	<!-- 提示信息弹窗  -->
+	<uni-popup ref="message" type="message">
+		<uni-popup-message :type="msgType" :message="messageText" :duration="2000"></uni-popup-message>
+	</uni-popup>
 	<view class="new">
 		<view class="new-title">温馨提示：</view>
 		<view class="new-text">
@@ -12,10 +16,6 @@
 	<view class="save" @click="save()">
 		保存设置
 	</view>
-	<!-- 提示信息弹窗 -->
-	<uni-popup ref="message" type="message">
-		<uni-popup-message :type="msgType" :message="messageText" :duration="2000"></uni-popup-message>
-	</uni-popup>
 </template>
 
 <script>

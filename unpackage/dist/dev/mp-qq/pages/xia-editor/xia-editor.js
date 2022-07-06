@@ -297,12 +297,13 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     z: common_vendor.o((...args) => $options.onEditorReady && $options.onEditorReady(...args)),
     A: common_vendor.o(($event) => $data.excerpt = $event),
     B: common_vendor.p({
-      type: "textarea",
+      type: "text",
       placeholder: "\u8BF7\u8F93\u5165\u6587\u7AE0\u63CF\u8FF0,\u53EF\u7559\u7A7A",
       modelValue: $data.excerpt
     }),
     C: common_vendor.p({
       ["show-animation"]: true,
+      open: true,
       title: "\u6587\u7AE0\u63CF\u8FF0"
     }),
     D: common_vendor.t($data.blogSorts[$data.sort].sortname || "\u8BF7\u9009\u62E9\u5206\u7C7B"),

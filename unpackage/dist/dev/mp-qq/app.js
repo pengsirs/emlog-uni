@@ -7,6 +7,7 @@ if (!Math) {
   "./pages/xia-editor/xia-editor.js";
   "./pages/blog-info/blog-info.js";
   "./pages/about/about.js";
+  "./pages/down/down.js";
   "./pages/sort-info/sort-info.js";
   "./pages/home/home.js";
   "./pages/search/search.js";

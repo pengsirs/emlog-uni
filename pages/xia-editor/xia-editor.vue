@@ -49,9 +49,10 @@
 
 
 				<uni-collapse accordion v-model="accordionVal" @change="change">
-					<uni-collapse-item :show-animation="true" title="文章描述">
-						<view class="content">
-							<uni-easyinput type="textarea" v-model="excerpt" placeholder="请输入文章描述,可留空"></uni-easyinput>
+					<uni-collapse-item :show-animation="true" :open="true" title="文章描述">
+						<view class="content"> 
+						<uni-easyinput type="text" v-model="excerpt" placeholder="请输入文章描述,可留空" />
+							<!-- <uni-easyinput type="textarea" v-model="excerpt" placeholder="请输入文章描述,可留空"></uni-easyinput> -->
 						</view>
 					</uni-collapse-item>
 					<uni-collapse-item :show-animation="true" title="选择分类">

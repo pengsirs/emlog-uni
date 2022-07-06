@@ -1,4 +1,4 @@
-const url = 'https://www.hkiii.cn';// 域名设置
+const url = 'https://www.hkiii.cn';// 博客域名设置
 const tenapi = 'https://api.tianapi.com';//请勿修改，调用百度收录等接口
 //系统配置
 const seturl = "https://tp.hkiii.cn";

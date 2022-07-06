@@ -49,18 +49,18 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: $data.value,
-    b: common_vendor.o(($event) => $data.value = $event.detail.value),
-    c: common_vendor.o(($event) => $options.save()),
-    d: common_vendor.p({
+    a: common_vendor.p({
       type: _ctx.msgType,
       message: _ctx.messageText,
       duration: 2e3
     }),
-    e: common_vendor.sr("message", "54f0c487-0"),
-    f: common_vendor.p({
+    b: common_vendor.sr("message", "54f0c487-0"),
+    c: common_vendor.p({
       type: "message"
-    })
+    }),
+    d: $data.value,
+    e: common_vendor.o(($event) => $data.value = $event.detail.value),
+    f: common_vendor.o(($event) => $options.save())
   };
 }
 var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/setting/admin.vue"]]);

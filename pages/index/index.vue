@@ -50,13 +50,37 @@
 		</view>
 
 
-		<uni-notice-bar show-icon scrollable background-color="#fff" color="#000" :text="appData.data.gonggao" />
+		<uni-notice-bar show-icon scrollable  background-color="#fff" color="#000" :text="appData.data.gonggao" />
 
 <!-- 		<scroll-view scroll-x="true" style="width: 100%;white-space: nowrap;">
 			<view class="sorts">
 				
 			</view>
 		</scroll-view> -->
+		
+		<view class="baidu-box">
+			<view class="baidu-item">
+				<view class="sl-icon">
+					<uni-icons color="#04BE02" type="star-filled" size="30"></uni-icons>
+				</view>
+				<view class="shoulu">
+					<view class="sl-content">App下载</view>
+					<view class="sl-title">{{shoulu||'获取中...'}}</view>
+				</view>
+				<uni-icons @click="shua('baidu')" color="#aaa" type="circle-filled" size="20"></uni-icons>
+			</view>
+			<view class="baidu-item">
+				<view class="sl-icon-sg">
+					<uni-icons color="#66ccff" type="qq" size="30"></uni-icons>
+				</view>
+				<view class="shoulu">
+					<view class="sl-content">联系客服</view>
+					<view class="sl-title">{{sogo||'获取中...'}}</view>
+				</view>
+				<uni-icons @click="shua('sogo')" color="#aaa" type="circle-filled" size="20"></uni-icons>
+			</view>
+		</view>
+		
 
 		<view v-if="backTopValue" class="xiaohuojian" @click="xhj">
 			<image src="../../static/fanhuidingbu.png" mode=""></image>
@@ -325,6 +349,23 @@
 		font-size: 16px
 	}
 
+	.sl-icon {
+		background-color: #8cbb96;
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+	}
+
+	.sl-icon-sg {
+		background-color: #BBE4FF;
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+	}
 	.many {
 		display: flex;
 		justify-content: space-between;

@@ -1,13 +1,13 @@
 
-.homelist-item{
+.homelist-item {
 		padding: 5px;
 }
-.homelist{
-	text-align: center;
+.homelist {
+		text-align: center;
 }
-.ft-content{
-	display:flex;
-	justify-content: space-between;
+.ft-content {
+		display: flex;
+		justify-content: space-around;
 }
 .content-box {
 		background-color: #fff;
@@ -39,6 +39,19 @@ page {
 		padding: 10px;
 		border-radius: 5px;
 		opacity: 0.5;
+}
+button {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		line-height: 1;
+		border-radius: 0;
+		display: inline-block;
+		background-color: #1d243c;
+		color: #fff;
+}
+button::after {
+		border: none;
 }
 .Copyright-text {
 		color: red;

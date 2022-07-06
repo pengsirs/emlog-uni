@@ -884,166 +884,16 @@
   opacity: 0.75;
 }
 
-/**
- * 这里是uni-app内置的常用样式变量
- *
- * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
- * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
- *
- */
-/**
- * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
- *
- * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
- */
-/* 颜色变量 */
-/* 行为相关颜色 */
-/* 文字基本颜色 */
-/* 背景颜色 */
-/* 边框颜色 */
-/* 尺寸变量 */
-/* 文字尺寸 */
-/* 图片尺寸 */
-/* Border Radius */
-/* 水平间距 */
-/* 垂直间距 */
-/* 透明度 */
-/* 文章场景相关 */
-.uni-collapse-item[data-v-e55e2a3e] {
-  box-sizing: border-box;
-}
-.uni-collapse-item__title[data-v-e55e2a3e] {
-  display: flex;
-  width: 100%;
-  box-sizing: border-box;
-  flex-direction: row;
-  align-items: center;
-  transition: border-bottom-color 0.3s;
-}
-.uni-collapse-item__title-wrap[data-v-e55e2a3e] {
-  width: 100%;
-  flex: 1;
-}
-.uni-collapse-item__title-box[data-v-e55e2a3e] {
-  padding: 0 15px;
-  display: flex;
-  width: 100%;
-  box-sizing: border-box;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 48px;
-  line-height: 48px;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-}
-.uni-collapse-item__title-box.is-disabled .uni-collapse-item__title-text[data-v-e55e2a3e] {
-  color: #fff;
-}
-.uni-collapse-item__title.is-open[data-v-e55e2a3e] {
-  border-bottom-color: transparent;
-}
-.uni-collapse-item__title-img[data-v-e55e2a3e] {
-  height: 22px;
-  width: 22px;
-  margin-right: 10px;
-}
-.uni-collapse-item__title-text[data-v-e55e2a3e] {
-  flex: 1;
-  font-size: 14px;
-  white-space: nowrap;
-  color: inherit;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.uni-collapse-item__title-arrow[data-v-e55e2a3e] {
-  display: flex;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  transform: rotate(0deg);
-}
-.uni-collapse-item__title-arrow-active[data-v-e55e2a3e] {
-  transform: rotate(-180deg);
-}
-.uni-collapse-item__wrap[data-v-e55e2a3e] {
-  will-change: height;
-  box-sizing: border-box;
-  overflow: hidden;
-  position: relative;
-  height: 0;
-}
-.uni-collapse-item__wrap.is--transition[data-v-e55e2a3e] {
-  transition-property: height, border-bottom-width;
-  transition-duration: 0.3s;
-  will-change: height;
-}
-.uni-collapse-item__wrap-content[data-v-e55e2a3e] {
-  position: absolute;
-  font-size: 13px;
-  color: #fff;
-  border-bottom-color: transparent;
-  border-bottom-style: solid;
-  border-bottom-width: 0;
-}
-.uni-collapse-item__wrap-content.uni-collapse-item--border[data-v-e55e2a3e] {
-  border-bottom-width: 1px;
-  border-bottom-color: red;
-  border-bottom-color: #ebeef5;
-}
-.uni-collapse-item__wrap-content.open[data-v-e55e2a3e] {
-  position: relative;
-}
-.uni-collapse-item--animation[data-v-e55e2a3e] {
-  transition-property: transform;
-  transition-duration: 0.3s;
-  transition-timing-function: ease;
-}
-/**
- * 这里是uni-app内置的常用样式变量
- *
- * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
- * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
- *
- */
-/**
- * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
- *
- * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
- */
-/* 颜色变量 */
-/* 行为相关颜色 */
-/* 文字基本颜色 */
-/* 背景颜色 */
-/* 边框颜色 */
-/* 尺寸变量 */
-/* 文字尺寸 */
-/* 图片尺寸 */
-/* Border Radius */
-/* 水平间距 */
-/* 垂直间距 */
-/* 透明度 */
-/* 文章场景相关 */
-.uni-collapse[data-v-39241bd6] {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-}
 
-.homelist-item{
+.homelist-item {
 		padding: 5px;
 }
-.homelist{
-	text-align: center;
+.homelist {
+		text-align: center;
 }
-.ft-content{
-	display:flex;
-	justify-content: space-between;
+.ft-content {
+		display: flex;
+		justify-content: space-around;
 }
 .content-box {
 		background-color: #fff;
@@ -1075,6 +925,19 @@ body {
 		padding: 10px;
 		border-radius: 5px;
 		opacity: 0.5;
+}
+uni-button {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		line-height: 1;
+		border-radius: 0;
+		display: inline-block;
+		background-color: #1d243c;
+		color: #fff;
+}
+uni-button::after {
+		border: none;
 }
 .Copyright-text {
 		color: red;

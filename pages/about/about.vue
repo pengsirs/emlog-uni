@@ -8,8 +8,7 @@
 			</view>
 			<view class="title"> 彭先生博客</view>
 			<view class="url">{{url}}</view>
-			<image class="banner" src="../../static/home.jpeg" mode="aspectFill"></image>
-			<view class="p">这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍这里是站点介绍</view>
+			<view class="p">这里是站点介绍</view>
 		</view>
 </template>
 

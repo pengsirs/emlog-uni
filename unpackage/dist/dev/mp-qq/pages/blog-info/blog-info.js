@@ -14,11 +14,13 @@ const _sfc_main = {
       data: {},
       haibao: "",
       url: "",
+      arrays: [0],
       content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:70%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:90%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:30%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:250px;width:100%;border-radius:5px;margin:10px auto;'></div>"
     };
   },
   onLoad(option) {
     this.blog(option.id);
+    this.id = option.id;
     this.url = option.url;
     this.show = !this.show;
     this.modeClass = "fade";
@@ -67,7 +69,23 @@ const _sfc_main = {
         }
       });
     },
+    home() {
+      common_vendor.index.reLaunch({
+        url: "../index/index"
+      });
+    },
+    wenti() {
+      common_vendor.index.navigateTo({
+        url: "../about/help?id=" + this.id
+      });
+    },
+    down() {
+      common_vendor.index.navigateTo({
+        url: "../down/down?id=" + this.id
+      });
+    },
     async blog(e) {
+      var arrays = this.arrays;
       const res = await api.myRequest({
         url: "/?rest-api=article_detail",
         method: "GET",
@@ -83,6 +101,13 @@ const _sfc_main = {
       res.data.data.article.content = res.data.data.article.content.replace(/\<h5/gi, '<h5 class="rich-h5" ');
       res.data.data.article.content = res.data.data.article.content.replace(/\<h6/gi, '<h6 class="rich-h6" ');
       res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, "****");
+      arrays = res.data.data.article.content.match(/<a (.*)a>/gi) ? res.data.data.article.content.match(/<a (.*)a>/gi) : "";
+      for (var i = 0; i < arrays.length; i++) {
+        if (arrays[i].indexOf("<img") == "-1") {
+          console.log(arrays[i].indexOf("<img"));
+          res.data.data.article.content = res.data.data.article.content.replace(arrays[i], '<a class="aaa">\u8BF7\u67E5\u770B\u9644\u4EF6\u8BF4\u660E</a> ');
+        }
+      }
       this.data = res.data.data.article;
       console.log();
     }
@@ -128,7 +153,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       ["container-style"]: "overflow: hidden;",
       selectable: "true",
       ["tag-style"]: $data.tagStyle,
-      content: $data.data.content || $data.content
+      content: $data.data.content
     }),
     i: common_vendor.t($data.data.title),
     j: common_vendor.t($data.data.author_name || "\u4F5C\u8005"),
@@ -142,30 +167,29 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       show: _ctx.show
     }),
     o: common_vendor.p({
-      type: "hand-up-filled",
+      type: "home-filled",
       color: "#564aff",
       size: "30"
     }),
-    p: common_vendor.o(($event) => _ctx.zanzhu()),
+    p: common_vendor.o(($event) => $options.home()),
     q: common_vendor.p({
       type: "chat-filled",
       color: "#fd7058",
       size: "30"
     }),
-    r: common_vendor.o(($event) => _ctx.wenti()),
+    r: common_vendor.o(($event) => $options.wenti()),
     s: common_vendor.p({
       type: "download-filled",
       color: "#fec855",
       size: "30"
     }),
-    t: common_vendor.o(($event) => _ctx.down()),
+    t: common_vendor.o(($event) => $options.down()),
     v: common_vendor.p({
       type: "paperplane-filled",
       color: "#42ff48",
       size: "30"
     }),
-    w: common_vendor.o(($event) => _ctx.share()),
-    x: common_vendor.p({
+    w: common_vendor.p({
       title: "\u6587\u7AE0\u6269\u5C55",
       ["show-animation"]: true
     })
