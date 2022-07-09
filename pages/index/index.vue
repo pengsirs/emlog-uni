@@ -61,13 +61,13 @@
 		<view class="baidu-box">
 			<view class="baidu-item">
 				<view class="sl-icon">
-					<uni-icons color="#04BE02" type="star-filled" size="30"></uni-icons>
+					<uni-icons color="#fd7081" type="star-filled" size="30"></uni-icons>
 				</view>
 				<view class="shoulu">
 					<view class="sl-content">App下载</view>
-					<view class="sl-title">{{shoulu||'获取中...'}}</view>
+					<view class="sl-title">复制Url</view>
 				</view>
-				<uni-icons @click="shua('baidu')" color="#aaa" type="circle-filled" size="20"></uni-icons>
+				<uni-icons @click="copyUrl()" color="#aaa" type="circle-filled" size="20"></uni-icons>
 			</view>
 			<view class="baidu-item">
 				<view class="sl-icon-sg">
@@ -75,9 +75,9 @@
 				</view>
 				<view class="shoulu">
 					<view class="sl-content">联系客服</view>
-					<view class="sl-title">{{sogo||'获取中...'}}</view>
+					<view class="sl-title">复制QQ</view>
 				</view>
-				<uni-icons @click="shua('sogo')" color="#aaa" type="circle-filled" size="20"></uni-icons>
+				<uni-icons @click="copyQQ()" color="#aaa" type="circle-filled" size="20"></uni-icons>
 			</view>
 		</view>
 		
@@ -222,11 +222,37 @@
 			}
 			return {
 				title: '分享好玩的程序！',
-				imageUrl:'http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948',
+				imageUrl: this.appData.data.shareimg,
 				path: 'pages/index/index'
 			}
 		},
 		methods: {
+			copyUrl(){
+				uni.setClipboardData({
+					data: this.appData.data.downurl,
+					success: function () {
+						// #ifndef APP-PLUS
+						uni.showModal({
+							title:"温馨提示",
+							content:"复制成功"
+						})
+						// #endif
+					}
+				});
+			},
+			copyQQ(){
+				uni.setClipboardData({
+					data: this.appData.data.qq,
+					success: function () {
+						// #ifndef APP-PLUS
+						uni.showModal({
+							title:"温馨提示",
+							content:"复制成功"
+						})
+						// #endif
+					}
+				});
+			},
 			async getData() {
 				var that = this;
 				const res = await htRequest({
@@ -348,9 +374,12 @@
 	page {
 		font-size: 16px
 	}
-
+	.sl-title{
+		font-size: 13px;
+		font-weight: 200;
+	}
 	.sl-icon {
-		background-color: #8cbb96;
+		background-color: #feb9bc;
 		width: 30px;
 		height: 30px;
 		border-radius: 50%;

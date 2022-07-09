@@ -4,9 +4,16 @@
 			<view class="box-img">
 				<image class="me-img" :src="avatarUrl" mode=""></image>
 			</view>
+			<!-- #ifdef MP-WEIXIN ||MP-QQ -->
+			<view class="me" @click="loginqw()">
+				{{nickName}}
+			</view>
+			<!-- #endif -->
+			<!-- #ifdef MP-BAIDU || APP-PLUS||H5 -->
 			<view class="me" @click="login()">
 				{{nickName}}
 			</view>
+			<!-- #endif -->
 		</view>
 		<view class="bannertm">
 			<view v-for="i in opacity" :style="i" class="tm"></view>
@@ -42,7 +49,6 @@
 				</view>
 				<uni-icons @click="shua('sogo')" color="#aaa" type="refreshempty" size="20"></uni-icons>
 			</view>
-
 		</view>
 		<view class="home-item">
 			<view class="home-a">
@@ -187,6 +193,14 @@
 			},
 			login() {
 				this.height = "height:40%"
+			},
+			loginqw(){
+				// #ifdef MP-QQ
+				this.getUser('qq')
+				// #endif
+				// #ifdef  MP-WEIXIN
+				this.getUser('weixin')
+				// #endif
 			},
 			getUser(app) {
 				var that = this

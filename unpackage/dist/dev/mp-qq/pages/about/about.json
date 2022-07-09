@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "关于我们",
   "navigationBarBackgroundColor": "#F17C67",
-  "usingComponents": {}
+  "usingComponents": {
+    "mp-html": "../../uni_modules/mp-html/components/mp-html/mp-html"
+  }
 }

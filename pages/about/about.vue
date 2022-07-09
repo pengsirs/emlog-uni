@@ -2,24 +2,33 @@
 	<view style="height: 10vh;">
 
 	</view>
-		<view class="content">
-			<view class="logo-box">
-				<image class="logo" src="../../static/logo.png" mode=""></image>
-			</view>
-			<view class="title"> 彭先生博客</view>
-			<view class="url">{{url}}</view>
-			<view class="p">这里是站点介绍</view>
+	<view class="content">
+		<view class="logo-box">
+			<image class="logo" src="../../static/logo.png" mode=""></image>
 		</view>
+		<view class="title"> 我的博客</view>
+		<view class="url">{{appData.data.blogurl}}</view>
+		<mp-html :content="appData.data.about"></mp-html>
+	</view>
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
-				url: 'www.hkiii.cn'
+				url: 'www.hkiii.cn',
+				appData:""
 			}
 		},
-		onLoad() {
+		onLoad() {},
+		onShow() {
+			var that = this
+			uni.getStorage({
+				key: 'appData',
+				success: function(res) {
+					that.appData = res.data
+				}
+			});
 		},
 		methods: {}
 	}
@@ -38,9 +47,11 @@
 		margin: 0px 10px;
 		min-height: 80vh;
 	}
-page{
-	font-size: 16px;
-}
+
+	page {
+		font-size: 16px;
+	}
+
 	.p {
 		text-indent: 30px;
 		font-weight: 300;

@@ -2411,11 +2411,25 @@ if (uni.restoreGlobal) {
       }
       return {
         title: "\u5206\u4EAB\u597D\u73A9\u7684\u7A0B\u5E8F\uFF01",
-        imageUrl: "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+        imageUrl: this.appData.data.shareimg,
         path: "pages/index/index"
       };
     },
     methods: {
+      copyUrl() {
+        uni.setClipboardData({
+          data: this.appData.data.downurl,
+          success: function() {
+          }
+        });
+      },
+      copyQQ() {
+        uni.setClipboardData({
+          data: this.appData.data.qq,
+          success: function() {
+          }
+        });
+      },
       async getData() {
         const res = await htRequest({
           url: "/index.php/index/index/get_miniapp",
@@ -2650,17 +2664,17 @@ if (uni.restoreGlobal) {
         vue.createElementVNode("view", { class: "baidu-item" }, [
           vue.createElementVNode("view", { class: "sl-icon" }, [
             vue.createVNode(_component_uni_icons, {
-              color: "#04BE02",
+              color: "#fd7081",
               type: "star-filled",
               size: "30"
             })
           ]),
           vue.createElementVNode("view", { class: "shoulu" }, [
             vue.createElementVNode("view", { class: "sl-content" }, "App\u4E0B\u8F7D"),
-            vue.createElementVNode("view", { class: "sl-title" }, vue.toDisplayString($data.shoulu || "\u83B7\u53D6\u4E2D..."), 1)
+            vue.createElementVNode("view", { class: "sl-title" }, "\u590D\u5236Url")
           ]),
           vue.createVNode(_component_uni_icons, {
-            onClick: _cache[2] || (_cache[2] = ($event) => _ctx.shua("baidu")),
+            onClick: _cache[2] || (_cache[2] = ($event) => $options.copyUrl()),
             color: "#aaa",
             type: "circle-filled",
             size: "20"
@@ -2676,10 +2690,10 @@ if (uni.restoreGlobal) {
           ]),
           vue.createElementVNode("view", { class: "shoulu" }, [
             vue.createElementVNode("view", { class: "sl-content" }, "\u8054\u7CFB\u5BA2\u670D"),
-            vue.createElementVNode("view", { class: "sl-title" }, vue.toDisplayString(_ctx.sogo || "\u83B7\u53D6\u4E2D..."), 1)
+            vue.createElementVNode("view", { class: "sl-title" }, "\u590D\u5236QQ")
           ]),
           vue.createVNode(_component_uni_icons, {
-            onClick: _cache[3] || (_cache[3] = ($event) => _ctx.shua("sogo")),
+            onClick: _cache[3] || (_cache[3] = ($event) => $options.copyQQ()),
             color: "#aaa",
             type: "circle-filled",
             size: "20"
@@ -8180,13 +8194,25 @@ if (uni.restoreGlobal) {
       this.show = !this.show;
       this.modeClass = "fade";
     },
+    onShow() {
+      var that = this;
+      uni.getStorage({
+        key: "appData",
+        success: function(res) {
+          that.appData = res.data;
+        },
+        fail() {
+          that.getData();
+        }
+      });
+    },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/blog-info/blog-info.vue:137", res.target);
+        formatAppLog("log", "at pages/blog-info/blog-info.vue:150", res.target);
       }
       return {
         title: this.data.title,
-        imageUrl: this.data.cover || "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+        imageUrl: this.data.cover || this.appData.data.shareimg,
         path: "pages/blog-info/blog-info?id=" + this.data.id + "&url=" + this.url
       };
     },
@@ -8198,13 +8224,13 @@ if (uni.restoreGlobal) {
           title: this.data.title,
           type: 0,
           href: this.url,
-          imageUrl: this.data.cover || "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+          imageUrl: this.data.cover || this.appData.data.shareimg,
           summary: "\u6211\u6B63\u5728\u67E5\u770B\u6587\u7AE0" + this.data.title + "\uFF0C\u8D76\u7D27\u8DDF\u6211\u4E00\u8D77\u6765\u4F53\u9A8C\uFF01",
           success: function(res) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:159", "success:" + JSON.stringify(res));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:170", "success:" + JSON.stringify(res));
           },
           fail: function(err) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:162", "fail:" + JSON.stringify(err));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:173", "fail:" + JSON.stringify(err));
           }
         });
       },
@@ -8214,13 +8240,13 @@ if (uni.restoreGlobal) {
           type: 0,
           title: this.data.title,
           summary: "\u6211\u6B63\u5728\u67E5\u770B\u6587\u7AE0" + this.data.title + "\uFF0C\u8D76\u7D27\u8DDF\u6211\u4E00\u8D77\u6765\u4F53\u9A8C\uFF01",
-          imageUrl: this.data.cover || "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+          imageUrl: this.data.cover || this.appData.data.shareimg,
           href: this.url,
           success: function(res) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:176", "success:" + JSON.stringify(res));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:186", "success:" + JSON.stringify(res));
           },
           fail: function(err) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:179", "fail:" + JSON.stringify(err));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:189", "fail:" + JSON.stringify(err));
           }
         });
       },
@@ -8237,6 +8263,20 @@ if (uni.restoreGlobal) {
       down() {
         uni.navigateTo({
           url: "../down/down?id=" + this.id
+        });
+      },
+      async getData() {
+        const res = await htRequest({
+          url: "/index.php/index/index/get_miniapp",
+          method: "POST",
+          data: {
+            setapi: set.setapi
+          }
+        });
+        this.appData = res.data;
+        uni.setStorage({
+          key: "appData",
+          data: res.data
         });
       },
       async blog(e) {
@@ -8390,14 +8430,25 @@ if (uni.restoreGlobal) {
   const _sfc_main$8 = {
     data() {
       return {
-        url: "www.hkiii.cn"
+        url: "www.hkiii.cn",
+        appData: ""
       };
     },
     onLoad() {
     },
+    onShow() {
+      var that = this;
+      uni.getStorage({
+        key: "appData",
+        success: function(res) {
+          that.appData = res.data;
+        }
+      });
+    },
     methods: {}
   };
   function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_mp_html = resolveEasycom(vue.resolveDynamicComponent("mp-html"), __easycom_0);
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("view", { style: { "height": "10vh" } }),
       vue.createElementVNode("view", { class: "content" }, [
@@ -8408,9 +8459,11 @@ if (uni.restoreGlobal) {
             mode: ""
           })
         ]),
-        vue.createElementVNode("view", { class: "title" }, " \u5F6D\u5148\u751F\u535A\u5BA2"),
-        vue.createElementVNode("view", { class: "url" }, vue.toDisplayString($data.url), 1),
-        vue.createElementVNode("view", { class: "p" }, "\u8FD9\u91CC\u662F\u7AD9\u70B9\u4ECB\u7ECD")
+        vue.createElementVNode("view", { class: "title" }, " \u6211\u7684\u535A\u5BA2"),
+        vue.createElementVNode("view", { class: "url" }, vue.toDisplayString($data.appData.data.blogurl), 1),
+        vue.createVNode(_component_mp_html, {
+          content: $data.appData.data.about
+        }, null, 8, ["content"])
       ])
     ], 64);
   }
@@ -8746,12 +8799,14 @@ if (uni.restoreGlobal) {
       login() {
         this.height = "height:40%";
       },
+      loginqw() {
+      },
       getUser(app) {
         var that = this;
         uni.login({
           provider: app,
           success: function(loginRes) {
-            formatAppLog("log", "at pages/home/home.vue:196", loginRes.authResult);
+            formatAppLog("log", "at pages/home/home.vue:210", loginRes.authResult);
             uni.getUserInfo({
               provider: app,
               success: function(infoRes) {
@@ -8786,7 +8841,7 @@ if (uni.restoreGlobal) {
                 url: "../index/index"
               });
             } else if (res.cancel) {
-              formatAppLog("log", "at pages/home/home.vue:232", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
+              formatAppLog("log", "at pages/home/home.vue:246", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
             }
           }
         });
@@ -8809,7 +8864,7 @@ if (uni.restoreGlobal) {
                 that.baidu("/sogoupages/index", "sogo");
               }
             } else if (res.cancel) {
-              formatAppLog("log", "at pages/home/home.vue:255", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
+              formatAppLog("log", "at pages/home/home.vue:269", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
             }
           }
         });

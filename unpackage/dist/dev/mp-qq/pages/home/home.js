@@ -118,6 +118,9 @@ const _sfc_main = {
     login() {
       this.height = "height:40%";
     },
+    loginqw() {
+      this.getUser("qq");
+    },
     getUser(app) {
       var that = this;
       common_vendor.index.login({
@@ -228,7 +231,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.appData.code == "200" ? {
     b: $data.avatarUrl,
     c: common_vendor.t($data.nickName),
-    d: common_vendor.o(($event) => $options.login()),
+    d: common_vendor.o(($event) => $options.loginqw()),
     e: common_vendor.f($data.opacity, (i, k0, i0) => {
       return {
         a: common_vendor.s(i)

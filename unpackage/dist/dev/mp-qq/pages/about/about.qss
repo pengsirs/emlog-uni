@@ -10,8 +10,8 @@ page {
 		margin: 0px 10px;
 		min-height: 80vh;
 }
-page{
-	font-size: 16px;
+page {
+		font-size: 16px;
 }
 .p {
 		text-indent: 30px;

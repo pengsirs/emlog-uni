@@ -1,7 +1,7 @@
 "use strict";
 var common_vendor = require("../../common/vendor.js");
 var api = require("../../api.js");
-require("../../setting.js");
+var setting = require("../../setting.js");
 const _sfc_main = {
   data() {
     return {
@@ -25,13 +25,25 @@ const _sfc_main = {
     this.show = !this.show;
     this.modeClass = "fade";
   },
+  onShow() {
+    var that = this;
+    common_vendor.index.getStorage({
+      key: "appData",
+      success: function(res) {
+        that.appData = res.data;
+      },
+      fail() {
+        that.getData();
+      }
+    });
+  },
   onShareAppMessage(res) {
     if (res.from === "button") {
       console.log(res.target);
     }
     return {
       title: this.data.title,
-      imageUrl: this.data.cover || "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+      imageUrl: this.data.cover || this.appData.data.shareimg,
       path: "pages/blog-info/blog-info?id=" + this.data.id + "&url=" + this.url
     };
   },
@@ -43,7 +55,7 @@ const _sfc_main = {
         title: this.data.title,
         type: 0,
         href: this.url,
-        imageUrl: this.data.cover || "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+        imageUrl: this.data.cover || this.appData.data.shareimg,
         summary: "\u6211\u6B63\u5728\u67E5\u770B\u6587\u7AE0" + this.data.title + "\uFF0C\u8D76\u7D27\u8DDF\u6211\u4E00\u8D77\u6765\u4F53\u9A8C\uFF01",
         success: function(res) {
           console.log("success:" + JSON.stringify(res));
@@ -59,7 +71,7 @@ const _sfc_main = {
         type: 0,
         title: this.data.title,
         summary: "\u6211\u6B63\u5728\u67E5\u770B\u6587\u7AE0" + this.data.title + "\uFF0C\u8D76\u7D27\u8DDF\u6211\u4E00\u8D77\u6765\u4F53\u9A8C\uFF01",
-        imageUrl: this.data.cover || "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+        imageUrl: this.data.cover || this.appData.data.shareimg,
         href: this.url,
         success: function(res) {
           console.log("success:" + JSON.stringify(res));
@@ -82,6 +94,20 @@ const _sfc_main = {
     down() {
       common_vendor.index.navigateTo({
         url: "../down/down?id=" + this.id
+      });
+    },
+    async getData() {
+      const res = await api.htRequest({
+        url: "/index.php/index/index/get_miniapp",
+        method: "POST",
+        data: {
+          setapi: setting.set.setapi
+        }
+      });
+      this.appData = res.data;
+      common_vendor.index.setStorage({
+        key: "appData",
+        data: res.data
       });
     },
     async blog(e) {

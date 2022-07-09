@@ -98,7 +98,8 @@
 
 <script>
 	import {
-		myRequest
+		myRequest,
+		htRequest
 	} from '@/api.js';
 	import set from '@/setting.js';
 	export default {
@@ -131,6 +132,18 @@
 			this.show = !this.show
 			this.modeClass = 'fade'
 		},
+		onShow() {
+			var that = this
+			uni.getStorage({
+				key: 'appData',
+				success: function(res) {
+					that.appData = res.data
+				},
+				fail() {
+					that.getData()
+				}
+			});
+		},
 		//	小程序分享
 		onShareAppMessage(res) {
 			if (res.from === 'button') { // 来自页面内分享按钮
@@ -138,8 +151,7 @@
 			}
 			return {
 				title: this.data.title,
-				imageUrl: this.data.cover ||
-					"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+				imageUrl: this.data.cover || this.appData.data.shareimg,
 				path: 'pages/blog-info/blog-info?id=' + this.data.id + "&url=" + this.url
 			}
 		},
@@ -152,8 +164,7 @@
 					title: this.data.title,
 					type: 0,
 					href: this.url,
-					imageUrl: this.data.cover ||
-						"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+					imageUrl: this.data.cover || this.appData.data.shareimg,
 					summary: "我正在查看文章" + this.data.title + "，赶紧跟我一起来体验！",
 					success: function(res) {
 						console.log("success:" + JSON.stringify(res));
@@ -169,8 +180,7 @@
 					type: 0,
 					title: this.data.title,
 					summary: "我正在查看文章" + this.data.title + "，赶紧跟我一起来体验！",
-					imageUrl: this.data.cover ||
-						"http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+					imageUrl: this.data.cover || this.appData.data.shareimg,
 					href: this.url,
 					success: function(res) {
 						console.log("success:" + JSON.stringify(res));
@@ -193,6 +203,21 @@
 			down(){
 				uni.navigateTo({
 					url:"../down/down?id=" + this.id
+				})
+			},
+			async getData() {
+				var that = this;
+				const res = await htRequest({
+					url: "/index.php/index/index/get_miniapp",
+					method: 'POST',
+					data: {
+						setapi: set.setapi
+					},
+				})
+				this.appData = res.data
+				uni.setStorage({
+					key:'appData',
+					data:res.data
 				})
 			},
 			async blog(e) {

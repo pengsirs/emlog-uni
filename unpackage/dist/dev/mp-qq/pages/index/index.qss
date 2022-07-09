@@ -109,8 +109,12 @@
 page {
   font-size: 16px;
 }
+.sl-title {
+  font-size: 13px;
+  font-weight: 200;
+}
 .sl-icon {
-  background-color: #8cbb96;
+  background-color: #feb9bc;
   width: 30px;
   height: 30px;
   border-radius: 50%;

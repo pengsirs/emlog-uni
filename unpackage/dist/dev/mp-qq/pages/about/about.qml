@@ -1,1 +1,1 @@
-<view style="height:10vh"></view><view class="content"><view class="logo-box"><image class="logo" src="/static/logo.png" mode=""></image></view><view class="title"> 彭先生博客</view><view class="url">{{a}}</view><view class="p">这里是站点介绍</view></view>
+<view style="height:10vh"></view><view class="content"><view class="logo-box"><image class="logo" src="/static/logo.png" mode=""></image></view><view class="title"> 我的博客</view><view class="url">{{a}}</view><mp-html qq:if="{{b}}" u-i="3e7982fc-0" bind:__l="__l" u-p="{{b}}"></mp-html></view>

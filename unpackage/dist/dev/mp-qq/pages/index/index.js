@@ -107,11 +107,33 @@ const _sfc_main = {
     }
     return {
       title: "\u5206\u4EAB\u597D\u73A9\u7684\u7A0B\u5E8F\uFF01",
-      imageUrl: "http://cdn.hkiii.cn//img/_2022/07/03/08/20/07/523/123986672/1710966669182295948",
+      imageUrl: this.appData.data.shareimg,
       path: "pages/index/index"
     };
   },
   methods: {
+    copyUrl() {
+      common_vendor.index.setClipboardData({
+        data: this.appData.data.downurl,
+        success: function() {
+          common_vendor.index.showModal({
+            title: "\u6E29\u99A8\u63D0\u793A",
+            content: "\u590D\u5236\u6210\u529F"
+          });
+        }
+      });
+    },
+    copyQQ() {
+      common_vendor.index.setClipboardData({
+        data: this.appData.data.qq,
+        success: function() {
+          common_vendor.index.showModal({
+            title: "\u6E29\u99A8\u63D0\u793A",
+            content: "\u590D\u5236\u6210\u529F"
+          });
+        }
+      });
+    },
     async getData() {
       const res = await api.htRequest({
         url: "/index.php/index/index/get_miniapp",
@@ -293,34 +315,32 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       text: $data.appData.data.gonggao
     }),
     o: common_vendor.p({
-      color: "#04BE02",
+      color: "#fd7081",
       type: "star-filled",
       size: "30"
     }),
-    p: common_vendor.t($data.shoulu || "\u83B7\u53D6\u4E2D..."),
-    q: common_vendor.o(($event) => _ctx.shua("baidu")),
-    r: common_vendor.p({
+    p: common_vendor.o(($event) => $options.copyUrl()),
+    q: common_vendor.p({
       color: "#aaa",
       type: "circle-filled",
       size: "20"
     }),
-    s: common_vendor.p({
+    r: common_vendor.p({
       color: "#66ccff",
       type: "qq",
       size: "30"
     }),
-    t: common_vendor.t(_ctx.sogo || "\u83B7\u53D6\u4E2D..."),
-    v: common_vendor.o(($event) => _ctx.shua("sogo")),
-    w: common_vendor.p({
+    s: common_vendor.o(($event) => $options.copyQQ()),
+    t: common_vendor.p({
       color: "#aaa",
       type: "circle-filled",
       size: "20"
     }),
-    x: $data.backTopValue
+    v: $data.backTopValue
   }, $data.backTopValue ? {
-    y: common_vendor.o((...args) => $options.xhj && $options.xhj(...args))
+    w: common_vendor.o((...args) => $options.xhj && $options.xhj(...args))
   } : {}, {
-    z: common_vendor.f($data.dataa, (item, index, i0) => {
+    x: common_vendor.f($data.dataa, (item, index, i0) => {
       return common_vendor.e({
         a: $options.getimg(item.description) || item.cover
       }, $options.getimg(item.description) || item.cover ? common_vendor.e({
@@ -369,7 +389,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         B: index
       });
     }),
-    A: common_vendor.p({
+    y: common_vendor.p({
       color: "#007AFF",
       status: $data.status
     })
