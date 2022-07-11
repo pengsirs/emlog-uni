@@ -45,11 +45,12 @@ Rro的Api接口还不完善，所以实现的功能可能没有老版本多，�
 1. https://tp.hkiii.cn（必须，获取后台设置以及上传图片）
 2. https://api.tianapi.com（必须，调用百度查询）
 3. 您的博客域名（必须） 
-
+4. 
 #### 使用教程
 1. 需要申请的api接口
 	* [百度收录量](https://www.tianapi.com/apiview/203)
 	* [搜狗收录量](https://www.tianapi.com/apiview/204)
+
 2. 需要注册的网站
 	* [Api后台管理](https://tp.hkiii.cn) （用于管理您的程序）
 	* [Dcloud](https://dev.dcloud.net.cn/) （用于App打包）
