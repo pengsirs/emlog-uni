@@ -58,7 +58,7 @@
 			</view>
 		</scroll-view> -->
 		
-		<view class="baidu-box">
+		<view class="baidu-box" v-if="appData.downurl != 1">
 			<view class="baidu-item">
 				<view class="sl-icon">
 					<uni-icons color="#fd7081" type="star-filled" size="30"></uni-icons>
@@ -231,12 +231,10 @@
 				uni.setClipboardData({
 					data: this.appData.data.downurl,
 					success: function () {
-						// #ifndef APP-PLUS
 						uni.showModal({
 							title:"温馨提示",
 							content:"复制成功"
 						})
-						// #endif
 					}
 				});
 			},
@@ -244,12 +242,10 @@
 				uni.setClipboardData({
 					data: this.appData.data.qq,
 					success: function () {
-						// #ifndef APP-PLUS
 						uni.showModal({
 							title:"温馨提示",
 							content:"复制成功"
 						})
-						// #endif
 					}
 				});
 			},
