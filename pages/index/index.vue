@@ -58,7 +58,7 @@
 			</view>
 		</scroll-view> -->
 		
-		<view class="baidu-box" v-if="appData.data.downurl != 1">
+		<view class="baidu-box" v-if="appData.downurl != 1">
 			<view class="baidu-item">
 				<view class="sl-icon">
 					<uni-icons color="#fd7081" type="star-filled" size="30"></uni-icons>

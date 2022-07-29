@@ -77,7 +77,7 @@
 							<view style="font-size: 12px;font-weight: 400;">问题反馈</view>
 						</view>
 					</view>
-					<view class="homelist" v-if="appData.data.downurl != 1" @click="down()">
+					<view class="homelist" v-if="appData.downurl != 1" @click="down()">
 						<view class="homelist-item">
 							<uni-icons type="download-filled" color="#fec855" size="30"></uni-icons>
 							<view style="font-size: 12px;font-weight: 400;">附件下载</view>
