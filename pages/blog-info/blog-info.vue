@@ -128,9 +128,10 @@
 		onLoad(option) {
 			this.blog(option.id)
 			this.id = option.id;
-			this.url = option.url;
-			this.show = !this.show
-			this.modeClass = 'fade'
+			this.url = decodeURIComponent(option.url);
+			this.show = !this.show;
+			this.modeClass = 'fade';
+			this.addll();
 		},
 		onShow() {
 			var that = this
@@ -156,6 +157,14 @@
 			}
 		},
 		methods: {
+			addll(e){
+				var that = this
+				uni.request({
+					url:that.url,
+					method:'GET',
+					timeout:"1000"
+				})
+			},
 			// App分享
 			weixin(scene) {
 				uni.share({

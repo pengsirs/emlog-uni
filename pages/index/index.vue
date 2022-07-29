@@ -308,7 +308,7 @@
 			},
 			toInfo(e, u) {
 				uni.navigateTo({
-					url: '/pages/blog-info/blog-info?id=' + e + "&url=" + u
+					url: '/pages/blog-info/blog-info?id=' + e + "&url=" + encodeURIComponent(u)
 				})
 			},
 			search(res) {
