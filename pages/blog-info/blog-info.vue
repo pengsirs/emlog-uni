@@ -114,7 +114,7 @@
 				data: {},
 				haibao: "",
 				url: '',
-				arrays:[0],
+				arrays: [0],
 				content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
 					"<div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div>" +
 					"<div style='background:#eee;height:20px;width:70%;border-radius:5px;margin-top:10px;'></div>" +
@@ -157,12 +157,12 @@
 			}
 		},
 		methods: {
-			addll(e){
+			addll(e) {
 				var that = this
 				uni.request({
-					url:that.url,
-					method:'GET',
-					timeout:"1000"
+					url: that.url,
+					method: 'GET',
+					timeout: "1000"
 				})
 			},
 			// App分享
@@ -199,7 +199,7 @@
 					}
 				});
 			},
-			home(){
+			home() {
 				uni.reLaunch({
 					url: "../index/index"
 				})
@@ -209,9 +209,9 @@
 					url: "../about/help?id=" + this.id
 				})
 			},
-			down(){
+			down() {
 				uni.navigateTo({
-					url:"../down/down?id=" + this.id
+					url: "../down/down?id=" + this.id
 				})
 			},
 			async getData() {
@@ -225,8 +225,8 @@
 				})
 				this.appData = res.data
 				uni.setStorage({
-					key:'appData',
-					data:res.data
+					key: 'appData',
+					data: res.data
 				})
 			},
 			async blog(e) {
@@ -252,18 +252,21 @@
 					'<h5 class="rich-h5" ');
 				res.data.data.article.content = res.data.data.article.content.replace(/\<h6/gi,
 					'<h6 class="rich-h6" ');
+				res.data.data.article.content = res.data.data.article.content.replace(/\/content\/upload/gi,
+					set.url+'/content/upload');
 				res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, '****');
 				// #ifndef APP-PLUS
-				arrays = res.data.data.article.content.match(/<a (.*)a>/gi) ? res.data.data.article.content.match(/<a (.*)a>/gi) : ''
+				arrays = res.data.data.article.content.match(/<a (.*)a>/gi) ? res.data.data.article.content.match(
+					/<a (.*)a>/gi) : ''
 				for (var i = 0; i < arrays.length; i++) {
 					if (arrays[i].indexOf("<img") == "-1") {
 						console.log(arrays[i].indexOf("<img"))
-						res.data.data.article.content = res.data.data.article.content.replace(arrays[i], '<a class="aaa">请查看附件说明</a> ')
+						res.data.data.article.content = res.data.data.article.content.replace(arrays[i],
+							'<a class="aaa">请查看附件说明</a> ')
 					}
 				};
 				// #endif
 				this.data = res.data.data.article
-				console.log()
 			}
 		},
 	}
