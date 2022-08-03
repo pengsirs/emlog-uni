@@ -131,7 +131,7 @@
 			this.url = decodeURIComponent(option.url);
 			this.show = !this.show;
 			this.modeClass = 'fade';
-			this.addll();
+			this.addll(option.id);
 		},
 		onShow() {
 			var that = this
@@ -160,7 +160,7 @@
 			addll(e) {
 				var that = this
 				uni.request({
-					url: that.url,
+					url: that.url||set.url+"/"+e,
 					method: 'GET',
 					timeout: "1000"
 				})
