@@ -160,7 +160,7 @@
 			addll(e) {
 				var that = this
 				uni.request({
-					url: that.url||set.url+"/"+e,
+					url: set.url+"/"+e,
 					method: 'GET',
 					timeout: "1000"
 				})
