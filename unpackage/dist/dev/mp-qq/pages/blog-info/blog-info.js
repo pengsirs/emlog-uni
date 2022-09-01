@@ -21,9 +21,10 @@ const _sfc_main = {
   onLoad(option) {
     this.blog(option.id);
     this.id = option.id;
-    this.url = option.url;
+    this.url = decodeURIComponent(option.url);
     this.show = !this.show;
     this.modeClass = "fade";
+    this.addll(option.id);
   },
   onShow() {
     var that = this;
@@ -48,6 +49,13 @@ const _sfc_main = {
     };
   },
   methods: {
+    addll(e) {
+      common_vendor.index.request({
+        url: setting.set.url + "/" + e,
+        method: "GET",
+        timeout: "1000"
+      });
+    },
     weixin(scene) {
       common_vendor.index.share({
         provider: "weixin",
@@ -126,6 +134,7 @@ const _sfc_main = {
       res.data.data.article.content = res.data.data.article.content.replace(/\<h4/gi, '<h4 class="rich-h4" ');
       res.data.data.article.content = res.data.data.article.content.replace(/\<h5/gi, '<h5 class="rich-h5" ');
       res.data.data.article.content = res.data.data.article.content.replace(/\<h6/gi, '<h6 class="rich-h6" ');
+      res.data.data.article.content = res.data.data.article.content.replace(/\/content\/upload/gi, setting.set.url + "/content/upload");
       res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, "****");
       arrays = res.data.data.article.content.match(/<a (.*)a>/gi) ? res.data.data.article.content.match(/<a (.*)a>/gi) : "";
       for (var i = 0; i < arrays.length; i++) {
@@ -135,7 +144,6 @@ const _sfc_main = {
         }
       }
       this.data = res.data.data.article;
-      console.log();
     }
   }
 };
@@ -143,18 +151,20 @@ if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   const _easycom_mp_html2 = common_vendor.resolveComponent("mp-html");
   const _easycom_uni_transition2 = common_vendor.resolveComponent("uni-transition");
-  const _component_uni_collapse_items = common_vendor.resolveComponent("uni-collapse-items");
-  const _component_uni_collapses = common_vendor.resolveComponent("uni-collapses");
-  (_easycom_uni_icons2 + _easycom_mp_html2 + _easycom_uni_transition2 + _component_uni_collapse_items + _component_uni_collapses)();
+  const _easycom_uni_collapse_items2 = common_vendor.resolveComponent("uni-collapse-items");
+  const _easycom_uni_collapses2 = common_vendor.resolveComponent("uni-collapses");
+  (_easycom_uni_icons2 + _easycom_mp_html2 + _easycom_uni_transition2 + _easycom_uni_collapse_items2 + _easycom_uni_collapses2)();
 }
 const _easycom_uni_icons = () => "../../uni_modules/uni-icons/components/uni-icons/uni-icons.js";
 const _easycom_mp_html = () => "../../uni_modules/mp-html/components/mp-html/mp-html.js";
 const _easycom_uni_transition = () => "../../uni_modules/uni-transition/components/uni-transition/uni-transition.js";
+const _easycom_uni_collapse_items = () => "../../uni_modules/uni-collapses/components/uni-collapse-items/uni-collapse-items.js";
+const _easycom_uni_collapses = () => "../../uni_modules/uni-collapses/components/uni-collapses/uni-collapses.js";
 if (!Math) {
-  (_easycom_uni_icons + _easycom_mp_html + _easycom_uni_transition)();
+  (_easycom_uni_icons + _easycom_mp_html + _easycom_uni_transition + _easycom_uni_collapse_items + _easycom_uni_collapses)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
+  return common_vendor.e({
     a: common_vendor.t($data.data.title || "\u6807\u9898\u52A0\u8F7D\u4E2D..."),
     b: common_vendor.p({
       color: "green",
@@ -204,22 +214,25 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       size: "30"
     }),
     r: common_vendor.o(($event) => $options.wenti()),
-    s: common_vendor.p({
+    s: _ctx.appData.downurl != 1
+  }, _ctx.appData.downurl != 1 ? {
+    t: common_vendor.p({
       type: "download-filled",
       color: "#fec855",
       size: "30"
     }),
-    t: common_vendor.o(($event) => $options.down()),
-    v: common_vendor.p({
+    v: common_vendor.o(($event) => $options.down())
+  } : {}, {
+    w: common_vendor.p({
       type: "paperplane-filled",
       color: "#42ff48",
       size: "30"
     }),
-    w: common_vendor.p({
+    x: common_vendor.p({
       title: "\u6587\u7AE0\u6269\u5C55",
       ["show-animation"]: true
     })
-  };
+  });
 }
 var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/blog-info/blog-info.vue"]]);
 _sfc_main.__runtimeHooks = 2;

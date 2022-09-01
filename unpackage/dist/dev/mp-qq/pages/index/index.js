@@ -188,7 +188,7 @@ const _sfc_main = {
     },
     toInfo(e, u) {
       common_vendor.index.navigateTo({
-        url: "/pages/blog-info/blog-info?id=" + e + "&url=" + u
+        url: "/pages/blog-info/blog-info?id=" + e + "&url=" + encodeURIComponent(u)
       });
     },
     search(res) {
@@ -314,82 +314,87 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       color: "#000",
       text: $data.appData.data.gonggao
     }),
-    o: common_vendor.p({
+    o: $data.appData.downurl != 1
+  }, $data.appData.downurl != 1 ? {
+    p: common_vendor.p({
       color: "#fd7081",
       type: "star-filled",
       size: "30"
     }),
-    p: common_vendor.o(($event) => $options.copyUrl()),
-    q: common_vendor.p({
+    q: common_vendor.o(($event) => $options.copyUrl()),
+    r: common_vendor.p({
       color: "#aaa",
       type: "circle-filled",
       size: "20"
     }),
-    r: common_vendor.p({
+    s: common_vendor.p({
       color: "#66ccff",
       type: "qq",
       size: "30"
     }),
-    s: common_vendor.o(($event) => $options.copyQQ()),
-    t: common_vendor.p({
+    t: common_vendor.o(($event) => $options.copyQQ()),
+    v: common_vendor.p({
       color: "#aaa",
       type: "circle-filled",
       size: "20"
-    }),
-    v: $data.backTopValue
-  }, $data.backTopValue ? {
-    w: common_vendor.o((...args) => $options.xhj && $options.xhj(...args))
+    })
   } : {}, {
-    x: common_vendor.f($data.dataa, (item, index, i0) => {
+    w: $data.backTopValue
+  }, $data.backTopValue ? {
+    x: common_vendor.o((...args) => $options.xhj && $options.xhj(...args))
+  } : {}, {
+    y: common_vendor.f($data.dataa, (item, index, i0) => {
       return common_vendor.e({
-        a: $options.getimg(item.description) || item.cover
+        a: index % 5 == 0 && index != 0
+      }, index % 5 == 0 && index != 0 ? {} : {}, {
+        b: $options.getimg(item.description) || item.cover
       }, $options.getimg(item.description) || item.cover ? common_vendor.e({
-        b: common_vendor.o(($event) => $options.imageError($event, index)),
-        c: item.cover || $options.getimg(item.description),
-        d: item.top == "y"
+        c: common_vendor.o(($event) => $options.imageError($event, index)),
+        d: item.cover || $options.getimg(item.description),
+        e: item.top == "y"
       }, item.top == "y" ? {} : {}, {
-        e: common_vendor.t(item.title),
-        f: common_vendor.t($options.delHtmlTag(item.description)),
-        g: common_vendor.t(item.sort_name),
-        h: "02d9e768-9-" + i0,
-        i: common_vendor.p({
+        f: common_vendor.t(item.title),
+        g: common_vendor.t($options.delHtmlTag(item.description)),
+        h: common_vendor.t(item.sort_name),
+        i: "02d9e768-9-" + i0,
+        j: common_vendor.p({
           type: "fire-filled",
           size: "17"
         }),
-        j: common_vendor.t(item.views),
-        k: "02d9e768-10-" + i0,
-        l: common_vendor.p({
+        k: common_vendor.t(item.views),
+        l: "02d9e768-10-" + i0,
+        m: common_vendor.p({
           type: "chat-filled",
           size: "17"
         }),
-        m: common_vendor.t(item.comnum),
-        n: common_vendor.o(($event) => $options.toInfo(item.id, item.url))
+        n: common_vendor.t(item.comnum),
+        o: common_vendor.o(($event) => $options.toInfo(item.id, item.url))
       }) : {}, {
-        o: !$options.getimg(item.description) && item.cover == ""
+        p: !$options.getimg(item.description) && item.cover == ""
       }, !$options.getimg(item.description) && item.cover == "" ? common_vendor.e({
-        p: item.top == "y"
+        q: item.top == "y"
       }, item.top == "y" ? {} : {}, {
-        q: common_vendor.t(item.title),
-        r: common_vendor.t($options.delHtmlTag(item.description)),
-        s: common_vendor.t(item.sort_name),
-        t: "02d9e768-11-" + i0,
-        v: common_vendor.p({
+        r: common_vendor.t(item.title),
+        s: common_vendor.t($options.delHtmlTag(item.description)),
+        t: common_vendor.t(item.sort_name),
+        v: "02d9e768-11-" + i0,
+        w: common_vendor.p({
           type: "fire-filled",
           size: "17"
         }),
-        w: common_vendor.t(item.views),
-        x: "02d9e768-12-" + i0,
-        y: common_vendor.p({
+        x: common_vendor.t(item.views),
+        y: "02d9e768-12-" + i0,
+        z: common_vendor.p({
           type: "chat-filled",
           size: "17"
         }),
-        z: common_vendor.t(item.comnum),
-        A: common_vendor.o(($event) => $options.toInfo(item.id, item.url))
+        A: common_vendor.t(item.comnum),
+        B: common_vendor.o(($event) => $options.toInfo(item.id, item.url))
       }) : {}, {
-        B: index
+        C: index
       });
     }),
-    y: common_vendor.p({
+    z: common_vendor.p({
       color: "#007AFF",
       status: $data.status
     })
