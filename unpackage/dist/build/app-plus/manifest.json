@@ -4,10 +4,10 @@
     "iPhone",
     "iPad"
   ],
-  "id": "__UNI__C022911",
+  "id": "__UNI__3366A12",
   "name": "彭先生博客",
   "version": {
-    "name": "1.0.0",
+    "name": "1.0.1",
     "code": "100"
   },
   "description": "emlog",
@@ -104,17 +104,7 @@
       "apple": {},
       "plugins": {
         "ad": {},
-        "oauth": {
-          "weixin": {
-            "appid": "wx7003a2cf933148fb",
-            "appsecret": "",
-            "UniversalLinks": ""
-          },
-          "qq": {
-            "appid": "102013189",
-            "UniversalLinks": ""
-          }
-        },
+        "oauth": {},
         "audio": {
           "mp3": {
             "description": "Android平台录音支持MP3格式文件"

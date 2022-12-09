@@ -1,0 +1,1 @@
+<view class="page"><view class="out"><view class="in"></view></view><view class="text">附件下载</view></view><view qq:for="{{a}}" qq:for-item="item" qq:key="d" class="page-two">{{item.a}}. <mp-html qq:if="{{item.c}}" u-i="{{item.b}}" bind:__l="__l" u-p="{{item.c}}"/></view><view qq:if="{{b}}" class="page-two"> 暂无附件 </view>

@@ -61,7 +61,11 @@
 		},
 		onLoad(options){
 			this.value = options.search
-			this.blog(options.search)
+			if(options.tag == 'tag'){
+				this.blog(options.search,'tag')
+			}else{
+				this.blog(options.search,'keyword')
+			}
 			console.log(111)
 		},
 		methods: {
@@ -73,14 +77,21 @@
 					url: '/pages/blog-info/blog-info?id=' + e
 				})
 			},
-			async blog(keyword) {
+			async blog(keyword,tag) {
 				console.log(keyword)
+				if(tag == 'tag'){
+					var data={
+						tag: keyword
+					}
+				}else if(tag == 'keyword'){
+					var data={
+						keyword: keyword
+					}
+				}
 				const res = await myRequest({
 					url: '/?rest-api=article_list',
 					method: 'GET',
-					data: {
-						keyword: keyword
-					}
+					data: data
 				})
 					this.dataa = res.data.data.articles
 				console.log(this.dataa)

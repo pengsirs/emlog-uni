@@ -24,11 +24,11 @@
 					class="Copyright-text">{{ data.author_name||"作者"}}</text><text>》转载文章时未注明出处或侵犯您的权益或版权，请联系《</text><text
 					class="Copyright-text">{{ data.author_name||"作者"}}</text><text>》，我们将及时清理删除并道歉，谢谢！</text>
 			</view>
-			<!-- 			<view class="tags">
-			<view>
-			<text class="tag">标签名</text>
+			<view class="tags">
+			<view v-for="item in data.tags">
+			<view class="tag" @click="search(item.name)">{{item.name}}</view>
 			</view>
-			</view> -->
+			</view>
 		</view>
 		<view class="foot-content"></view>
 	</uni-transition>
@@ -229,6 +229,11 @@
 					data: res.data
 				})
 			},
+			search(res) {
+				uni.navigateTo({
+					url: "../search/search?tag=tag&search=" + res
+				})
+			},
 			async blog(e) {
 				var arrays = this.arrays
 				const res = await myRequest({
@@ -351,18 +356,19 @@
 	}
 
 	.tags {
-		display: -webkit-box;
+		display: flex;
 		margin: 10px 0px;
-		opacity: 0.5;
+		flex-wrap: wrap;
 	}
 
 	.tag {
-		background: #ddd;
 		font-size: 12px;
 		padding: 2px 5px;
 		font-weight: 100;
-		border-radius: 15px;
-		margin: 3px;
+		border-radius: 5px;
+		margin: 5px;
+		color: #2979ff;
+		border: 1px solid #2979ff;
 	}
 
 	.foot-content {

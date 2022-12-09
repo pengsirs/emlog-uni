@@ -135,7 +135,7 @@
     "uni-app": {
       "control": "uni-v3",
       "vueVersion": "3",
-      "compilerVersion": "3.4.15",
+      "compilerVersion": "3.4.18",
       "nvueCompiler": "uni-app",
       "renderer": "auto",
       "nvue": {

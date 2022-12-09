@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "分类详情",
+  "navigationBarBackgroundColor": "#F17C67",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "uni-icons": "../../uni_modules/uni-icons/components/uni-icons/uni-icons",
+    "uni-load-more": "../../uni_modules/uni-load-more/components/uni-load-more/uni-load-more"
+  }
+}

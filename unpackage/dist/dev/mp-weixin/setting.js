@@ -1,18 +1,12 @@
 "use strict";
-const url = "https://www.hkiii.cn";
-const $apikey = "21afd3a75a3f465cec89a2e57997aa4f";
+const url = "https://xfcc.com";
 const tenapi = "https://api.tianapi.com";
-const tiankey = "dedce66fbabebe6b94677ac20fbfa785";
-const $accessKey = "onk7a3DkIlOdm0ct8ga5M9iUr007mLOGRbyV7qcL";
-const $secretKey = "dnLtxGA1nFcx1Pd5kB6UA1eKGXCGD4o9g1WvVldp";
-const $bucket = "hkiii";
+const seturl = "https://tp.hkiii.cn";
+const setapi = "733d7be2196ff70efaf6913fc8bdcabf";
 var set = {
   url,
-  $apikey,
-  tenapi,
-  tiankey,
-  $accessKey,
-  $secretKey,
-  $bucket
+  seturl,
+  setapi,
+  tenapi
 };
 exports.set = set;

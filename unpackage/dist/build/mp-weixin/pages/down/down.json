@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "附件下载",
+  "navigationBarBackgroundColor": "#F17C67",
+  "usingComponents": {
+    "mp-html": "../../uni_modules/mp-html/components/mp-html/mp-html"
+  }
+}

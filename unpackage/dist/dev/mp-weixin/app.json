@@ -4,6 +4,8 @@
     "pages/xia-editor/xia-editor",
     "pages/blog-info/blog-info",
     "pages/about/about",
+    "pages/down/down",
+    "pages/sort-info/sort-info",
     "pages/home/home",
     "pages/search/search",
     "pages/setting/admin",
@@ -41,6 +43,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }
