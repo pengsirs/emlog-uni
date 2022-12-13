@@ -1101,17 +1101,18 @@ uni-button::after {
 		opacity: 0.5;
 }
 .tags {
-		display: -webkit-box;
+		display: flex;
 		margin: 10px 0px;
-		opacity: 0.5;
+		flex-wrap: wrap;
 }
 .tag {
-		background: #ddd;
 		font-size: 12px;
 		padding: 2px 5px;
 		font-weight: 100;
-		border-radius: 15px;
-		margin: 3px;
+		border-radius: 5px;
+		margin: 5px;
+		color: #2979ff;
+		border: 1px solid #2979ff;
 }
 .foot-content {
 		height: 40px;

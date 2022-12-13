@@ -1,1 +1,0 @@
-<view class="uni-popup-message"><view class="{{['uni-popup-message__box', 'fixforpc-width', c]}}"><slot><text class="{{['uni-popup-message-text', b]}}">{{a}}</text></slot></view></view>

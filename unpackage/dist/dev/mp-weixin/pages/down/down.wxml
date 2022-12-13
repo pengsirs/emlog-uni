@@ -1,1 +1,0 @@
-<view class="page"><view class="out"><view class="in"></view></view><view class="text">附件下载</view></view><view wx:for="{{a}}" wx:for-item="item" wx:key="d" class="page-two">{{item.a}}. <mp-html wx:if="{{item.c}}" u-i="{{item.b}}" bind:__l="__l" u-p="{{item.c}}"/></view><view wx:if="{{b}}" class="page-two"> 暂无附件 </view>

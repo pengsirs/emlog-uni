@@ -1,9 +1,0 @@
-{
-  "component": true,
-  "navigationBarTitleText": "文章详情",
-  "navigationBarBackgroundColor": "#F17C67",
-  "usingComponents": {
-    "uni-icons": "../../uni_modules/uni-icons/components/uni-icons/uni-icons",
-    "mp-html": "../../uni_modules/mp-html/components/mp-html/mp-html"
-  }
-}

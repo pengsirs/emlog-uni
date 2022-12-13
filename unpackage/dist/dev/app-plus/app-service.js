@@ -45,53 +45,17 @@ if (typeof uni !== "undefined" && uni && uni.requireGlobal) {
 if (uni.restoreGlobal) {
   uni.restoreGlobal(Vue, weex, plus, setTimeout, clearTimeout, setInterval, clearInterval);
 }
-(function(shared, vue) {
+(function(vue, shared) {
   "use strict";
-  function isDebugMode() {
-    return typeof __channelId__ === "string" && __channelId__;
-  }
-  function jsonStringifyReplacer(k, p) {
-    switch (shared.toRawType(p)) {
-      case "Function":
-        return "function() { [native code] }";
-      default:
-        return p;
-    }
-  }
-  function normalizeLog(type, filename, args) {
-    if (isDebugMode()) {
-      args.push(filename.replace("at ", "uni-app:///"));
-      return console[type].apply(console, args);
-    }
-    const msgs = args.map(function(v) {
-      const type2 = shared.toTypeString(v).toLowerCase();
-      if (["[object object]", "[object array]", "[object module]"].indexOf(type2) !== -1) {
-        try {
-          v = "---BEGIN:JSON---" + JSON.stringify(v, jsonStringifyReplacer) + "---END:JSON---";
-        } catch (e) {
-          v = type2;
-        }
-      } else {
-        if (v === null) {
-          v = "---NULL---";
-        } else if (v === void 0) {
-          v = "---UNDEFINED---";
-        } else {
-          const vType = shared.toRawType(v).toUpperCase();
-          if (vType === "NUMBER" || vType === "BOOLEAN") {
-            v = "---BEGIN:" + vType + "---" + v + "---END:" + vType + "---";
-          } else {
-            v = String(v);
-          }
-        }
-      }
-      return v;
-    });
-    return msgs.join("---COMMA---") + " " + filename;
-  }
   function formatAppLog(type, filename, ...args) {
-    const res = normalizeLog(type, filename, args);
-    res && console[type](res);
+    if (uni.__log__) {
+      uni.__log__(type, filename, ...args);
+    } else {
+      console[type].apply(console, [...args, filename]);
+    }
+  }
+  function resolveEasycom(component, easycom) {
+    return shared.isString(component) ? easycom : component;
   }
   var icons = {
     "id": "2852637",
@@ -1327,9 +1291,6 @@ if (uni.restoreGlobal) {
     }, null, 6);
   }
   var __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__scopeId", "data-v-a2e81f6e"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
-  function resolveEasycom(component, easycom) {
-    return shared.isString(component) ? easycom : component;
-  }
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -2234,10 +2195,10 @@ if (uni.restoreGlobal) {
     ]);
   }
   var __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-90d4256a"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
-  const url = "https://blog.iosgo.co";
+  const url = "https://www.hkiii.cn";
   const tenapi = "https://api.tianapi.com";
   const seturl = "https://tp.hkiii.cn";
-  const setapi = "733d7be2196ff70efaf6913fc8bdcabf";
+  const setapi = "dc483e80a7a0bd9ef71d8cf973673924";
   var set = {
     url,
     seturl,
@@ -8626,6 +8587,11 @@ if (uni.restoreGlobal) {
           data: res.data
         });
       },
+      search(res) {
+        uni.navigateTo({
+          url: "../search/search?tag=tag&search=" + res
+        });
+      },
       async blog(e) {
         this.arrays;
         const res = await myRequest({
@@ -8709,7 +8675,16 @@ if (uni.restoreGlobal) {
               vue.createElementVNode("text", { class: "Copyright-text" }, vue.toDisplayString($data.data.author_name || "\u4F5C\u8005"), 1),
               vue.createElementVNode("text", null, "\u300B\uFF0C\u6211\u4EEC\u5C06\u53CA\u65F6\u6E05\u7406\u5220\u9664\u5E76\u9053\u6B49\uFF0C\u8C22\u8C22\uFF01")
             ]),
-            vue.createCommentVNode(' 			<view class="tags">\n			<view>\n			<text class="tag">\u6807\u7B7E\u540D</text>\n			</view>\n			</view> ')
+            vue.createElementVNode("view", { class: "tags" }, [
+              (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.data.tags, (item) => {
+                return vue.openBlock(), vue.createElementBlock("view", null, [
+                  vue.createElementVNode("view", {
+                    class: "tag",
+                    onClick: ($event) => $options.search(item.name)
+                  }, vue.toDisplayString(item.name), 9, ["onClick"])
+                ]);
+              }), 256))
+            ])
           ]),
           vue.createElementVNode("view", { class: "foot-content" })
         ]),
@@ -9566,8 +9541,12 @@ if (uni.restoreGlobal) {
     },
     onLoad(options) {
       this.value = options.search;
-      this.blog(options.search);
-      formatAppLog("log", "at pages/search/search.vue:65", 111);
+      if (options.tag == "tag") {
+        this.blog(options.search, "tag");
+      } else {
+        this.blog(options.search, "keyword");
+      }
+      formatAppLog("log", "at pages/search/search.vue:69", 111);
     },
     methods: {
       search(res) {
@@ -9578,17 +9557,24 @@ if (uni.restoreGlobal) {
           url: "/pages/blog-info/blog-info?id=" + e
         });
       },
-      async blog(keyword) {
-        formatAppLog("log", "at pages/search/search.vue:77", keyword);
+      async blog(keyword, tag) {
+        formatAppLog("log", "at pages/search/search.vue:81", keyword);
+        if (tag == "tag") {
+          var data2 = {
+            tag: keyword
+          };
+        } else if (tag == "keyword") {
+          var data2 = {
+            keyword
+          };
+        }
         const res = await myRequest({
           url: "/?rest-api=article_list",
           method: "GET",
-          data: {
-            keyword
-          }
+          data: data2
         });
         this.dataa = res.data.data.articles;
-        formatAppLog("log", "at pages/search/search.vue:86", this.dataa);
+        formatAppLog("log", "at pages/search/search.vue:97", this.dataa);
       }
     }
   };
@@ -9796,4 +9782,4 @@ if (uni.restoreGlobal) {
   __app__._component.render = () => {
   };
   __app__.mount("#app");
-})(uni.VueShared, Vue);
+})(Vue, uni.VueShared);
