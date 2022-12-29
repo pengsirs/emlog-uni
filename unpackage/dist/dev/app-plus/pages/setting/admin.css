@@ -23,12 +23,12 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.uni-popup-message[data-v-38167fe2] {
+.uni-popup-message[data-v-a4566996] {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-.uni-popup-message__box[data-v-38167fe2] {
+.uni-popup-message__box[data-v-a4566996] {
   background-color: #e1f3d8;
   padding: 10px 15px;
   border-color: #eee;
@@ -37,7 +37,7 @@
   flex: 1;
 }
 @media screen and (min-width: 500px) {
-.fixforpc-width[data-v-38167fe2] {
+.fixforpc-width[data-v-a4566996] {
     margin-top: 20px;
     border-radius: 4px;
     flex: none;
@@ -45,32 +45,32 @@
     max-width: 50%;
 }
 }
-.uni-popup-message-text[data-v-38167fe2] {
+.uni-popup-message-text[data-v-a4566996] {
   font-size: 14px;
   padding: 0;
 }
-.uni-popup__success[data-v-38167fe2] {
+.uni-popup__success[data-v-a4566996] {
   background-color: #e1f3d8;
 }
-.uni-popup__success-text[data-v-38167fe2] {
+.uni-popup__success-text[data-v-a4566996] {
   color: #67C23A;
 }
-.uni-popup__warn[data-v-38167fe2] {
+.uni-popup__warn[data-v-a4566996] {
   background-color: #faecd8;
 }
-.uni-popup__warn-text[data-v-38167fe2] {
+.uni-popup__warn-text[data-v-a4566996] {
   color: #E6A23C;
 }
-.uni-popup__error[data-v-38167fe2] {
+.uni-popup__error[data-v-a4566996] {
   background-color: #fde2e2;
 }
-.uni-popup__error-text[data-v-38167fe2] {
+.uni-popup__error-text[data-v-a4566996] {
   color: #F56C6C;
 }
-.uni-popup__info[data-v-38167fe2] {
+.uni-popup__info[data-v-a4566996] {
   background-color: #F2F6FC;
 }
-.uni-popup__info-text[data-v-38167fe2] {
+.uni-popup__info-text[data-v-a4566996] {
   color: #909399;
 }
 /**
@@ -98,26 +98,26 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.uni-popup[data-v-7c43d41b] {
+.uni-popup[data-v-4dd3c44b] {
   position: fixed;
   z-index: 99;
 }
-.uni-popup.top[data-v-7c43d41b], .uni-popup.left[data-v-7c43d41b], .uni-popup.right[data-v-7c43d41b] {
+.uni-popup.top[data-v-4dd3c44b], .uni-popup.left[data-v-4dd3c44b], .uni-popup.right[data-v-4dd3c44b] {
   top: 0;
 }
-.uni-popup .uni-popup__wrapper[data-v-7c43d41b] {
+.uni-popup .uni-popup__wrapper[data-v-4dd3c44b] {
   display: block;
   position: relative;
   /* iphonex 等安全区设置，底部安全区适配 */
 }
-.uni-popup .uni-popup__wrapper.left[data-v-7c43d41b], .uni-popup .uni-popup__wrapper.right[data-v-7c43d41b] {
+.uni-popup .uni-popup__wrapper.left[data-v-4dd3c44b], .uni-popup .uni-popup__wrapper.right[data-v-4dd3c44b] {
   padding-top: 0;
   flex: 1;
 }
-.fixforpc-z-index[data-v-7c43d41b] {
+.fixforpc-z-index[data-v-4dd3c44b] {
   z-index: 999;
 }
-.fixforpc-top[data-v-7c43d41b] {
+.fixforpc-top[data-v-4dd3c44b] {
   top: 0;
 }
 

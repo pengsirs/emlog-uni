@@ -38,11 +38,6 @@
       "id": "1",
       "kernel": "WKWebview"
     },
-    "statusbar": {
-      "immersed": "supportedDevice",
-      "style": "light",
-      "background": "#F8F8F8"
-    },
     "usingComponents": true,
     "nvueStyleCompiler": "uni-app",
     "compilerVersion": 3,
@@ -114,6 +109,11 @@
         }
       }
     },
+    "statusbar": {
+      "immersed": "supportedDevice",
+      "style": "dark",
+      "background": "#F8F8F8"
+    },
     "uniStatistics": {
       "enable": false
     },
@@ -127,13 +127,16 @@
     "uni-app": {
       "control": "uni-v3",
       "vueVersion": "3",
-      "compilerVersion": "3.6.5",
+      "compilerVersion": "3.6.15",
       "nvueCompiler": "uni-app",
       "renderer": "auto",
       "nvue": {
         "flex-direction": "column"
       },
-      "nvueLaunchMode": "normal"
+      "nvueLaunchMode": "normal",
+      "webView": {
+        "minUserAgentVersion": "49.0"
+      }
     },
     "tabBar": {
       "position": "bottom",

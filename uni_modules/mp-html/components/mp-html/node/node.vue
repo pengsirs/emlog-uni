@@ -3,20 +3,27 @@
     <block v-for="(n, i) in childs" v-bind:key="i">
       <!-- 图片 -->
       <!-- 占位图 -->
-      <image v-if="n.name==='img'&&((opts[1]&&!ctrl[i])||ctrl[i]<0)" class="_img" :style="n.attrs.style" :src="ctrl[i]<0?opts[2]:opts[1]" mode="widthFix" />
+      <image v-if="n.name==='img'&&!n.t&&((opts[1]&&!ctrl[i])||ctrl[i]<0)" class="_img" :style="n.attrs.style" :src="ctrl[i]<0?opts[2]:opts[1]" mode="widthFix" />
       <!-- 显示图片 -->
       <!-- #ifdef H5 || (APP-PLUS && VUE2) -->
       <img v-if="n.name==='img'" :id="n.attrs.id" :class="'_img '+n.attrs.class" :style="(ctrl[i]===-1?'display:none;':'')+n.attrs.style" :src="n.attrs.src||(ctrl.load?n.attrs['data-src']:'')" :data-i="i" @load="imgLoad" @error="mediaError" @tap.stop="imgTap" @longpress="imgLongTap" />
       <!-- #endif -->
+      <!-- #ifndef H5 || (APP-PLUS && VUE2) -->
+      <!-- 表格中的图片，使用 rich-text 防止大小不正确 -->
+      <rich-text v-if="n.name==='img'&&n.t" :style="'display:'+n.t" :nodes="'<img class=\'_img\' style=\''+n.attrs.style+'\' src=\''+n.attrs.src+'\'>'" :data-i="i" @tap.stop="imgTap" />
+      <!-- #endif -->
       <!-- #ifndef H5 || APP-PLUS -->
-      <image v-if="n.name==='img'" :id="n.attrs.id" :class="'_img '+n.attrs.class" :style="(ctrl[i]===-1?'display:none;':'')+'width:'+(ctrl[i]||1)+'px;height:1px;'+n.attrs.style" :src="n.attrs.src" :mode="!n.h?'widthFix':(!n.w?'heightFix':'')" :lazy-load="opts[0]" :webp="n.webp" :show-menu-by-longpress="opts[3]&&!n.attrs.ignore" :image-menu-prevent="!opts[3]||n.attrs.ignore" :data-i="i" @load="imgLoad" @error="mediaError" @tap.stop="imgTap" @longpress="imgLongTap" />
+      <image v-else-if="n.name==='img'" :id="n.attrs.id" :class="'_img '+n.attrs.class" :style="(ctrl[i]===-1?'display:none;':'')+'width:'+(ctrl[i]||1)+'px;height:1px;'+n.attrs.style" :src="n.attrs.src" :mode="!n.h?'widthFix':(!n.w?'heightFix':'')" :lazy-load="opts[0]" :webp="n.webp" :show-menu-by-longpress="opts[3]&&!n.attrs.ignore" :image-menu-prevent="!opts[3]||n.attrs.ignore" :data-i="i" @load="imgLoad" @error="mediaError" @tap.stop="imgTap" @longpress="imgLongTap" />
       <!-- #endif -->
       <!-- #ifdef APP-PLUS && VUE3 -->
-      <image v-if="n.name==='img'" :id="n.attrs.id" :class="'_img '+n.attrs.class" :style="(ctrl[i]===-1?'display:none;':'')+'width:'+(ctrl[i]||1)+'px;'+n.attrs.style" :src="n.attrs.src||(ctrl.load?n.attrs['data-src']:'')" :mode="!n.h?'widthFix':(!n.w?'heightFix':'')" :data-i="i" @load="imgLoad" @error="mediaError" @tap.stop="imgTap" @longpress="imgLongTap" />
+      <image v-else-if="n.name==='img'" :id="n.attrs.id" :class="'_img '+n.attrs.class" :style="(ctrl[i]===-1?'display:none;':'')+'width:'+(ctrl[i]||1)+'px;'+n.attrs.style" :src="n.attrs.src||(ctrl.load?n.attrs['data-src']:'')" :mode="!n.h?'widthFix':(!n.w?'heightFix':'')" :data-i="i" @load="imgLoad" @error="mediaError" @tap.stop="imgTap" @longpress="imgLongTap" />
       <!-- #endif -->
       <!-- 文本 -->
-      <!-- #ifndef MP-BAIDU || MP-ALIPAY || MP-TOUTIAO -->
-      <text v-else-if="n.text" :user-select="opts[4]" decode>{{n.text}}</text>
+      <!-- #ifdef MP-WEIXIN -->
+      <text v-else-if="n.text" :user-select="opts[4]=='force'&&isiOS" decode>{{n.text}}</text>
+      <!-- #endif -->
+      <!-- #ifndef MP-WEIXIN || MP-BAIDU || MP-ALIPAY || MP-TOUTIAO -->
+      <text v-else-if="n.text" decode>{{n.text}}</text>
       <!-- #endif -->
       <text v-else-if="n.name==='br'">\n</text>
       <!-- 链接 -->
@@ -54,7 +61,7 @@
           </block>
         </view>
       </view>
-      
+      <rich-text v-else-if="n.attrs&&n.attrs['data-content']" :nodes="[n]" :data-content="n.attrs['data-content']" :data-lang="n.attrs['data-lang']" @longpress="copyCode" />
       <!-- 富文本 -->
       <!-- #ifdef H5 || ((MP-WEIXIN || MP-QQ || APP-PLUS || MP-360) && VUE2) -->
       <rich-text v-else-if="!n.c&&!handler.isInline(n.name, n.attrs.style)" :id="n.attrs.id" :style="n.f" :user-select="opts[4]" :nodes="[n]" />
@@ -113,7 +120,10 @@ export default {
   },
   data () {
     return {
-      ctrl: {}
+      ctrl: {},
+      // #ifdef MP-WEIXIN
+      isiOS: uni.getSystemInfoSync().system.includes('iOS')
+      // #endif
     }
   },
   props: {
@@ -129,7 +139,7 @@ export default {
   },
   components: {
 
-    // #ifndef H5 && VUE3
+    // #ifndef (H5 || APP-PLUS) && VUE3
     node
     // #endif
   },
@@ -165,9 +175,17 @@ export default {
     }
     // #endif
   },
-  methods:{
+  methods:{copyCode (e) {
+      uni.showActionSheet({
+        itemList: ['复制代码'],
+        success: () =>
+          uni.setClipboardData({
+            data: e.currentTarget.dataset.content
+          })
+      })
+    },
     // #ifdef MP-WEIXIN
-    toJSON () { },
+    toJSON () { return this },
     // #endif
     /**
      * @description 播放视频事件
@@ -194,6 +212,9 @@ export default {
             // #endif
           )
           ctx.id = id
+          if (this.root.playbackRate) {
+            ctx.playbackRate(this.root.playbackRate)
+          }
           this.root._videos.push(ctx)
         }
       }
@@ -279,6 +300,25 @@ export default {
         // 加载完毕，取消加载中占位图
         this.$set(this.ctrl, i, 1)
       }
+      this.checkReady()
+    },
+
+    /**
+     * @description 检查是否所有图片加载完毕
+     */
+    checkReady () {
+      if (!this.root.lazyLoad) {
+        this.root._unloadimgs -= 1
+        if (!this.root._unloadimgs) {
+          setTimeout(() => {
+            this.root.getRect().then(rect => {
+              this.root.$emit('ready', rect)
+            }).catch(() => {
+              this.root.$emit('ready', {})
+            })
+          }, 350)
+        }
+      }
     },
 
     /**
@@ -355,6 +395,7 @@ export default {
         if (this.opts[2]) {
           this.$set(this.ctrl, i, -1)
         }
+        this.checkReady()
       }
       if (this.root) {
         this.root.$emit('error', {
@@ -371,9 +412,10 @@ export default {
 </script>
 <style>
 	/deep/ .hl-code,/deep/ .hl-pre{color:#ccc;background:0 0;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;font-size:1em;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}/deep/ .hl-pre{padding:1em;margin:.5em 0;overflow:auto}/deep/ .hl-pre{background:#2d2d2d}/deep/ .hl-block-comment,/deep/ .hl-cdata,/deep/ .hl-comment,/deep/ .hl-doctype,/deep/ .hl-prolog{color:#999}/deep/ .hl-punctuation{color:#ccc}/deep/ .hl-attr-name,/deep/ .hl-deleted,/deep/ .hl-namespace,/deep/ .hl-tag{color:#e2777a}/deep/ .hl-function-name{color:#6196cc}/deep/ .hl-boolean,/deep/ .hl-function,/deep/ .hl-number{color:#f08d49}/deep/ .hl-class-name,/deep/ .hl-constant,/deep/ .hl-property,/deep/ .hl-symbol{color:#f8c555}/deep/ .hl-atrule,/deep/ .hl-builtin,/deep/ .hl-important,/deep/ .hl-keyword,/deep/ .hl-selector{color:#cc99cd}/deep/ .hl-attr-value,/deep/ .hl-char,/deep/ .hl-regex,/deep/ .hl-string,/deep/ .hl-variable{color:#7ec699}/deep/ .hl-entity,/deep/ .hl-operator,/deep/ .hl-url{color:#67cdcc}/deep/ .hl-bold,/deep/ .hl-important{font-weight:700}/deep/ .hl-italic{font-style:italic}/deep/ .hl-entity{cursor:help}/deep/ .hl-inserted{color:green}/deep/ .md-p {
-	  margin-block-start: 1em;
-	  margin-block-end: 1em;
-	}
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+}
+
 	/deep/ .rich-h1{
 	  font-size:20px;
 	  margin:10px 0px;
@@ -431,126 +473,104 @@ export default {
 	/deep/ .aaa{
 	  color:green;
 	}
-	/deep/ .md-table,
-	/deep/ .md-blockquote {
-	  margin-bottom: 16px;
-	}
-	
-	/deep/ .md-table {
-	  box-sizing: border-box;
-	  width: 100%;
-	  overflow: auto;
-	  border-spacing: 0;
-	  border-collapse: collapse;
-	}
-	
-	/deep/ .md-tr {
-	  background-color: #fff;
-	  border-top: 1px solid #c6cbd1;
-	}
-	
-	/deep/ .md-table .md-tr:nth-child(2n) {
-	  background-color: #f6f8fa;
-	}
-	
-	/deep/ .md-th,
-	/deep/ .md-td {
-	  padding: 6px 13px !important;
-	  border: 1px solid #dfe2e5;
-	}
-	
-	/deep/ .md-th {
-	  font-weight: 600;
-	}
-	
-	/deep/ .md-blockquote {
-	  padding: 0 1em;
-	  color: #6a737d;
-	  border-left: 0.25em solid #dfe2e5;
-	}
-	
-	/deep/ .md-code {
-	  padding: 0.2em 0.4em;
-	  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
-	  font-size: 85%;
-	  background-color: rgba(27, 31, 35, 0.05);
-	  border-radius: 3px;
-	}
-	
-	/deep/ .md-pre .md-code {
-	  padding: 0;
-	  font-size: 100%;
-	  background: transparent;
-	  border: 0;
-	}/deep/ .hl-pre {
-	  position: relative;
-	}
-	/deep/ .hl-code {
-	  overflow: auto;
-	  display: block;
-	}/deep/ .hl-language {
-	  font-size: 12px;
-	  font-weight: 600;
-	  position: absolute;
-	  right: 8px;
-	  text-align: right;
-	  top: 3px;
-	}
-	/deep/ .hl-pre {
-	  padding-top: 1.5em;
-	}/deep/ .hl-pre {
-	  font-size: 14px;
-	  padding-left: 3.8em;
-	  counter-reset: linenumber;
-	}
-	/deep/ .line-numbers-rows {
-	  position: absolute;
-	  pointer-events: none;
-	  top: 1.5em;
-	  font-size: 100%;
-	  left: 0;
-	  width: 3em; /* works for line-numbers below 1000 lines */
-	  letter-spacing: -1px;
-	  border-right: 1px solid #999;
-	  -webkit-user-select: none;
-	  -moz-user-select: none;
-	  -ms-user-select: none;
-	  user-select: none;
-	}
-	/deep/ .line-numbers-rows .span {
-	  display: block;
-	  counter-increment: linenumber;
-	} 
-	/deep/ .line-numbers-rows .span:before {
-	  content: counter(linenumber);
-	  color: #999;
-	  display: block;
-	  padding-right: 0.8em;
-	  text-align: right;
-	}/* #ifndef H5 || MP-ALIPAY || APP-PLUS */
-	  /deep/ ._address,
-	  /deep/ ._article,
-	  /deep/ ._aside,
-	  /deep/ ._body,
-	  /deep/ ._caption,
-	  /deep/ ._center,
-	  /deep/ ._cite,
-	  /deep/ ._footer,
-	  /deep/ ._header,
-	  /deep/ ._html,
-	  /deep/ ._nav,
-	  /deep/ ._pre,
-	  /deep/ ._section {
-	    display: block;
-	  }
-	  
-	  /* #endif */
-	  /deep/ ._video {
-	    width: 300px;
-	    height: 225px;
-	    display: inline-block;
-	    background-color: black;
-	  }
+
+/deep/ .md-table,
+/deep/ .md-blockquote {
+  margin-bottom: 16px;
+}
+
+/deep/ .md-table {
+  box-sizing: border-box;
+  width: 100%;
+  overflow: auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+/deep/ .md-tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.md-table .md-tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+/deep/ .md-th,
+/deep/ .md-td {
+  padding: 6px 13px !important;
+  border: 1px solid #dfe2e5;
+}
+
+/deep/ .md-th {
+  font-weight: 600;
+}
+
+/deep/ .md-blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+
+/deep/ .md-code {
+  padding: 0.2em 0.4em;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+/deep/ .md-pre .md-code {
+  padding: 0;
+  font-size: 100%;
+  background: transparent;
+  border: 0;
+}/deep/ .hl-pre {
+  position: relative;
+}
+/deep/ .hl-code {
+  overflow: auto;
+  display: block;
+}/deep/ .hl-language {
+  font-size: 12px;
+  font-weight: 600;
+  position: absolute;
+  right: 8px;
+  text-align: right;
+  top: 3px;
+}
+/deep/ .hl-pre {
+  padding-top: 1.5em;
+}/deep/ .hl-pre {
+  font-size: 14px;
+  padding-left: 3.8em;
+  counter-reset: linenumber;
+}
+/deep/ .line-numbers-rows {
+  position: absolute;
+  pointer-events: none;
+  top: 1.5em;
+  font-size: 100%;
+  left: 0;
+  width: 3em; /* works for line-numbers below 1000 lines */
+  letter-spacing: -1px;
+  border-right: 1px solid #999;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/deep/ .line-numbers-rows .span {
+  display: block;
+  counter-increment: linenumber;
+} 
+/deep/ .line-numbers-rows .span:before {
+  content: counter(linenumber);
+  color: #999;
+  display: block;
+  padding-right: 0.8em;
+  text-align: right;
+}
 /* a 标签默认效果 */
 ._a {
   padding: 1.5px 0 1.5px 0;

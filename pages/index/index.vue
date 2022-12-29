@@ -286,7 +286,7 @@
 			showDrawer(e) {
 				this.$refs[e].open()
 			},
-			// 关闭窗口
+			// 关闭窗口 
 			closeDrawer(e) {
 				this.$refs[e].close()
 			},

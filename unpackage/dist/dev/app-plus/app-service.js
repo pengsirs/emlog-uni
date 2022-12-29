@@ -1,28 +1,12 @@
-var __defProp = Object.defineProperty;
-var __defProps = Object.defineProperties;
-var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
-var __getOwnPropSymbols = Object.getOwnPropertySymbols;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
-    if (__hasOwnProp.call(b, prop))
-      __defNormalProp(a, prop, b[prop]);
-  if (__getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(b)) {
-      if (__propIsEnum.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    }
-  return a;
-};
-var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 if (typeof Promise !== "undefined" && !Promise.prototype.finally) {
   Promise.prototype.finally = function(callback) {
     const promise = this.constructor;
-    return this.then((value) => promise.resolve(callback()).then(() => value), (reason) => promise.resolve(callback()).then(() => {
-      throw reason;
-    }));
+    return this.then(
+      (value) => promise.resolve(callback()).then(() => value),
+      (reason) => promise.resolve(callback()).then(() => {
+        throw reason;
+      })
+    );
   };
 }
 ;
@@ -57,7 +41,7 @@ if (uni.restoreGlobal) {
   function resolveEasycom(component, easycom) {
     return shared.isString(component) ? easycom : component;
   }
-  var icons = {
+  const icons = {
     "id": "2852637",
     "name": "uniui\u56FE\u6807\u5E93",
     "font_family": "uniicons",
@@ -1228,7 +1212,7 @@ if (uni.restoreGlobal) {
       }
     ]
   };
-  var _export_sfc = (sfc, props) => {
+  const _export_sfc = (sfc, props) => {
     const target = sfc.__vccOpts || sfc;
     for (const [key, val] of props) {
       target[key] = val;
@@ -1290,7 +1274,7 @@ if (uni.restoreGlobal) {
       onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
     }, null, 6);
   }
-  var __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__scopeId", "data-v-a2e81f6e"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__scopeId", "data-v-d31e1c47"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -1571,19 +1555,19 @@ if (uni.restoreGlobal) {
       }
     };
   }
-  var en$1 = {
+  const en$1 = {
     "uni-search-bar.cancel": "cancel",
     "uni-search-bar.placeholder": "Search enter content"
   };
-  var zhHans$1 = {
+  const zhHans$1 = {
     "uni-search-bar.cancel": "cancel",
     "uni-search-bar.placeholder": "\u8BF7\u8F93\u5165\u641C\u7D22\u5185\u5BB9"
   };
-  var zhHant$1 = {
+  const zhHant$1 = {
     "uni-search-bar.cancel": "cancel",
     "uni-search-bar.placeholder": "\u8ACB\u8F38\u5165\u641C\u7D22\u5167\u5BB9"
   };
-  var messages$1 = {
+  const messages$1 = {
     en: en$1,
     "zh-Hans": zhHans$1,
     "zh-Hant": zhHant$1
@@ -1786,7 +1770,7 @@ if (uni.restoreGlobal) {
       }, vue.toDisplayString($options.cancelTextI18n), 1)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["__scopeId", "data-v-180dbe05"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
+  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["__scopeId", "data-v-f07ef577"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
   const _sfc_main$o = {
     name: "UniDrawer",
     components: {},
@@ -1865,7 +1849,7 @@ if (uni.restoreGlobal) {
       ], 6)
     ], 34)) : vue.createCommentVNode("v-if", true);
   }
-  var __easycom_2$2 = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__scopeId", "data-v-558f1882"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-drawer/components/uni-drawer/uni-drawer.vue"]]);
+  const __easycom_2$2 = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__scopeId", "data-v-f7c32d22"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-drawer/components/uni-drawer/uni-drawer.vue"]]);
   const _sfc_main$n = {
     name: "UniNoticeBar",
     emits: ["click", "getmore", "close"],
@@ -2046,23 +2030,23 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ], 4)) : vue.createCommentVNode("v-if", true);
   }
-  var __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-a1596656"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-notice-bar/components/uni-notice-bar/uni-notice-bar.vue"]]);
-  var en = {
+  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-c3453ea3"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-notice-bar/components/uni-notice-bar/uni-notice-bar.vue"]]);
+  const en = {
     "uni-load-more.contentdown": "Pull up to show more",
     "uni-load-more.contentrefresh": "loading...",
     "uni-load-more.contentnomore": "No more data"
   };
-  var zhHans = {
+  const zhHans = {
     "uni-load-more.contentdown": "\u4E0A\u62C9\u663E\u793A\u66F4\u591A",
     "uni-load-more.contentrefresh": "\u6B63\u5728\u52A0\u8F7D...",
     "uni-load-more.contentnomore": "\u6CA1\u6709\u66F4\u591A\u6570\u636E\u4E86"
   };
-  var zhHant = {
+  const zhHant = {
     "uni-load-more.contentdown": "\u4E0A\u62C9\u986F\u793A\u66F4\u591A",
     "uni-load-more.contentrefresh": "\u6B63\u5728\u52A0\u8F09...",
     "uni-load-more.contentnomore": "\u6C92\u6709\u66F4\u591A\u6578\u64DA\u4E86"
   };
-  var messages = {
+  const messages = {
     en,
     "zh-Hans": zhHans,
     "zh-Hant": zhHant
@@ -2194,12 +2178,12 @@ if (uni.restoreGlobal) {
       }, vue.toDisplayString($props.status === "more" ? $options.contentdownText : $props.status === "loading" ? $options.contentrefreshText : $options.contentnomoreText), 5)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  var __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-90d4256a"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
+  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-9245e42c"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
   const url = "https://www.hkiii.cn";
   const tenapi = "https://api.tianapi.com";
   const seturl = "https://tp.hkiii.cn";
   const setapi = "dc483e80a7a0bd9ef71d8cf973673924";
-  var set = {
+  const set = {
     url,
     seturl,
     setapi,
@@ -2770,7 +2754,7 @@ if (uni.restoreGlobal) {
       }, null, 8, ["status"])
     ]);
   }
-  var PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/index/index.vue"]]);
   const _sfc_main$k = {
     name: "uni-easyinput",
     emits: ["click", "iconClick", "update:modelValue", "input", "focus", "blur", "confirm"],
@@ -3082,7 +3066,7 @@ if (uni.restoreGlobal) {
       ], 6)
     ], 6);
   }
-  var __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-abe12412"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
+  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-09fd5285"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
   const _sfc_main$j = {
     name: "uniCollapseItem",
     props: {
@@ -3290,7 +3274,7 @@ if (uni.restoreGlobal) {
       ], 6)
     ]);
   }
-  var __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-41027c34"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
+  const __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-3d2dde9f"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
   const _sfc_main$i = {
     name: "uniCollapse",
     emits: ["change", "activeItem", "input", "update:modelValue"],
@@ -3405,8 +3389,8 @@ if (uni.restoreGlobal) {
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ]);
   }
-  var __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-275068f4"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
-  var popup = {
+  const __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-3f050360"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
+  const popup = {
     data() {
       return {};
     },
@@ -3479,7 +3463,7 @@ if (uni.restoreGlobal) {
       ], 2)
     ]);
   }
-  var __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-38167fe2"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-popup/components/uni-popup-message/uni-popup-message.vue"]]);
+  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-a4566996"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-popup/components/uni-popup-message/uni-popup-message.vue"]]);
   class MPAnimation {
     constructor(options, _this) {
       this.options = options;
@@ -3518,9 +3502,10 @@ if (uni.restoreGlobal) {
       if (!ref)
         return;
       return new Promise((resolve, reject) => {
-        nvueAnimation.transition(ref, __spreadValues({
-          styles
-        }, config2), (res) => {
+        nvueAnimation.transition(ref, {
+          styles,
+          ...config2
+        }, (res) => {
           resolve();
         });
       });
@@ -3644,9 +3629,10 @@ if (uni.restoreGlobal) {
     },
     computed: {
       stylesObject() {
-        let styles = __spreadProps(__spreadValues({}, this.styles), {
+        let styles = {
+          ...this.styles,
           "transition-duration": this.duration / 1e3 + "s"
-        });
+        };
         let transform = "";
         for (let i in styles) {
           let line = this.toLine(i);
@@ -3826,7 +3812,7 @@ if (uni.restoreGlobal) {
       vue.renderSlot(_ctx.$slots, "default")
     ], 14, ["animation"])) : vue.createCommentVNode("v-if", true);
   }
-  var __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
+  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
   const _sfc_main$f = {
     name: "uniPopup",
     components: {},
@@ -4165,7 +4151,7 @@ if (uni.restoreGlobal) {
       ], 32)
     ], 2)) : vue.createCommentVNode("v-if", true);
   }
-  var __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-7c43d41b"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
+  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-4dd3c44b"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
   var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
   var md5$1 = { exports: {} };
   /**
@@ -4618,7 +4604,7 @@ if (uni.restoreGlobal) {
       }
     })();
   })(md5$1);
-  var md5 = md5$1.exports;
+  const md5 = md5$1.exports;
   const _sfc_main$e = {
     props: {
       value: {
@@ -5098,8 +5084,8 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ], 64);
   }
-  var PagesXiaEditorXiaEditor = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/xia-editor/xia-editor.vue"]]);
-  var block0 = (Comp) => {
+  const PagesXiaEditorXiaEditor = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/xia-editor/xia-editor.vue"]]);
+  const block0 = (Comp) => {
     (Comp.$wxs || (Comp.$wxs = [])).push("handler");
     (Comp.$wxsModules || (Comp.$wxsModules = {}))["handler"] = "2f992f8c";
   };
@@ -5122,9 +5108,7 @@ if (uni.restoreGlobal) {
       childs: Array,
       opts: Array
     },
-    components: {
-      node
-    },
+    components: {},
     mounted() {
       this.$nextTick(() => {
         for (this.root = this.$parent; this.root.$options.name !== "mp-html"; this.root = this.root.$parent)
@@ -5156,6 +5140,14 @@ if (uni.restoreGlobal) {
       }
     },
     methods: {
+      copyCode(e) {
+        uni.showActionSheet({
+          itemList: ["\u590D\u5236\u4EE3\u7801"],
+          success: () => uni.setClipboardData({
+            data: e.currentTarget.dataset.content
+          })
+        });
+      },
       play(e) {
         this.root.$emit("play");
       },
@@ -5211,6 +5203,21 @@ if (uni.restoreGlobal) {
         } else if (this.opts[1] && !this.ctrl[i] || this.ctrl[i] === -1) {
           this.$set(this.ctrl, i, 1);
         }
+        this.checkReady();
+      },
+      checkReady() {
+        if (!this.root.lazyLoad) {
+          this.root._unloadimgs -= 1;
+          if (!this.root._unloadimgs) {
+            setTimeout(() => {
+              this.root.getRect().then((rect) => {
+                this.root.$emit("ready", rect);
+              }).catch(() => {
+                this.root.$emit("ready", {});
+              });
+            }, 350);
+          }
+        }
       },
       linkTap(e) {
         const node2 = e.currentTarget ? this.childs[e.currentTarget.dataset.i] : {};
@@ -5257,6 +5264,7 @@ if (uni.restoreGlobal) {
           if (this.opts[2]) {
             this.$set(this.ctrl, i, -1);
           }
+          this.checkReady();
         }
         if (this.root) {
           this.root.$emit("error", {
@@ -5279,7 +5287,7 @@ if (uni.restoreGlobal) {
         return vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: i }, [
           vue.createCommentVNode(" \u56FE\u7247 "),
           vue.createCommentVNode(" \u5360\u4F4D\u56FE "),
-          n.name === "img" && ($props.opts[1] && !$data.ctrl[i] || $data.ctrl[i] < 0) ? (vue.openBlock(), vue.createElementBlock("image", {
+          n.name === "img" && !n.t && ($props.opts[1] && !$data.ctrl[i] || $data.ctrl[i] < 0) ? (vue.openBlock(), vue.createElementBlock("image", {
             key: 0,
             class: "_img",
             style: vue.normalizeStyle(n.attrs.style),
@@ -5287,25 +5295,29 @@ if (uni.restoreGlobal) {
             mode: "widthFix"
           }, null, 12, ["src"])) : vue.createCommentVNode("v-if", true),
           vue.createCommentVNode(" \u663E\u793A\u56FE\u7247 "),
-          n.name === "img" ? (vue.openBlock(), vue.createElementBlock("image", {
+          vue.createCommentVNode(" \u8868\u683C\u4E2D\u7684\u56FE\u7247\uFF0C\u4F7F\u7528 rich-text \u9632\u6B62\u5927\u5C0F\u4E0D\u6B63\u786E "),
+          n.name === "img" && n.t ? (vue.openBlock(), vue.createElementBlock("rich-text", {
             key: 1,
+            style: vue.normalizeStyle("display:" + n.t),
+            nodes: "<img class='_img' style='" + n.attrs.style + "' src='" + n.attrs.src + "'>",
+            "data-i": i,
+            onClick: _cache[0] || (_cache[0] = vue.withModifiers((...args) => $options.imgTap && $options.imgTap(...args), ["stop"]))
+          }, null, 12, ["nodes", "data-i"])) : n.name === "img" ? (vue.openBlock(), vue.createElementBlock("image", {
+            key: 2,
             id: n.attrs.id,
             class: vue.normalizeClass("_img " + n.attrs.class),
             style: vue.normalizeStyle(($data.ctrl[i] === -1 ? "display:none;" : "") + "width:" + ($data.ctrl[i] || 1) + "px;" + n.attrs.style),
             src: n.attrs.src || ($data.ctrl.load ? n.attrs["data-src"] : ""),
             mode: !n.h ? "widthFix" : !n.w ? "heightFix" : "",
             "data-i": i,
-            onLoad: _cache[0] || (_cache[0] = (...args) => $options.imgLoad && $options.imgLoad(...args)),
-            onError: _cache[1] || (_cache[1] = (...args) => $options.mediaError && $options.mediaError(...args)),
-            onClick: _cache[2] || (_cache[2] = vue.withModifiers((...args) => $options.imgTap && $options.imgTap(...args), ["stop"])),
-            onLongpress: _cache[3] || (_cache[3] = (...args) => $options.imgLongTap && $options.imgLongTap(...args))
-          }, null, 46, ["id", "src", "mode", "data-i"])) : n.text ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 2 }, [
+            onLoad: _cache[1] || (_cache[1] = (...args) => $options.imgLoad && $options.imgLoad(...args)),
+            onError: _cache[2] || (_cache[2] = (...args) => $options.mediaError && $options.mediaError(...args)),
+            onClick: _cache[3] || (_cache[3] = vue.withModifiers((...args) => $options.imgTap && $options.imgTap(...args), ["stop"])),
+            onLongpress: _cache[4] || (_cache[4] = (...args) => $options.imgLongTap && $options.imgLongTap(...args))
+          }, null, 46, ["id", "src", "mode", "data-i"])) : n.text ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 3 }, [
             vue.createCommentVNode(" \u6587\u672C "),
-            vue.createElementVNode("text", {
-              "user-select": $props.opts[4],
-              decode: ""
-            }, vue.toDisplayString(n.text), 9, ["user-select"])
-          ], 2112)) : n.name === "br" ? (vue.openBlock(), vue.createElementBlock("text", { key: 3 }, "\\n")) : n.name === "a" ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 4 }, [
+            vue.createElementVNode("text", { decode: "" }, vue.toDisplayString(n.text), 1)
+          ], 2112)) : n.name === "br" ? (vue.openBlock(), vue.createElementBlock("text", { key: 4 }, "\\n")) : n.name === "a" ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 5 }, [
             vue.createCommentVNode(" \u94FE\u63A5 "),
             vue.createElementVNode("view", {
               id: n.attrs.id,
@@ -5313,7 +5325,7 @@ if (uni.restoreGlobal) {
               "hover-class": "_hover",
               style: vue.normalizeStyle("display:inline;" + n.attrs.style),
               "data-i": i,
-              onClick: _cache[4] || (_cache[4] = vue.withModifiers((...args) => $options.linkTap && $options.linkTap(...args), ["stop"]))
+              onClick: _cache[5] || (_cache[5] = vue.withModifiers((...args) => $options.linkTap && $options.linkTap(...args), ["stop"]))
             }, [
               vue.createVNode(_component_node, {
                 name: "span",
@@ -5322,27 +5334,27 @@ if (uni.restoreGlobal) {
                 style: { "display": "inherit" }
               }, null, 8, ["childs", "opts"])
             ], 14, ["id", "data-i"])
-          ], 2112)) : n.html ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 5 }, [
+          ], 2112)) : n.html ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 6 }, [
             vue.createCommentVNode(" \u89C6\u9891 "),
             vue.createElementVNode("view", {
               id: n.attrs.id,
               class: vue.normalizeClass("_video " + n.attrs.class),
               style: vue.normalizeStyle(n.attrs.style),
               innerHTML: n.html,
-              onVplay: _cache[5] || (_cache[5] = vue.withModifiers((...args) => $options.play && $options.play(...args), ["stop"]))
+              onVplay: _cache[6] || (_cache[6] = vue.withModifiers((...args) => $options.play && $options.play(...args), ["stop"]))
             }, null, 46, ["id", "innerHTML"])
           ], 2112)) : n.name === "iframe" ? (vue.openBlock(), vue.createElementBlock("iframe", {
-            key: 6,
+            key: 7,
             style: vue.normalizeStyle(n.attrs.style),
             allowfullscreen: n.attrs.allowfullscreen,
             frameborder: n.attrs.frameborder,
             src: n.attrs.src
           }, null, 12, ["allowfullscreen", "frameborder", "src"])) : n.name === "embed" ? (vue.openBlock(), vue.createElementBlock("embed", {
-            key: 7,
+            key: 8,
             style: vue.normalizeStyle(n.attrs.style),
             src: n.attrs.src
           }, null, 12, ["src"])) : n.name === "table" && n.c || n.name === "li" ? (vue.openBlock(), vue.createElementBlock("view", {
-            key: 8,
+            key: 9,
             id: n.attrs.id,
             class: vue.normalizeClass("_" + n.name + " " + n.attrs.class),
             style: vue.normalizeStyle(n.attrs.style)
@@ -5394,7 +5406,13 @@ if (uni.restoreGlobal) {
                 }), 128))
               ], 6);
             }), 128))
-          ], 14, ["id"])) : !n.c ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 9 }, [
+          ], 14, ["id"])) : n.attrs && n.attrs["data-content"] ? (vue.openBlock(), vue.createElementBlock("rich-text", {
+            key: 10,
+            nodes: [n],
+            "data-content": n.attrs["data-content"],
+            "data-lang": n.attrs["data-lang"],
+            onLongpress: _cache[7] || (_cache[7] = (...args) => $options.copyCode && $options.copyCode(...args))
+          }, null, 40, ["nodes", "data-content", "data-lang"])) : !n.c ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 11 }, [
             vue.createCommentVNode(" \u5BCC\u6587\u672C "),
             vue.createElementVNode("rich-text", {
               id: n.attrs.id,
@@ -5404,7 +5422,7 @@ if (uni.restoreGlobal) {
               "user-select": $props.opts[4],
               nodes: [n]
             }, null, 12, ["id", "selectable", "user-select", "nodes"])
-          ], 2112)) : n.c === 2 ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 10 }, [
+          ], 2112)) : n.c === 2 ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 12 }, [
             vue.createCommentVNode(" \u7EE7\u7EED\u9012\u5F52 "),
             vue.createElementVNode("view", {
               id: n.attrs.id,
@@ -5423,7 +5441,7 @@ if (uni.restoreGlobal) {
               }), 128))
             ], 14, ["id"])
           ], 2112)) : (vue.openBlock(), vue.createBlock(_component_node, {
-            key: 11,
+            key: 13,
             style: vue.normalizeStyle(n.f),
             name: n.name,
             attrs: n.attrs,
@@ -5436,7 +5454,7 @@ if (uni.restoreGlobal) {
   }
   if (typeof block0 === "function")
     block0(_sfc_main$d);
-  var node = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-35a45afb"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/mp-html/components/mp-html/node/node.vue"]]);
+  const node = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-8845ff2f"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/mp-html/components/mp-html/node/node.vue"]]);
   const config = {
     trustTags: makeMap("a,abbr,ad,audio,b,blockquote,br,code,col,colgroup,dd,del,dl,dt,div,em,fieldset,h1,h2,h3,h4,h5,h6,hr,i,img,ins,label,legend,li,ol,p,q,ruby,rt,source,span,strong,sub,sup,table,tbody,td,tfoot,th,thead,tr,title,ul,video"),
     blockTags: makeMap("address,article,aside,body,caption,center,cite,footer,header,html,nav,pre,section"),
@@ -5529,29 +5547,48 @@ if (uni.restoreGlobal) {
     }
     return str;
   }
-  function Parser(vm) {
+  function mergeNodes(nodes) {
+    let i = nodes.length - 1;
+    for (let j = i; j >= -1; j--) {
+      if (j === -1 || nodes[j].c || !nodes[j].name || nodes[j].name !== "div" && nodes[j].name !== "p" && nodes[j].name[0] !== "h" || (nodes[j].attrs.style || "").includes("inline")) {
+        if (i - j >= 5) {
+          nodes.splice(j + 1, i - j, {
+            name: "div",
+            attrs: {},
+            children: nodes.slice(j + 1, i + 1)
+          });
+        }
+        i = j - 1;
+      }
+    }
+  }
+  function Parser$1(vm) {
     this.options = vm || {};
     this.tagStyle = Object.assign({}, config.tagStyle, this.options.tagStyle);
     this.imgList = vm.imgList || [];
+    this.imgList._unloadimgs = 0;
     this.plugins = vm.plugins || [];
     this.attrs = /* @__PURE__ */ Object.create(null);
     this.stack = [];
     this.nodes = [];
     this.pre = (this.options.containerStyle || "").includes("white-space") && this.options.containerStyle.includes("pre") ? 2 : 0;
   }
-  Parser.prototype.parse = function(content) {
+  Parser$1.prototype.parse = function(content) {
     for (let i = this.plugins.length; i--; ) {
       if (this.plugins[i].onUpdate) {
         content = this.plugins[i].onUpdate(content, config) || content;
       }
     }
-    new Lexer(this).parse(content);
+    new Lexer$1(this).parse(content);
     while (this.stack.length) {
       this.popNode();
     }
+    if (this.nodes.length > 50) {
+      mergeNodes(this.nodes);
+    }
     return this.nodes;
   };
-  Parser.prototype.expose = function() {
+  Parser$1.prototype.expose = function() {
     for (let i = this.stack.length; i--; ) {
       const item = this.stack[i];
       if (item.c || item.name === "a" || item.name === "video" || item.name === "audio")
@@ -5559,7 +5596,7 @@ if (uni.restoreGlobal) {
       item.c = 1;
     }
   };
-  Parser.prototype.hook = function(node2) {
+  Parser$1.prototype.hook = function(node2) {
     for (let i = this.plugins.length; i--; ) {
       if (this.plugins[i].onParse && this.plugins[i].onParse(node2, this) === false) {
         return false;
@@ -5567,7 +5604,7 @@ if (uni.restoreGlobal) {
     }
     return true;
   };
-  Parser.prototype.getUrl = function(url2) {
+  Parser$1.prototype.getUrl = function(url2) {
     const domain = this.options.domain;
     if (url2[0] === "/") {
       if (url2[1] === "/") {
@@ -5586,7 +5623,7 @@ if (uni.restoreGlobal) {
     }
     return url2;
   };
-  Parser.prototype.parseStyle = function(node2) {
+  Parser$1.prototype.parseStyle = function(node2) {
     const attrs = node2.attrs;
     const list = (this.tagStyle[node2.name] || "").split(";").concat((attrs.style || "").split(";"));
     const styleObj = {};
@@ -5632,13 +5669,13 @@ if (uni.restoreGlobal) {
     node2.attrs.style = tmp;
     return styleObj;
   };
-  Parser.prototype.onTagName = function(name) {
+  Parser$1.prototype.onTagName = function(name) {
     this.tagName = this.xml ? name : name.toLowerCase();
     if (this.tagName === "svg") {
       this.xml = (this.xml || 0) + 1;
     }
   };
-  Parser.prototype.onAttrName = function(name) {
+  Parser$1.prototype.onAttrName = function(name) {
     name = this.xml ? name : name.toLowerCase();
     if (name.substr(0, 5) === "data-") {
       if (name === "data-src" && !this.attrs.src) {
@@ -5653,7 +5690,7 @@ if (uni.restoreGlobal) {
       this.attrs[name] = "T";
     }
   };
-  Parser.prototype.onAttrVal = function(val) {
+  Parser$1.prototype.onAttrVal = function(val) {
     const name = this.attrName || "";
     if (name === "style" || name === "href") {
       this.attrs[name] = decodeEntity(val, true);
@@ -5663,7 +5700,7 @@ if (uni.restoreGlobal) {
       this.attrs[name] = val;
     }
   };
-  Parser.prototype.onOpenTag = function(selfClose) {
+  Parser$1.prototype.onOpenTag = function(selfClose) {
     const node2 = /* @__PURE__ */ Object.create(null);
     node2.name = this.tagName;
     node2.attrs = this.attrs;
@@ -5718,13 +5755,23 @@ if (uni.restoreGlobal) {
               const item = this.stack[i];
               if (item.name === "a") {
                 node2.a = item.attrs;
-                break;
+              }
+              if (item.name === "table" && !node2.webp && !attrs.src.includes("cloud://")) {
+                if (!styleObj.display || styleObj.display.includes("inline")) {
+                  node2.t = "inline-block";
+                } else {
+                  node2.t = styleObj.display;
+                }
+                styleObj.display = void 0;
               }
               item.c = 1;
             }
             attrs.i = this.imgList.length.toString();
             let src = attrs["original-src"] || attrs.src;
             this.imgList.push(src);
+            if (!node2.t) {
+              this.imgList._unloadimgs += 1;
+            }
             if (this.options.lazyLoad) {
               attrs["data-src"] = attrs.src;
               attrs.src = void 0;
@@ -5768,7 +5815,7 @@ if (uni.restoreGlobal) {
     }
     siblings.push(node2);
   };
-  Parser.prototype.onCloseTag = function(name) {
+  Parser$1.prototype.onCloseTag = function(name) {
     name = this.xml ? name : name.toLowerCase();
     let i;
     for (i = this.stack.length; i--; ) {
@@ -5790,7 +5837,7 @@ if (uni.restoreGlobal) {
       });
     }
   };
-  Parser.prototype.popNode = function() {
+  Parser$1.prototype.popNode = function() {
     const node2 = this.stack.pop();
     let attrs = node2.attrs;
     const children = node2.children;
@@ -5948,6 +5995,8 @@ if (uni.restoreGlobal) {
       let padding = parseFloat(attrs.cellpadding);
       let spacing = parseFloat(attrs.cellspacing);
       const border = parseFloat(attrs.border);
+      const bordercolor = styleObj["border-color"];
+      const borderstyle = styleObj["border-style"];
       if (node2.c) {
         if (isNaN(padding)) {
           padding = 2;
@@ -5957,7 +6006,7 @@ if (uni.restoreGlobal) {
         }
       }
       if (border) {
-        attrs.style += ";border:" + border + "px solid gray";
+        attrs.style += `;border:${border}px ${borderstyle || "solid"} ${bordercolor || "gray"}`;
       }
       if (node2.flag && node2.c) {
         styleObj.display = "grid";
@@ -5989,7 +6038,7 @@ if (uni.restoreGlobal) {
                 col++;
               }
               let style = td.attrs.style || "";
-              const start = style.indexOf("width") ? style.indexOf(";width") : 0;
+              let start = style.indexOf("width") ? style.indexOf(";width") : 0;
               if (start !== -1) {
                 let end = style.indexOf(";", start + 6);
                 if (end === -1) {
@@ -6000,7 +6049,28 @@ if (uni.restoreGlobal) {
                 }
                 style = style.substr(0, start) + style.substr(end);
               }
-              style += (border ? `;border:${border}px solid gray` + (spacing ? "" : ";border-right:0;border-bottom:0") : "") + (padding ? `;padding:${padding}px` : "");
+              style += ";display:flex";
+              start = style.indexOf("vertical-align");
+              if (start !== -1) {
+                const val = style.substr(start + 15, 10);
+                if (val.includes("middle")) {
+                  style += ";align-items:center";
+                } else if (val.includes("bottom")) {
+                  style += ";align-items:flex-end";
+                }
+              } else {
+                style += ";align-items:center";
+              }
+              start = style.indexOf("text-align");
+              if (start !== -1) {
+                const val = style.substr(start + 11, 10);
+                if (val.includes("center")) {
+                  style += ";justify-content: center";
+                } else if (val.includes("right")) {
+                  style += ";justify-content: right";
+                }
+              }
+              style = (border ? `;border:${border}px ${borderstyle || "solid"} ${bordercolor || "gray"}` + (spacing ? "" : ";border-right:0;border-bottom:0") : "") + (padding ? `;padding:${padding}px` : "") + ";" + style;
               if (td.attrs.colspan) {
                 style += `;grid-column-start:${col};grid-column-end:${col + parseInt(td.attrs.colspan)}`;
                 if (!td.attrs.rowspan) {
@@ -6048,7 +6118,7 @@ if (uni.restoreGlobal) {
               const td = nodes[i];
               if (td.name === "th" || td.name === "td") {
                 if (border) {
-                  td.attrs.style = `border:${border}px solid gray;${td.attrs.style || ""}`;
+                  td.attrs.style = `border:${border}px ${borderstyle || "solid"} ${bordercolor || "gray"};${td.attrs.style || ""}`;
                 }
                 if (padding) {
                   td.attrs.style = `padding:${padding}px;${td.attrs.style || ""}`;
@@ -6101,7 +6171,7 @@ if (uni.restoreGlobal) {
         node3.c = 2;
         for (let i = node3.children.length; i--; ) {
           const child = node3.children[i];
-          if (child.name && (config.inlineTags[child.name] || (child.attrs.style || "").includes("inline")) && !child.c) {
+          if (child.name && (config.inlineTags[child.name] || (child.attrs.style || "").includes("inline") && child.children) && !child.c) {
             traversal(child);
           }
           if (!child.c || child.name === "table") {
@@ -6124,19 +6194,7 @@ if (uni.restoreGlobal) {
       node2.f = ";max-width:100%";
     }
     if (children.length >= 50 && node2.c && !(styleObj.display || "").includes("flex")) {
-      let i = children.length - 1;
-      for (let j = i; j >= -1; j--) {
-        if (j === -1 || children[j].c || !children[j].name || children[j].name !== "div" && children[j].name !== "p" && children[j].name[0] !== "h" || (children[j].attrs.style || "").includes("inline")) {
-          if (i - j >= 5) {
-            children.splice(j + 1, i - j, {
-              name: "div",
-              attrs: {},
-              children: node2.children.slice(j + 1, i + 1)
-            });
-          }
-          i = j - 1;
-        }
-      }
+      mergeNodes(children);
     }
     for (const key in styleObj) {
       if (styleObj[key]) {
@@ -6153,7 +6211,7 @@ if (uni.restoreGlobal) {
     }
     attrs.style = attrs.style.substr(1) || void 0;
   };
-  Parser.prototype.onText = function(text) {
+  Parser$1.prototype.onText = function(text) {
     if (!this.pre) {
       let trim = "";
       let flag;
@@ -6169,8 +6227,15 @@ if (uni.restoreGlobal) {
           }
         }
       }
-      if (trim === " " && flag)
-        return;
+      if (trim === " ") {
+        if (flag)
+          return;
+        else {
+          const parent = this.stack[this.stack.length - 1];
+          if (parent && parent.name[0] === "t")
+            return;
+        }
+      }
       text = trim;
     }
     const node2 = /* @__PURE__ */ Object.create(null);
@@ -6181,10 +6246,10 @@ if (uni.restoreGlobal) {
       siblings.push(node2);
     }
   };
-  function Lexer(handler) {
+  function Lexer$1(handler) {
     this.handler = handler;
   }
-  Lexer.prototype.parse = function(content) {
+  Lexer$1.prototype.parse = function(content) {
     this.content = content || "";
     this.i = 0;
     this.start = 0;
@@ -6193,7 +6258,7 @@ if (uni.restoreGlobal) {
       this.state();
     }
   };
-  Lexer.prototype.checkClose = function(method2) {
+  Lexer$1.prototype.checkClose = function(method2) {
     const selfClose = this.content[this.i] === "/";
     if (this.content[this.i] === ">" || selfClose && this.content[this.i + 1] === ">") {
       if (method2) {
@@ -6216,7 +6281,7 @@ if (uni.restoreGlobal) {
     }
     return false;
   };
-  Lexer.prototype.text = function() {
+  Lexer$1.prototype.text = function() {
     this.i = this.content.indexOf("<", this.i);
     if (this.i === -1) {
       if (this.start < this.content.length) {
@@ -6255,7 +6320,7 @@ if (uni.restoreGlobal) {
       this.i++;
     }
   };
-  Lexer.prototype.tagName = function() {
+  Lexer$1.prototype.tagName = function() {
     if (blankChar[this.content[this.i]]) {
       this.handler.onTagName(this.content.substring(this.start, this.i));
       while (blankChar[this.content[++this.i]])
@@ -6268,7 +6333,7 @@ if (uni.restoreGlobal) {
       this.i++;
     }
   };
-  Lexer.prototype.attrName = function() {
+  Lexer$1.prototype.attrName = function() {
     let c = this.content[this.i];
     if (blankChar[c] || c === "=") {
       this.handler.onAttrName(this.content.substring(this.start, this.i));
@@ -6297,7 +6362,7 @@ if (uni.restoreGlobal) {
       this.i++;
     }
   };
-  Lexer.prototype.attrVal = function() {
+  Lexer$1.prototype.attrVal = function() {
     const c = this.content[this.i];
     const len = this.content.length;
     if (c === '"' || c === "'") {
@@ -6322,7 +6387,7 @@ if (uni.restoreGlobal) {
       this.state = this.attrName;
     }
   };
-  Lexer.prototype.endTag = function() {
+  Lexer$1.prototype.endTag = function() {
     const c = this.content[this.i];
     if (blankChar[c] || c === ">" || c === "/") {
       this.handler.onCloseTag(this.content.substring(this.start, this.i));
@@ -6350,23 +6415,23 @@ if (uni.restoreGlobal) {
       }
     }
     function s(e2, t3) {
-      (t3 == null || t3 > e2.length) && (t3 = e2.length);
+      (null == t3 || t3 > e2.length) && (t3 = e2.length);
       for (var n2 = 0, r2 = new Array(t3); n2 < t3; n2++)
         r2[n2] = e2[n2];
       return r2;
     }
     function p(e2, t3) {
       var n2;
-      if (typeof Symbol != "undefined" && e2[Symbol.iterator] != null)
+      if ("undefined" != typeof Symbol && null != e2[Symbol.iterator])
         return (n2 = e2[Symbol.iterator]()).next.bind(n2);
       if (Array.isArray(e2) || (n2 = function(e3, t4) {
         if (e3) {
-          if (typeof e3 == "string")
+          if ("string" == typeof e3)
             return s(e3, t4);
           var n3 = Object.prototype.toString.call(e3).slice(8, -1);
-          return n3 === "Object" && e3.constructor && (n3 = e3.constructor.name), n3 === "Map" || n3 === "Set" ? Array.from(e3) : n3 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n3) ? s(e3, t4) : void 0;
+          return "Object" === n3 && e3.constructor && (n3 = e3.constructor.name), "Map" === n3 || "Set" === n3 ? Array.from(e3) : "Arguments" === n3 || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n3) ? s(e3, t4) : void 0;
         }
-      }(e2)) || t3 && e2 && typeof e2.length == "number") {
+      }(e2)) || t3 && e2 && "number" == typeof e2.length) {
         n2 && (e2 = n2);
         var r2 = 0;
         return function() {
@@ -6389,7 +6454,7 @@ if (uni.restoreGlobal) {
     var u = /&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/gi;
     function h(e2) {
       return e2.replace(u, function(e3, t3) {
-        return (t3 = t3.toLowerCase()) === "colon" ? ":" : t3.charAt(0) === "#" ? t3.charAt(1) === "x" ? String.fromCharCode(parseInt(t3.substring(2), 16)) : String.fromCharCode(+t3.substring(1)) : "";
+        return "colon" === (t3 = t3.toLowerCase()) ? ":" : "#" === t3.charAt(0) ? "x" === t3.charAt(1) ? String.fromCharCode(parseInt(t3.substring(2), 16)) : String.fromCharCode(+t3.substring(1)) : "";
       });
     }
     var g = /(^|[^\[])\^/g;
@@ -6397,12 +6462,12 @@ if (uni.restoreGlobal) {
     var k = {}, b = /^[^:]+:\/*[^/]*$/, m = /^([^:]+:)[\s\S]*$/, x = /^([^:]+:\/*[^/]*)[\s\S]*$/;
     function w(e2, t3) {
       k[" " + e2] || (b.test(e2) ? k[" " + e2] = e2 + "/" : k[" " + e2] = v(e2, "/", true));
-      var n2 = (e2 = k[" " + e2]).indexOf(":") === -1;
-      return t3.substring(0, 2) === "//" ? n2 ? t3 : e2.replace(m, "$1") + t3 : t3.charAt(0) === "/" ? n2 ? t3 : e2.replace(x, "$1") + t3 : e2 + t3;
+      var n2 = -1 === (e2 = k[" " + e2]).indexOf(":");
+      return "//" === t3.substring(0, 2) ? n2 ? t3 : e2.replace(m, "$1") + t3 : "/" === t3.charAt(0) ? n2 ? t3 : e2.replace(x, "$1") + t3 : e2 + t3;
     }
     function v(e2, t3, n2) {
       var r2 = e2.length;
-      if (r2 === 0)
+      if (0 === r2)
         return "";
       for (var i2 = 0; i2 < r2; ) {
         var s2 = e2.charAt(r2 - i2 - 1);
@@ -6438,7 +6503,7 @@ if (uni.restoreGlobal) {
         } catch (e3) {
           return null;
         }
-        if (r2.indexOf("javascript:") === 0 || r2.indexOf("vbscript:") === 0 || r2.indexOf("data:") === 0)
+        if (0 === r2.indexOf("javascript:") || 0 === r2.indexOf("vbscript:") || 0 === r2.indexOf("data:"))
           return null;
       }
       t3 && !d.test(n2) && (n2 = w(t3, n2));
@@ -6456,7 +6521,7 @@ if (uni.restoreGlobal) {
       return e2;
     }, R = function(e2, t3) {
       var n2 = e2.replace(/\|/g, function(e3, t4, n3) {
-        for (var r3 = false, i2 = t4; 0 <= --i2 && n3[i2] === "\\"; )
+        for (var r3 = false, i2 = t4; 0 <= --i2 && "\\" === n3[i2]; )
           r3 = !r3;
         return r3 ? "|" : " |";
       }).split(/ \|/), r2 = 0;
@@ -6469,10 +6534,10 @@ if (uni.restoreGlobal) {
         n2[r2] = n2[r2].trim().replace(/\\\|/g, "|");
       return n2;
     }, T = function(e2, t3) {
-      if (e2.indexOf(t3[1]) === -1)
+      if (-1 === e2.indexOf(t3[1]))
         return -1;
       for (var n2 = e2.length, r2 = 0, i2 = 0; i2 < n2; i2++)
-        if (e2[i2] === "\\")
+        if ("\\" === e2[i2])
           i2++;
         else if (e2[i2] === t3[0])
           r2++;
@@ -6490,7 +6555,7 @@ if (uni.restoreGlobal) {
     }, q = t2.defaults, O = v, C = R, U = _, j = T;
     function E(e2, t3, n2) {
       var r2 = t3.href, i2 = t3.title ? U(t3.title) : null, t3 = e2[1].replace(/\\([\[\]])/g, "$1");
-      return e2[0].charAt(0) !== "!" ? { type: "link", raw: n2, href: r2, title: i2, text: t3 } : { type: "image", raw: n2, href: r2, title: i2, text: U(t3) };
+      return "!" !== e2[0].charAt(0) ? { type: "link", raw: n2, href: r2, title: i2, text: t3 } : { type: "image", raw: n2, href: r2, title: i2, text: U(t3) };
     }
     var D = function() {
       function e2(e3) {
@@ -6505,7 +6570,7 @@ if (uni.restoreGlobal) {
         e3 = this.rules.block.code.exec(e3);
         if (e3) {
           t4 = t4[t4.length - 1];
-          if (t4 && t4.type === "paragraph")
+          if (t4 && "paragraph" === t4.type)
             return { raw: e3[0], text: e3[0].trimRight() };
           t4 = e3[0].replace(/^ {4}/gm, "");
           return { type: "code", raw: e3[0], codeBlockStyle: "indented", text: this.options.pedantic ? t4 : O(t4, "\n") };
@@ -6514,12 +6579,12 @@ if (uni.restoreGlobal) {
         var t4 = this.rules.block.fences.exec(e3);
         if (t4) {
           var n2 = t4[0], e3 = function(e4, t5) {
-            if ((e4 = e4.match(/^(\s+)(?:```)/)) === null)
+            if (null === (e4 = e4.match(/^(\s+)(?:```)/)))
               return t5;
             var n3 = e4[1];
             return t5.split("\n").map(function(e5) {
               var t6 = e5.match(/^\s+/);
-              return t6 !== null && t6[0].length >= n3.length ? e5.slice(n3.length) : e5;
+              return null !== t6 && t6[0].length >= n3.length ? e5.slice(n3.length) : e5;
             }).join("\n");
           }(n2, t4[3] || "");
           return { type: "code", raw: n2, lang: t4[2] && t4[2].trim(), text: e3 };
@@ -6559,16 +6624,16 @@ if (uni.restoreGlobal) {
                 u2.splice(f2, 2, u2[f2] + "\n" + u2[f2 + 1]), f2--, h2--;
                 continue;
               }
-              (!this.options.pedantic || this.options.smartLists ? r2[2][r2[2].length - 1] !== a2[a2.length - 1] : o2 == (r2[2].length === 1)) && (n2 = u2.slice(f2 + 1).join("\n"), c2.raw = c2.raw.substring(0, c2.raw.length - n2.length), f2 = h2 - 1), g2 = r2;
+              (!this.options.pedantic || this.options.smartLists ? r2[2][r2[2].length - 1] !== a2[a2.length - 1] : o2 == (1 === r2[2].length)) && (n2 = u2.slice(f2 + 1).join("\n"), c2.raw = c2.raw.substring(0, c2.raw.length - n2.length), f2 = h2 - 1), g2 = r2;
             }
-            r2 = t4.length, ~(t4 = t4.replace(/^ *([*+-]|\d+[.)]) ?/, "")).indexOf("\n ") && (r2 -= t4.length, t4 = this.options.pedantic ? t4.replace(/^ {1,4}/gm, "") : t4.replace(new RegExp("^ {1," + r2 + "}", "gm"), "")), r2 = p2 || /\n\n(?!\s*$)/.test(t4), f2 !== h2 - 1 && (p2 = t4.charAt(t4.length - 1) === "\n", r2 = r2 || p2), r2 && (c2.loose = true), this.options.gfm && (s2 = void 0, (i2 = /^\[[ xX]\] /.test(t4)) && (s2 = t4[1] !== " ", t4 = t4.replace(/^\[[ xX]\] +/, ""))), c2.items.push({ type: "list_item", raw: l2, task: i2, checked: s2, loose: r2, text: t4 });
+            r2 = t4.length, ~(t4 = t4.replace(/^ *([*+-]|\d+[.)]) ?/, "")).indexOf("\n ") && (r2 -= t4.length, t4 = this.options.pedantic ? t4.replace(/^ {1,4}/gm, "") : t4.replace(new RegExp("^ {1," + r2 + "}", "gm"), "")), r2 = p2 || /\n\n(?!\s*$)/.test(t4), f2 !== h2 - 1 && (p2 = "\n" === t4.charAt(t4.length - 1), r2 = r2 || p2), r2 && (c2.loose = true), this.options.gfm && (s2 = void 0, (i2 = /^\[[ xX]\] /.test(t4)) && (s2 = " " !== t4[1], t4 = t4.replace(/^\[[ xX]\] +/, ""))), c2.items.push({ type: "list_item", raw: l2, task: i2, checked: s2, loose: r2, text: t4 });
           }
           return c2;
         }
       }, t3.html = function(e3) {
         e3 = this.rules.block.html.exec(e3);
         if (e3)
-          return { type: this.options.sanitize ? "paragraph" : "html", raw: e3[0], pre: !this.options.sanitizer && (e3[1] === "pre" || e3[1] === "script" || e3[1] === "style"), text: this.options.sanitize ? this.options.sanitizer ? this.options.sanitizer(e3[0]) : U(e3[0]) : e3[0] };
+          return { type: this.options.sanitize ? "paragraph" : "html", raw: e3[0], pre: !this.options.sanitizer && ("pre" === e3[1] || "script" === e3[1] || "style" === e3[1]), text: this.options.sanitize ? this.options.sanitizer ? this.options.sanitizer(e3[0]) : U(e3[0]) : e3[0] };
       }, t3.def = function(e3) {
         e3 = this.rules.block.def.exec(e3);
         if (e3)
@@ -6589,16 +6654,16 @@ if (uni.restoreGlobal) {
       }, t3.lheading = function(e3) {
         e3 = this.rules.block.lheading.exec(e3);
         if (e3)
-          return { type: "heading", raw: e3[0], depth: e3[2].charAt(0) === "=" ? 1 : 2, text: e3[1] };
+          return { type: "heading", raw: e3[0], depth: "=" === e3[2].charAt(0) ? 1 : 2, text: e3[1] };
       }, t3.paragraph = function(e3) {
         e3 = this.rules.block.paragraph.exec(e3);
         if (e3)
-          return { type: "paragraph", raw: e3[0], text: e3[1].charAt(e3[1].length - 1) === "\n" ? e3[1].slice(0, -1) : e3[1] };
+          return { type: "paragraph", raw: e3[0], text: "\n" === e3[1].charAt(e3[1].length - 1) ? e3[1].slice(0, -1) : e3[1] };
       }, t3.text = function(e3, t4) {
         e3 = this.rules.block.text.exec(e3);
         if (e3) {
           t4 = t4[t4.length - 1];
-          return t4 && t4.type === "text" ? { raw: e3[0], text: e3[0] } : { type: "text", raw: e3[0], text: e3[0] };
+          return t4 && "text" === t4.type ? { raw: e3[0], text: e3[0] } : { type: "text", raw: e3[0], text: e3[0] };
         }
       }, t3.escape = function(e3) {
         e3 = this.rules.inline.escape.exec(e3);
@@ -6612,7 +6677,7 @@ if (uni.restoreGlobal) {
         var t4 = this.rules.inline.link.exec(e3);
         if (t4) {
           e3 = j(t4[2], "()");
-          -1 < e3 && (r2 = (t4[0].indexOf("!") === 0 ? 5 : 4) + t4[1].length + e3, t4[2] = t4[2].substring(0, e3), t4[0] = t4[0].substring(0, r2).trim(), t4[3] = "");
+          -1 < e3 && (r2 = (0 === t4[0].indexOf("!") ? 5 : 4) + t4[1].length + e3, t4[2] = t4[2].substring(0, e3), t4[0] = t4[0].substring(0, r2).trim(), t4[3] = "");
           var n2, e3 = t4[2], r2 = "";
           return r2 = this.options.pedantic ? (n2 = /^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(e3), n2 ? (e3 = n2[1], n2[3]) : "") : t4[3] ? t4[3].slice(1, -1) : "", E(t4, { href: (e3 = e3.trim().replace(/^<([\s\S]*)>$/, "$1")) && e3.replace(this.rules.inline._escapes, "$1"), title: r2 && r2.replace(this.rules.inline._escapes, "$1") }, t4[0]);
         }
@@ -6625,22 +6690,22 @@ if (uni.restoreGlobal) {
           return { type: "text", raw: n2, text: n2 };
         }
       }, t3.strong = function(e3, t4, n2) {
-        n2 === void 0 && (n2 = "");
+        void 0 === n2 && (n2 = "");
         var r2 = this.rules.inline.strong.start.exec(e3);
-        if (r2 && (!r2[1] || r2[1] && (n2 === "" || this.rules.inline.punctuation.exec(n2)))) {
+        if (r2 && (!r2[1] || r2[1] && ("" === n2 || this.rules.inline.punctuation.exec(n2)))) {
           t4 = t4.slice(-1 * e3.length);
-          var i2, s2 = r2[0] === "**" ? this.rules.inline.strong.endAst : this.rules.inline.strong.endUnd;
-          for (s2.lastIndex = 0; (r2 = s2.exec(t4)) != null; )
+          var i2, s2 = "**" === r2[0] ? this.rules.inline.strong.endAst : this.rules.inline.strong.endUnd;
+          for (s2.lastIndex = 0; null != (r2 = s2.exec(t4)); )
             if (i2 = this.rules.inline.strong.middle.exec(t4.slice(0, r2.index + 3)))
               return { type: "strong", raw: e3.slice(0, i2[0].length), text: e3.slice(2, i2[0].length - 2) };
         }
       }, t3.em = function(e3, t4, n2) {
-        n2 === void 0 && (n2 = "");
+        void 0 === n2 && (n2 = "");
         var r2 = this.rules.inline.em.start.exec(e3);
-        if (r2 && (!r2[1] || r2[1] && (n2 === "" || this.rules.inline.punctuation.exec(n2)))) {
+        if (r2 && (!r2[1] || r2[1] && ("" === n2 || this.rules.inline.punctuation.exec(n2)))) {
           t4 = t4.slice(-1 * e3.length);
-          var i2, s2 = r2[0] === "*" ? this.rules.inline.em.endAst : this.rules.inline.em.endUnd;
-          for (s2.lastIndex = 0; (r2 = s2.exec(t4)) != null; )
+          var i2, s2 = "*" === r2[0] ? this.rules.inline.em.endAst : this.rules.inline.em.endUnd;
+          for (s2.lastIndex = 0; null != (r2 = s2.exec(t4)); )
             if (i2 = this.rules.inline.em.middle.exec(t4.slice(0, r2.index + 2)))
               return { type: "em", raw: e3.slice(0, i2[0].length), text: e3.slice(1, i2[0].length - 1) };
         }
@@ -6661,18 +6726,18 @@ if (uni.restoreGlobal) {
       }, t3.autolink = function(e3, t4) {
         e3 = this.rules.inline.autolink.exec(e3);
         if (e3) {
-          var n2, t4 = e3[2] === "@" ? "mailto:" + (n2 = U(this.options.mangle ? t4(e3[1]) : e3[1])) : n2 = U(e3[1]);
+          var n2, t4 = "@" === e3[2] ? "mailto:" + (n2 = U(this.options.mangle ? t4(e3[1]) : e3[1])) : n2 = U(e3[1]);
           return { type: "link", raw: e3[0], text: n2, href: t4, tokens: [{ type: "text", raw: n2, text: n2 }] };
         }
       }, t3.url = function(e3, t4) {
         var n2, r2, i2, s2;
         if (n2 = this.rules.inline.url.exec(e3)) {
-          if (n2[2] === "@")
+          if ("@" === n2[2])
             i2 = "mailto:" + (r2 = U(this.options.mangle ? t4(n2[0]) : n2[0]));
           else {
             for (; s2 = n2[0], n2[0] = this.rules.inline._backpedal.exec(n2[0])[0], s2 !== n2[0]; )
               ;
-            r2 = U(n2[0]), i2 = n2[1] === "www." ? "http://" + r2 : r2;
+            r2 = U(n2[0]), i2 = "www." === n2[1] ? "http://" + r2 : r2;
           }
           return { type: "link", raw: n2[0], text: r2, href: i2, tokens: [{ type: "text", raw: r2, text: r2 }] };
         }
@@ -6712,7 +6777,7 @@ if (uni.restoreGlobal) {
         return e3 = e3.replace(/\r\n|\r/g, "\n").replace(/\t/g, "    "), this.blockTokens(e3, this.tokens, true), this.inline(this.tokens), this.tokens;
       }, r2.blockTokens = function(e3, t4, n3) {
         var r3, i2, s2, l2;
-        for (t4 === void 0 && (t4 = []), n3 === void 0 && (n3 = true), e3 = e3.replace(/^ +$/gm, ""); e3; )
+        for (void 0 === t4 && (t4 = []), void 0 === n3 && (n3 = true), e3 = e3.replace(/^ +$/gm, ""); e3; )
           if (r3 = this.tokenizer.space(e3))
             e3 = e3.substring(r3.raw.length), r3.type && t4.push(r3);
           else if (r3 = this.tokenizer.code(e3, t4))
@@ -6777,15 +6842,15 @@ if (uni.restoreGlobal) {
         return e3;
       }, r2.inlineTokens = function(e3, t4, n3, r3) {
         var i2;
-        t4 === void 0 && (t4 = []), n3 === void 0 && (n3 = false), r3 === void 0 && (r3 = false);
+        void 0 === t4 && (t4 = []), void 0 === n3 && (n3 = false), void 0 === r3 && (r3 = false);
         var s2, l2, a2, o2 = e3;
         if (this.tokens.links) {
           var c2 = Object.keys(this.tokens.links);
           if (0 < c2.length)
-            for (; (s2 = this.tokenizer.rules.inline.reflinkSearch.exec(o2)) != null; )
+            for (; null != (s2 = this.tokenizer.rules.inline.reflinkSearch.exec(o2)); )
               c2.includes(s2[0].slice(s2[0].lastIndexOf("[") + 1, -1)) && (o2 = o2.slice(0, s2.index) + "[" + B("a", s2[0].length - 2) + "]" + o2.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex));
         }
-        for (; (s2 = this.tokenizer.rules.inline.blockSkip.exec(o2)) != null; )
+        for (; null != (s2 = this.tokenizer.rules.inline.blockSkip.exec(o2)); )
           o2 = o2.slice(0, s2.index) + "[" + B("a", s2[0].length - 2) + "]" + o2.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
         for (; e3; )
           if (l2 || (a2 = ""), l2 = false, i2 = this.tokenizer.escape(e3))
@@ -6793,9 +6858,9 @@ if (uni.restoreGlobal) {
           else if (i2 = this.tokenizer.tag(e3, n3, r3))
             e3 = e3.substring(i2.raw.length), n3 = i2.inLink, r3 = i2.inRawBlock, t4.push(i2);
           else if (i2 = this.tokenizer.link(e3))
-            e3 = e3.substring(i2.raw.length), i2.type === "link" && (i2.tokens = this.inlineTokens(i2.text, [], true, r3)), t4.push(i2);
+            e3 = e3.substring(i2.raw.length), "link" === i2.type && (i2.tokens = this.inlineTokens(i2.text, [], true, r3)), t4.push(i2);
           else if (i2 = this.tokenizer.reflink(e3, this.tokens.links))
-            e3 = e3.substring(i2.raw.length), i2.type === "link" && (i2.tokens = this.inlineTokens(i2.text, [], true, r3)), t4.push(i2);
+            e3 = e3.substring(i2.raw.length), "link" === i2.type && (i2.tokens = this.inlineTokens(i2.text, [], true, r3)), t4.push(i2);
           else if (i2 = this.tokenizer.strong(e3, o2, a2))
             e3 = e3.substring(i2.raw.length), i2.tokens = this.inlineTokens(i2.text, [], n3, r3), t4.push(i2);
           else if (i2 = this.tokenizer.em(e3, o2, a2))
@@ -6832,7 +6897,7 @@ if (uni.restoreGlobal) {
       var t3 = e2.prototype;
       return t3.code = function(e3, t4, n2) {
         var r2 = (t4 || "").match(/\S*/)[0];
-        return !this.options.highlight || (t4 = this.options.highlight(e3, r2)) != null && t4 !== e3 && (n2 = true, e3 = t4), r2 ? '<pre><code class="' + this.options.langPrefix + V(r2, true) + '">' + (n2 ? e3 : V(e3, true)) + "</code></pre>\n" : "<pre><code>" + (n2 ? e3 : V(e3, true)) + "</code></pre>\n";
+        return !this.options.highlight || null != (t4 = this.options.highlight(e3, r2)) && t4 !== e3 && (n2 = true, e3 = t4), r2 ? '<pre><code class="' + this.options.langPrefix + V(r2, true) + '">' + (n2 ? e3 : V(e3, true)) + "</code></pre>\n" : "<pre><code>" + (n2 ? e3 : V(e3, true)) + "</code></pre>\n";
       }, t3.blockquote = function(e3) {
         return "<blockquote>\n" + e3 + "</blockquote>\n";
       }, t3.html = function(e3) {
@@ -6843,7 +6908,7 @@ if (uni.restoreGlobal) {
         return this.options.xhtml ? "<hr/>\n" : "<hr>\n";
       }, t3.list = function(e3, t4, n2) {
         var r2 = t4 ? "ol" : "ul";
-        return "<" + r2 + (t4 && n2 !== 1 ? ' start="' + n2 + '"' : "") + ">\n" + e3 + "</" + r2 + ">\n";
+        return "<" + r2 + (t4 && 1 !== n2 ? ' start="' + n2 + '"' : "") + ">\n" + e3 + "</" + r2 + ">\n";
       }, t3.listitem = function(e3) {
         return "<li>" + e3 + "</li>\n";
       }, t3.checkbox = function(e3) {
@@ -6868,12 +6933,12 @@ if (uni.restoreGlobal) {
       }, t3.del = function(e3) {
         return "<del>" + e3 + "</del>";
       }, t3.link = function(e3, t4, n2) {
-        if ((e3 = G(this.options.sanitize, this.options.baseUrl, e3)) === null)
+        if (null === (e3 = G(this.options.sanitize, this.options.baseUrl, e3)))
           return n2;
         e3 = '<a href="' + V(e3) + '"';
         return t4 && (e3 += ' title="' + t4 + '"'), e3 += ">" + n2 + "</a>";
       }, t3.image = function(e3, t4, n2) {
-        if ((e3 = G(this.options.sanitize, this.options.baseUrl, e3)) === null)
+        if (null === (e3 = G(this.options.sanitize, this.options.baseUrl, e3)))
           return n2;
         n2 = '<img src="' + e3 + '" alt="' + n2 + '"';
         return t4 && (n2 += ' title="' + t4 + '"'), n2 += this.options.xhtml ? "/>" : ">";
@@ -6917,7 +6982,7 @@ if (uni.restoreGlobal) {
             ;
         return t4 || (this.seen[e3] = r2, this.seen[n2] = 0), n2;
       }, t3.slug = function(e3, t4) {
-        t4 === void 0 && (t4 = {});
+        void 0 === t4 && (t4 = {});
         var n2 = this.serialize(e3);
         return this.getNextSafeSlug(n2, t4.dryrun);
       }, e2;
@@ -6932,7 +6997,7 @@ if (uni.restoreGlobal) {
       };
       var e2 = n2.prototype;
       return e2.parse = function(e3, t3) {
-        t3 === void 0 && (t3 = true);
+        void 0 === t3 && (t3 = true);
         for (var n3, r2, i2, s2, l2, a2, o2, c2, u2, p2, h2, g2, f2, d2, k2, b2 = "", m2 = e3.length, x2 = 0; x2 < m2; x2++)
           switch ((c2 = e3[x2]).type) {
             case "space":
@@ -6961,7 +7026,7 @@ if (uni.restoreGlobal) {
               continue;
             case "list":
               for (u2 = c2.ordered, w2 = c2.start, p2 = c2.loose, i2 = c2.items.length, o2 = "", n3 = 0; n3 < i2; n3++)
-                f2 = (g2 = c2.items[n3]).checked, d2 = g2.task, h2 = "", g2.task && (k2 = this.renderer.checkbox(f2), p2 ? 0 < g2.tokens.length && g2.tokens[0].type === "text" ? (g2.tokens[0].text = k2 + " " + g2.tokens[0].text, g2.tokens[0].tokens && 0 < g2.tokens[0].tokens.length && g2.tokens[0].tokens[0].type === "text" && (g2.tokens[0].tokens[0].text = k2 + " " + g2.tokens[0].tokens[0].text)) : g2.tokens.unshift({ type: "text", text: k2 }) : h2 += k2), h2 += this.parse(g2.tokens, p2), o2 += this.renderer.listitem(h2, d2, f2);
+                f2 = (g2 = c2.items[n3]).checked, d2 = g2.task, h2 = "", g2.task && (k2 = this.renderer.checkbox(f2), p2 ? 0 < g2.tokens.length && "text" === g2.tokens[0].type ? (g2.tokens[0].text = k2 + " " + g2.tokens[0].text, g2.tokens[0].tokens && 0 < g2.tokens[0].tokens.length && "text" === g2.tokens[0].tokens[0].type && (g2.tokens[0].tokens[0].text = k2 + " " + g2.tokens[0].tokens[0].text)) : g2.tokens.unshift({ type: "text", text: k2 }) : h2 += k2), h2 += this.parse(g2.tokens, p2), o2 += this.renderer.listitem(h2, d2, f2);
               b2 += this.renderer.list(o2, u2, w2);
               continue;
             case "html":
@@ -6971,7 +7036,7 @@ if (uni.restoreGlobal) {
               b2 += this.renderer.paragraph(this.parseInline(c2.tokens));
               continue;
             case "text":
-              for (o2 = c2.tokens ? this.parseInline(c2.tokens) : c2.text; x2 + 1 < m2 && e3[x2 + 1].type === "text"; )
+              for (o2 = c2.tokens ? this.parseInline(c2.tokens) : c2.text; x2 + 1 < m2 && "text" === e3[x2 + 1].type; )
                 o2 += "\n" + ((c2 = e3[++x2]).tokens ? this.parseInline(c2.tokens) : c2.text);
               b2 += t3 ? this.renderer.paragraph(o2) : o2;
               continue;
@@ -7026,11 +7091,11 @@ if (uni.restoreGlobal) {
       }, n2;
     }(), te = A, ne = I, re = _, _ = t2.getDefaults, ie = t2.changeDefaults, t2 = t2.defaults;
     function se(e2, n2, r2) {
-      if (e2 == null)
+      if (null == e2)
         throw new Error("marked(): input parameter is undefined or null");
-      if (typeof e2 != "string")
+      if ("string" != typeof e2)
         throw new Error("marked(): input parameter is of type " + Object.prototype.toString.call(e2) + ", string expected");
-      if (typeof n2 == "function" && (r2 = n2, n2 = null), n2 = te({}, se.defaults, n2 || {}), ne(n2), r2) {
+      if ("function" == typeof n2 && (r2 = n2, n2 = null), n2 = te({}, se.defaults, n2 || {}), ne(n2), r2) {
         var i2, s2 = n2.highlight;
         try {
           i2 = W.lex(e2, n2);
@@ -7053,12 +7118,12 @@ if (uni.restoreGlobal) {
           return l2();
         var a2 = 0;
         return se.walkTokens(i2, function(n3) {
-          n3.type === "code" && (a2++, setTimeout(function() {
+          "code" === n3.type && (a2++, setTimeout(function() {
             s2(n3.text, n3.lang, function(e3, t4) {
-              return e3 ? l2(e3) : (t4 != null && t4 !== n3.text && (n3.text = t4, n3.escaped = true), void (--a2 === 0 && l2()));
+              return e3 ? l2(e3) : (null != t4 && t4 !== n3.text && (n3.text = t4, n3.escaped = true), void (0 === --a2 && l2()));
             });
           }, 0));
-        }), void (a2 === 0 && l2());
+        }), void (0 === a2 && l2());
       }
       try {
         var t3 = W.lex(e2, n2);
@@ -7082,7 +7147,7 @@ if (uni.restoreGlobal) {
               for (var e3 = arguments.length, t4 = new Array(e3), n3 = 0; n3 < e3; n3++)
                 t4[n3] = arguments[n3];
               var r2 = a2.renderer[i2].apply(l2, t4);
-              return r2 === false && (r2 = s2.apply(l2, t4)), r2;
+              return false === r2 && (r2 = s2.apply(l2, t4)), r2;
             };
           }(e2);
         n2.renderer = l2;
@@ -7095,7 +7160,7 @@ if (uni.restoreGlobal) {
               for (var e3 = arguments.length, t4 = new Array(e3), n3 = 0; n3 < e3; n3++)
                 t4[n3] = arguments[n3];
               var r2 = a2.tokenizer[i2].apply(l2, t4);
-              return r2 === false && (r2 = s2.apply(l2, t4)), r2;
+              return false === r2 && (r2 = s2.apply(l2, t4)), r2;
             };
           }(e2);
         n2.tokenizer = l2;
@@ -7125,9 +7190,9 @@ if (uni.restoreGlobal) {
         }
       }
     }, se.parseInline = function(e2, t3) {
-      if (e2 == null)
+      if (null == e2)
         throw new Error("marked.parseInline(): input parameter is undefined or null");
-      if (typeof e2 != "string")
+      if ("string" != typeof e2)
         throw new Error("marked.parseInline(): input parameter is of type " + Object.prototype.toString.call(e2) + ", string expected");
       t3 = te({}, se.defaults, t3 || {}), ne(t3);
       try {
@@ -7140,7 +7205,7 @@ if (uni.restoreGlobal) {
       }
     }, se.Parser = ee, se.parser = ee.parse, se.Renderer = H, se.TextRenderer = J, se.Lexer = W, se.lexer = W.lex, se.Tokenizer = D, se.Slugger = K, se.parse = se;
   }
-  var marked = t();
+  const marked = t();
   let index = 0;
   function Markdown(vm) {
     this.vm = vm;
@@ -7358,7 +7423,7 @@ if (uni.restoreGlobal) {
     }
     return content;
   };
-  var _self = typeof window != "undefined" ? window : typeof WorkerGlobalScope != "undefined" && self instanceof WorkerGlobalScope ? self : {}, Prism = function(e) {
+  var _self = "undefined" != typeof window ? window : "undefined" != typeof WorkerGlobalScope && self instanceof WorkerGlobalScope ? self : {}, Prism = function(e) {
     var n = /(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i, t2 = 0, r = {}, a = { manual: e.Prism && e.Prism.manual, disableWorkerMessageHandler: e.Prism && e.Prism.disableWorkerMessageHandler, util: { encode: function e2(n2) {
       return n2 instanceof i ? new i(n2.type, e2(n2.content), n2.alias) : Array.isArray(n2) ? n2.map(e2) : n2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/\u00a0/g, " ");
     }, type: function(e2) {
@@ -7392,7 +7457,7 @@ if (uni.restoreGlobal) {
     }, setLanguage: function(e2, t3) {
       e2.className = e2.className.replace(RegExp(n, "gi"), ""), e2.classList.add("language-" + t3);
     }, currentScript: function() {
-      if (typeof document == "undefined")
+      if ("undefined" == typeof document)
         return null;
       if ("currentScript" in document)
         return document.currentScript;
@@ -7443,7 +7508,7 @@ if (uni.restoreGlobal) {
         if (n2.hasOwnProperty(o2)) {
           t3.call(n2, o2, n2[o2], r2 || o2);
           var s2 = n2[o2], u2 = a.util.type(s2);
-          u2 !== "Object" || i2[l2(s2)] ? u2 !== "Array" || i2[l2(s2)] || (i2[l2(s2)] = true, e2(s2, t3, o2, i2)) : (i2[l2(s2)] = true, e2(s2, t3, null, i2));
+          "Object" !== u2 || i2[l2(s2)] ? "Array" !== u2 || i2[l2(s2)] || (i2[l2(s2)] = true, e2(s2, t3, o2, i2)) : (i2[l2(s2)] = true, e2(s2, t3, null, i2));
         }
     } }, plugins: {}, highlightAll: function(e2, n2) {
       a.highlightAllUnder(document, e2, n2);
@@ -7451,17 +7516,17 @@ if (uni.restoreGlobal) {
       var r2 = { callback: t3, container: e2, selector: 'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code' };
       a.hooks.run("before-highlightall", r2), r2.elements = Array.prototype.slice.apply(r2.container.querySelectorAll(r2.selector)), a.hooks.run("before-all-elements-highlight", r2);
       for (var i2, l2 = 0; i2 = r2.elements[l2++]; )
-        a.highlightElement(i2, n2 === true, r2.callback);
+        a.highlightElement(i2, true === n2, r2.callback);
     }, highlightElement: function(n2, t3, r2) {
       var i2 = a.util.getLanguage(n2), l2 = a.languages[i2];
       a.util.setLanguage(n2, i2);
       var o2 = n2.parentElement;
-      o2 && o2.nodeName.toLowerCase() === "pre" && a.util.setLanguage(o2, i2);
+      o2 && "pre" === o2.nodeName.toLowerCase() && a.util.setLanguage(o2, i2);
       var s2 = { element: n2, language: i2, grammar: l2, code: n2.textContent };
       function u2(e2) {
         s2.highlightedCode = e2, a.hooks.run("before-insert", s2), s2.element.innerHTML = s2.highlightedCode, a.hooks.run("after-highlight", s2), a.hooks.run("complete", s2), r2 && r2.call(s2.element);
       }
-      if (a.hooks.run("before-sanity-check", s2), (o2 = s2.element.parentElement) && o2.nodeName.toLowerCase() === "pre" && !o2.hasAttribute("tabindex") && o2.setAttribute("tabindex", "0"), !s2.code)
+      if (a.hooks.run("before-sanity-check", s2), (o2 = s2.element.parentElement) && "pre" === o2.nodeName.toLowerCase() && !o2.hasAttribute("tabindex") && o2.setAttribute("tabindex", "0"), !s2.code)
         return a.hooks.run("complete", s2), void (r2 && r2.call(s2.element));
       if (a.hooks.run("before-highlight", s2), s2.grammar)
         if (t3 && e.Worker) {
@@ -7539,7 +7604,7 @@ if (uni.restoreGlobal) {
                     j += (w = w.next).value.length;
                   if (A = j -= w.value.length, w.value instanceof i)
                     continue;
-                  for (var C = w; C !== n2.tail && (j < O || typeof C.value == "string"); C = C.next)
+                  for (var C = w; C !== n2.tail && (j < O || "string" == typeof C.value); C = C.next)
                     L++, j += C.value.length;
                   L--, E = e2.slice(A, j), P.index -= A;
                 } else if (!(P = l(b, 0, E, m)))
@@ -7571,7 +7636,7 @@ if (uni.restoreGlobal) {
       n2.next = r2, r2.prev = n2, e2.length -= a2;
     }
     if (e.Prism = a, i.stringify = function e2(n2, t3) {
-      if (typeof n2 == "string")
+      if ("string" == typeof n2)
         return n2;
       if (Array.isArray(n2)) {
         var r2 = "";
@@ -7596,13 +7661,13 @@ if (uni.restoreGlobal) {
     }
     if (g && (a.filename = g.src, g.hasAttribute("data-manual") && (a.manual = true)), !a.manual) {
       var h = document.readyState;
-      h === "loading" || h === "interactive" && g && g.defer ? document.addEventListener("DOMContentLoaded", f) : window.requestAnimationFrame ? window.requestAnimationFrame(f) : window.setTimeout(f, 16);
+      "loading" === h || "interactive" === h && g && g.defer ? document.addEventListener("DOMContentLoaded", f) : window.requestAnimationFrame ? window.requestAnimationFrame(f) : window.setTimeout(f, 16);
     }
     return a;
   }(_self);
-  typeof global != "undefined" && (global.Prism = Prism);
+  "undefined" != typeof global && (global.Prism = Prism);
   Prism.languages.markup = { comment: { pattern: /<!--(?:(?!<!--)[\s\S])*?-->/, greedy: true }, prolog: { pattern: /<\?[\s\S]+?\?>/, greedy: true }, doctype: { pattern: /<!DOCTYPE(?:[^>"'[\]]|"[^"]*"|'[^']*')+(?:\[(?:[^<"'\]]|"[^"]*"|'[^']*'|<(?!!--)|<!--(?:[^-]|-(?!->))*-->)*\]\s*)?>/i, greedy: true, inside: { "internal-subset": { pattern: /(^[^\[]*\[)[\s\S]+(?=\]>$)/, lookbehind: true, greedy: true, inside: null }, string: { pattern: /"[^"]*"|'[^']*'/, greedy: true }, punctuation: /^<!|>$|[[\]]/, "doctype-tag": /^DOCTYPE/i, name: /[^\s<>'"]+/ } }, cdata: { pattern: /<!\[CDATA\[[\s\S]*?\]\]>/i, greedy: true }, tag: { pattern: /<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/, greedy: true, inside: { tag: { pattern: /^<\/?[^\s>\/]+/, inside: { punctuation: /^<\/?/, namespace: /^[^\s>\/:]+:/ } }, "special-attr": [], "attr-value": { pattern: /=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+)/, inside: { punctuation: [{ pattern: /^=/, alias: "attr-equals" }, { pattern: /^(\s*)["']|["']$/, lookbehind: true }] } }, punctuation: /\/?>/, "attr-name": { pattern: /[^\s>\/]+/, inside: { namespace: /^[^\s>\/:]+:/ } } } }, entity: [{ pattern: /&[\da-z]{1,8};/i, alias: "named-entity" }, /&#x?[\da-f]{1,8};/i] }, Prism.languages.markup.tag.inside["attr-value"].inside.entity = Prism.languages.markup.entity, Prism.languages.markup.doctype.inside["internal-subset"].inside = Prism.languages.markup, Prism.hooks.add("wrap", function(a) {
-    a.type === "entity" && (a.attributes.title = a.content.replace(/&amp;/, "&"));
+    "entity" === a.type && (a.attributes.title = a.content.replace(/&amp;/, "&"));
   }), Object.defineProperty(Prism.languages.markup.tag, "addInlined", { value: function(a, e) {
     var s = {};
     s["language-" + e] = { pattern: /(^<!\[CDATA\[)[\s\S]+?(?=\]\]>$)/i, lookbehind: true, inside: Prism.languages[e] }, s.cdata = /^<!\[CDATA\[|\]\]>$/i;
@@ -7645,9 +7710,9 @@ if (uni.restoreGlobal) {
       if (t2.language === a) {
         var c = t2.tokenStack = [];
         t2.code = t2.code.replace(r, function(e2) {
-          if (typeof o == "function" && !o(e2))
+          if ("function" == typeof o && !o(e2))
             return e2;
-          for (var r2, i = c.length; t2.code.indexOf(r2 = n(a, i)) !== -1; )
+          for (var r2, i = c.length; -1 !== t2.code.indexOf(r2 = n(a, i)); )
             ++i;
           return c[i] = e2, r2;
         }), t2.grammar = e.languages.markup;
@@ -7659,12 +7724,12 @@ if (uni.restoreGlobal) {
         !function c(i) {
           for (var u = 0; u < i.length && !(r >= o.length); u++) {
             var g = i[u];
-            if (typeof g == "string" || g.content && typeof g.content == "string") {
-              var l = o[r], s = t2.tokenStack[l], f = typeof g == "string" ? g : g.content, p = n(a, l), k = f.indexOf(p);
+            if ("string" == typeof g || g.content && "string" == typeof g.content) {
+              var l = o[r], s = t2.tokenStack[l], f = "string" == typeof g ? g : g.content, p = n(a, l), k = f.indexOf(p);
               if (k > -1) {
                 ++r;
                 var m = f.substring(0, k), d = new e.Token(a, e.tokenize(s, t2.grammar), "language-" + a, s), h = f.substring(k + p.length), v = [];
-                m && v.push.apply(v, c([m])), v.push(d), h && v.push.apply(v, c([h])), typeof g == "string" ? i.splice.apply(i, [u, 1].concat(v)) : g.content = v;
+                m && v.push.apply(v, c([m])), v.push(d), h && v.push.apply(v, c([h])), "string" == typeof g ? i.splice.apply(i, [u, 1].concat(v)) : g.content = v;
               }
             } else
               g.content && c(g.content);
@@ -7690,6 +7755,10 @@ if (uni.restoreGlobal) {
   }
   Highlight.prototype.onParse = function(node2, vm) {
     if (node2.name === "pre") {
+      if (vm.options.editable) {
+        node2.attrs.class = (node2.attrs.class || "") + " hl-pre";
+        return;
+      }
       let i;
       for (i = node2.children.length; i--; ) {
         if (node2.children[i].name === "code")
@@ -7698,17 +7767,19 @@ if (uni.restoreGlobal) {
       if (i === -1)
         return;
       const code = node2.children[i];
-      let className = code.attrs.class || "";
+      let className = code.attrs.class + " " + node2.attrs.class;
       i = className.indexOf("language-");
       if (i === -1) {
-        className = node2.attrs.class || "";
-        i = className.indexOf("language-");
+        i = className.indexOf("lang-");
+        if (i === -1) {
+          className = "language-text";
+          i = 9;
+        } else {
+          i += 5;
+        }
+      } else {
+        i += 9;
       }
-      if (i === -1) {
-        className = "language-text";
-        i = className.indexOf("language-");
-      }
-      i += 9;
       let j;
       for (j = i; j < className.length; j++) {
         if (className[j] === " ")
@@ -7723,7 +7794,9 @@ if (uni.restoreGlobal) {
           node2.c = void 0;
         }
         if (Prism.languages[lang]) {
-          code.children = new Parser(this.vm).parse("<pre>" + Prism.highlight(text, Prism.languages[lang], lang).replace(/token /g, "hl-") + "</pre>")[0].children;
+          code.children = new Parser$1(this.vm).parse(
+            "<pre>" + Prism.highlight(text, Prism.languages[lang], lang).replace(/token /g, "hl-") + "</pre>"
+          )[0].children;
         }
         node2.attrs.class = "hl-pre";
         code.attrs.class = "hl-code";
@@ -7782,7 +7855,7 @@ if (uni.restoreGlobal) {
                 name: "span",
                 attrs: {},
                 type: "node",
-                c: anchor ? 1 : void 0,
+                c: 1,
                 s: 1,
                 children: []
               };
@@ -7801,6 +7874,7 @@ if (uni.restoreGlobal) {
                       id: anchor ? "search" + (res.length + 1) : void 0,
                       style
                     },
+                    c: 1,
                     children: [{
                       type: "text",
                       text: key instanceof RegExp ? key.exec(text)[0] : key
@@ -7869,19 +7943,251 @@ if (uni.restoreGlobal) {
       });
     };
   }
-  const plugins = [Markdown, Emoji, Highlight, Search];
+  const blank = {
+    " ": true,
+    "\n": true,
+    "	": true,
+    "\r": true,
+    "\f": true
+  };
+  function Parser() {
+    this.styles = [];
+    this.selectors = [];
+  }
+  Parser.prototype.parse = function(content) {
+    new Lexer(this).parse(content);
+    return this.styles;
+  };
+  Parser.prototype.onSelector = function(name) {
+    if (name.includes("[") || name.includes("*") || name.includes("@"))
+      return;
+    const selector = {};
+    if (name.includes(":")) {
+      const info = name.split(":");
+      const pseudo = info.pop();
+      if (pseudo === "before" || pseudo === "after") {
+        selector.pseudo = pseudo;
+        name = info[0];
+      } else
+        return;
+    }
+    function splitItem(str) {
+      const arr = [];
+      let i, start;
+      for (i = 1, start = 0; i < str.length; i++) {
+        if (str[i] === "." || str[i] === "#") {
+          arr.push(str.substring(start, i));
+          start = i;
+        }
+      }
+      if (!arr.length) {
+        return str;
+      } else {
+        arr.push(str.substring(start, i));
+        return arr;
+      }
+    }
+    if (name.includes(" ")) {
+      selector.list = [];
+      const list = name.split(" ");
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].length) {
+          const arr = list[i].split(">");
+          for (let j = 0; j < arr.length; j++) {
+            selector.list.push(splitItem(arr[j]));
+            if (j < arr.length - 1) {
+              selector.list.push(">");
+            }
+          }
+        }
+      }
+    } else {
+      selector.key = splitItem(name);
+    }
+    this.selectors.push(selector);
+  };
+  Parser.prototype.onContent = function(content) {
+    for (let i = 0; i < this.selectors.length; i++) {
+      this.selectors[i].style = content;
+    }
+    this.styles = this.styles.concat(this.selectors);
+    this.selectors = [];
+  };
+  function Lexer(handler) {
+    this.selector = "";
+    this.style = "";
+    this.handler = handler;
+  }
+  Lexer.prototype.parse = function(content) {
+    this.i = 0;
+    this.content = content;
+    this.state = this.blank;
+    for (let len = content.length; this.i < len; this.i++) {
+      this.state(content[this.i]);
+    }
+  };
+  Lexer.prototype.comment = function() {
+    this.i = this.content.indexOf("*/", this.i) + 1;
+    if (!this.i) {
+      this.i = this.content.length;
+    }
+  };
+  Lexer.prototype.blank = function(c) {
+    if (!blank[c]) {
+      if (c === "/" && this.content[this.i + 1] === "*") {
+        this.comment();
+        return;
+      }
+      this.selector += c;
+      this.state = this.name;
+    }
+  };
+  Lexer.prototype.name = function(c) {
+    if (c === "/" && this.content[this.i + 1] === "*") {
+      this.comment();
+      return;
+    }
+    if (c === "{" || c === "," || c === ";") {
+      this.handler.onSelector(this.selector.trimEnd());
+      this.selector = "";
+      if (c !== "{") {
+        while (blank[this.content[++this.i]])
+          ;
+      }
+      if (this.content[this.i] === "{") {
+        this.floor = 1;
+        this.state = this.val;
+      } else {
+        this.selector += this.content[this.i];
+      }
+    } else if (blank[c]) {
+      this.selector += " ";
+    } else {
+      this.selector += c;
+    }
+  };
+  Lexer.prototype.val = function(c) {
+    if (c === "/" && this.content[this.i + 1] === "*") {
+      this.comment();
+      return;
+    }
+    if (c === "{") {
+      this.floor++;
+    } else if (c === "}") {
+      this.floor--;
+      if (!this.floor) {
+        this.handler.onContent(this.style);
+        this.style = "";
+        this.state = this.blank;
+        return;
+      }
+    }
+    this.style += c;
+  };
+  function Style() {
+    this.styles = [];
+  }
+  Style.prototype.onParse = function(node2, vm) {
+    if (node2.name === "style" && node2.children.length && node2.children[0].type === "text") {
+      this.styles = this.styles.concat(new Parser().parse(node2.children[0].text));
+    } else if (node2.name) {
+      let matched = ["", "", "", ""];
+      for (let i = 0, len = this.styles.length; i < len; i++) {
+        const item = this.styles[i];
+        let res = match(node2, item.key || item.list[item.list.length - 1]);
+        let j;
+        if (res) {
+          if (!item.key) {
+            j = item.list.length - 2;
+            for (let k = vm.stack.length; j >= 0 && k--; ) {
+              if (item.list[j] === ">") {
+                if (j < 1 || j > item.list.length - 2)
+                  break;
+                if (match(vm.stack[k], item.list[j - 1])) {
+                  j -= 2;
+                } else {
+                  j++;
+                }
+              } else if (match(vm.stack[k], item.list[j])) {
+                j--;
+              }
+            }
+            res = 4;
+          }
+          if (item.key || j < 0) {
+            if (item.pseudo && node2.children) {
+              let text;
+              item.style = item.style.replace(/content:([^;]+)/, (_, $1) => {
+                text = $1.replace(/['"]/g, "").replace(/attr\((.+?)\)/, (_2, $12) => node2.attrs[$12.trim()] || "").replace(/\\(\w{4})/, (_2, $12) => String.fromCharCode(parseInt($12, 16)));
+                return "";
+              });
+              const pseudo = {
+                name: "span",
+                attrs: {
+                  style: item.style
+                },
+                children: [{
+                  type: "text",
+                  text
+                }]
+              };
+              if (item.pseudo === "before") {
+                node2.children.unshift(pseudo);
+              } else {
+                node2.children.push(pseudo);
+              }
+            } else {
+              matched[res - 1] += item.style + (item.style[item.style.length - 1] === ";" ? "" : ";");
+            }
+          }
+        }
+      }
+      matched = matched.join("");
+      if (matched.length > 2) {
+        node2.attrs.style = matched + (node2.attrs.style || "");
+      }
+    }
+  };
+  function match(node2, keys) {
+    function matchItem(key) {
+      if (key[0] === "#") {
+        if (node2.attrs.id && node2.attrs.id.trim() === key.substr(1))
+          return 3;
+      } else if (key[0] === ".") {
+        key = key.substr(1);
+        const selectors = (node2.attrs.class || "").split(" ");
+        for (let i = 0; i < selectors.length; i++) {
+          if (selectors[i].trim() === key)
+            return 2;
+        }
+      } else if (node2.name === key) {
+        return 1;
+      }
+      return 0;
+    }
+    if (keys instanceof Array) {
+      let res = 0;
+      for (let j = 0; j < keys.length; j++) {
+        const tmp = matchItem(keys[j]);
+        if (!tmp)
+          return 0;
+        if (tmp > res) {
+          res = tmp;
+        }
+      }
+      return res;
+    }
+    return matchItem(keys);
+  }
+  const plugins = [Markdown, Emoji, Highlight, Search, Style];
   const _sfc_main$c = {
     name: "mp-html",
     data() {
       return {
-        tooltip: null,
-        slider: null,
         nodes: []
       };
     },
     props: {
-      editable: Boolean,
-      placeholder: String,
       markdown: Boolean,
       containerStyle: {
         type: String,
@@ -7934,11 +8240,6 @@ if (uni.restoreGlobal) {
       node
     },
     watch: {
-      editable(val) {
-        this.setContent(val ? this.content : this.getContent());
-        if (!val)
-          this._maskTap();
-      },
       content(content) {
         this.setContent(content);
       }
@@ -7950,31 +8251,14 @@ if (uni.restoreGlobal) {
       }
     },
     mounted() {
-      if ((this.content || this.editable) && !this.nodes.length) {
+      if (this.content && !this.nodes.length) {
         this.setContent(this.content);
       }
     },
     beforeDestroy() {
       this._hook("onDetached");
-      clearInterval(this._timer);
     },
     methods: {
-      _containTap() {
-        if (!this._lock && !this.slider) {
-          this._edit = void 0;
-          this._maskTap();
-        }
-      },
-      _tooltipTap(e) {
-        this._tooltipcb(e.currentTarget.dataset.i);
-        this.$set(this, "tooltip", null);
-      },
-      _sliderChanging(e) {
-        this._slideringcb(e.detail.value);
-      },
-      _sliderChange(e) {
-        this._slidercb(e.detail.value);
-      },
       in(page, selector, scrollTop) {
         if (page && selector && scrollTop) {
           this._in = {
@@ -8059,29 +8343,52 @@ if (uni.restoreGlobal) {
           page = page.$parent;
         page.$scope.$getAppWebview().evalJS(command);
       },
+      setPlaybackRate(rate) {
+        this.playbackRate = rate;
+        for (let i = (this._videos || []).length; i--; ) {
+          this._videos[i].playbackRate(rate);
+        }
+        const command = 'for(var e=document.getElementsByTagName("video"),i=e.length;i--;)e[i].playbackRate=' + rate;
+        let page = this.$parent;
+        while (!page.$scope)
+          page = page.$parent;
+        page.$scope.$getAppWebview().evalJS(command);
+      },
       setContent(content, append) {
         if (!append || !this.imgList) {
           this.imgList = [];
         }
-        const nodes = new Parser(this).parse(content);
+        const nodes = new Parser$1(this).parse(content);
         this.$set(this, "nodes", append ? (this.nodes || []).concat(nodes) : nodes);
         this._videos = [];
         this.$nextTick(() => {
           this._hook("onLoad");
           this.$emit("load");
         });
-        let height;
-        clearInterval(this._timer);
-        this._timer = setInterval(() => {
-          this.getRect().then((rect) => {
+        if (this.lazyLoad || this.imgList._unloadimgs < this.imgList.length / 2) {
+          let height = 0;
+          const callback = (rect) => {
+            if (!rect || !rect.height)
+              rect = {};
             if (rect.height === height) {
               this.$emit("ready", rect);
-              clearInterval(this._timer);
+            } else {
+              height = rect.height;
+              setTimeout(() => {
+                this.getRect().then(callback).catch(callback);
+              }, 350);
             }
-            height = rect.height;
-          }).catch(() => {
-          });
-        }, 350);
+          };
+          this.getRect().then(callback).catch(callback);
+        } else {
+          if (!this.imgList._unloadimgs) {
+            this.getRect().then((rect) => {
+              this.$emit("ready", rect);
+            }).catch(() => {
+              this.$emit("ready", {});
+            });
+          }
+        }
       },
       _hook(name) {
         for (let i = plugins.length; i--; ) {
@@ -8097,52 +8404,17 @@ if (uni.restoreGlobal) {
     return vue.openBlock(), vue.createElementBlock("view", {
       id: "_root",
       class: vue.normalizeClass(($props.selectable ? "_select " : "") + "_root"),
-      style: vue.normalizeStyle(($props.editable ? "position:relative;min-height:200px;" : "") + $props.containerStyle),
-      onClick: _cache[3] || (_cache[3] = (...args) => $options._containTap && $options._containTap(...args))
+      style: vue.normalizeStyle($props.containerStyle)
     }, [
       !$data.nodes[0] ? vue.renderSlot(_ctx.$slots, "default", { key: 0 }, void 0, true) : (vue.openBlock(), vue.createBlock(_component_node, {
         key: 1,
         childs: $data.nodes,
-        opts: [$props.lazyLoad, $props.loadingImg, $props.errorImg, $props.showImgMenu, $props.editable, $props.placeholder, "nodes"],
+        opts: [$props.lazyLoad, $props.loadingImg, $props.errorImg, $props.showImgMenu, $props.selectable],
         name: "span"
-      }, null, 8, ["childs", "opts"])),
-      $data.tooltip ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 2,
-        class: "_tooltip_contain",
-        style: vue.normalizeStyle("top:" + $data.tooltip.top + "px")
-      }, [
-        vue.createElementVNode("view", { class: "_tooltip" }, [
-          (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.tooltip.items, (item, index2) => {
-            return vue.openBlock(), vue.createElementBlock("view", {
-              key: index2,
-              class: "_tooltip_item",
-              "data-i": index2,
-              onClick: _cache[0] || (_cache[0] = (...args) => $options._tooltipTap && $options._tooltipTap(...args))
-            }, vue.toDisplayString(item), 9, ["data-i"]);
-          }), 128))
-        ])
-      ], 4)) : vue.createCommentVNode("v-if", true),
-      $data.slider ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 3,
-        class: "_slider",
-        style: vue.normalizeStyle("top:" + $data.slider.top + "px")
-      }, [
-        vue.createElementVNode("slider", {
-          value: $data.slider.value,
-          min: $data.slider.min,
-          max: $data.slider.max,
-          "handle-size": "14",
-          "block-size": "14",
-          "show-value": "",
-          activeColor: "white",
-          style: { "padding": "3px" },
-          onChanging: _cache[1] || (_cache[1] = (...args) => $options._sliderChanging && $options._sliderChanging(...args)),
-          onChange: _cache[2] || (_cache[2] = (...args) => $options._sliderChange && $options._sliderChange(...args))
-        }, null, 40, ["value", "min", "max"])
-      ], 4)) : vue.createCommentVNode("v-if", true)
+      }, null, 8, ["childs", "opts"]))
     ], 6);
   }
-  var __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-0cfd6ca1"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/mp-html/components/mp-html/mp-html.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-a290f043"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/mp-html/components/mp-html/mp-html.vue"]]);
   const _sfc_main$b = {
     name: "uniCollapseItems",
     props: {
@@ -8355,7 +8627,7 @@ if (uni.restoreGlobal) {
       ], 6)
     ]);
   }
-  var __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-e55e2a3e"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-collapses/components/uni-collapse-items/uni-collapse-items.vue"]]);
+  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-c3bf187e"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-collapses/components/uni-collapse-items/uni-collapse-items.vue"]]);
   const _sfc_main$a = {
     name: "uniCollapses",
     emits: ["change", "activeItem", "input", "update:modelValue"],
@@ -8470,7 +8742,7 @@ if (uni.restoreGlobal) {
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ]);
   }
-  var __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-39241bd6"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-collapses/components/uni-collapses/uni-collapses.vue"]]);
+  const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-b091aba3"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-collapses/components/uni-collapses/uni-collapses.vue"]]);
   const _sfc_main$9 = {
     data() {
       return {
@@ -8601,14 +8873,34 @@ if (uni.restoreGlobal) {
             id: e
           }
         });
-        res.data.data.article.content = res.data.data.article.content.replace(/\<img/gi, '<img class="rich-img" ');
-        res.data.data.article.content = res.data.data.article.content.replace(/\<h1/gi, '<h1 class="rich-h1" ');
-        res.data.data.article.content = res.data.data.article.content.replace(/\<h2/gi, '<h2 class="rich-h2" ');
-        res.data.data.article.content = res.data.data.article.content.replace(/\<h3/gi, '<h3 class="rich-h3" ');
-        res.data.data.article.content = res.data.data.article.content.replace(/\<h4/gi, '<h4 class="rich-h4" ');
-        res.data.data.article.content = res.data.data.article.content.replace(/\<h5/gi, '<h5 class="rich-h5" ');
-        res.data.data.article.content = res.data.data.article.content.replace(/\<h6/gi, '<h6 class="rich-h6" ');
-        res.data.data.article.content = res.data.data.article.content.replace(/\/content\/upload/gi, set.url + "/content/upload");
+        res.data.data.article.content = res.data.data.article.content.replace(
+          /\<img/gi,
+          '<img class="rich-img" '
+        );
+        res.data.data.article.content = res.data.data.article.content.replace(
+          /\<h1/gi,
+          '<h1 class="rich-h1" '
+        );
+        res.data.data.article.content = res.data.data.article.content.replace(
+          /\<h2/gi,
+          '<h2 class="rich-h2" '
+        );
+        res.data.data.article.content = res.data.data.article.content.replace(
+          /\<h3/gi,
+          '<h3 class="rich-h3" '
+        );
+        res.data.data.article.content = res.data.data.article.content.replace(
+          /\<h4/gi,
+          '<h4 class="rich-h4" '
+        );
+        res.data.data.article.content = res.data.data.article.content.replace(
+          /\<h5/gi,
+          '<h5 class="rich-h5" '
+        );
+        res.data.data.article.content = res.data.data.article.content.replace(
+          /\<h6/gi,
+          '<h6 class="rich-h6" '
+        );
         res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, "****");
         this.data = res.data.data.article;
       }
@@ -8748,7 +9040,7 @@ if (uni.restoreGlobal) {
       ])
     ], 64);
   }
-  var PagesBlogInfoBlogInfo = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/blog-info/blog-info.vue"]]);
+  const PagesBlogInfoBlogInfo = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/blog-info/blog-info.vue"]]);
   const _sfc_main$8 = {
     data() {
       return {
@@ -8789,7 +9081,7 @@ if (uni.restoreGlobal) {
       ])
     ], 64);
   }
-  var PagesAboutAbout = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/about/about.vue"]]);
+  const PagesAboutAbout = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/about/about.vue"]]);
   const _sfc_main$7 = {
     data() {
       return {
@@ -8848,7 +9140,7 @@ if (uni.restoreGlobal) {
       }, " \u6682\u65E0\u9644\u4EF6 ")) : vue.createCommentVNode("v-if", true)
     ], 64);
   }
-  var PagesDownDown = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/down/down.vue"]]);
+  const PagesDownDown = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/down/down.vue"]]);
   const _sfc_main$6 = {
     data() {
       return {
@@ -9004,7 +9296,7 @@ if (uni.restoreGlobal) {
       }, null, 8, ["status"])
     ], 64);
   }
-  var PagesSortInfoSortInfo = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/sort-info/sort-info.vue"]]);
+  const PagesSortInfoSortInfo = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/sort-info/sort-info.vue"]]);
   const _sfc_main$5 = {
     data() {
       return {
@@ -9390,7 +9682,7 @@ if (uni.restoreGlobal) {
       }, " \u8D26\u53F7\u672A\u6FC0\u6D3B\uFF0C\u8BF7\u8054\u7CFBQQ6283354 ")) : vue.createCommentVNode("v-if", true)
     ], 64);
   }
-  var PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/home/home.vue"]]);
+  const PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/home/home.vue"]]);
   const _sfc_main$4 = {
     name: "UniCard",
     emits: ["click"],
@@ -9531,7 +9823,7 @@ if (uni.restoreGlobal) {
       ])
     ], 6);
   }
-  var __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-19622063"], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/uni_modules/uni-card/components/uni-card/uni-card.vue"]]);
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-ae4bee67"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-card/components/uni-card/uni-card.vue"]]);
   const _sfc_main$3 = {
     data() {
       return {
@@ -9647,7 +9939,7 @@ if (uni.restoreGlobal) {
       ])
     ], 64);
   }
-  var PagesSearchSearch = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/search/search.vue"]]);
+  const PagesSearchSearch = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/search/search.vue"]]);
   const _sfc_main$2 = {
     data() {
       return {
@@ -9724,7 +10016,7 @@ if (uni.restoreGlobal) {
       }, " \u4FDD\u5B58\u8BBE\u7F6E ")
     ], 64);
   }
-  var PagesSettingAdmin = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/setting/admin.vue"]]);
+  const PagesSettingAdmin = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/setting/admin.vue"]]);
   const _sfc_main$1 = {};
   function _sfc_render(_ctx, _cache) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
@@ -9745,7 +10037,7 @@ if (uni.restoreGlobal) {
       }, "\u6682\u672A\u5F00\u653E")
     ], 64);
   }
-  var PagesAboutHelp = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/pages/about/help.vue"]]);
+  const PagesAboutHelp = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/about/help.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/xia-editor/xia-editor", PagesXiaEditorXiaEditor);
   __definePage("pages/blog-info/blog-info", PagesBlogInfoBlogInfo);
@@ -9767,7 +10059,7 @@ if (uni.restoreGlobal) {
       formatAppLog("log", "at App.vue:10", "App Hide");
     }
   };
-  var App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/pengsong/Downloads/Web/uni-app/demo2/App.vue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/pengsong/Downloads/emlog-wxmini/App.vue"]]);
   function createApp() {
     const app = vue.createVueApp(App);
     return {

@@ -1,26 +1,18 @@
 <template>
-  <view id="_root" :class="(selectable?'_select ':'')+'_root'" :style="(editable?'position:relative;min-height:200px;':'')+containerStyle" @tap="_containTap">
+  <view id="_root" :class="(selectable?'_select ':'')+'_root'" :style="containerStyle">
     <slot v-if="!nodes[0]" />
     <!-- #ifndef APP-PLUS-NVUE -->
-    <node v-else :childs="nodes" :opts="[lazyLoad,loadingImg,errorImg,showImgMenu,editable,placeholder,'nodes']" name="span" />
+    <node v-else :childs="nodes" :opts="[lazyLoad,loadingImg,errorImg,showImgMenu,selectable]" name="span" />
     <!-- #endif -->
     <!-- #ifdef APP-PLUS-NVUE -->
     <web-view ref="web" src="/static/app-plus/mp-html/local.html" :style="'margin-top:-2px;height:' + height + 'px'" @onPostMessage="_onMessage" />
     <!-- #endif -->
-    <view v-if="tooltip" class="_tooltip_contain" :style="'top:'+tooltip.top+'px'">
-      <view class="_tooltip">
-        <view v-for="(item, index) in tooltip.items" v-bind:key="index" class="_tooltip_item" :data-i="index" @tap="_tooltipTap">{{item}}</view>
-      </view>
-    </view>
-    <view v-if="slider" class="_slider" :style="'top:'+slider.top+'px'">
-      <slider :value="slider.value" :min="slider.min" :max="slider.max" handle-size="14" block-size="14" show-value activeColor="white" style="padding:3px" @changing="_sliderChanging" @change="_sliderChange" />
-    </view>
   </view>
 </template>
 
 <script>
 /**
- * mp-html v2.3.0
+ * mp-html v2.4.1
  * @description 富文本组件
  * @tutorial https://github.com/jin-yufeng/mp-html
  * @property {String} container-style 容器的样式
@@ -53,16 +45,15 @@ import markdown from './markdown/index.js'
 import emoji from './emoji/index.js'
 import highlight from './highlight/index.js'
 import search from './search/index.js'
-const plugins=[markdown,emoji,highlight,search,]
+import style from './style/index.js'
+const plugins=[markdown,emoji,highlight,search,style,]
 // #ifdef APP-PLUS-NVUE
 const dom = weex.requireModule('dom')
 // #endif
 export default {
   name: 'mp-html',
-  data() {
+  data () {
     return {
-      tooltip: null,
-      slider: null,
       nodes: [],
       // #ifdef APP-PLUS-NVUE
       height: 3
@@ -70,8 +61,6 @@ export default {
     }
   },
   props: {
-    editable: Boolean,
-    placeholder: String,
     markdown: Boolean,
     containerStyle: {
       type: String,
@@ -128,11 +117,6 @@ export default {
   },
   // #endif
   watch: {
-    editable(val) {
-      this.setContent(val ? this.content : this.getContent())
-      if (!val)
-        this._maskTap()
-    },
     content (content) {
       this.setContent(content)
     }
@@ -144,31 +128,14 @@ export default {
     }
   },
   mounted () {
-    if ((this.content || this.editable) && !this.nodes.length) {
+    if (this.content && !this.nodes.length) {
       this.setContent(this.content)
     }
   },
   beforeDestroy () {
     this._hook('onDetached')
-    clearInterval(this._timer)
   },
   methods: {
-    _containTap() {
-      if (!this._lock && !this.slider) {
-        this._edit = undefined
-        this._maskTap()
-      }
-    },
-    _tooltipTap(e) {
-      this._tooltipcb(e.currentTarget.dataset.i)
-      this.$set(this, 'tooltip', null)
-    },
-    _sliderChanging(e) {
-      this._slideringcb(e.detail.value)
-    },
-    _sliderChange(e) {
-      this._slidercb(e.detail.value)
-    },
     /**
      * @description 将锚点跳转的范围限定在一个 scroll-view 内
      * @param {Object} page scroll-view 所在页面的示例
@@ -324,6 +291,28 @@ export default {
     },
 
     /**
+     * @description 设置媒体播放速率
+     * @param {Number} rate 播放速率
+     */
+    setPlaybackRate (rate) {
+      this.playbackRate = rate
+      for (let i = (this._videos || []).length; i--;) {
+        this._videos[i].playbackRate(rate)
+      }
+      // #ifdef APP-PLUS
+      const command = 'for(var e=document.getElementsByTagName("video"),i=e.length;i--;)e[i].playbackRate=' + rate
+      // #ifndef APP-PLUS-NVUE
+      let page = this.$parent
+      while (!page.$scope) page = page.$parent
+      page.$scope.$getAppWebview().evalJS(command)
+      // #endif
+      // #ifdef APP-PLUS-NVUE
+      this.$refs.web.evalJs(command)
+      // #endif
+      // #endif
+    },
+
+    /**
      * @description 设置内容
      * @param {String} content html 内容
      * @param {Boolean} append 是否在尾部追加
@@ -347,19 +336,32 @@ export default {
         this.$emit('load')
       })
 
-      // 等待图片加载完毕
-      let height
-      clearInterval(this._timer)
-      this._timer = setInterval(() => {
-        this.getRect().then(rect => {
+      if (this.lazyLoad || this.imgList._unloadimgs < this.imgList.length / 2) {
+        // 设置懒加载，每 350ms 获取高度，不变则认为加载完毕
+        let height = 0
+        const callback = rect => {
+          if (!rect || !rect.height) rect = {}
           // 350ms 总高度无变化就触发 ready 事件
           if (rect.height === height) {
             this.$emit('ready', rect)
-            clearInterval(this._timer)
+          } else {
+            height = rect.height
+            setTimeout(() => {
+              this.getRect().then(callback).catch(callback)
+            }, 350)
           }
-          height = rect.height
-        }).catch(() => { })
-      }, 350)
+        }
+        this.getRect().then(callback).catch(callback)
+      } else {
+        // 未设置懒加载，等待所有图片加载完毕
+        if (!this.imgList._unloadimgs) {
+          this.getRect().then(rect => {
+            this.$emit('ready', rect)
+          }).catch(() => {
+            this.$emit('ready', {})
+          })
+        }
+      }
       // #endif
     },
 
@@ -379,7 +381,7 @@ export default {
      * @description 设置内容
      */
     _set (nodes, append) {
-      this.$refs.web.evalJs('setContent(' + JSON.stringify(nodes) + ',' + JSON.stringify([this.containerStyle.replace(/(?:margin|padding)[^;]+/g, ''), this.errorImg, this.loadingImg, this.pauseVideo, this.scrollTable, this.selectable]) + ',' + append + ')')
+      this.$refs.web.evalJs('setContent(' + JSON.stringify(nodes).replace(/%22/g, '') + ',' + JSON.stringify([this.containerStyle.replace(/(?:margin|padding)[^;]+/g, ''), this.errorImg, this.loadingImg, this.pauseVideo, this.scrollTable, this.selectable]) + ',' + append + ')')
     },
 
     /**
@@ -405,7 +407,9 @@ export default {
         case 'onReady':
           this.getRect().then(res => {
             this.$emit('ready', res)
-          }).catch(() => { })
+          }).catch(() => {
+            this.$emit('ready', {})
+          })
           break
         // 总高度发生变化
         case 'onHeightChange':
@@ -498,48 +502,4 @@ export default {
   user-select: text;
 }
 /* #endif */
-
-/* 提示条 */
-._tooltip_contain {
-  position: absolute;
-  right: 20px;
-  left: 20px;
-  text-align: center;
-}
-
-._tooltip {
-  box-sizing: border-box;
-  display: inline-block;
-  width: auto;
-  max-width: 100%;
-  height: 30px;
-  padding: 0 3px;
-  overflow: scroll;
-  font-size: 14px;
-  line-height: 30px;
-  white-space: nowrap;
-}
-
-._tooltip_item {
-  display: inline-block;
-  width: auto;
-  padding: 0 2vw;
-  line-height: 30px;
-  background-color: black;
-  color: white;
-}
-
-/* 图片宽度滚动条 */
-._slider {
-  position: absolute;
-  left: 20px;
-  width: 220px;
-}
-
-._tooltip,
-._slider {
-  background-color: black;
-  border-radius: 3px;
-  opacity: 0.75;
-}
 </style>
