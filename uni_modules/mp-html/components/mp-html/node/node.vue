@@ -416,60 +416,69 @@ export default {
   margin-block-end: 1em;
 }
 
-	/deep/ .rich-h1{
-	  font-size:20px;
-	  margin:10px 0px;
-	}
-	/deep/ .rich-h1:before{
-	  content:"#";
-	  color:green;
-	}
-	/deep/ .rich-h2{
-	  font-size:19px;
-	  margin:10px 0px;
-	}
-	/deep/ .rich-h2:before{
-	  content:"#";
-	  color:#f17c67;
-	}
-	/deep/ .rich-h3{
-	  font-size:18px;
-	  margin:10px 0px;
-	}
-	/deep/ .rich-h3:before{
-	  content:"#";
-	  color:#495a80;
-	}
-	/deep/ .rich-h4{
-	  font-size:17px;
-	  margin:10px 0px;
-	}
-	/deep/ .rich-h4:before{
-	  content:"#";
-	  color:#e9f01d;
-	}
-	/deep/ .rich-h5{
-	  font-size:16px;
-	  margin:10px 0px;
-	}
-	/deep/ .rich-h5:before{
-	  content:"#";
-	  color:#801818;
-	}
-	/deep/ .rich-h6{
-	  font-size:15px;
-	  margin:10px 0px;
-	}
-	/deep/ .rich-h6:before{
-	  content:"#";
-	  color:#483c32;
-	}
-	/deep/ .rich-img {
-	 border-radius: 5px;
-	}
-	/deep/ .rich-a{
-	  display:none!important;
-	}
+/deep/.rich-h1,/deep/.rich-h2,/deep/.rich-h3,/deep/.rich-h4,/deep/.rich-h5,/deep/.rich-h6{
+  position: relative;
+  padding-bottom: 8px;
+}
+/deep/.rich-h1:before,/deep/.rich-h2:before,/deep/.rich-h3:before,/deep/.rich-h4:before,/deep/.rich-h5:before,/deep/.rich-h6:before{
+  width: 40px;
+  height: 3px;
+  position: absolute;
+  content: '';
+  top: auto;
+  left: 0;
+  bottom: 3px;
+  border-radius: 3px;
+  transition: 4s;
+}
+/deep/.rich-h1{
+  font-size:20px;
+  margin:10px 0px;
+}
+/deep/.rich-h1:before{
+  background-image:linear-gradient(to right ,green,rgb(4, 46, 4));
+  box-shadow: 1px 1px 3px -1px green;
+}
+/deep/.rich-h2{
+  font-size:19px;
+  margin:10px 0px;
+}
+/deep/.rich-h2:before{
+  background-image:linear-gradient(to right ,#f17c67,#971903);
+  box-shadow: 1px 1px 3px -1px #f17c67;
+}
+/deep/.rich-h3{
+  font-size:18px;
+  margin:10px 0px;
+}
+/deep/.rich-h3:before{
+  background-image:linear-gradient(to right ,#495a80,#022c85);
+  box-shadow: 1px 1px 3px -1px #495a80;
+}
+/deep/.rich-h4{
+  font-size:17px;
+  margin:10px 0px;
+}
+/deep/.rich-h4:before{
+  background-image:linear-gradient(to right ,#e9f01d,#686b03);
+  box-shadow: 1px 1px 3px -1px #e9f01d;
+}
+/deep/.rich-h5{
+  font-size:16px;
+  margin:10px 0px;
+}
+/deep/.rich-h5:before{
+  background-image:linear-gradient(to right ,#7c3a3a,#801818);
+  box-shadow: 1px 1px 3px -1px #801818;
+}
+/deep/.rich-h6{
+  font-size:15px;
+  margin:10px 0px;
+}
+/deep/.rich-h6:before{
+  background-image:linear-gradient(to right ,#967a63,#483c32);
+  box-shadow: 1px 1px 3px -1px #483c32;
+}
 	/deep/ .aaa{
 	  color:green;
 	}
