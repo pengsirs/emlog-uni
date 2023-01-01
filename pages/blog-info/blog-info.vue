@@ -13,21 +13,41 @@
 					<uni-icons color="blue" type="calendar" size="14"></uni-icons>{{data.date||"1970-01-01 00:00:00"}}
 				</view>
 			</view>
-			<mp-html lozy-load="true" container-style="overflow: hidden;" selectable="true" :tag-style="tagStyle"
-				:content="data.content"></mp-html>
-			<!-- <rich-text :nodes="data.content"></rich-text> -->
-			<view class="over">—— The End ——</view>
-
-			<view class="Copyright">
-				<text>版权声明：若无特殊注明，《</text><text class="Copyright-text">{{ data.title }}</text><text>》内容为《</text><text
-					class="Copyright-text">{{ data.author_name||"作者"}}</text><text>》原创，转载请保留文章出处。如有《</text><text
-					class="Copyright-text">{{ data.author_name||"作者"}}</text><text>》转载文章时未注明出处或侵犯您的权益或版权，请联系《</text><text
-					class="Copyright-text">{{ data.author_name||"作者"}}</text><text>》，我们将及时清理删除并道歉，谢谢！</text>
+			<view class="openhtml" :style="'height: '+height+';overflow: hidden;'">
+				
+				<mp-html lozy-load="true" container-style="overflow: hidden;" selectable="true" :tag-style="tagStyle"
+					:content="data.content"></mp-html>
+					
+					<view class="over">—— The End ——</view>
 			</view>
-			<view class="tags">
+			<view class="htmlbtn" v-if="html" @click="closeHtml">收起<uni-icons style="margin-left: 5px;" type="top" size="16"></uni-icons></view>
+			<view class="htmlbtn" v-if="!html" @click="openHtml">查看更多<uni-icons style="margin-left: 5px;" type="bottom" size="16"></uni-icons></view>
+			<!-- <rich-text :nodes="data.content"></rich-text> -->
+			<view class="Copyright-box">
+				<view class="Copyright-item">
+					<view class="Copyright">
+						<text>版权声明：若无特殊注明，《</text><text
+							class="Copyright-text">{{ data.title }}</text><text>》内容为《</text><text
+							class="Copyright-text">{{ data.author_name||"作者"}}</text><text>》原创，转载请保留文章出处。如有《</text><text
+							class="Copyright-text">{{ data.author_name||"作者"}}</text><text>》转载文章时未注明出处或侵犯您的权益或版权，请联系《</text><text
+							class="Copyright-text">{{ data.author_name||"作者"}}</text><text>》，我们将及时清理删除并道歉，谢谢！</text>
+					</view>
+				</view>
+			</view>
+
+			<!-- 			<view class="tags">
 			<view v-for="item in data.tags">
 			<view class="tag" @click="search(item.name)">{{item.name}}</view>
 			</view>
+			</view> -->
+
+			<view class="tags" v-if="data.tags!=''">
+				<view class="tag-title">文章标签</view>
+				<view class="tag-item">
+					<view v-for="item in data.tags">
+						<view class="tag" @click="search(item.name)">{{ item.name }}</view>
+					</view>
+				</view>
 			</view>
 		</view>
 		<view class="foot-content"></view>
@@ -111,8 +131,10 @@
 					td: 'border:1px #eee solid;text-align:center;',
 					th: 'border:1px #eee solid;background-color:#ffc09f;',
 				},
+				height:"350px",
 				data: {},
 				haibao: "",
+				html:false,
 				url: '',
 				arrays: [0],
 				content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
@@ -157,10 +179,18 @@
 			}
 		},
 		methods: {
+			openHtml(){
+				this.height="100%"
+				this.html = !this.html
+			},
+			closeHtml(){
+				this.height="350px"
+				this.html = !this.html
+			},
 			addll(e) {
 				var that = this
 				uni.request({
-					url: set.url+"/"+e,
+					url: set.url + "/" + e,
 					method: 'GET',
 					timeout: "1000"
 				})
@@ -230,7 +260,7 @@
 				})
 			},
 			search(res) {
-				uni.navigateTo({
+				uni.switchTab({
 					url: "../search/search?tag=tag&search=" + res
 				})
 			},
@@ -277,7 +307,25 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	.htmlbtn{
+		width: 100%;
+		text-align: center;
+		padding-top: 30px;
+		margin-top: -30px;
+		font-size: 17px;
+		font-weight: 500;
+		color: #666;
+		left: 0;
+		position: relative;
+		z-index:99;
+		background: linear-gradient(360deg, #fff 0%, #fff 50%, rgba(255, 255, 255, 0) 100%);
+	}
+	.openhtml{
+		z-index: 1;
+		position: relative;
+	}
+
 	.homelist-item {
 		padding: 5px;
 	}
@@ -318,14 +366,7 @@
 		font-size: 18px;
 	}
 
-	.Copyright {
-		background: #ddd;
-		font-size: 12px;
-		font-weight: 100;
-		padding: 10px;
-		border-radius: 5px;
-		opacity: 0.5;
-	}
+
 
 	button {
 		margin: 0;
@@ -355,10 +396,40 @@
 		opacity: 0.5;
 	}
 
+	.tag-item {
+		flex-wrap: wrap;
+		display: flex;
+	}
+
 	.tags {
 		display: flex;
+		flex-direction: column;
 		margin: 10px 0px;
-		flex-wrap: wrap;
+		padding: 5px;
+		border-radius: 5px;
+		background-color: #fff;
+		box-shadow: 0px 0px 5px #eee;
+	}
+
+	.tag-title:before {
+		width: 40px;
+		height: 3px;
+		position: absolute;
+		content: '';
+		top: auto;
+		left: 5px;
+		bottom: 3px;
+		border-radius: 5px;
+		transition: 4s;
+		background-image: linear-gradient(to right, #2979ff, #002c77);
+		box-shadow: 1px 1px 3px -1px #2979ff;
+	}
+
+	.tag-title {
+		padding: 2px 5px;
+		font-weight: 600;
+		position: relative;
+		padding-bottom: 8px;
 	}
 
 	.tag {
@@ -369,6 +440,31 @@
 		margin: 5px;
 		color: #2979ff;
 		border: 1px solid #2979ff;
+	}
+
+	.Copyright {
+		background: #fff;
+		font-size: 12px;
+		font-weight: 300;
+		color:#555;
+		padding: 10px;
+		border-radius: 5px;
+		box-shadow: 0px 0px 2px #fff;
+	}
+
+	.Copyright-item {
+		padding: 2px;
+		border-radius: 5px;
+		background-color: #fff;
+		box-shadow: inset 1px 1px 2px #eee, inset -1px -1px 2px #eee;
+	}
+
+	.Copyright-box {
+		padding: 2px;
+		border-radius: 5px;
+		background-color: #fff;
+		box-shadow: 0px 0px 5px #eee;
+		margin-top: 20px;
 	}
 
 	.foot-content {

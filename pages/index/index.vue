@@ -50,9 +50,9 @@
 		</view>
 
 
-		<uni-notice-bar show-icon scrollable  background-color="#fff" color="#000" :text="appData.data.gonggao" />
+		<uni-notice-bar show-icon scrollable  background-color="#fff" color="#000" :text="appData.data.gonggao||'获取中...'" />
 
-<!-- 		<scroll-view scroll-x="true" style="width: 100%;white-space: nowrap;">
+		<!-- 		<scroll-view scroll-x="true" style="width: 100%;white-space: nowrap;">
 			<view class="sorts">
 				
 			</view>
@@ -105,7 +105,7 @@
 								<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
 							</view>
 							<view class="comments">
-								<uni-icons type="chat-filled" size="17"></uni-icons>{{item.comnum}}
+								{{getDateBeforeNow(item.date)}}
 							</view>
 						</view>
 					</view>
@@ -123,10 +123,16 @@
 								<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
 							</view>
 							<view class="comments">
-								<uni-icons type="chat-filled" size="17"></uni-icons>{{item.comnum}}
+								{{getDateBeforeNow(item.date)}}
 							</view>
 						</view>
 					</view>
+<!-- 					<view v-if="item.sortop == '已收录'||item.sortop == '提交链接'">
+						{{item.sortop}}
+					</view>
+					<view v-else>
+						{{getBaidu(index,item.url) || ''}}
+					</view> -->
 				</view>
 			</view>
 		</view>
@@ -137,7 +143,8 @@
 	import {
 		myRequest,
 		apiRequest,
-		htRequest
+		htRequest,
+		get
 	} from '@/api.js';
 	import set from '@/setting.js';
 	export default {
@@ -148,7 +155,7 @@
 				$req_time: '',
 				$sign: '',
 				page: 1,
-				shoulu: "",
+				shoulu: '',
 				description: '',
 				di: false,
 				backTopValue: false,
@@ -189,7 +196,6 @@
 		mounted() {},
 		onLoad() {
 			this.blog(1);
-			this.getSorts();
 			this.getData();
 		},
 		onShow() {
@@ -267,6 +273,12 @@
 					data:res.data
 				})
 			},
+			async getBaidu(u){
+				const res = await get({
+					url:'http://data.zz.baidu.com/urls?site='+u+'&token=GUCdGsUGTM0wkGnH',                     
+				})
+				
+			},
 			change(index,id) {
 				uni.navigateTo({
 					url:"../sort-info/sort-info?id="+id
@@ -309,6 +321,38 @@
 					return false;
 				}
 			},
+			getDateBeforeNow(stringTime) {
+			  stringTime = new Date(stringTime.replace(/-/g, '/'))
+			  // 统一单位换算
+			  var minute = 1000 * 60;
+			  var hour = minute * 60;
+			  var day = hour * 24;
+			  var week = day * 7;
+			  var month = day * 30;
+			  var year = month * 12;
+			  var time1 = new Date().getTime();
+			  var time2 = new Date(stringTime).getTime();
+			  var time = time1 - time2;
+			  var result = null;
+			  if (time < 0) {
+			      result = stringTime;
+			  } else if (time / year >= 1) {
+			      result = parseInt(time / year) + "年前";
+			  } else if (time / month >= 1) {
+			      result = parseInt(time / month) + "月前";
+			  } else if (time / week >= 1) {
+			      result = parseInt(time / week) + "周前";
+			  } else if (time / day >= 1) {
+			      result = parseInt(time / day) + "天前";
+			  } else if (time / hour >= 1) {
+			      result = parseInt(time / hour) + "小时前";
+			  } else if (time / minute >= 1) {
+			      result = parseInt(time / minute) + "分钟前";
+			  } else {
+			      result = "刚刚";
+			  }
+			  return result;
+			},
 			toInfo(e, u) {
 				uni.navigateTo({
 					url: '/pages/blog-info/blog-info?id=' + e + "&url=" + encodeURIComponent(u)
@@ -316,7 +360,7 @@
 			},
 			search(res) {
 				uni.navigateTo({
-					url: "../search/search?search=" + res.value
+					url: "/pages/search/search?search=" + res.value
 				})
 			},
 			messageToggle(type) {
@@ -356,13 +400,6 @@
 				})
 				this.blogAll = [...this.blogAll, ...res.data.data.articles]
 			},
-			async getSorts() {
-				const res = await myRequest({
-					url: '/?rest-api=sort_list',
-					method: 'GET',
-				})
-				this.blogSorts = res.data.data.sorts
-			}
 		}
 	}
 </script>
@@ -444,12 +481,15 @@
 	}
 
 
+	
 	.right {
 		display: flex;
 		justify-content: space-around;
 		padding: 5px;
-		width: 50%;
+		width: 60%;
 		opacity: 0.5;
+		font-size: 13px;
+		align-items: center;
 		border-bottom: 1px dotted #eee;
 	}
 
@@ -464,7 +504,7 @@
 	.list-items {
 		display: flex;
 		height: 100px;
-		margin: 10px;
+		margin: 10px 10px 0px 10px;
 		padding: 10px;
 		background-color: #fff;
 		box-shadow: #ddd 1px 1px 30px;

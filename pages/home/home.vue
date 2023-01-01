@@ -1,24 +1,15 @@
 <template>
 	<view class="centent" v-if="appData.code== '200'">
 		<view class="banner-box">
-			<view class="box-img">
-				<image class="me-img" :src="avatarUrl" mode=""></image>
-			</view>
-			<!-- #ifdef MP-WEIXIN ||MP-QQ -->
-			<view class="me" @click="loginqw()">
-				{{nickName}}
-			</view>
-			<!-- #endif -->
-			<!-- #ifdef MP-BAIDU || APP-PLUS||H5 -->
-			<view class="me" @click="login()">
-				{{nickName}}
-			</view>
-			<!-- #endif -->
+			
 		</view>
 		<view class="bannertm">
 			<view v-for="i in opacity" :style="i" class="tm"></view>
 		</view>
 		<view class="homelist">
+			<view class="box-img">
+				<images src="../../static/logo.png"></images>
+			</view>
 			<button open-type="openSetting" class="homelist-item" @click="go('setting')">
 				<image class="homelist-img" src="../../static/home/xitongshezhi.png"></image>
 				<view style="font-size: 12px;font-weight: 200;">程序设置</view>
@@ -106,7 +97,7 @@
 				shoulu: '',
 				sogo: '',
 				height: '0%',
-				avatarUrl: '../../static/logo.png',
+				avatarUrl: 'http://cdn.hkiii.cn//img/_2022/06/30/12/54/49/747/6483441/7812966043841394587',
 				nickName: "点击登录",
 				homelist: [
 					{
@@ -311,7 +302,28 @@
 
 <style>
 	@import "../../uni.css";
-
+	.box-img {
+		width: 80px;
+		height: 80px;
+		margin: auto;
+		background:#fff;
+		border-radius: 50%;
+		box-shadow:inset 0px 0px 5px #666;
+		position: absolute;
+		top:70px;
+		z-index: 99;
+	}
+	.box-img image{
+		width: 100%;
+		height: 100%;
+	}
+	
+/* 	.me-img {
+		border-radius: 50%;
+		background-color: #fff;
+		border: 2px #eee solid;
+		box-shadow:inset 0px 0px 5px #eee;
+	} */
 	page {
 		font-size: 16px;
 	}

@@ -15,17 +15,6 @@
 	height: 1px;
 }
 
-.box-img {
-	width: 60px;
-	margin: auto;
-}
-
-.me-img {
-	width: 60px;
-	height: 60px;
-	border-radius: 50%;
-	margin: 10px auto;
-}
 
 .me {
 	text-align: center;
@@ -44,6 +33,7 @@
 	width: 100%;
 	margin-top: -35px;
 	z-index: 1;
+	position: relative;
 }
 
 .content {

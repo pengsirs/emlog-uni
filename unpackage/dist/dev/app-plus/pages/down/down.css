@@ -5,59 +5,68 @@
   -webkit-margin-after: 1em;
           margin-block-end: 1em;
 }
+[data-v-8845ff2f] .rich-h1,[data-v-8845ff2f] .rich-h2,[data-v-8845ff2f] .rich-h3,[data-v-8845ff2f] .rich-h4,[data-v-8845ff2f] .rich-h5,[data-v-8845ff2f] .rich-h6{
+  position: relative;
+  padding-bottom: 8px;
+}
+[data-v-8845ff2f] .rich-h1:before,[data-v-8845ff2f] .rich-h2:before,[data-v-8845ff2f] .rich-h3:before,[data-v-8845ff2f] .rich-h4:before,[data-v-8845ff2f] .rich-h5:before,[data-v-8845ff2f] .rich-h6:before{
+  width: 40px;
+  height: 3px;
+  position: absolute;
+  content: '';
+  top: auto;
+  left: 0;
+  bottom: 3px;
+  border-radius: 3px;
+  transition: 4s;
+}
 [data-v-8845ff2f] .rich-h1{
-	  font-size:20px;
-	  margin:10px 0px;
+  font-size:20px;
+  margin:10px 0px;
 }
 [data-v-8845ff2f] .rich-h1:before{
-	  content:"#";
-	  color:green;
+  background-image:linear-gradient(to right ,green,rgb(4, 46, 4));
+  box-shadow: 1px 1px 3px -1px green;
 }
 [data-v-8845ff2f] .rich-h2{
-	  font-size:19px;
-	  margin:10px 0px;
+  font-size:19px;
+  margin:10px 0px;
 }
 [data-v-8845ff2f] .rich-h2:before{
-	  content:"#";
-	  color:#f17c67;
+  background-image:linear-gradient(to right ,#f17c67,#971903);
+  box-shadow: 1px 1px 3px -1px #f17c67;
 }
 [data-v-8845ff2f] .rich-h3{
-	  font-size:18px;
-	  margin:10px 0px;
+  font-size:18px;
+  margin:10px 0px;
 }
 [data-v-8845ff2f] .rich-h3:before{
-	  content:"#";
-	  color:#495a80;
+  background-image:linear-gradient(to right ,#495a80,#022c85);
+  box-shadow: 1px 1px 3px -1px #495a80;
 }
 [data-v-8845ff2f] .rich-h4{
-	  font-size:17px;
-	  margin:10px 0px;
+  font-size:17px;
+  margin:10px 0px;
 }
 [data-v-8845ff2f] .rich-h4:before{
-	  content:"#";
-	  color:#e9f01d;
+  background-image:linear-gradient(to right ,#e9f01d,#686b03);
+  box-shadow: 1px 1px 3px -1px #e9f01d;
 }
 [data-v-8845ff2f] .rich-h5{
-	  font-size:16px;
-	  margin:10px 0px;
+  font-size:16px;
+  margin:10px 0px;
 }
 [data-v-8845ff2f] .rich-h5:before{
-	  content:"#";
-	  color:#801818;
+  background-image:linear-gradient(to right ,#7c3a3a,#801818);
+  box-shadow: 1px 1px 3px -1px #801818;
 }
 [data-v-8845ff2f] .rich-h6{
-	  font-size:15px;
-	  margin:10px 0px;
+  font-size:15px;
+  margin:10px 0px;
 }
 [data-v-8845ff2f] .rich-h6:before{
-	  content:"#";
-	  color:#483c32;
-}
-[data-v-8845ff2f] .rich-img {
-	 border-radius: 5px;
-}
-[data-v-8845ff2f] .rich-a{
-	  display:none!important;
+  background-image:linear-gradient(to right ,#967a63,#483c32);
+  box-shadow: 1px 1px 3px -1px #483c32;
 }
 [data-v-8845ff2f] .aaa{
 	  color:green;

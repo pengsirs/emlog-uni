@@ -53,6 +53,20 @@ export const apiRequest = (options) => {
 	})
 };
 
+export const get = (options) => {
+	return new Promise((resolve, reject) => {
+		uni.request({
+			url: options.url,
+			header: options.header,
+			method: 'get', 
+			data: options.data || {}, 
+			success: (res) => {
+				resolve(res);
+			}
+		});
+	})
+};
+
 export const htRequest = (options) => {
 	return new Promise((resolve, reject) => {
 		uni.request({

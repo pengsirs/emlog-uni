@@ -1,119 +1,259 @@
 <template>
-	<view class="searchTop">
-		<uni-search-bar placeholder="请输入要搜索的内容"  v-model="value" cancelButton="none" bgColor="#eee" @confirm="search"/>
-	</view>
-	<view class="content-item">
-		
-		
-		<view v-for="(item,index) in dataa" :key="index">
-		
-		
-			<uni-card :title="item.title" :sub-title="item.date" :extra="item.sort_name" :cover="cover" @click="toInfo(item.id)" v-if="item.cover!=''">
-			    <image slot='cover' style="width: 100%;" :src="item.cover"></image>
-					<view class="list-flex">
-						<view class="list-item">
-							作者:{{item.author_name}}
+	<view>
+		<view class="container">
+
+			<view class="uni-padding-wrap uni-common-mt">
+				<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" />
+			</view>
+			
+			<view class="tui-searchbox">
+				<view class="tui-search-input">
+					<icon type="search" :size="13" color="#333"></icon>
+					<input confirm-type="search" placeholder="大家都在搜：Brief" :focus="true" auto-focus
+						placeholder-class="tui-input-plholder" class="tui-input" :value="key" @input="bindinput"
+						@confirm="setKey(key)" />
+					<icon type="clear" :size="13" color="#ccc" @click="setKey('')" v-if="key"></icon>
+				</view>
+				<view class="tui-cancle" @click="setKey(key)">搜索</view>
+			</view>
+
+			<view class="tui-search-history" v-if="history.length>0 && !key">
+				<view class="tui-history-header">
+					<view class="tui-search-title">大家都在搜</view>
+				</view>
+				<view class="tui-history-content">
+					<block :key="index" v-for="item in history">
+						<view class="hot" @click="setKey(item)" margin="0 24rpx 24rpx 0">{{ item }}</view>
+					</block>
+				</view>
+			</view>
+			<view v-if="key">
+				<view class="tui-header">
+					<view class="tui-header-left tui-noboredr">搜索: “{{ key }}”的结果</view>
+				</view>
+				<view class="tui-result-box" v-if="searchList">
+					<view :key="index" v-for="item in searchList">
+						<view v-if="getimg(item.description) || item.cover" class="list-items"
+							@click="toInfo(item.id,item.url)">
+							<view class="img-box">
+								<image @error="imageError($event, index)" class="lists-img"
+									:src="item.cover||getimg(item.description)" mode="scaleToFill"></image>
+							</view>
+							<view class="list-box">
+								<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}
+								</view>
+								<text class="desc">{{delHtmlTag(item.description)}}</text>
+								<view class="many">
+									<view class="sort">{{item.sort_name}}</view>
+									<view class="right">
+										<view class="read">
+											<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
+										</view>
+										<view class="comments">
+											{{getDateBeforeNow(item.date)}}
+										</view>
+									</view>
+								</view>
+							</view>
 						</view>
-						<view class="list-item">
-							阅读{{item.views}}
-						</view>
-						<view class="list-item">
-							评论{{item.comnum}}
+
+						<view v-if="!getimg(item.description) && item.cover == ''" class="list-items"
+							@click="toInfo(item.id,item.url)">
+							<view class="list-box-null">
+								<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}
+								</view>
+								<text class="desc">{{delHtmlTag(item.description)}}</text>
+								<view class="many">
+									<view class="sort">{{item.sort_name}}</view>
+									<view class="right">
+										<view class="read">
+											<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
+										</view>
+										<view class="comments">
+											{{getDateBeforeNow(item.date)}}
+										</view>
+									</view>
+								</view>
+							</view>
 						</view>
 					</view>
-			</uni-card>
-		
-		
-		
-			<uni-section type="line" v-if="item.cover==''">
-				<uni-card :title="item.title" :sub-title="item.date" :extra="item.sort_name" :thumbnail="item.cover"
-					@click="toInfo(item.id)">
-					<view class="list-flex">
-						<view class="list-item">
-							作者:{{item.author_name}}
-						</view>
-						<view class="list-item">
-							阅读{{item.views}}
-						</view>
-						<view class="list-item">
-							评论{{item.comnum}}
-						</view>
-					</view>
-				</uni-card>
-			</uni-section>
+				</view>
+				<view v-else style="margin-top: 100px">
+					<over></over>
+				</view>
+			</view>
 		</view>
-		
-		
-		
 	</view>
 </template>
 
 <script>
+	// pages/search.js
 	import {
-		myRequest
+		myRequest,
+		apiRequest,
+		htRequest,
+		get
 	} from '@/api.js';
+	import set from '@/setting.js';
+	var app = getApp();
 	export default {
 		data() {
 			return {
-				value:'',
-				dataa:'没有搜索到哦！'
+				current: 0,
+				history: ['Brief', 'Emlog', '小程序', 'bug修复', '前端', '跨域', '游戏', 'PHP', 'VUE', '爬虫', 'JAVA'],
+				key: '',
+				items: ['文章搜索', '标签搜索'],
+				showActionSheet: false,
+				searchList: [],
+				isend: false
+			};
+		}
+		/**
+		 * 生命周期函数--监听页面加载
+		 */
+		,
+		onLoad: function(options) {
+			this.key = options.keyword
+			if (options.keyword) {
+				this.getData();
 			}
 		},
-		onLoad(options){
-			this.value = options.search
-			if(options.tag == 'tag'){
-				this.blog(options.search,'tag')
-			}else{
-				this.blog(options.search,'keyword')
-			}
-			console.log(111)
-		},
+		/**
+		 * 生命周期函数--监听页面初次渲染完成
+		 */
+		onReady: function() {},
+		/**
+		 * 生命周期函数--监听页面显示
+		 */
+		onShow: function() {},
+		/**
+		 * 生命周期函数--监听页面隐藏
+		 */
+		onHide: function() {},
+		/**
+		 * 生命周期函数--监听页面卸载
+		 */
+		onUnload: function() {},
+		/**
+		 * 页面相关事件处理函数--监听用户下拉动作
+		 */
+		onPullDownRefresh: function() {},
+		/**
+		 * 页面上拉触底事件的处理函数
+		 */
+		onReachBottom: function() {},
+		/**
+		 * 用户点击右上角分享
+		 */
+		onShareAppMessage: function() {},
 		methods: {
-			search(res){
-				this.blog(res.value)
+			onClickItem(e) {
+				if (this.current !== e.currentIndex) {
+					this.current = e.currentIndex
+				}
 			},
-			toInfo(e) {
-				uni.navigateTo({
-					url: '/pages/blog-info/blog-info?id=' + e
-				})
-			},
-			async blog(keyword,tag) {
-				console.log(keyword)
-				if(tag == 'tag'){
-					var data={
-						tag: keyword
+			async getData() {
+				if (this.key) {
+					var that = this;
+					var data = {
+						keyword: that.key
 					}
-				}else if(tag == 'keyword'){
-					var data={
-						keyword: keyword
+					const res = await myRequest({
+						url: '/?rest-api=article_list',
+						method: 'GET',
+						data: data
+					})
+					if (res.data.data.articles == '') {
+						this.isend = true
+						// that.getData('tag');
+					} else {
+						this.searchList = res.data.data.articles
 					}
 				}
-				const res = await myRequest({
-					url: '/?rest-api=article_list',
-					method: 'GET',
-					data: data
-				})
-					this.dataa = res.data.data.articles
-				console.log(this.dataa)
-			}
-		},
-	}
-</script>
+			},
 
+			toInfo(id, url) {
+				uni.navigateTo({
+					url: '/pages/blog-info/blog-info?id=' + id + '&url=' + encodeURIComponent(url)
+				});
+			},
+
+			bindinput(e) {
+				this.key = e.detail.value
+				this.getData();
+			},
+
+			setKey(key) {
+				this.searchList = ''
+				this.key = key
+				this.getData();
+			},
+
+			selectResult: function(e) {
+				var gid = e.detail.item.value;
+				uni.navigateTo({
+					url: '../blog-info/blog-info?gid=' + gid
+				});
+			},
+			delHtmlTag(str) {
+				var reg = RegExp('<.*?>+|\n|\r', "ig");
+				var result = str.replace(reg, '');
+				return result;
+			},
+			imageError(e, index) {
+				this.dataa[index]['cover'] =
+					'http://cdn.hkiii.cn//img/_2022/06/29/01/38/12/502/6483441/11289324486965076622'
+			},
+			getimg(str) {
+				var reg = RegExp(/<img.+?src=('|")?([^'"]+)('|")?(?:\s+|>|\/>)/, "gim");
+				var srcReg = /<img.+?src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+				var result = str.match(srcReg);
+				if (result != null) {
+					return result[1];
+				} else {
+					return false;
+				}
+			},
+			getDateBeforeNow(stringTime) {
+				stringTime = new Date(stringTime.replace(/-/g, '/'))
+				// 统一单位换算
+				var minute = 1000 * 60;
+				var hour = minute * 60;
+				var day = hour * 24;
+				var week = day * 7;
+				var month = day * 30;
+				var year = month * 12;
+				var time1 = new Date().getTime();
+				var time2 = new Date(stringTime).getTime();
+				var time = time1 - time2;
+				var result = null;
+				if (time < 0) {
+					result = stringTime;
+				} else if (time / year >= 1) {
+					result = parseInt(time / year) + "年前";
+				} else if (time / month >= 1) {
+					result = parseInt(time / month) + "月前";
+				} else if (time / week >= 1) {
+					result = parseInt(time / week) + "周前";
+				} else if (time / day >= 1) {
+					result = parseInt(time / day) + "天前";
+				} else if (time / hour >= 1) {
+					result = parseInt(time / hour) + "小时前";
+				} else if (time / minute >= 1) {
+					result = parseInt(time / minute) + "分钟前";
+				} else {
+					result = "刚刚";
+				}
+				return result;
+			},
+		}
+	};
+</script>
 <style>
-		@import "../../uni.css";
-		.searchTop{
-			position: fixed;
-			top: 0px;
-			width: 100%;
-			z-index: 2;
-			background-color: #fff;
-			box-shadow: #eee 1px 1px 10px;
-		}
-		.content-item{
-			margin-top: 60px;
-		}
-		page{
-			font-size: 16px;
-		}
+	@import url("search.css");
+
+	.uni-common-mt {
+		width: 50%;
+		margin: 10px auto;
+	}
 </style>

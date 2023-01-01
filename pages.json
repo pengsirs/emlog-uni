@@ -24,6 +24,13 @@
 			}
 		},
 		{
+			"path": "pages/sorts/sorts",
+			"style": {
+				"navigationBarTitleText": "分类",
+				"navigationBarBackgroundColor": "#F17C67"
+			}
+		},
+		{
 			"path": "pages/about/about",
 			"style": {
 				"navigationBarTitleText": "关于我们",
@@ -80,6 +87,13 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"null": "@/components/null/null",
+			"over": "@/components/over/over"
+		}
+	},
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#3cc51f",
@@ -92,15 +106,25 @@
 				"text": "首页"
 			},
 			{
-				"pagePath": "pages/xia-editor/xia-editor",
+				"pagePath": "pages/sorts/sorts",
 				"iconPath": "./static/tabbar/love.png",
 				"selectedIconPath": "./static/tabbar/love-active.png",
+				"text": "分类"
+			},{
+				"pagePath": "pages/xia-editor/xia-editor",
+				"iconPath": "./static/tabbar/fabu.png",
+				"selectedIconPath": "./static/tabbar/fabu-active.png",
 				"text": "发布"
+			},{
+				"pagePath": "pages/search/search",
+				"iconPath": "./static/tabbar/search.png",
+				"selectedIconPath": "./static/tabbar/search-active.png",
+				"text": "搜索"
 			},
 			{
 				"pagePath": "pages/home/home",
-				"iconPath": "./static/tabbar/home.png",
-				"selectedIconPath": "./static/tabbar/home-active.png",
+				"iconPath": "./static/tabbar/user.png",
+				"selectedIconPath": "./static/tabbar/user-active.png",
 				"text": "我的"
 			}
 		]

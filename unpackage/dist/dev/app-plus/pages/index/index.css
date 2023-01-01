@@ -995,16 +995,6 @@
 .tm {
 	height: 1px;
 }
-.box-img {
-	width: 60px;
-	margin: auto;
-}
-.me-img {
-	width: 60px;
-	height: 60px;
-	border-radius: 50%;
-	margin: 10px auto;
-}
 .me {
 	text-align: center;
 	font-weight: 800;
@@ -1020,6 +1010,7 @@
 	width: 100%;
 	margin-top: -35px;
 	z-index: 1;
+	position: relative;
 }
 .content {
 	position: relative;
@@ -1132,8 +1123,10 @@ body {
   display: flex;
   justify-content: space-around;
   padding: 5px;
-  width: 50%;
+  width: 60%;
   opacity: 0.5;
+  font-size: 13px;
+  align-items: center;
   border-bottom: 1px dotted #eee;
 }
 .views {
@@ -1145,7 +1138,7 @@ body {
 .list-items {
   display: flex;
   height: 100px;
-  margin: 10px;
+  margin: 10px 10px 0px 10px;
   padding: 10px;
   background-color: #fff;
   box-shadow: #ddd 1px 1px 30px;
