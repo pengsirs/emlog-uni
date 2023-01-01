@@ -3,7 +3,6 @@ page {
 	color: #333;
 	background: #fff;
 }
-
 .container {
 	padding: 0 30rpx 30rpx 30rpx;
 	box-sizing: border-box;
@@ -20,7 +19,7 @@ page {
 }
 .hot{
 	padding: 5px 10px;
-	background: #ddd;
+	background: #eee;
 	border-radius: 20px;
 	margin-right: 5px;
 	margin-bottom: 5px;
@@ -33,7 +32,7 @@ page {
 	border-radius: 35rpx;
 	padding: 0 30rpx;
 	box-sizing: border-box;
-	background: #ddd;
+	background: #eee;
 	display: flex;
 	align-items: center;
 	flex-wrap: nowrap;
@@ -112,35 +111,6 @@ page {
 	padding: 28rpx 0;
 }
 
-page {
-	font-size: 16px;
-	background-color: #f2f2f2;
-}
-/* 自定义底部切换圆点 */
-.swiper-custom {
-}
-
-.swiper-wrap {
-    position: relative;
-}
-
-.swiper-img {
-    width: 98%;
-    height: 98%;
-	margin: 1%;
-	border-radius: 5px;
-}
-.wrap .smt-card-area {
-    margin: 25.36rpx 0 72.46rpx;
-    background: #fff;
-}
-.wrap{
-	width:98%;
-   margin:auto;
-   padding-bottom: 5px;
-   margin-bottom: 5px;
-   box-shadow:0px 0px 5px #eee;
-}
 smt-icon{
 	margin-right: 5px;
   }
@@ -355,7 +325,7 @@ smt-icon{
 .list-items {
 	display: flex;
 	height: 100px;
-	margin: 10px 10px 0px 10px;
+	margin: 10px -10px 0px -10px;
 	padding: 10px;
 	background-color: #fff;
 	box-shadow: #ddd 1px 1px 30px;

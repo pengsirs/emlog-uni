@@ -260,8 +260,8 @@
 				})
 			},
 			search(res) {
-				uni.switchTab({
-					url: "../search/search?tag=tag&search=" + res
+				uni.reLaunch({
+					url: "../search/search?tag=1&keyword=" + res
 				})
 			},
 			async blog(e) {

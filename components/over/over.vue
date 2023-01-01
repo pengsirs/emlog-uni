@@ -1,5 +1,5 @@
 <template>
-    <view class="container">
+    <view class="toot-box">
         <view class="root">
             <image style="width: 60%; margin: auto" src="../../static/null.png" mode="widthFix" />
             <view style="margin: 10px; font-weight: 800">搜索结果：空</view>

@@ -1223,7 +1223,7 @@ if (uni.restoreGlobal) {
     const reg2 = /^[0-9]*$/g;
     return typeof val === "number" || reg2.test(val) ? val + "px" : val;
   };
-  const _sfc_main$t = {
+  const _sfc_main$s = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -1267,14 +1267,14 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$s(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("text", {
       style: vue.normalizeStyle({ color: $props.color, "font-size": $options.iconSize }),
       class: vue.normalizeClass(["uni-icons", ["uniui-" + $props.type, $props.customPrefix, $props.customPrefix ? $props.type : ""]]),
       onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
     }, null, 6);
   }
-  const __easycom_1$4 = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$s], ["__scopeId", "data-v-d31e1c47"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_1$4 = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$r], ["__scopeId", "data-v-d31e1c47"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -1575,7 +1575,7 @@ if (uni.restoreGlobal) {
   const {
     t: t$2
   } = initVueI18n(messages$1);
-  const _sfc_main$s = {
+  const _sfc_main$r = {
     name: "UniSearchBar",
     emits: ["input", "update:modelValue", "clear", "cancel", "confirm", "blur", "focus"],
     props: {
@@ -1713,7 +1713,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$4);
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-searchbar" }, [
       vue.createElementVNode("view", {
@@ -1770,86 +1770,7 @@ if (uni.restoreGlobal) {
       }, vue.toDisplayString($options.cancelTextI18n), 1)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$r], ["__scopeId", "data-v-f07ef577"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
-  const _sfc_main$r = {
-    name: "UniDrawer",
-    components: {},
-    emits: ["change"],
-    props: {
-      mode: {
-        type: String,
-        default: ""
-      },
-      mask: {
-        type: Boolean,
-        default: true
-      },
-      maskClick: {
-        type: Boolean,
-        default: true
-      },
-      width: {
-        type: Number,
-        default: 220
-      }
-    },
-    data() {
-      return {
-        visibleSync: false,
-        showDrawer: false,
-        rightMode: false,
-        watchTimer: null,
-        drawerWidth: 220
-      };
-    },
-    created() {
-      this.drawerWidth = this.width;
-      this.rightMode = this.mode === "right";
-    },
-    methods: {
-      clear() {
-      },
-      close(type) {
-        if (type === "mask" && !this.maskClick || !this.visibleSync)
-          return;
-        this._change("showDrawer", "visibleSync", false);
-      },
-      open() {
-        if (this.visibleSync)
-          return;
-        this._change("visibleSync", "showDrawer", true);
-      },
-      _change(param1, param2, status) {
-        this[param1] = status;
-        if (this.watchTimer) {
-          clearTimeout(this.watchTimer);
-        }
-        this.watchTimer = setTimeout(() => {
-          this[param2] = status;
-          this.$emit("change", status);
-        }, status ? 50 : 300);
-      }
-    }
-  };
-  function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
-    return $data.visibleSync ? (vue.openBlock(), vue.createElementBlock("view", {
-      key: 0,
-      class: vue.normalizeClass([{ "uni-drawer--visible": $data.showDrawer }, "uni-drawer"]),
-      onTouchmove: _cache[1] || (_cache[1] = vue.withModifiers((...args) => $options.clear && $options.clear(...args), ["stop", "prevent"]))
-    }, [
-      vue.createElementVNode("view", {
-        class: vue.normalizeClass(["uni-drawer__mask", { "uni-drawer__mask--visible": $data.showDrawer && $props.mask }]),
-        onClick: _cache[0] || (_cache[0] = ($event) => $options.close("mask"))
-      }, null, 2),
-      vue.createElementVNode("view", {
-        class: vue.normalizeClass(["uni-drawer__content", { "uni-drawer--right": $data.rightMode, "uni-drawer--left": !$data.rightMode, "uni-drawer__content--visible": $data.showDrawer }]),
-        style: vue.normalizeStyle({ width: $data.drawerWidth + "px" })
-      }, [
-        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
-      ], 6)
-    ], 34)) : vue.createCommentVNode("v-if", true);
-  }
-  const __easycom_2$3 = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$q], ["__scopeId", "data-v-f7c32d22"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-drawer/components/uni-drawer/uni-drawer.vue"]]);
+  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$q], ["__scopeId", "data-v-f07ef577"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
   const _sfc_main$q = {
     name: "UniNoticeBar",
     emits: ["click", "getmore", "close"],
@@ -2030,7 +1951,7 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ], 4)) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__scopeId", "data-v-c3453ea3"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-notice-bar/components/uni-notice-bar/uni-notice-bar.vue"]]);
+  const __easycom_2$3 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__scopeId", "data-v-c3453ea3"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-notice-bar/components/uni-notice-bar/uni-notice-bar.vue"]]);
   const en = {
     "uni-load-more.contentdown": "Pull up to show more",
     "uni-load-more.contentrefresh": "loading...",
@@ -2273,15 +2194,23 @@ if (uni.restoreGlobal) {
         $sign: "",
         page: 1,
         shoulu: "",
-        description: "",
+        one: "",
+        two: "",
+        three: "",
+        four: "",
+        searchKey: "",
+        sorts: "",
+        count: "",
+        description: 0,
         di: false,
+        swiperCurrent: "",
         backTopValue: false,
         onRefresh: false,
         status: "loading",
         blogSorts: [],
         images: [
           "http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/167/6483441/13482961188039425428",
-          "http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/181/6483441/13482961192300838800",
+          "https://cdn.hkiii.cn/cg/11.jpeg",
           "http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/172/6483441/13482961190153354896"
         ],
         opacity: [
@@ -2336,6 +2265,7 @@ if (uni.restoreGlobal) {
     onLoad() {
       this.blog(1);
       this.getData();
+      this.getSorts();
     },
     onShow() {
       var that = this;
@@ -2364,7 +2294,7 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/index/index.vue:230", res.target);
+        formatAppLog("log", "at pages/index/index.vue:272", res.target);
       }
       return {
         title: "\u5206\u4EAB\u597D\u73A9\u7684\u7A0B\u5E8F\uFF01",
@@ -2373,6 +2303,53 @@ if (uni.restoreGlobal) {
       };
     },
     methods: {
+      async getSortsData(sort, sid) {
+        var that = this;
+        var res = await myRequest({
+          url: "/?rest-api=article_list",
+          method: "GET",
+          data: {
+            sort_id: sid,
+            count: 3
+          }
+        });
+        var array = [];
+        if (sort == 1) {
+          array.push(res.data.data.articles);
+          that.one = res.data.data.articles;
+        } else if (sort == 2) {
+          array.push(res.data.data.articles);
+          that.two = res.data.data.articles;
+        } else if (sort == 3) {
+          array.push(res.data.data.articles);
+          that.three = res.data.data.articles;
+        } else if (sort == 4) {
+          array.push(res.data.data.articles);
+          that.four = res.data.data.articles;
+        }
+        that.count = [...that.count, ...array];
+      },
+      async getSorts() {
+        var that = this;
+        var res = await myRequest({
+          url: "/?rest-api=sort_list",
+          method: "GET"
+        });
+        that.sorts = res.data.data.sorts;
+        for (var i = 0; i < 4; i++) {
+          this.getSortsData(i + 1, res.data.data.sorts[i].sid);
+        }
+      },
+      goToSorts() {
+        uni.switchTab({
+          url: "../sorts/sorts"
+        });
+      },
+      goSortLogs: function(sid, sortname) {
+        uni.navigateTo({
+          url: "../sort-info/sort-info?id=" + sid + "&sortname=" + sortname
+        });
+      },
       copyUrl() {
         uni.setClipboardData({
           data: this.appData.data.downurl,
@@ -2489,9 +2466,13 @@ if (uni.restoreGlobal) {
         });
       },
       search(res) {
-        uni.navigateTo({
-          url: "/pages/search/search?search=" + res.value
+        var value = res.value || this.searchKey;
+        uni.reLaunch({
+          url: "/pages/search/search?keyword=" + value
         });
+      },
+      swiperChangeCustom(e) {
+        this.swiperCurrent = e.detail.current;
       },
       messageToggle(type) {
         this.msgType = type;
@@ -2534,22 +2515,19 @@ if (uni.restoreGlobal) {
   function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$4);
     const _component_uni_search_bar = resolveEasycom(vue.resolveDynamicComponent("uni-search-bar"), __easycom_1$3);
-    const _component_uni_drawer = resolveEasycom(vue.resolveDynamicComponent("uni-drawer"), __easycom_2$3);
-    const _component_uni_notice_bar = resolveEasycom(vue.resolveDynamicComponent("uni-notice-bar"), __easycom_3$1);
+    const _component_uni_notice_bar = resolveEasycom(vue.resolveDynamicComponent("uni-notice-bar"), __easycom_2$3);
     const _component_uni_load_more = resolveEasycom(vue.resolveDynamicComponent("uni-load-more"), __easycom_1$2);
     return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
       vue.createElementVNode("view", { class: "header" }, [
         vue.createElementVNode("view", { class: "user" }, [
           vue.createElementVNode("view", {
-            class: "user-img",
             onClick: _cache[0] || (_cache[0] = ($event) => $options.showDrawer("showLeft"))
           }, [
-            vue.createCommentVNode(' <image class="user-img" src="../../static/logo.png" mode=""></image>'),
-            vue.createVNode(_component_uni_icons, {
-              type: "settings",
-              color: "#007AFF	",
-              size: "30"
-            })
+            vue.createElementVNode("image", {
+              class: "user-img",
+              src: $data.avatarUrl,
+              mode: ""
+            }, null, 8, ["src"])
           ])
         ]),
         vue.createElementVNode("view", { class: "secrch" }, [
@@ -2560,7 +2538,9 @@ if (uni.restoreGlobal) {
             bgColor: "#eee",
             onConfirm: $options.search,
             onCancel: $options.search,
-            "cancel-text": "\u641C\u7D22"
+            "cancel-text": "\u641C\u7D22",
+            modelValue: $data.searchKey,
+            "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.searchKey = $event)
           }, {
             default: vue.withCtx(() => [
               vue.createVNode(_component_uni_icons, {
@@ -2571,72 +2551,67 @@ if (uni.restoreGlobal) {
               })
             ]),
             _: 1
-          }, 8, ["onConfirm", "onCancel"])
+          }, 8, ["onConfirm", "onCancel", "modelValue"])
         ]),
-        vue.createElementVNode("view", { class: "user" }, [
-          vue.createElementVNode("view", null, [
-            vue.createElementVNode("image", {
-              onClick: _cache[1] || (_cache[1] = ($event) => $options.getUser()),
-              class: "user-img",
-              src: $data.avatarUrl,
-              mode: ""
-            }, null, 8, ["src"])
-          ])
+        vue.createElementVNode("view", {
+          class: "user",
+          onClick: _cache[2] || (_cache[2] = (...args) => $options.search && $options.search(...args))
+        }, [
+          vue.createElementVNode("view", {
+            class: "user-img",
+            style: { "line-height": "34px", "font-size": "14px", "font-weight": "800", "text-align": "center", "color": "#333" }
+          }, " \u641C\u7D22 ")
         ])
       ]),
-      vue.createElementVNode("view", { class: "example-body" }, [
-        vue.createVNode(_component_uni_drawer, {
-          ref: "showLeft",
-          mode: "left",
-          width: 320
-        }, {
-          default: vue.withCtx(() => [
-            vue.createElementVNode("scroll-view", {
-              style: { "height": "100%" },
-              "scroll-y": "true"
-            }, [
-              vue.createElementVNode("view", { class: "title" }, [
-                vue.createElementVNode("view", { class: "title-blue" }),
-                vue.createElementVNode("text", null, "\u6587\u7AE0\u5206\u7C7B")
-              ]),
-              vue.createElementVNode("view", { class: "sorts" }, [
-                (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.blogSorts, (s, index2) => {
-                  return vue.openBlock(), vue.createElementBlock("view", {
-                    key: index2,
-                    id: "tab" + index2,
-                    class: vue.normalizeClass(["scroll-view-item_H", $data.current == index2 ? "active" : ""]),
-                    onClick: ($event) => $options.change(index2, s.sid)
-                  }, [
-                    vue.createElementVNode("view", { class: "sort-item" }, vue.toDisplayString(s.sortname), 1)
-                  ], 10, ["id", "onClick"]);
-                }), 128))
-              ])
-            ])
-          ]),
-          _: 1
-        }, 512)
-      ]),
-      vue.createElementVNode("swiper", {
-        class: "swiper-box",
-        "indicator-dots": "true",
-        autoplay: "true",
-        circular: "true",
-        "previous-margin": "10px",
-        "next-margin": "10px"
-      }, [
-        (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.images, (item, index2) => {
-          return vue.openBlock(), vue.createElementBlock("swiper-item", { key: index2 }, [
-            vue.createElementVNode("view", {
-              class: vue.normalizeClass(["swiper-item", "swiper-item" + index2])
-            }, [
-              vue.createElementVNode("img", {
-                src: item,
-                class: "swiper-img",
-                srcset: ""
-              }, null, 8, ["src"])
-            ], 2)
-          ]);
-        }), 128))
+      vue.createCommentVNode(` 		<view class="example-body">
+			<uni-drawer ref="showLeft" mode="left" :width="320">
+				<scroll-view style="height: 100%;" scroll-y="true">
+					<view class="title">
+						<view class="title-blue"></view>
+						<text>\u6587\u7AE0\u5206\u7C7B</text>
+					</view>
+					<view class="sorts">
+						<view v-for="(s,index) in blogSorts" :key="index" :id="'tab'+index"
+							:class="['scroll-view-item_H',current==index?'active':'']" @click="change(index,s.sid)">
+							<view class="sort-item">{{s.sortname}}</view>
+						</view>
+					</view>
+				</scroll-view>
+			</uni-drawer>
+		</view> `),
+      vue.createElementVNode("view", { class: "swiper-wrap" }, [
+        vue.createElementVNode("swiper", {
+          class: "swiper-box",
+          "indicator-dots": false,
+          autoplay: "true",
+          circular: "true",
+          "previous-margin": "10px",
+          "next-margin": "10px",
+          vertical: _ctx.vertical,
+          current: $data.swiperCurrent,
+          onChange: _cache[3] || (_cache[3] = (...args) => $options.swiperChangeCustom && $options.swiperChangeCustom(...args))
+        }, [
+          (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.images, (item, index2) => {
+            return vue.openBlock(), vue.createElementBlock("swiper-item", { key: index2 }, [
+              vue.createElementVNode("view", {
+                class: vue.normalizeClass(["swiper-item", "swiper-item" + index2])
+              }, [
+                vue.createElementVNode("img", {
+                  src: item,
+                  class: "swiper-img",
+                  srcset: ""
+                }, null, 8, ["src"])
+              ], 2)
+            ]);
+          }), 128))
+        ], 40, ["vertical", "current"]),
+        vue.createElementVNode("view", { class: "dots" }, [
+          (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.images, (item, index2) => {
+            return vue.openBlock(), vue.createElementBlock("view", {
+              class: vue.normalizeClass("dot " + (index2 == $data.swiperCurrent ? " active" : ""))
+            }, null, 2);
+          }), 256))
+        ])
       ]),
       vue.createElementVNode("view", { class: "bannertm" }, [
         (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.opacity, (i) => {
@@ -2671,7 +2646,7 @@ if (uni.restoreGlobal) {
             vue.createElementVNode("view", { class: "sl-title" }, "\u590D\u5236Url")
           ]),
           vue.createVNode(_component_uni_icons, {
-            onClick: _cache[2] || (_cache[2] = ($event) => $options.copyUrl()),
+            onClick: _cache[4] || (_cache[4] = ($event) => $options.copyUrl()),
             color: "#aaa",
             type: "circle-filled",
             size: "20"
@@ -2690,17 +2665,82 @@ if (uni.restoreGlobal) {
             vue.createElementVNode("view", { class: "sl-title" }, "\u590D\u5236QQ")
           ]),
           vue.createVNode(_component_uni_icons, {
-            onClick: _cache[3] || (_cache[3] = ($event) => $options.copyQQ()),
+            onClick: _cache[5] || (_cache[5] = ($event) => $options.copyQQ()),
             color: "#aaa",
             type: "circle-filled",
             size: "20"
           })
         ])
       ])) : vue.createCommentVNode("v-if", true),
+      vue.createElementVNode("view", { class: "s-box" }, [
+        vue.createElementVNode("view", { class: "s-header" }, [
+          vue.createElementVNode("view", { class: "s-header-right" }, "\u4E13\u9898\u63A8\u8350"),
+          vue.createElementVNode("view", {
+            class: "s-header-left",
+            onClick: _cache[6] || (_cache[6] = (...args) => $options.goToSorts && $options.goToSorts(...args))
+          }, [
+            vue.createVNode(_component_uni_icons, {
+              color: "#333",
+              type: "bars",
+              size: "20px"
+            })
+          ])
+        ]),
+        vue.createElementVNode("view", { class: "card-area" }, [
+          vue.createElementVNode("scroll-view", {
+            class: "scroll-view",
+            "scroll-x": ""
+          }, [
+            (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.count, (item, index2) => {
+              return vue.openBlock(), vue.createElementBlock("view", { class: "s-item" }, [
+                vue.createElementVNode("view", {
+                  class: "s-title-header",
+                  onClick: ($event) => $options.goSortLogs($data.sorts[index2].sid, $data.sorts[index2].sortname)
+                }, [
+                  vue.createElementVNode("view", { class: "s-Ftitle" }, "\u6700\u65B0\u6587\u7AE0"),
+                  vue.createElementVNode("view", { class: "s-title" }, [
+                    vue.createElementVNode("view", null, vue.toDisplayString($data.sorts[index2].sortname), 1),
+                    vue.createVNode(_component_uni_icons, {
+                      color: "#fff",
+                      type: "forward",
+                      size: "12px"
+                    })
+                  ])
+                ], 8, ["onClick"]),
+                item == "" ? (vue.openBlock(), vue.createElementBlock("view", {
+                  key: 0,
+                  style: { "text-align": "center", "display": "flex", "flex-direction": "column" }
+                }, [
+                  vue.createElementVNode("image", {
+                    style: { "width": "80%", "margin": "auto" },
+                    src: "/static/null.png",
+                    mode: "widthFix"
+                  }),
+                  vue.createElementVNode("view", { style: { "margin": "10px" } }, "\u8FD8\u6CA1\u6709\u6587\u7AE0\u54E6\uFF01")
+                ])) : vue.createCommentVNode("v-if", true),
+                (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(item, (it, i) => {
+                  return vue.openBlock(), vue.createElementBlock("view", {
+                    class: "s-content",
+                    onClick: ($event) => $options.toInfo(it.id, it.url)
+                  }, [
+                    vue.createElementVNode("view", { class: "s-content-item" }, [
+                      vue.createElementVNode("image", {
+                        src: "../../static/ph" + (i + 1) + ".png"
+                      }, null, 8, ["src"]),
+                      vue.createElementVNode("view", { class: "ding" }, vue.toDisplayString(i + 1), 1),
+                      vue.createElementVNode("view", { class: "s-text" }, vue.toDisplayString(it.title), 1)
+                    ])
+                  ], 8, ["onClick"]);
+                }), 256))
+              ]);
+            }), 256))
+          ])
+        ])
+      ]),
       $data.backTopValue ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 1,
         class: "xiaohuojian",
-        onClick: _cache[4] || (_cache[4] = (...args) => $options.xhj && $options.xhj(...args))
+        onClick: _cache[7] || (_cache[7] = (...args) => $options.xhj && $options.xhj(...args))
       }, [
         vue.createElementVNode("image", {
           src: "/static/fanhuidingbu.png",
@@ -2772,13 +2812,7 @@ if (uni.restoreGlobal) {
                   ]),
                   vue.createElementVNode("view", { class: "comments" }, vue.toDisplayString($options.getDateBeforeNow(item.date)), 1)
                 ])
-              ]),
-              vue.createCommentVNode(` 					<view v-if="item.sortop == '\u5DF2\u6536\u5F55'||item.sortop == '\u63D0\u4EA4\u94FE\u63A5'">
-						{{item.sortop}}
-					</view>
-					<view v-else>
-						{{getBaidu(index,item.url) || ''}}
-					</view> `)
+              ])
             ])
           ], 8, ["onClick"])) : vue.createCommentVNode("v-if", true)
         ]);
@@ -8905,8 +8939,8 @@ if (uni.restoreGlobal) {
         });
       },
       search(res) {
-        uni.switchTab({
-          url: "../search/search?tag=tag&search=" + res
+        uni.reLaunch({
+          url: "../search/search?tag=1&keyword=" + res
         });
       },
       async blog(e) {
@@ -9207,7 +9241,7 @@ if (uni.restoreGlobal) {
       },
       goSortLogs: function(sid, sortname) {
         uni.navigateTo({
-          url: "../sort-info/sort-info?id=" + sid
+          url: "../sort-info/sort-info?id=" + sid + "&sortname=" + sortname
         });
       }
     }
@@ -9360,6 +9394,9 @@ if (uni.restoreGlobal) {
     },
     onLoad(option) {
       this.blog(1, option.id);
+      uni.setNavigationBarTitle({
+        title: option.sortname
+      });
     },
     onReachBottom() {
       this.page = this.page + 1;
@@ -9410,6 +9447,37 @@ if (uni.restoreGlobal) {
         } else {
           this.dataa = [...this.dataa, ...res.data.data.articles];
         }
+      },
+      getDateBeforeNow(stringTime) {
+        stringTime = new Date(stringTime.replace(/-/g, "/"));
+        var minute = 1e3 * 60;
+        var hour = minute * 60;
+        var day = hour * 24;
+        var week = day * 7;
+        var month = day * 30;
+        var year = month * 12;
+        var time1 = new Date().getTime();
+        var time2 = new Date(stringTime).getTime();
+        var time = time1 - time2;
+        var result = null;
+        if (time < 0) {
+          result = stringTime;
+        } else if (time / year >= 1) {
+          result = parseInt(time / year) + "\u5E74\u524D";
+        } else if (time / month >= 1) {
+          result = parseInt(time / month) + "\u6708\u524D";
+        } else if (time / week >= 1) {
+          result = parseInt(time / week) + "\u5468\u524D";
+        } else if (time / day >= 1) {
+          result = parseInt(time / day) + "\u5929\u524D";
+        } else if (time / hour >= 1) {
+          result = parseInt(time / hour) + "\u5C0F\u65F6\u524D";
+        } else if (time / minute >= 1) {
+          result = parseInt(time / minute) + "\u5206\u949F\u524D";
+        } else {
+          result = "\u521A\u521A";
+        }
+        return result;
       }
     }
   };
@@ -9451,13 +9519,7 @@ if (uni.restoreGlobal) {
                     }),
                     vue.createTextVNode(vue.toDisplayString(item.views), 1)
                   ]),
-                  vue.createElementVNode("view", { class: "comments" }, [
-                    vue.createVNode(_component_uni_icons, {
-                      type: "chat-filled",
-                      size: "17"
-                    }),
-                    vue.createTextVNode(vue.toDisplayString(item.comnum), 1)
-                  ])
+                  vue.createElementVNode("view", { class: "comments" }, vue.toDisplayString($options.getDateBeforeNow(item.date)), 1)
                 ])
               ])
             ])
@@ -9486,13 +9548,7 @@ if (uni.restoreGlobal) {
                     }),
                     vue.createTextVNode(vue.toDisplayString(item.views), 1)
                   ]),
-                  vue.createElementVNode("view", { class: "comments" }, [
-                    vue.createVNode(_component_uni_icons, {
-                      type: "chat-filled",
-                      size: "17"
-                    }),
-                    vue.createTextVNode(vue.toDisplayString(item.comnum), 1)
-                  ])
+                  vue.createElementVNode("view", { class: "comments" }, vue.toDisplayString($options.getDateBeforeNow(item.date)), 1)
                 ])
               ])
             ])
@@ -9984,7 +10040,7 @@ if (uni.restoreGlobal) {
     methods: {}
   };
   function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
+    return vue.openBlock(), vue.createElementBlock("view", { class: "toot-box" }, [
       vue.createElementVNode("view", { class: "root" }, [
         vue.createElementVNode("image", {
           style: { "width": "60%", "margin": "auto" },
@@ -10011,6 +10067,9 @@ if (uni.restoreGlobal) {
       };
     },
     onLoad: function(options) {
+      if (options.tag == "1") {
+        this.current = 1;
+      }
       this.key = options.keyword;
       if (options.keyword) {
         this.getData();
@@ -10034,14 +10093,21 @@ if (uni.restoreGlobal) {
       onClickItem(e) {
         if (this.current !== e.currentIndex) {
           this.current = e.currentIndex;
+          this.key = "";
         }
       },
       async getData() {
         if (this.key) {
           var that = this;
-          var data2 = {
-            keyword: that.key
-          };
+          if (this.current == 0) {
+            var data2 = {
+              keyword: that.key
+            };
+          } else {
+            var data2 = {
+              tag: that.key
+            };
+          }
           const res = await myRequest({
             url: "/?rest-api=article_list",
             method: "GET",
@@ -10129,14 +10195,15 @@ if (uni.restoreGlobal) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_1$4);
     const _component_over = resolveEasycom(vue.resolveDynamicComponent("over"), __easycom_2);
     return vue.openBlock(), vue.createElementBlock("view", null, [
+      vue.createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
+        vue.createVNode(_component_uni_segmented_control, {
+          current: $data.current,
+          values: $data.items,
+          onClickItem: $options.onClickItem,
+          styleType: "text"
+        }, null, 8, ["current", "values", "onClickItem"])
+      ]),
       vue.createElementVNode("view", { class: "container" }, [
-        vue.createElementVNode("view", { class: "uni-padding-wrap uni-common-mt" }, [
-          vue.createVNode(_component_uni_segmented_control, {
-            current: $data.current,
-            values: $data.items,
-            onClickItem: $options.onClickItem
-          }, null, 8, ["current", "values", "onClickItem"])
-        ]),
         vue.createElementVNode("view", { class: "tui-searchbox" }, [
           vue.createElementVNode("view", { class: "tui-search-input" }, [
             vue.createElementVNode("icon", {

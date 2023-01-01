@@ -10,18 +10,6 @@
      	{
      		"launchtype" : "local"
      	},
-     	"mp-baidu" : 
-     	{
-     		"launchtype" : "local"
-     	},
-     	"mp-qq" : 
-     	{
-     		"launchtype" : "local"
-     	},
-     	"mp-weixin" : 
-     	{
-     		"launchtype" : "local"
-     	},
      	"type" : "uniCloud"
      }
     ]

@@ -84,7 +84,7 @@ export default {
 
         goSortLogs: function (sid,sortname) {
             uni.navigateTo({
-            	url:"../sort-info/sort-info?id="+sid
+            	url:"../sort-info/sort-info?id="+sid+'&sortname='+sortname
             })
         }
     }

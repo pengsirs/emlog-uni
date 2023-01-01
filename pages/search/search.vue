@@ -1,11 +1,9 @@
 <template>
 	<view>
+		<view class="uni-padding-wrap uni-common-mt">
+			<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" styleType="text" />
+		</view>
 		<view class="container">
-
-			<view class="uni-padding-wrap uni-common-mt">
-				<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" />
-			</view>
-			
 			<view class="tui-searchbox">
 				<view class="tui-search-input">
 					<icon type="search" :size="13" color="#333"></icon>
@@ -105,7 +103,7 @@
 				items: ['文章搜索', '标签搜索'],
 				showActionSheet: false,
 				searchList: [],
-				isend: false
+				isend: false,
 			};
 		}
 		/**
@@ -113,6 +111,9 @@
 		 */
 		,
 		onLoad: function(options) {
+			if (options.tag == '1') {
+				this.current = 1
+			}
 			this.key = options.keyword
 			if (options.keyword) {
 				this.getData();
@@ -150,13 +151,20 @@
 			onClickItem(e) {
 				if (this.current !== e.currentIndex) {
 					this.current = e.currentIndex
+					this.key = ''
 				}
 			},
 			async getData() {
 				if (this.key) {
 					var that = this;
-					var data = {
-						keyword: that.key
+					if (this.current == 0) {
+						var data = {
+							keyword: that.key
+						}
+					} else {
+						var data = {
+							tag: that.key
+						}
 					}
 					const res = await myRequest({
 						url: '/?rest-api=article_list',
@@ -171,7 +179,6 @@
 					}
 				}
 			},
-
 			toInfo(id, url) {
 				uni.navigateTo({
 					url: '/pages/blog-info/blog-info?id=' + id + '&url=' + encodeURIComponent(url)
@@ -255,5 +262,14 @@
 	.uni-common-mt {
 		width: 50%;
 		margin: 10px auto;
+		box-shadow: 0px 0px 5px #ddd;
+		border-radius: 5px;
+		padding-bottom: 3px;
+		background-color: #fff;
+		position: fixed;
+		bottom: 0;
+		left: 50%;
+		margin-left: -25%;
+		z-index: 99;
 	}
 </style>
