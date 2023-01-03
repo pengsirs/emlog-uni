@@ -1,89 +1,95 @@
 <template>
 	<view>
-		<view class="uni-padding-wrap uni-common-mt">
-			<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" styleType="text" />
+		<view v-if="appData.state==200">
+			<view class="uni-padding-wrap uni-common-mt">
+				<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" styleType="text" />
+			</view>
+			<view class="container">
+				<view class="tui-searchbox">
+					<view class="tui-search-input">
+						<icon type="search" :size="15" color="#666"></icon>
+						<input confirm-type="search" placeholder="大家都在搜：Brief" :focus="false"
+							placeholder-class="tui-input-plholder" class="tui-input" :value="key" @input="bindinput"
+							@confirm="setKey(key)" />
+						<icon type="clear" :size="13" color="#ccc" @click="setKey('')" v-if="key"></icon>
+					</view>
+					<view class="tui-cancle" @click="setKey(key)">搜索</view>
+				</view>
+				<view class="tui-search-history" v-if="history.length>0 && !key">
+					<view class="tui-history-header">
+						<view class="tui-search-title">大家都在搜</view>
+					</view>
+					<view class="tui-history-content">
+						<block :key="index" v-for="item in history">
+							<view class="hot" @click="setKey(item)" margin="0 24rpx 24rpx 0">{{ item }}</view>
+						</block>
+					</view>
+				</view>
+				<view v-if="key">
+					<view class="tui-header">
+						<view class="tui-header-left tui-noboredr">
+							<text v-if="current==0" style="font-weight: 600;">文章</text>
+							<text v-else style="font-weight: 600;">标签</text>
+							搜索: <text style="color: red;">{{ key }}</text>的结果
+						</view>
+					</view>
+					<view class="tui-result-box" v-if="searchList">
+						<view :key="index" v-for="item in searchList">
+							<view v-if="getimg(item.description) || item.cover" class="list-items"
+								@click="toInfo(item.id,item.url)">
+								<view class="img-box">
+									<image @error="imageError($event, index)" class="lists-img"
+										:src="item.cover||getimg(item.description)" mode="scaleToFill"></image>
+								</view>
+								<view class="list-box">
+									<view class="list-title"><span v-if="item.top=='y'"
+											class="top">置顶</span>{{item.title}}
+									</view>
+									<text class="desc">{{delHtmlTag(item.description)}}</text>
+									<view class="many">
+										<view class="sort">{{item.sort_name}}</view>
+										<view class="right">
+											<view class="read">
+												<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
+											</view>
+											<view class="comments">
+												{{getDateBeforeNow(item.date)}}
+											</view>
+										</view>
+									</view>
+								</view>
+							</view>
+
+							<view v-if="!getimg(item.description) && item.cover == ''" class="list-items"
+								@click="toInfo(item.id,item.url)">
+								<view class="list-box-null">
+									<view class="list-title"><span v-if="item.top=='y'"
+											class="top">置顶</span>{{item.title}}
+									</view>
+									<text class="desc">{{delHtmlTag(item.description)}}</text>
+									<view class="many">
+										<view class="sort">{{item.sort_name}}</view>
+										<view class="right">
+											<view class="read">
+												<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
+											</view>
+											<view class="comments">
+												{{getDateBeforeNow(item.date)}}
+											</view>
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view v-else style="margin-top: 100px">
+						<over></over>
+					</view>
+				</view>
+			</view>
 		</view>
-		<view class="container">
-			<view class="tui-searchbox">
-				<view class="tui-search-input">
-					<icon type="search" :size="15" color="#666"></icon>
-					<input confirm-type="search" placeholder="大家都在搜：Brief" :focus="false"
-						placeholder-class="tui-input-plholder" class="tui-input" :value="key" @input="bindinput"
-						@confirm="setKey(key)" />
-					<icon type="clear" :size="13" color="#ccc" @click="setKey('')" v-if="key"></icon>
-				</view>
-				<view class="tui-cancle" @click="setKey(key)">搜索</view>
-			</view>
-
-			<view class="tui-search-history" v-if="history.length>0 && !key">
-				<view class="tui-history-header">
-					<view class="tui-search-title">大家都在搜</view>
-				</view>
-				<view class="tui-history-content">
-					<block :key="index" v-for="item in history">
-						<view class="hot" @click="setKey(item)" margin="0 24rpx 24rpx 0">{{ item }}</view>
-					</block>
-				</view>
-			</view>
-			<view v-if="key">
-				<view class="tui-header">
-					<view class="tui-header-left tui-noboredr">
-						<text v-if="current==0" style="font-weight: 600;">文章</text>
-						<text v-else style="font-weight: 600;">标签</text>
-						搜索: <text style="color: red;">{{ key }}</text>的结果
-					</view>
-				</view>
-				<view class="tui-result-box" v-if="searchList">
-					<view :key="index" v-for="item in searchList">
-						<view v-if="getimg(item.description) || item.cover" class="list-items"
-							@click="toInfo(item.id,item.url)">
-							<view class="img-box">
-								<image @error="imageError($event, index)" class="lists-img"
-									:src="item.cover||getimg(item.description)" mode="scaleToFill"></image>
-							</view>
-							<view class="list-box">
-								<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}
-								</view>
-								<text class="desc">{{delHtmlTag(item.description)}}</text>
-								<view class="many">
-									<view class="sort">{{item.sort_name}}</view>
-									<view class="right">
-										<view class="read">
-											<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
-										</view>
-										<view class="comments">
-											{{getDateBeforeNow(item.date)}}
-										</view>
-									</view>
-								</view>
-							</view>
-						</view>
-
-						<view v-if="!getimg(item.description) && item.cover == ''" class="list-items"
-							@click="toInfo(item.id,item.url)">
-							<view class="list-box-null">
-								<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}
-								</view>
-								<text class="desc">{{delHtmlTag(item.description)}}</text>
-								<view class="many">
-									<view class="sort">{{item.sort_name}}</view>
-									<view class="right">
-										<view class="read">
-											<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
-										</view>
-										<view class="comments">
-											{{getDateBeforeNow(item.date)}}
-										</view>
-									</view>
-								</view>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view v-else style="margin-top: 100px">
-					<over></over>
-				</view>
-			</view>
+		<view v-else>
+		    <null></null>
 		</view>
 	</view>
 </template>
@@ -108,6 +114,7 @@
 				showActionSheet: false,
 				searchList: [],
 				isend: false,
+				appData:'',
 			};
 		}
 		/**
@@ -119,7 +126,7 @@
 				this.current = 1
 			}
 			if (options.keyword != '') {
-			this.key = options.keyword
+				this.key = options.keyword
 				this.getData();
 			}
 		},
@@ -130,7 +137,15 @@
 		/**
 		 * 生命周期函数--监听页面显示
 		 */
-		onShow: function() {},
+		onShow: function() {
+			var that = this
+			uni.getStorage({
+				key: 'set_data',
+				success: function(res) {
+					that.appData = res.data
+				}
+			});
+		},
 		/**
 		 * 生命周期函数--监听页面隐藏
 		 */

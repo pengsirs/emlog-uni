@@ -97,7 +97,7 @@
 							<view style="font-size: 12px;font-weight: 400;">问题反馈</view>
 						</view>
 					</view>
-					<view class="homelist" v-if="appData.downurl != 1" @click="down()">
+					<view class="homelist" v-if="appData.auditing != 1" @click="down()">
 						<view class="homelist-item">
 							<uni-icons type="download-filled" color="#fec855" size="30"></uni-icons>
 							<view style="font-size: 12px;font-weight: 400;">附件下载</view>
@@ -158,12 +158,9 @@
 		onShow() {
 			var that = this
 			uni.getStorage({
-				key: 'appData',
+				key: 'set_data',
 				success: function(res) {
 					that.appData = res.data
-				},
-				fail() {
-					that.getData()
 				}
 			});
 		},
@@ -174,7 +171,7 @@
 			}
 			return {
 				title: this.data.title,
-				imageUrl: this.data.cover || this.appData.data.shareimg,
+				imageUrl: this.data.cover || this.appData.data.shareImg,
 				path: 'pages/blog-info/blog-info?id=' + this.data.id + "&url=" + this.url
 			}
 		},
@@ -203,7 +200,7 @@
 					title: this.data.title,
 					type: 0,
 					href: this.url,
-					imageUrl: this.data.cover || this.appData.data.shareimg,
+					imageUrl: this.data.cover || this.appData.data.shareImg,
 					summary: "我正在查看文章" + this.data.title + "，赶紧跟我一起来体验！",
 					success: function(res) {
 						console.log("success:" + JSON.stringify(res));
@@ -219,7 +216,7 @@
 					type: 0,
 					title: this.data.title,
 					summary: "我正在查看文章" + this.data.title + "，赶紧跟我一起来体验！",
-					imageUrl: this.data.cover || this.appData.data.shareimg,
+					imageUrl: this.data.cover || this.appData.data.shareImg,
 					href: this.url,
 					success: function(res) {
 						console.log("success:" + JSON.stringify(res));
@@ -242,21 +239,6 @@
 			down() {
 				uni.navigateTo({
 					url: "../down/down?id=" + this.id
-				})
-			},
-			async getData() {
-				var that = this;
-				const res = await htRequest({
-					url: "/index.php/index/index/get_miniapp",
-					method: 'POST',
-					data: {
-						setapi: set.setapi
-					},
-				})
-				this.appData = res.data
-				uni.setStorage({
-					key: 'appData',
-					data: res.data
 				})
 			},
 			search(res) {

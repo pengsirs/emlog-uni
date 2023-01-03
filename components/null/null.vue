@@ -3,7 +3,7 @@
         <view class="root">
             <image style="width: 60%; margin: auto" src="../../static/failed.png" mode="widthFix" />
             <view style="margin: 10px; font-weight: 800">加载失败</view>
-            <view style="margin: 10px; font-size: 13px; color: #666">请确认是否安装插件和打开Emlog后台的Api接口</view>
+            <view style="margin: 10px; font-size: 13px; color: #666">请确认是否安装插件或打开Emlog后台的Api接口</view>
         </view>
     </view>
 </template>

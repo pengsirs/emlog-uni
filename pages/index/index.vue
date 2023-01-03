@@ -1,165 +1,169 @@
 <template>
-	<view class="content" v-if="appData.state=200">
-		<view class="header">
-			<view class="user">
-				<view @click="showDrawer('showLeft')">
-					<image class="user-img" :src="avatarUrl" mode=""></image>
-				</view>
-			</view>
-			<view class="secrch">
-				<uni-search-bar :radius="5" placeholder="请输入要搜索的内容" cancelButton="none" bgColor="#eee" @confirm="search"
-					@cancel="search" cancel-text="搜索" v-model="searchKey">
-					<uni-icons slot="searchIcon" color="#999999" size="18" type="home" />
-				</uni-search-bar>
-			</view>
-			<view class="user" @click="search">
-				<view class="user-img"
-					style="line-height: 34px;font-size: 14px;font-weight: 800;text-align: center;color: #333;">
-					搜索
-				</view>
-			</view>
-		</view>
-		<view class="example-body">
-			<uni-drawer ref="showLeft" mode="left" :width="320">
-				<scroll-view style="height: 100%;" scroll-y="true">
-
-				</scroll-view>
-			</uni-drawer>
-		</view>
-		<view class="swiper-wrap">
-			<swiper class="swiper-box" :indicator-dots="false" autoplay="true" circular="true" previous-margin="10px"
-				next-margin="10px" :circular="true" :vertical="vertical" :current="swiperCurrent"
-				@change="swiperChangeCustom">
-				<swiper-item v-for="(item,index) in lunbo" :key="index" @click="toInfo(lbid[index])">
-					<view class="swiper-item" :class="'swiper-item' + index">
-						<img :src="item!='0'?item:'https://cdn.hkiii.cn/cg/' + (index+1) + '.jpeg'" class="swiper-img" srcset="">
+	<view>
+		<view class="content" v-if="appData.state==200">
+			<view class="header">
+				<view class="user">
+					<view @click="showDrawer('showLeft')">
+						<image class="user-img" :src="avatarUrl" mode=""></image>
 					</view>
-				</swiper-item>
-			</swiper>
-			<view class="dots">
-				<view v-for="(item, index) in images" :class="'dot ' + (index == swiperCurrent ? ' active' : '')">
 				</view>
-			</view>
-		</view>
-		<view class="bannertm">
-			<view v-for="i in opacity" :style="i" class="tm"></view>
-		</view>
-
-
-		<uni-notice-bar show-icon scrollable background-color="#fff" color="#000"
-			:text="appData.data.ridingLantern||'获取中...'" />
-		<view class="baidu-box" v-if="appData.data.auditing != 1">
-			<view class="baidu-item">
-				<view class="sl-icon">
-					<uni-icons color="#fd7081" type="star-filled" size="30"></uni-icons>
+				<view class="secrch">
+					<uni-search-bar :radius="5" placeholder="请输入要搜索的内容" cancelButton="none" bgColor="#eee"
+						@confirm="search" @cancel="search" cancel-text="搜索" v-model="searchKey">
+						<uni-icons slot="searchIcon" color="#999999" size="18" type="home" />
+					</uni-search-bar>
 				</view>
-				<view class="shoulu">
-					<view class="sl-content">App下载</view>
-					<view class="sl-title">复制Url</view>
-				</view>
-				<uni-icons @click="copyUrl()" color="#aaa" type="circle-filled" size="20"></uni-icons>
-			</view>
-			<view class="baidu-item">
-				<view class="sl-icon-sg">
-					<uni-icons color="#66ccff" type="qq" size="30"></uni-icons>
-				</view>
-				<view class="shoulu">
-					<view class="sl-content">联系客服</view>
-					<view class="sl-title">复制QQ</view>
-				</view>
-				<uni-icons @click="copyQQ()" color="#aaa" type="circle-filled" size="20"></uni-icons>
-			</view>
-		</view>
-
-		<view class="s-box">
-			<view class="s-header">
-				<view class="s-header-right">专题推荐</view>
-				<view class="s-header-left" @click="goToSorts">
-					<uni-icons color="#333" type="bars" size="20px"></uni-icons>
-				</view>
-			</view>
-			<view class="card-area">
-				<scroll-view class="scroll-view" scroll-x>
-					<view class="s-item" v-for="(item,index) in count">
-						<view class="s-title-header" @click="goSortLogs(sorts[index].sid,sorts[index].sortname)">
-							<view class="s-Ftitle">最新文章</view>
-							<view class="s-title">
-								<view>{{ sorts[index].sortname }}</view>
-								<uni-icons color="#fff" type="forward" size="12px"></uni-icons>
-							</view>
-						</view>
-
-						<view v-if="item == ''" style="text-align: center; display: flex; flex-direction: column">
-							<image style="width: 80%; margin: auto" src="../../static/null.png" mode="widthFix" />
-							<view style="margin: 10px">还没有文章哦！</view>
-						</view>
-
-						<view class="s-content" v-for="(it,i) in item" @click="toInfo(it.id,it.url)">
-							<view class="s-content-item">
-								<image :src="'../../static/ph' + (i + 1) + '.png'" />
-								<view class="ding">{{ i + 1 }}</view>
-								<view class="s-text">{{ it.title }}</view>
-							</view>
-						</view>
-					</view>
-				</scroll-view>
-				<view class="fugai"></view>
-			</view>
-		</view>
-
-
-		<view v-if="backTopValue" class="xiaohuojian" @click="xhj">
-			<image src="../../static/fanhuidingbu.png" mode=""></image>
-		</view>
-
-		<view v-for="(item,index) in dataa" :key="index">
-			<!-- #ifdef MP-QQ -->
-			<ad class="ad" v-if="index%5==0 && index!=0" unit-id="675f88c8665f60f30b71804e8ef4707a"></ad>
-			<!-- #endif -->
-			<view v-if="getimg(item.description) || item.cover" class="list-items" @click="toInfo(item.id,item.url)">
-				<view class="img-box">
-					<image @error="imageError($event, index)" class="lists-img"
-						:src="item.cover||getimg(item.description)" mode="scaleToFill"></image>
-				</view>
-				<view class="list-box">
-					<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}</view>
-					<text class="desc">{{delHtmlTag(item.description)}}</text>
-					<view class="many">
-						<view class="sort">{{item.sort_name}}</view>
-						<view class="right">
-							<view class="read">
-								<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
-							</view>
-							<view class="comments">
-								{{getDateBeforeNow(item.date)}}
-							</view>
-						</view>
+				<view class="user" @click="search">
+					<view class="user-img"
+						style="line-height: 34px;font-size: 14px;font-weight: 800;text-align: center;color: #333;">
+						搜索
 					</view>
 				</view>
 			</view>
-			<view v-if="!getimg(item.description) && item.cover == ''" class="list-items"
-				@click="toInfo(item.id,item.url)">
-				<view class="list-box-null">
-					<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}</view>
-					<text class="desc">{{delHtmlTag(item.description)}}</text>
-					<view class="many">
-						<view class="sort">{{item.sort_name}}</view>
-						<view class="right">
-							<view class="read">
-								<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
+			<view class="example-body">
+				<uni-drawer ref="showLeft" mode="left" :width="320">
+					<scroll-view style="height: 100%;" scroll-y="true">
+
+					</scroll-view>
+				</uni-drawer>
+			</view>
+			<view class="swiper-wrap">
+				<swiper class="swiper-box" :indicator-dots="false" autoplay="true" circular="true"
+					previous-margin="10px" next-margin="10px" :circular="true" :vertical="vertical"
+					:current="swiperCurrent" @change="swiperChangeCustom">
+					<swiper-item v-for="(item,index) in lunbo" :key="index" @click="toInfo(lbid[index])">
+						<view class="swiper-item" :class="'swiper-item' + index">
+							<img :src="item!='0'?item:'https://cdn.hkiii.cn/cg/' + (index+1) + '.jpeg'"
+								class="swiper-img" srcset="">
+						</view>
+					</swiper-item>
+				</swiper>
+				<view class="dots">
+					<view v-for="(item, index) in images" :class="'dot ' + (index == swiperCurrent ? ' active' : '')">
+					</view>
+				</view>
+			</view>
+			<view class="bannertm">
+				<view v-for="i in opacity" :style="i" class="tm"></view>
+			</view>
+
+
+			<uni-notice-bar show-icon scrollable background-color="#fff" color="#000"
+				:text="appData.data.ridingLantern||'获取中...'" />
+			<view class="baidu-box" v-if="appData.data.auditing != 1">
+				<view class="baidu-item">
+					<view class="sl-icon">
+						<uni-icons color="#fd7081" type="star-filled" size="30"></uni-icons>
+					</view>
+					<view class="shoulu">
+						<view class="sl-content">App下载</view>
+						<view class="sl-title">复制Url</view>
+					</view>
+					<uni-icons @click="copyUrl()" color="#aaa" type="circle-filled" size="20"></uni-icons>
+				</view>
+				<view class="baidu-item">
+					<view class="sl-icon-sg">
+						<uni-icons color="#66ccff" type="qq" size="30"></uni-icons>
+					</view>
+					<view class="shoulu">
+						<view class="sl-content">联系客服</view>
+						<view class="sl-title">复制QQ</view>
+					</view>
+					<uni-icons @click="copyQQ()" color="#aaa" type="circle-filled" size="20"></uni-icons>
+				</view>
+			</view>
+
+			<view class="s-box">
+				<view class="s-header">
+					<view class="s-header-right">专题推荐</view>
+					<view class="s-header-left" @click="goToSorts">
+						<uni-icons color="#333" type="bars" size="20px"></uni-icons>
+					</view>
+				</view>
+				<view class="card-area">
+					<scroll-view class="scroll-view" scroll-x>
+						<view class="s-item" v-for="(item,index) in count">
+							<view class="s-title-header" @click="goSortLogs(sorts[index].sid,sorts[index].sortname)">
+								<view class="s-Ftitle">最新文章</view>
+								<view class="s-title">
+									<view>{{ sorts[index].sortname }}</view>
+									<uni-icons color="#fff" type="forward" size="12px"></uni-icons>
+								</view>
 							</view>
-							<view class="comments">
-								{{getDateBeforeNow(item.date)}}
+
+							<view v-if="item == ''" style="text-align: center; display: flex; flex-direction: column">
+								<image style="width: 80%; margin: auto" src="../../static/null.png" mode="widthFix" />
+								<view style="margin: 10px">还没有文章哦！</view>
+							</view>
+
+							<view class="s-content" v-for="(it,i) in item" @click="toInfo(it.id,it.url)">
+								<view class="s-content-item">
+									<image :src="'../../static/ph' + (i + 1) + '.png'" />
+									<view class="ding">{{ i + 1 }}</view>
+									<view class="s-text">{{ it.title }}</view>
+								</view>
+							</view>
+						</view>
+					</scroll-view>
+					<view class="fugai"></view>
+				</view>
+			</view>
+
+
+			<view v-if="backTopValue" class="xiaohuojian" @click="xhj">
+				<image src="../../static/fanhuidingbu.png" mode=""></image>
+			</view>
+
+			<view v-for="(item,index) in dataa" :key="index">
+				<!-- #ifdef MP-QQ -->
+				<ad class="ad" v-if="index%5==0 && index!=0" unit-id="675f88c8665f60f30b71804e8ef4707a"></ad>
+				<!-- #endif -->
+				<view v-if="getimg(item.description) || item.cover" class="list-items"
+					@click="toInfo(item.id,item.url)">
+					<view class="img-box">
+						<image @error="imageError($event, index)" class="lists-img"
+							:src="item.cover||getimg(item.description)" mode="scaleToFill"></image>
+					</view>
+					<view class="list-box">
+						<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}</view>
+						<text class="desc">{{delHtmlTag(item.description)}}</text>
+						<view class="many">
+							<view class="sort">{{item.sort_name}}</view>
+							<view class="right">
+								<view class="read">
+									<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
+								</view>
+								<view class="comments">
+									{{getDateBeforeNow(item.date)}}
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
+				<view v-if="!getimg(item.description) && item.cover == ''" class="list-items"
+					@click="toInfo(item.id,item.url)">
+					<view class="list-box-null">
+						<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}</view>
+						<text class="desc">{{delHtmlTag(item.description)}}</text>
+						<view class="many">
+							<view class="sort">{{item.sort_name}}</view>
+							<view class="right">
+								<view class="read">
+									<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
+								</view>
+								<view class="comments">
+									{{getDateBeforeNow(item.date)}}
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
 			</view>
+			<uni-load-more color="#007AFF" :status="status" />
 		</view>
-		<uni-load-more color="#007AFF" :status="status" />
-	</view>
-	<view v-else style="margin-top: 100px">
-		<null></null>
+		<view v-else style="margin-top: 100px">
+			<null></null>
+		</view>
 	</view>
 </template>
 <script>
@@ -223,7 +227,7 @@
 				scrollinto: '',
 				appData: '',
 				lunbo: [],
-				lbid:[],
+				lbid: [],
 			}
 		},
 		mounted() {},
@@ -335,7 +339,7 @@
 			},
 			async getData() {
 				uni.showLoading({
-					title:"加载中",
+					title: "加载中",
 				})
 				var that = this;
 				const res = await htRequest({
@@ -345,11 +349,11 @@
 						get: 'getApi'
 					},
 				})
-				if(res.data.state > 0){
+				if (res.data.state > 0) {
 					uni.hideLoading();
-					if(this.lunbo.length<=0){
+					if (this.lunbo.length <= 0) {
 						uni.showLoading({
-							title:"处理中",
+							title: "处理中",
 						})
 						var lunbo = res.data.data.lbid.split(",")
 						for (var i = 0; i < lunbo.length; i++) {
@@ -357,14 +361,18 @@
 						}
 					}
 					this.appData = res.data
-				}else{
+					uni.setStorage({
+						key: 'set_data',
+						data: res.data
+					})
+				} else {
 					uni.hideLoading();
 					uni.showToast({
-						icon:'error',
-						title:"请检查插件是否安装"
+						icon: 'error',
+						title: "插件出错"
 					})
 				}
-				
+
 			},
 			async getBaidu(u) {
 				const res = await get({

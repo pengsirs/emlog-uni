@@ -16,7 +16,7 @@
 				<view style="font-size: 12px;font-weight: 200;">{{i.text}}</view>
 			</view>
 		</view>
-		<view class="baidu-box">
+		<view class="baidu-box" v-if="appData.data.tianapi != '0'">
 			<view class="baidu-item">
 				<view class="sl-icon">
 					<uni-icons color="#88CFFF" type="vip-filled" size="30"></uni-icons>
@@ -47,7 +47,7 @@
 				<view class="home-a-a">页面开发</view>
 				<view class="home-a-b">大彭Sir</view>
 			</view>
-			<view class="home-b" @click="about()">
+			<view class="home-b" @click="about(appData.data.about)">
 				<view class="home-a-a">关于我们</view>
 				<view class="home-a-c"><uni-icons type="info-filled" color="#666" size="20"></uni-icons></view>
 			</view>
@@ -115,21 +115,9 @@
 		onShow() {
 			var that = this
 			uni.getStorage({
-				key: 'appData',
+				key: 'set_data',
 				success: function(res) {
 					that.appData = res.data
-				}
-			});
-			uni.getStorage({
-				key: "avatarUrl",
-				success: function(res) {
-					that.avatarUrl = res.data
-				}
-			})
-			uni.getStorage({
-				key: "nickName",
-				success: function(res) {
-					that.nickName = res.data
 				}
 			});
 			uni.getStorage({
@@ -161,46 +149,7 @@
 					content:"本地数据请使用清除缓存功能！"
 				})
 			},
-			close() {
-				this.height = "height:0%";
-			},
-			login() {
-				this.height = "height:40%"
-			},
-			loginqw(){
-				// #ifdef MP-QQ
-				this.getUser('qq')
-				// #endif
-				// #ifdef  MP-WEIXIN
-				this.getUser('weixin')
-				// #endif
-			},
-			getUser(app) {
-				var that = this
-				uni.login({
-					provider: app,
-					success: function(loginRes) {
-						console.log(loginRes.authResult);
-						// 获取用户信息
-						uni.getUserInfo({
-							provider: app,
-							success: function(infoRes) {
-								that.avatarUrl = infoRes.userInfo.avatarUrl
-								that.nickName = infoRes.userInfo.nickName
-								uni.setStorage({
-									key: 'nickName',
-									data: infoRes.userInfo.nickName
-								})
-								uni.setStorage({
-									key: 'avatarUrl',
-									data: infoRes.userInfo.avatarUrl
-								})
-							}
-						});
-					}
-				});
-				this.height = "height:0%";
-			},
+
 			clear() {
 				uni.showModal({
 					title: "温馨提示",
@@ -221,7 +170,12 @@
 					}
 				})
 			},
-			about() {
+			about(e) {
+				uni.navigateTo({
+					url: '/pages/blog-info/blog-info?id=' + e
+				})
+			},
+			ys() {
 				uni.navigateTo({
 					url: "../about/about"
 				})
@@ -263,7 +217,7 @@
 			},
 			async baidu(u, k) {
 				var that = this;
-				var urlNoProtocol = that.appData.data.blogurl.replace(/^https?\:\/\//i, "");
+				var urlNoProtocol = set.url.replace(/^https?\:\/\//i, "");
 				const res = await apiRequest({
 					url: u,
 					method: 'GET',

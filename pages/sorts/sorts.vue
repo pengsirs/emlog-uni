@@ -9,7 +9,7 @@
             <image src="https://cdn.hkiii.cn/cg/10.jpeg" mode="aspectFill" />
         </view>
 
-        <view class="sorts" v-if="'adata'">
+        <view class="sorts" v-if="appData.state==200">
             <block :s-key="item.sid" v-for="item in sorts">
                     <view class="sortbox" @click="goSortLogs(item.sid,item.sortname)">
                         <view class="item-link">
@@ -41,7 +41,7 @@ export default {
         return {
             description: '',
             sorts: [],
-            adata: '',
+            appData: '',
             sid: '',
             sortname: ''
         };
@@ -70,16 +70,13 @@ export default {
 			this.sorts = res.data.data.sorts
 		},
         getSetting() {
-            var that = this;
-            uni.getStorage({
-                key: 'admin_data',
-
-                success(res) {
-                    that.setData({
-                        adata: res.data
-                    });
-                }
-            });
+			var that = this
+			uni.getStorage({
+				key: 'set_data',
+				success: function(res) {
+					that.appData = res.data
+				}
+			});
         },
 
         goSortLogs: function (sid,sortname) {

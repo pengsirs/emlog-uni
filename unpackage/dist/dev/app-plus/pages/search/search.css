@@ -610,6 +610,20 @@
 	justify-content: space-between;
 }
 
+.root[data-v-4968336f] {
+	border-radius: 10px;
+	box-shadow: inset 1px 1px 5px #ddd, inset -1px -1px 5px #ddd;
+	padding: 5px;
+	text-align: center;
+	width: 80%;
+	height: 50vh;
+	flex-direction: column;
+	margin: 0 auto;
+	margin-top: 25%;
+	display: flex;
+	justify-content: space-between;
+}
+
 /* pages/search.wxss */
 body {
 	color: #333;
