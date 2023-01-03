@@ -1,9 +1,9 @@
 <template>
-    <view class="container">
+    <view class="over">
         <view class="root">
             <image style="width: 60%; margin: auto" src="../../static/failed.png" mode="widthFix" />
-            <view style="margin: 10px; font-weight: 800">授权失败</view>
-            <view style="margin: 10px; font-size: 13px; color: #666">请查看setting.js里面的授权码是否正确，或联系QQ6283354授权。</view>
+            <view style="margin: 10px; font-weight: 800">加载失败</view>
+            <view style="margin: 10px; font-size: 13px; color: #666">请确认是否安装插件和打开Emlog后台的Api接口</view>
         </view>
     </view>
 </template>

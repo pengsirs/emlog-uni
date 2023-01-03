@@ -223,21 +223,18 @@
 	.list-items {
 		display: flex;
 		height: 100px;
-		margin: 10px;
+		margin: 10px 10px 0px 10px;
 		padding: 10px;
 		background-color: #fff;
 		box-shadow: #ddd 1px 1px 30px;
 		border-radius: 10px;
 		justify-content: space-between;
 	}
-
+	
 	.lists-img {
 		width: 100%;
 		height: 90px;
 		border-radius: 5px;
-		padding: 5px;
-		background-color: #fff;
-		box-shadow: inset 1px 1px 2px #ddd, inset -1px -1px 2px #ddd;
 	}
 
 	.list-box {
@@ -246,7 +243,7 @@
 		flex-direction: column;
 		justify-content: space-between;
 	}
-
+                    
 	.list-box-null {
 		width: 100%;
 		display: flex;
@@ -256,6 +253,10 @@
 
 	.img-box {
 		width: 30%;
+		border-radius: 5px;
+		padding: 3px;
+		background-color: #fff;
+		box-shadow: inset 1px 1px 2px #ddd, inset -1px -1px 2px #ddd;
 	}
 
 	.list-title {

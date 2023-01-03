@@ -40,7 +40,7 @@ export const myRequest = (options) => {
 export const apiRequest = (options) => {
 	return new Promise((resolve, reject) => {
 		uni.request({
-			url: set.tenapi + options.url,
+			url: 'https://api.tianapi.com' + options.url,
 			header: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
@@ -70,7 +70,7 @@ export const get = (options) => {
 export const htRequest = (options) => {
 	return new Promise((resolve, reject) => {
 		uni.request({
-			url: set.seturl + options.url,
+			url: set.url + options.url,
 			header: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},

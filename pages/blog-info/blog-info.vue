@@ -2,7 +2,7 @@
 	<uni-transition ref="ani" custom-class="transition" :mode-class="modeClass" :styles="styles" :show="show">
 		<view class="content-box">
 			<view class="title">
-				{{data.title||"标题加载中..."}}
+				{{data.title||"没有该文章或加载失败..."}}
 			</view>
 			<view class="xx">
 				<view class="author-name">
@@ -307,7 +307,7 @@
 	}
 </script>
 
-<style scoped>
+<style>
 	.htmlbtn{
 		width: 100%;
 		text-align: center;

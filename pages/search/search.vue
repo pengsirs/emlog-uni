@@ -6,8 +6,8 @@
 		<view class="container">
 			<view class="tui-searchbox">
 				<view class="tui-search-input">
-					<icon type="search" :size="13" color="#333"></icon>
-					<input confirm-type="search" placeholder="大家都在搜：Brief" :focus="true" auto-focus
+					<icon type="search" :size="15" color="#666"></icon>
+					<input confirm-type="search" placeholder="大家都在搜：Brief" :focus="false"
 						placeholder-class="tui-input-plholder" class="tui-input" :value="key" @input="bindinput"
 						@confirm="setKey(key)" />
 					<icon type="clear" :size="13" color="#ccc" @click="setKey('')" v-if="key"></icon>
@@ -27,7 +27,11 @@
 			</view>
 			<view v-if="key">
 				<view class="tui-header">
-					<view class="tui-header-left tui-noboredr">搜索: “{{ key }}”的结果</view>
+					<view class="tui-header-left tui-noboredr">
+						<text v-if="current==0" style="font-weight: 600;">文章</text>
+						<text v-else style="font-weight: 600;">标签</text>
+						搜索: <text style="color: red;">{{ key }}</text>的结果
+					</view>
 				</view>
 				<view class="tui-result-box" v-if="searchList">
 					<view :key="index" v-for="item in searchList">
@@ -114,8 +118,8 @@
 			if (options.tag == '1') {
 				this.current = 1
 			}
+			if (options.keyword != '') {
 			this.key = options.keyword
-			if (options.keyword) {
 				this.getData();
 			}
 		},

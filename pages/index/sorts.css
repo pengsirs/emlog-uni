@@ -1,6 +1,6 @@
 .s-box {
 	background-color: #fff;
-	box-shadow: 1px 1px 5px #eee;
+	box-shadow: 1px 1px 5px #ddd;
 	margin: 10px 10px 0px 10px;
 	border-radius: 10px;
 }
@@ -43,6 +43,7 @@
 	overflow: hidden;
 	border-radius: 5px;
 	background: #FFF;
+	position: relative;
 }
 
 .top-description {
@@ -57,6 +58,15 @@
 	padding: 5px 0px 5px 0px;
 }
 
+.fugai{
+	background: #fff;
+	position: absolute;
+	right: -1px;
+	top: 0;
+	height: 100%;
+	width: 6px;
+	border-radius: 0px 0px 10px 0px;
+}
 .s-item {
 	display: inline-block !important;
 	width: 47%;
@@ -66,7 +76,8 @@
 	background: #fff;
 	box-shadow: 0px 0px 5px #eee;
 }
-.s-header-left{
+
+.s-header-left {
 	margin-right: 5px;
 }
 
@@ -184,7 +195,7 @@
 	margin-top: 70px;
 }
 
-	.swiper-img {
-		width: 99%;
-		border-radius: 10px;
-	}
+.swiper-img {
+	width: 99%;
+	border-radius: 10px;
+}

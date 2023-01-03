@@ -18,7 +18,8 @@
         },
         /* 模块配置 */
         "modules" : {
-            "OAuth" : {}
+            "OAuth" : {},
+            "Share" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -49,7 +50,8 @@
             /* SDK配置 */
             "sdkConfigs" : {
                 "ad" : {},
-                "oauth" : {}
+                "oauth" : {},
+                "share" : {}
             },
             "icons" : {
                 "android" : {

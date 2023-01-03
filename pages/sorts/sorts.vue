@@ -4,7 +4,7 @@
         <view class="categorie-header">
             <view class="categorie-text">
                 <text>博客分类</text>
-                <view>大彭Sir-成就更好的我，遇上更好的你！</view>
+                <view>成就更好的我，遇上更好的你！</view>
             </view>
             <image src="https://cdn.hkiii.cn/cg/10.jpeg" mode="aspectFill" />
         </view>

@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "搜索",
-  "navigationBarBackgroundColor": "#F17C67",
-  "usingComponents": {
-    "uni-search-bar": "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar",
-    "uni-card": "../../uni_modules/uni-card/components/uni-card/uni-card"
-  }
-}

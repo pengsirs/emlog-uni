@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="content" v-if="appData.state=200">
 		<view class="header">
 			<view class="user">
 				<view @click="showDrawer('showLeft')">
@@ -13,40 +13,32 @@
 				</uni-search-bar>
 			</view>
 			<view class="user" @click="search">
-				<view class="user-img" style="line-height: 34px;font-size: 14px;font-weight: 800;text-align: center;color: #333;">
+				<view class="user-img"
+					style="line-height: 34px;font-size: 14px;font-weight: 800;text-align: center;color: #333;">
 					搜索
 				</view>
 			</view>
 		</view>
-
-		<!-- 		<view class="example-body">
+		<view class="example-body">
 			<uni-drawer ref="showLeft" mode="left" :width="320">
 				<scroll-view style="height: 100%;" scroll-y="true">
-					<view class="title">
-						<view class="title-blue"></view>
-						<text>文章分类</text>
-					</view>
-					<view class="sorts">
-						<view v-for="(s,index) in blogSorts" :key="index" :id="'tab'+index"
-							:class="['scroll-view-item_H',current==index?'active':'']" @click="change(index,s.sid)">
-							<view class="sort-item">{{s.sortname}}</view>
-						</view>
-					</view>
+
 				</scroll-view>
 			</uni-drawer>
-		</view> -->
+		</view>
 		<view class="swiper-wrap">
 			<swiper class="swiper-box" :indicator-dots="false" autoplay="true" circular="true" previous-margin="10px"
 				next-margin="10px" :circular="true" :vertical="vertical" :current="swiperCurrent"
 				@change="swiperChangeCustom">
-				<swiper-item v-for="(item, index) in images" :key="index">
+				<swiper-item v-for="(item,index) in lunbo" :key="index" @click="toInfo(lbid[index])">
 					<view class="swiper-item" :class="'swiper-item' + index">
-						<img :src="item" class="swiper-img" srcset="">
+						<img :src="item!='0'?item:'https://cdn.hkiii.cn/cg/' + (index+1) + '.jpeg'" class="swiper-img" srcset="">
 					</view>
 				</swiper-item>
 			</swiper>
 			<view class="dots">
-				<view v-for="(item, index) in images" :class="'dot ' + (index == swiperCurrent ? ' active' : '')"></view>
+				<view v-for="(item, index) in images" :class="'dot ' + (index == swiperCurrent ? ' active' : '')">
+				</view>
 			</view>
 		</view>
 		<view class="bannertm">
@@ -55,14 +47,8 @@
 
 
 		<uni-notice-bar show-icon scrollable background-color="#fff" color="#000"
-			:text="appData.data.gonggao||'获取中...'" />
-
-		<!-- 		<scroll-view scroll-x="true" style="width: 100%;white-space: nowrap;">
-			<view class="sorts">
-				
-			</view>
-		</scroll-view> -->
-		<view class="baidu-box" v-if="appData.downurl != 1">
+			:text="appData.data.ridingLantern||'获取中...'" />
+		<view class="baidu-box" v-if="appData.data.auditing != 1">
 			<view class="baidu-item">
 				<view class="sl-icon">
 					<uni-icons color="#fd7081" type="star-filled" size="30"></uni-icons>
@@ -117,6 +103,7 @@
 						</view>
 					</view>
 				</scroll-view>
+				<view class="fugai"></view>
 			</view>
 		</view>
 
@@ -171,6 +158,9 @@
 		</view>
 		<uni-load-more color="#007AFF" :status="status" />
 	</view>
+	<view v-else style="margin-top: 100px">
+		<null></null>
+	</view>
 </template>
 <script>
 	import {
@@ -193,7 +183,7 @@
 				two: '',
 				three: '',
 				four: '',
-				searchKey:'',
+				searchKey: '',
 				sorts: '',
 				count: '',
 				description: 0,
@@ -231,7 +221,9 @@
 				blogAll: '',
 				current: 0,
 				scrollinto: '',
-				appData: ''
+				appData: '',
+				lunbo: [],
+				lbid:[],
 			}
 		},
 		mounted() {},
@@ -240,15 +232,7 @@
 			this.getData();
 			this.getSorts();
 		},
-		onShow() {
-			var that = this;
-			uni.getStorage({
-				key: "avatarUrl",
-				success: function(res) {
-					that.avatarUrl = res.data
-				}
-			})
-		},
+		onShow() {},
 		onReachBottom() {
 			this.page = this.page + 1
 			this.blog(this.page);
@@ -257,7 +241,9 @@
 			this.dataa = ""
 			this.status = "loading"
 			this.page = 1
+			this.appData = ''
 			this.blog(this.page);
+			this.getData();
 			uni.stopPullDownRefresh();
 		},
 		// 监听滚动条坐标
@@ -273,7 +259,7 @@
 			}
 			return {
 				title: '分享好玩的程序！',
-				imageUrl: this.appData.data.shareimg,
+				imageUrl: this.appData.data.shareImg,
 				path: 'pages/index/index'
 			}
 		},
@@ -320,14 +306,14 @@
 					url: '../sorts/sorts'
 				});
 			},
-			goSortLogs: function (sid,sortname) {
-			    uni.navigateTo({
-			    	url:"../sort-info/sort-info?id="+sid+'&sortname='+sortname
-			    })
+			goSortLogs: function(sid, sortname) {
+				uni.navigateTo({
+					url: "../sort-info/sort-info?id=" + sid + '&sortname=' + sortname
+				})
 			},
 			copyUrl() {
 				uni.setClipboardData({
-					data: this.appData.data.downurl,
+					data: this.appData.data.appUrl,
 					success: function() {
 						uni.showModal({
 							title: "温馨提示",
@@ -348,19 +334,37 @@
 				});
 			},
 			async getData() {
+				uni.showLoading({
+					title:"加载中",
+				})
 				var that = this;
 				const res = await htRequest({
-					url: "/index.php/index/index/get_miniapp",
-					method: 'POST',
+					url: "/content/plugins/ApiSetting/api.php",
+					method: 'GET',
 					data: {
-						setapi: set.setapi
+						get: 'getApi'
 					},
 				})
-				this.appData = res.data
-				uni.setStorage({
-					key: 'appData',
-					data: res.data
-				})
+				if(res.data.state > 0){
+					uni.hideLoading();
+					if(this.lunbo.length<=0){
+						uni.showLoading({
+							title:"处理中",
+						})
+						var lunbo = res.data.data.lbid.split(",")
+						for (var i = 0; i < lunbo.length; i++) {
+							this.getInitImg(lunbo[i])
+						}
+					}
+					this.appData = res.data
+				}else{
+					uni.hideLoading();
+					uni.showToast({
+						icon:'error',
+						title:"请检查插件是否安装"
+					})
+				}
+				
 			},
 			async getBaidu(u) {
 				const res = await get({
@@ -400,13 +404,17 @@
 					'http://cdn.hkiii.cn//img/_2022/06/29/01/38/12/502/6483441/11289324486965076622'
 			},
 			getimg(str) {
-				var reg = RegExp(/<img.+?src=('|")?([^'"]+)('|")?(?:\s+|>|\/>)/, "gim");
-				var srcReg = /<img.+?src=[\'\"]?([^\'\"]*)[\'\"]?/i;
-				var result = str.match(srcReg);
-				if (result != null) {
-					return result[1];
+				if (str) {
+					var reg = RegExp(/<img.+?src=('|")?([^'"]+)('|")?(?:\s+|>|\/>)/, "gim");
+					var srcReg = /<img.+?src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+					var result = str.match(srcReg);
+					if (result != null) {
+						return result[1];
+					} else {
+						return false;
+					}
 				} else {
-					return false;
+					return '0'
 				}
 			},
 			getDateBeforeNow(stringTime) {
@@ -482,16 +490,19 @@
 				}
 
 			},
-			async blogall() {
+			async getInitImg(e) {
 				const res = await myRequest({
-					url: '/?rest-api=article_list',
+					url: '/?rest-api=article_detail',
 					method: 'GET',
 					data: {
-						count: 999
+						id: e
 					}
 				})
-				this.blogAll = [...this.blogAll, ...res.data.data.articles]
-			},
+				var a = this.getimg(res.data.data.article.content) || "0"
+				this.lbid.push(e)
+				this.lunbo.push(a)
+				uni.hideLoading();
+			}
 		}
 	}
 </script>
@@ -613,9 +624,6 @@
 		width: 100%;
 		height: 90px;
 		border-radius: 5px;
-		padding: 5px;
-		background-color: #fff;
-		box-shadow: inset 1px 1px 2px #ddd, inset -1px -1px 2px #ddd;
 	}
 
 	.list-box {
@@ -634,6 +642,10 @@
 
 	.img-box {
 		width: 30%;
+		border-radius: 5px;
+		padding: 3px;
+		background-color: #fff;
+		box-shadow: inset 1px 1px 2px #ddd, inset -1px -1px 2px #ddd;
 	}
 
 	.list-title {

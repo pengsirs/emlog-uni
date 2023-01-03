@@ -1,15 +1,12 @@
 <template>
-	<view class="centent" v-if="appData.code== '200'">
+	<view class="centent">
 		<view class="banner-box">
-			
-		</view>
-		<view class="bannertm">
-			<view v-for="i in opacity" :style="i" class="tm"></view>
+			<view class="box-img">
+				<image :src="avatarUrl"></image>
+			</view>
+			<view class="user-nick">您好，欢迎访问</view>
 		</view>
 		<view class="homelist">
-			<view class="box-img">
-				<images src="../../static/logo.png"></images>
-			</view>
 			<button open-type="openSetting" class="homelist-item" @click="go('setting')">
 				<image class="homelist-img" src="../../static/home/xitongshezhi.png"></image>
 				<view style="font-size: 12px;font-weight: 200;">程序设置</view>
@@ -50,37 +47,34 @@
 				<view class="home-a-a">页面开发</view>
 				<view class="home-a-b">大彭Sir</view>
 			</view>
-			<view class="home-a" @click="clear()">
-				<view class="home-a-a">清除缓存</view>
-				<view class="home-a-b">></view>
-			</view>
 			<view class="home-b" @click="about()">
 				<view class="home-a-a">关于我们</view>
-				<view class="home-a-c">></view>
+				<view class="home-a-c"><uni-icons type="info-filled" color="#666" size="20"></uni-icons></view>
+			</view>
+			<view class="home-b" @click="about()">
+				<view class="home-a-a">接口设置</view>
+				<view class="home-a-c"><uni-icons type="gear-filled" size="20" color="#666"></uni-icons></view>
 			</view>
 		</view>
-		<view class="login" :style="height">
-			<view class="close" @click="close()">
-				<view class="close-title">请选择登录方式</view>
-				<view class="close-btn">
-					<uni-icons type="closeempty" color="#fff" size="30"></uni-icons>
-				</view>
+		
+		<view class="home-item">
+			<view class="home-a">
+				<view class="home-a-a">应用更新</view>
+				<view class="home-a-b"><uni-icons type="cloud-upload-filled" size="20"></uni-icons></view>
 			</view>
-			<view class="login-content">
-				该功能仅获取您的微信/QQ头像，用于前端页面展示，本程序不会储存您的个人信息，请放心使用！
+			<view class="home-a" >
+				<view class="home-a-a">隐私协议</view>
+				<view class="home-a-b"><uni-icons type="map-filled" size="20"></uni-icons></view>
 			</view>
-			<view class="login-box">
-				<view class="wx" @click="getUser('weixin')">
-					<uni-icons type="weixin" color="#04BE02" size="16"></uni-icons>微信登录
-				</view>
-				<view class="qq" @click="getUser('qq')">
-					<uni-icons type="qq" color="#66ccff" size="16"></uni-icons>QQ登录
-				</view>
+			<view class="home-a" @click="clear()">
+				<view class="home-a-a">清除缓存</view>
+				<view class="home-a-b"><uni-icons type="refresh-filled" size="20"></uni-icons></view>
+			</view>
+			<view class="home-a" @click="edit()">
+				<view class="home-a-a">退出登录</view>
+				<view class="home-a-b"><uni-icons type="clear" size="20"></uni-icons></view>
 			</view>
 		</view>
-	</view>
-	<view class="centent" style="text-align: center;" v-if="appData.code== '201'">
-		账号未激活，请联系QQ6283354
 	</view>
 </template>
 
@@ -96,9 +90,7 @@
 			return {
 				shoulu: '',
 				sogo: '',
-				height: '0%',
 				avatarUrl: 'http://cdn.hkiii.cn//img/_2022/06/30/12/54/49/747/6483441/7812966043841394587',
-				nickName: "点击登录",
 				homelist: [
 					{
 						img: "../../static/home/bangzhuzhongxin.png",
@@ -107,8 +99,8 @@
 					},
 					{
 						img: "../../static/home/guanyuwomen.png",
-						text: "关于我们",
-						url: "../about/about"
+						text: "链接提交",
+						url: "../baidu/baidu"
 					},
 					{
 						img: "../../static/home/zhanghuguanli.png",
@@ -117,22 +109,6 @@
 					}
 				],
 				appData: [],
-				opacity: ["opacity:0.1;background:#fff;", "opacity:0.125;background:#fff;",
-					"opacity:0.15;background:#fff;", "opacity:0.175;background:#fff;", "opacity:0.2;background:#fff;",
-					"opacity:0.225;background:#fff;",
-					"opacity:0.25;background:#fff;", "opacity:0.275;background:#fff;", "opacity:0.3;background:#fff;",
-					"opacity:0.325;background:#fff;", "opacity:0.375;background:#fff;", "opacity:0.4;background:#fff;",
-					"opacity:0.425;background:#fff;", "opacity:0.45;background:#fff;",
-					"opacity:0.475;background:#fff;", "opacity:0.5;background:#fff;", "opacity:0.525;background:#fff;",
-					"opacity:0.55;background:#fff;",
-					"opacity:0.575;background:#fff;", "opacity:0.6;background:#fff;", "opacity:0.625;background:#fff;",
-					"opacity:0.65;background:#fff;", "opacity:0.675;background:#fff;", "opacity:0.7;background:#fff;",
-					"opacity:0.725;background:#fff;", "opacity:0.75;background:#fff;",
-					"opacity:0.775;background:#fff;", "opacity:0.8;background:#fff;", "opacity:0.825;background:#fff;",
-					"opacity:0.85;background:#fff;",
-					"opacity:0.875;background:#fff;", "opacity:0.9;background:#fff;", "opacity:0.925;background:#fff;",
-					"opacity:0.95;background:#fff;", "opacity:0.975;background:#fff;"
-				],
 			}
 		},
 		mounted() {},
@@ -179,6 +155,12 @@
 			this.height = "height:0%";
 		},
 		methods: {
+			edit(){
+				uni.showModal({
+					title:"退出成功",
+					content:"本地数据请使用清除缓存功能！"
+				})
+			},
 			close() {
 				this.height = "height:0%";
 			},
@@ -303,27 +285,25 @@
 <style>
 	@import "../../uni.css";
 	.box-img {
-		width: 80px;
-		height: 80px;
-		margin: auto;
+		width: 70px;
+		height: 70px;
 		background:#fff;
-		border-radius: 50%;
-		box-shadow:inset 0px 0px 5px #666;
-		position: absolute;
-		top:70px;
-		z-index: 99;
+		border-radius: 10px;
+		box-shadow:inset 0px 0px 5px #eee;
+		margin: 30px 0px 0px 30px;
+		overflow: hidden;
+		padding: 3px;
 	}
 	.box-img image{
 		width: 100%;
 		height: 100%;
+		border-radius: 10px;
 	}
-	
-/* 	.me-img {
-		border-radius: 50%;
-		background-color: #fff;
-		border: 2px #eee solid;
-		box-shadow:inset 0px 0px 5px #eee;
-	} */
+	.banner-box{
+		display: flex;
+		background: #F17C67;
+		border-radius: 0px 0px 30% 30%;
+	}
 	page {
 		font-size: 16px;
 	}
@@ -466,14 +446,15 @@ button::after{
 
 	.homelist {
 		margin: 10px;
-		margin-top: -25px;
+		margin-top: -60px;
 		background-color: #fff;
-		border-radius: 20px 20px 0px 0px;
+		border-radius: 20px;
 		display: flex;
 		height: 55px;
 		padding: 10px;
 		justify-content: space-around;
 		z-index: 2;
+		box-shadow: 0px 0px 5px #eee;
 	}
 
 	.home-item {
@@ -516,5 +497,53 @@ button::after{
 		font-weight: 100;
 		font-size: 17px;
 		line-height: 39rpx;
+	}
+	.user-nick{
+	    display: inline-block;
+	    vertical-align: middle;
+	    font-size: 20px;
+	    overflow: hidden;
+	    white-space: nowrap;
+	    text-overflow: ellipsis;
+	    margin-left:20px;
+		margin-top: 30px;
+	    font-weight:800;
+	    line-height: 70px;
+	    height: 70px;
+		color: #fff;
+	}
+	.user-nick-a{
+	    display: inline-block;
+	    vertical-align: middle;
+	    font-size: 20px;
+	    width: 200rpx;
+	    overflow: hidden;
+	    white-space: nowrap;
+	    text-overflow: ellipsis;
+	    font-weight:800;
+	    line-height: 70px;
+	    height: 70px;
+	}
+	.sorts{
+	    margin:50px 10px 0px 10px;
+	    background-color:#fff;
+	    padding:5px;
+	    font-weight:200;
+	    border-radius:10px 10px 0px 0px;
+	    border-bottom: 2px dotted #eeeeee;
+	    padding:10px 20px 10px 20px;
+	    overflow: hidden;
+	    white-space: nowrap;
+	    text-align:center;
+	}
+	.sorts-b{
+	    margin:0px 10px;
+	    background-color:#fff;
+	    padding:5px;
+	    font-weight:100;
+	    padding:10px 20px 10px 20px;
+	    font-size:15px;
+	    border-radius:0px 0px 10px 10px;
+	    margin-bottom:10px;
 	}
 </style>

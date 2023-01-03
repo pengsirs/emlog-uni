@@ -1,84 +1,111 @@
 <template>
-	<view class="container" v-if="flg">
-		<view class="page-body">
-			<view class='wrapper'>
-				<input class="inp-title" v-model="title" placeholder="文章标题" type="text" />
-				<view class='toolbar' @tap="format">
-					<view :class="formats.bold ? 'ql-active' : ''" class="iconfont icon-zitijiacu" data-name="bold">
-					</view>
-					<view :class="formats.italic ? 'ql-active' : ''" class="iconfont icon-zitixieti" data-name="italic">
-					</view>
-					<view :class="formats.underline ? 'ql-active' : ''" class="iconfont icon-zitixiahuaxian"
-						data-name="underline"></view>
-					<view :class="formats.strike ? 'ql-active' : ''" class="iconfont icon-zitishanchuxian"
-						data-name="strike"></view>
-					<view :class="formats.align === 'left' ? 'ql-active' : ''" class="iconfont icon-zuoduiqi"
-						data-name="align" data-value="left"></view>
-					<view :class="formats.align === 'center' ? 'ql-active' : ''" class="iconfont icon-juzhongduiqi"
-						data-name="align" data-value="center"></view>
-					<view :class="formats.align === 'right' ? 'ql-active' : ''" class="iconfont icon-youduiqi"
-						data-name="align" data-value="right"></view>
-					<!-- 有序和无序列表 -->
-					<view :class="formats.list === 'ordered' ? 'ql-active' : ''" class="iconfont icon-youxupailie"
-						data-name="list" data-value="ordered"></view>
-					<view :class="formats.list === 'bullet' ? 'ql-active' : ''" class="iconfont icon-wuxupailie"
-						data-name="list" data-value="bullet"></view>
-					<!-- 回退和快进 -->
-					<view class="iconfont icon-undo" @tap="undo"></view>
-					<view class="iconfont icon-redo" @tap="redo"></view>
-					<!-- 分割线 -->
-					<view class="iconfont icon-fengexian" @tap="insertDivider"></view>
-					<!-- 插入图片 -->
-					<view class="iconfont icon-charutupian" @tap="insertImage"></view>
-					<!-- <view class="iconfont icon-code" @tap="removeFormat">{{code}}</view> -->
-					<view class="iconfont icon--checklist" data-name="list" data-value="check"></view>
-					<!-- 标题 -->
-					<view :class="formats.header === 1 ? 'ql-active' : ''" class="iconfont icon-format-header-1"
-						data-name="header" :data-value="1"></view>
-					<view :class="formats.header === 2 ? 'ql-active' : ''" class="iconfont icon-format-header-2"
-						data-name="header" :data-value="2"></view>
-					<view :class="formats.header === 3 ? 'ql-active' : ''" class="iconfont icon-format-header-3"
-						data-name="header" :data-value="3"></view>
-				</view>
-
-				<editor @input="editText" id="editor" class="ql-container" :placeholder="placeholder" showImgSize
-					showImgToolbar showImgResize @statuschange="onStatusChange" :read-only="readOnly"
-					@ready="onEditorReady">
-				</editor>
-
-
-
-				<uni-collapse accordion v-model="accordionVal" @change="change">
-					<uni-collapse-item :show-animation="true" :open="true" title="文章描述">
-						<view class="content"> 
-						<uni-easyinput type="text" v-model="excerpt" placeholder="请输入文章描述,可留空" />
-							<!-- <uni-easyinput type="textarea" v-model="excerpt" placeholder="请输入文章描述,可留空"></uni-easyinput> -->
-						</view>
-					</uni-collapse-item>
-					<uni-collapse-item :show-animation="true" title="选择分类">
-						<view class="content">
-							<view class="uni-list">
-								<view class="uni-list-cell">
-									<view class="uni-list-cell-db">
-										<picker @change="bindPickerChange" :value="sort" :range="blogSortName">
-											<view class="uni-input">{{blogSorts[sort].sortname || "请选择分类"}}</view>
-										</picker>
-									</view>
-								</view>
-							</view>
-						</view>
-					</uni-collapse-item>
-					<uni-collapse-item :show-animation="true" title="文章标签">
-						<view class="content">
-							<uni-easyinput type="text" v-model="tags" placeholder="文章标签，多个半角逗号分隔，如：PHP,MySQL" />
-						</view>
-					</uni-collapse-item>
-				</uni-collapse>
-
-				<view class="fabu" @click="fabu()">发布</view>
-
-			</view>
+	<view class="container">
+		<view class="tab">
+			<view @click="swiperCurrent=0" :class="'tab1 ' + (0 == swiperCurrent ? ' active' : '')">编辑</view>
+			<view @click="swiperCurrent=1" :class="'tab2 ' + (1 == swiperCurrent ? ' active' : '')">文章</view>
+			<view @click="swiperCurrent=2" :class="'tab3 ' + (2 == swiperCurrent ? ' active' : '')">笔记</view>
 		</view>
+		<swiper class="swiper" :current="swiperCurrent" easing-function="easeInOutCubic"
+			:duration="500" @change="swiperChangeCustom">
+			<swiper-item>
+				<scroll-view :scroll-top="scrollTop" :scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
+					@scrolltolower="lower" @scroll="scroll">
+					00000000
+				</scroll-view>
+			</swiper-item>
+			<swiper-item>
+				<scroll-view :scroll-top="scrollTop" :scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
+					@scrolltolower="lower" @scroll="scroll">
+					<view class="page-body">
+						<view class='wrapper'>
+							<input class="inp-title" v-model="title" placeholder="文章标题" type="text" />
+							<view class='toolbar' @tap="format">
+								<view :class="formats.bold ? 'ql-active' : ''" class="iconfont icon-zitijiacu"
+									data-name="bold">
+								</view>
+								<view :class="formats.italic ? 'ql-active' : ''" class="iconfont icon-zitixieti"
+									data-name="italic">
+								</view>
+								<view :class="formats.underline ? 'ql-active' : ''" class="iconfont icon-zitixiahuaxian"
+									data-name="underline"></view>
+								<view :class="formats.strike ? 'ql-active' : ''" class="iconfont icon-zitishanchuxian"
+									data-name="strike"></view>
+								<view :class="formats.align === 'left' ? 'ql-active' : ''"
+									class="iconfont icon-zuoduiqi" data-name="align" data-value="left"></view>
+								<view :class="formats.align === 'center' ? 'ql-active' : ''"
+									class="iconfont icon-juzhongduiqi" data-name="align" data-value="center"></view>
+								<view :class="formats.align === 'right' ? 'ql-active' : ''"
+									class="iconfont icon-youduiqi" data-name="align" data-value="right"></view>
+								<!-- 有序和无序列表 -->
+								<view :class="formats.list === 'ordered' ? 'ql-active' : ''"
+									class="iconfont icon-youxupailie" data-name="list" data-value="ordered"></view>
+								<view :class="formats.list === 'bullet' ? 'ql-active' : ''"
+									class="iconfont icon-wuxupailie" data-name="list" data-value="bullet"></view>
+								<!-- 回退和快进 -->
+								<view class="iconfont icon-undo" @tap="undo"></view>
+								<view class="iconfont icon-redo" @tap="redo"></view>
+								<!-- 分割线 -->
+								<view class="iconfont icon-fengexian" @tap="insertDivider"></view>
+								<!-- 插入图片 -->
+								<view class="iconfont icon-charutupian" @tap="insertImage"></view>
+								<!-- <view class="iconfont icon-code" @tap="removeFormat">{{code}}</view> -->
+								<view class="iconfont icon--checklist" data-name="list" data-value="check"></view>
+								<!-- 标题 -->
+								<view :class="formats.header === 1 ? 'ql-active' : ''"
+									class="iconfont icon-format-header-1" data-name="header" :data-value="1"></view>
+								<view :class="formats.header === 2 ? 'ql-active' : ''"
+									class="iconfont icon-format-header-2" data-name="header" :data-value="2"></view>
+								<view :class="formats.header === 3 ? 'ql-active' : ''"
+									class="iconfont icon-format-header-3" data-name="header" :data-value="3"></view>
+							</view>
+				
+							<editor @input="editText" id="editor" class="ql-container" :placeholder="placeholder"
+								showImgSize showImgToolbar showImgResize @statuschange="onStatusChange"
+								:read-only="readOnly" @ready="onEditorReady">
+							</editor>
+							<uni-collapse accordion v-model="accordionVal" @change="change">
+								<uni-collapse-item :show-animation="true" :open="true" title="文章描述">
+									<view class="content">
+										<uni-easyinput type="text" v-model="excerpt" placeholder="请输入文章描述,可留空" />
+										<!-- <uni-easyinput type="textarea" v-model="excerpt" placeholder="请输入文章描述,可留空"></uni-easyinput> -->
+									</view>
+								</uni-collapse-item>
+								<uni-collapse-item :show-animation="true" title="选择分类">
+									<view class="content">
+										<view class="uni-list">
+											<view class="uni-list-cell">
+												<view class="uni-list-cell-db">
+													<picker @change="bindPickerChange" :value="sort"
+														:range="blogSortName">
+														<view class="uni-input">{{blogSorts[sort].sortname || "请选择分类"}}
+														</view>
+													</picker>
+												</view>
+											</view>
+										</view>
+									</view>
+								</uni-collapse-item>
+								<uni-collapse-item :show-animation="true" title="文章标签">
+									<view class="content">
+										<uni-easyinput type="text" v-model="tags"
+											placeholder="文章标签，多个半角逗号分隔，如：PHP,MySQL" />
+									</view>
+								</uni-collapse-item>
+							</uni-collapse>
+							<view class="fabu" @click="fabu()">发布文章</view>
+						</view>
+					</view>
+				</scroll-view>
+			</swiper-item>
+			<swiper-item>
+				<scroll-view :scroll-top="scrollTop" :scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
+					@scrolltolower="lower" @scroll="scroll">
+					<textarea  class="textarea uni-input" placeholder="开始写笔记吧!"/>
+					<view class="fabu" @click="fabubj()">发布笔记</view>
+				</scroll-view>
+			</swiper-item>
+		</swiper>
+
 	</view>
 
 	<view>
@@ -86,13 +113,6 @@
 		<uni-popup ref="message" type="message">
 			<uni-popup-message :type="msgType" :message="messageText" :duration="2000"></uni-popup-message>
 		</uni-popup>
-	</view>
-	<view v-if="!flg" class="content">
-		<view class="flg-title"></view>
-		<image class="flg-img" src="../../static/close.png" mode="aspectFill"></image>
-		<view class="flg-text">管理员信息验证失败！</view>
-		<view class="flg-cell">请联系管理员获得该权限！</view>
-		<button class="flg-btn" @click="setting()">管理员设置</button>
 	</view>
 </template>
 
@@ -126,8 +146,9 @@
 				cover: [],
 				flg: false,
 				tags: '',
-				sid:'1',
+				sid: '1',
 				blogSorts: [],
+				swiperCurrent:1,
 			}
 		},
 		created() {},
@@ -168,6 +189,9 @@
 			uni.stopPullDownRefresh();
 		},
 		methods: {
+			swiperChangeCustom(e) {
+				this.swiperCurrent = e.detail.current
+			},
 			setting() {
 				uni.navigateTo({
 					url: "../setting/admin"
@@ -221,7 +245,7 @@
 						title: '发布成功',
 					});
 					uni.reLaunch({
-						url:"../index/index"
+						url: "../index/index"
 					})
 				}
 				this.dataa = res.data
@@ -299,8 +323,8 @@
 							url: 'https://tp.hkiii.cn/index.php/index/index/img',
 							filePath: res.tempFilePaths[0],
 							name: 'file',
-							method:'POST',
-							fileType:"image",
+							method: 'POST',
+							fileType: "image",
 							formData: {
 								ak: that.appData.data.accessKey,
 								sk: that.appData.data.secretKey,
@@ -357,6 +381,47 @@
 	.uni-input {
 		text-align: center;
 	}
+	.tab{
+		box-shadow:inset 0px 0px 5px #ddd;
+		width: 95%;
+		height: 5vh;
+		margin: 2vh auto;
+		padding: 5px 0px;
+		border-radius: 10px;
+		display: flex;
+		justify-content: space-around;
+		line-height: 5vh;
+	}
+	.tab view{
+		width: 30%;
+		text-align: center;
+		box-shadow: 0px 0px 10px #ddd;
+		border-radius: 5px;
+	}
+	
+	.swiper {
+		width: 100%;
+		margin: auto;
+		height: 90vh;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+			}
+	.scroll-Y{
+		height: 95vh;
+		background-color: #fff;
+		box-shadow: 0px 0px 5px #ddd;
+		width: 95%;
+		margin: 10px auto 10px;
+		border-radius: 10px;
+		/* overflow: hidden; */
+	}
+	.textarea{
+		width: 90%;
+		margin:  10px auto 10px;
+	}
+	.page-body {
+	}
 
 	page {
 		margin: 0;
@@ -368,15 +433,19 @@
 		margin: 10px auto;
 		padding: 10px;
 		text-align: center;
-		background-color: #06c;
+		background-color: #38F;
 		border-radius: 5px;
 	}
 
-	.uni-input {
+	.uni-input,>>>.uni-easyinput input {
 		padding: 10px;
-		border: #eee 1px solid;
+		box-shadow:inset 0px 0px 5px #ddd;
+		border-radius: 5px;
+	border: 0!important;
 	}
-
+>>>.is-input-border{
+	border: 0!important;
+}
 	.flg-img {
 		width: 100%;
 		margin-top: 50px;
@@ -420,7 +489,7 @@
 	}
 
 	.toolbar {
-		border: 1upx #eee solid;
+		
 	}
 
 	.iconfont {
@@ -447,15 +516,22 @@
 		background: #fff;
 		font-size: 16px;
 		line-height: 1.5;
-		border: 1px #eee solid;
+		box-shadow:inset 0px 0px 5px #ddd;
+		border-radius: 5px;
 	}
 
 	.ql-active {
-		color: #06c;
+		color: #38F;
 	}
 
 	.inp-title {
-		border: 1px #eee solid;
+		box-shadow:inset 0px 0px 5px #ddd;
+		border-radius: 5px;
 		padding: 5px;
+	}
+	.active {
+		background: #38F;
+		box-shadow: 0px 0px 10px #38F!important;
+		transition: all 1s;
 	}
 </style>
