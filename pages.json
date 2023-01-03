@@ -92,6 +92,7 @@
 		"autoscan": true,
 		"custom": {
 			"null": "@/components/null/null",
+			"list": "@/components/list/list",
 			"over": "@/components/over/over"
 		}
 	},

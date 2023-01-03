@@ -10,7 +10,9 @@
 			<swiper-item>
 				<scroll-view :scroll-top="scrollTop" :scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
 					@scrolltolower="lower" @scroll="scroll">
-					00000000
+					<list @editBlog="editBlog" :List="list" xiangqing="编辑文章" desc="来自文章分类:"></list>
+					<view class="loadmany" @click="loadmany">---加载更多---</view>
+					<view style="height: 50px;"></view>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
@@ -19,6 +21,7 @@
 					<view class="page-body">
 						<view class='wrapper'>
 							<input class="inp-title" v-model="title" placeholder="文章标题" type="text" />
+							
 							<view class='toolbar' @tap="format">
 								<view :class="formats.bold ? 'ql-active' : ''" class="iconfont icon-zitijiacu"
 									data-name="bold">
@@ -57,12 +60,16 @@
 									class="iconfont icon-format-header-2" data-name="header" :data-value="2"></view>
 								<view :class="formats.header === 3 ? 'ql-active' : ''"
 									class="iconfont icon-format-header-3" data-name="header" :data-value="3"></view>
+									<view class="iconfont icon-shanchu" @click="reblogid"></view>
 							</view>
 				
 							<editor @input="editText" id="editor" class="ql-container" :placeholder="placeholder"
 								showImgSize showImgToolbar showImgResize @statuschange="onStatusChange"
 								:read-only="readOnly" @ready="onEditorReady">
 							</editor>
+							
+							<view @click="reblogid" v-if="blogid" style="margin: 10px 0px;color:brown;">当前编辑的文章ID是{{blogid}}，点击清空重新编写</view>
+							
 							<uni-collapse accordion v-model="accordionVal" @change="change">
 								<uni-collapse-item :show-animation="true" :open="true" title="文章描述">
 									<view class="content">
@@ -92,7 +99,9 @@
 									</view>
 								</uni-collapse-item>
 							</uni-collapse>
-							<view class="fabu" @click="fabu()">发布文章</view>
+							<view v-if="!blogid" class="fabu" @click="fabu()">发布文章</view>
+							<view v-if="blogid" class="fabu" @click="bianji()">保存编辑</view>
+							<view style="height: 50px;"></view>
 						</view>
 					</view>
 				</scroll-view>
@@ -143,10 +152,13 @@
 				title: '',
 				excerpt: '',
 				sort: 1,
+				page: 1,
+				list:'',
 				cover: [],
 				flg: false,
 				tags: '',
 				sid: '1',
+				blogid:'',
 				blogSorts: [],
 				swiperCurrent:1,
 			}
@@ -189,6 +201,30 @@
 			uni.stopPullDownRefresh();
 		},
 		methods: {
+			editBlog(e){
+				this.swiperCurrent = 1;
+				this.blogid = e
+				this.getOne(e);
+			},
+			reblogid(){
+				this.title = ''
+				this.blogid = ''
+				this.clear();
+			},
+			async getOne(e) {
+				var arrays = this.arrays
+				const res = await myRequest({
+					url: '/?rest-api=article_detail',
+					method: 'GET',
+					data: {
+						id: e
+					}
+				})
+				this.title = res.data.data.article.title
+				this.editorCtx.setContents({
+					html: res.data.data.article.content
+				})
+			},
 			swiperChangeCustom(e) {
 				this.swiperCurrent = e.detail.current
 			},
@@ -223,7 +259,7 @@
 				var mm = time.getMinutes();
 				var ss = time.getSeconds();
 				var $req_time = String((time.getTime() / 1000).toFixed(0)); // unix时间戳, 单位秒
-				var md = $req_time + this.appData.data.apikey
+				var md = $req_time + '107570bc1b8e6b482055e01030a15685'
 				var $sign = md5(md); // MD5签名
 				const res = await myRequest({
 					url: '/?rest-api=article_post',
@@ -241,15 +277,64 @@
 					}
 				})
 				if (res.data.msg == "ok") {
-					uni.showToast({
+					uni.showModal({
 						title: '发布成功',
+						content:"大约30秒后刷新首页即可",
+						success() {
+							uni.reLaunch({
+								url: "../index/index"
+							})
+						}
 					});
-					uni.reLaunch({
-						url: "../index/index"
-					})
 				}
 				this.dataa = res.data
-				console.log(this.dataa)
+			},
+			async bianji() {
+				var id = this.blogid
+				var title = this.$data.title
+				var htmls = this.$data.htmls
+				var excerpt = this.$data.excerpt
+				var tags = this.$data.tags
+				var sid = this.$data.sid
+				var cover = this.$data.cover
+				var time = new Date();
+				var YYYY = time.getFullYear();
+				var MM = time.getMonth() + 1;
+				var DD = time.getDate();
+				var hh = time.getHours();
+				var mm = time.getMinutes();
+				var ss = time.getSeconds();
+				var $req_time = String((time.getTime() / 1000).toFixed(0)); // unix时间戳, 单位秒
+				var md = $req_time + '107570bc1b8e6b482055e01030a15685'
+				var $sign = md5(md); // MD5签名
+				const res = await myRequest({
+					url: '/?rest-api=article_update',
+					data: {
+						req_sign: $sign,
+						req_time: $req_time,
+						id:id,
+						title: title,
+						content: htmls,
+						excerpt: excerpt, //文章描述
+						cover: cover[0] || '', //文章封面，默认上传的第一张
+						sort_id: sid, //分类ID
+						author_uid: '1', //用户ID
+						tags: tags,
+						post_date: YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss //发布时间
+					}
+				})
+				if (res.data.msg == "ok") {
+					uni.showModal({
+						title: '修改成功',
+						content:"大约30秒后刷新首页即可",
+						success() {
+							uni.reLaunch({
+								url: "../index/index"
+							})
+						}
+					});
+				}
+				this.dataa = res.data
 			},
 			editText(res) {
 				this.$emit('editorChange', res.detail.html)
@@ -363,9 +448,30 @@
 					this.blogSortName.push(res.data.data.sorts[i].sortname)
 				}
 				console.log(this.blogSortName)
-			}
+			},
+			async blog(page) {
+				const res = await myRequest({
+					url: '/?rest-api=article_list',
+					method: 'GET',
+					data: {
+						page: page,
+						count: 10
+					}
+				})
+				if (res.data.data.articles == '') {
+					this.status = "no-more"
+				} else {
+					this.list = [...this.list, ...res.data.data.articles]
+				}
+			},
+			loadmany() {
+				this.page = this.page + 1
+				this.blog(this.page);
+			},
 		},
+
 		onLoad() {
+			this.blog(1);
 			this.getSorts();
 			uni.loadFontFace({
 				family: 'Pacifico',
@@ -377,7 +483,9 @@
 
 <style>
 	@import "./cs.css";
-
+	.loadmany{
+		text-align: center;
+	}
 	.uni-input {
 		text-align: center;
 	}

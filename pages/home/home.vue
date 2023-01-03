@@ -62,7 +62,7 @@
 				<view class="home-a-a">应用更新</view>
 				<view class="home-a-b"><uni-icons type="cloud-upload-filled" size="20"></uni-icons></view>
 			</view>
-			<view class="home-a" >
+			<view class="home-a" @click="ys">
 				<view class="home-a-a">隐私协议</view>
 				<view class="home-a-b"><uni-icons type="map-filled" size="20"></uni-icons></view>
 			</view>
@@ -176,8 +176,9 @@
 				})
 			},
 			ys() {
-				uni.navigateTo({
-					url: "../about/about"
+				uni.showModal({
+					title:"温馨提示",
+					content:"本程序承诺不保留任何用户信息，用户在使用过程中存留的数据可在本页面（清除缓存）中清理！"
 				})
 			},
 			shua(b) {

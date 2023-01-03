@@ -496,7 +496,6 @@
 				} else {
 					this.dataa = [...this.dataa, ...res.data.data.articles]
 				}
-
 			},
 			async getInitImg(e) {
 				const res = await myRequest({
