@@ -53,24 +53,26 @@
 			return {
 				id: '',
 				page: 1,
-				dataa: ''
+				dataa: '',
+				status: "loading",
 			}
 		},
 		onLoad(option) {
 			this.blog(1, option.id)
+			this.id = option.id
 			uni.setNavigationBarTitle({
 				title: option.sortname
 			});
 		},
 		onReachBottom() {
 			this.page = this.page + 1
-			this.blog(this.page);
+			this.blog(this.page,this.id);
 		},
 		onPullDownRefresh() {
 			this.dataa = ""
 			this.status = "loading"
 			this.page = 1
-			this.blog(this.page);
+			this.blog(this.page,this.id);
 			uni.stopPullDownRefresh();
 		},
 		methods: {

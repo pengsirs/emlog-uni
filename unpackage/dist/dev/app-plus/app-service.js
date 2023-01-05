@@ -1274,7 +1274,7 @@ if (uni.restoreGlobal) {
       onClick: _cache[0] || (_cache[0] = (...args) => $options._onClick && $options._onClick(...args))
     }, null, 6);
   }
-  const __easycom_1$4 = /* @__PURE__ */ _export_sfc(_sfc_main$u, [["render", _sfc_render$t], ["__scopeId", "data-v-d31e1c47"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_1$4 = /* @__PURE__ */ _export_sfc(_sfc_main$u, [["render", _sfc_render$t], ["__scopeId", "data-v-d31e1c47"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   const isObject = (val) => val !== null && typeof val === "object";
   const defaultDelimiters = ["{", "}"];
   class BaseFormatter {
@@ -1770,7 +1770,7 @@ if (uni.restoreGlobal) {
       }, vue.toDisplayString($options.cancelTextI18n), 1)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$s], ["__scopeId", "data-v-f07ef577"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
+  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$s], ["__scopeId", "data-v-f07ef577"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue"]]);
   const _sfc_main$s = {
     name: "UniDrawer",
     components: {},
@@ -1849,7 +1849,7 @@ if (uni.restoreGlobal) {
       ], 6)
     ], 34)) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_2$3 = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$r], ["__scopeId", "data-v-f7c32d22"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-drawer/components/uni-drawer/uni-drawer.vue"]]);
+  const __easycom_2$3 = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$r], ["__scopeId", "data-v-f7c32d22"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-drawer/components/uni-drawer/uni-drawer.vue"]]);
   const _sfc_main$r = {
     name: "UniNoticeBar",
     emits: ["click", "getmore", "close"],
@@ -2030,7 +2030,7 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ], 4)) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_3$3 = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$q], ["__scopeId", "data-v-c3453ea3"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-notice-bar/components/uni-notice-bar/uni-notice-bar.vue"]]);
+  const __easycom_3$3 = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$q], ["__scopeId", "data-v-c3453ea3"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-notice-bar/components/uni-notice-bar/uni-notice-bar.vue"]]);
   const en = {
     "uni-load-more.contentdown": "Pull up to show more",
     "uni-load-more.contentrefresh": "loading...",
@@ -2178,7 +2178,7 @@ if (uni.restoreGlobal) {
       }, vue.toDisplayString($props.status === "more" ? $options.contentdownText : $props.status === "loading" ? $options.contentrefreshText : $options.contentnomoreText), 5)) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__scopeId", "data-v-9245e42c"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
+  const __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__scopeId", "data-v-9245e42c"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-load-more/components/uni-load-more/uni-load-more.vue"]]);
   const _sfc_main$p = {
     data() {
       return {};
@@ -2214,7 +2214,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const __easycom_3$2 = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["__scopeId", "data-v-4968336f"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/components/null/null.vue"]]);
+  const __easycom_3$2 = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["__scopeId", "data-v-4968336f"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/components/null/null.vue"]]);
   const url = "https://www.hkiii.cn";
   const set = {
     url
@@ -2971,7 +2971,7 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/pages/index/index.vue"]]);
   const _sfc_main$n = {
     name: "hklist",
     props: {
@@ -3062,7 +3062,7 @@ if (uni.restoreGlobal) {
       }), 256))
     ]);
   }
-  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-18578b00"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/components/list/list.vue"]]);
+  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-18578b00"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/components/list/list.vue"]]);
   const _sfc_main$m = {
     name: "uni-easyinput",
     emits: ["click", "iconClick", "update:modelValue", "input", "focus", "blur", "confirm"],
@@ -3374,7 +3374,7 @@ if (uni.restoreGlobal) {
       ], 6)
     ], 6);
   }
-  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-09fd5285"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
+  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-09fd5285"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.vue"]]);
   const _sfc_main$l = {
     name: "uniCollapseItem",
     props: {
@@ -3582,7 +3582,7 @@ if (uni.restoreGlobal) {
       ], 6)
     ]);
   }
-  const __easycom_2$2 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-3d2dde9f"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
+  const __easycom_2$2 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-3d2dde9f"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
   const _sfc_main$k = {
     name: "uniCollapse",
     emits: ["change", "activeItem", "input", "update:modelValue"],
@@ -3697,7 +3697,7 @@ if (uni.restoreGlobal) {
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ]);
   }
-  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-3f050360"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
+  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-3f050360"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
   const popup = {
     data() {
       return {};
@@ -3771,7 +3771,7 @@ if (uni.restoreGlobal) {
       ], 2)
     ]);
   }
-  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-a4566996"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-popup/components/uni-popup-message/uni-popup-message.vue"]]);
+  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-a4566996"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-popup/components/uni-popup-message/uni-popup-message.vue"]]);
   class MPAnimation {
     constructor(options, _this) {
       this.options = options;
@@ -4120,7 +4120,7 @@ if (uni.restoreGlobal) {
       vue.renderSlot(_ctx.$slots, "default")
     ], 14, ["animation"])) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
+  const __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-transition/components/uni-transition/uni-transition.vue"]]);
   const _sfc_main$h = {
     name: "uniPopup",
     components: {},
@@ -4459,7 +4459,7 @@ if (uni.restoreGlobal) {
       ], 32)
     ], 2)) : vue.createCommentVNode("v-if", true);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-4dd3c44b"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-4dd3c44b"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
   var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
   var md5$1 = { exports: {} };
   /**
@@ -5563,7 +5563,7 @@ if (uni.restoreGlobal) {
       ])
     ], 64);
   }
-  const PagesXiaEditorXiaEditor = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/xia-editor/xia-editor.vue"]]);
+  const PagesXiaEditorXiaEditor = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/pages/xia-editor/xia-editor.vue"]]);
   const block0 = (Comp) => {
     (Comp.$wxs || (Comp.$wxs = [])).push("handler");
     (Comp.$wxsModules || (Comp.$wxsModules = {}))["handler"] = "2f992f8c";
@@ -5933,7 +5933,7 @@ if (uni.restoreGlobal) {
   }
   if (typeof block0 === "function")
     block0(_sfc_main$f);
-  const node = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-8845ff2f"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/mp-html/components/mp-html/node/node.vue"]]);
+  const node = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-8845ff2f"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/mp-html/components/mp-html/node/node.vue"]]);
   const config = {
     trustTags: makeMap("a,abbr,ad,audio,b,blockquote,br,code,col,colgroup,dd,del,dl,dt,div,em,fieldset,h1,h2,h3,h4,h5,h6,hr,i,img,ins,label,legend,li,ol,p,q,ruby,rt,source,span,strong,sub,sup,table,tbody,td,tfoot,th,thead,tr,title,ul,video"),
     blockTags: makeMap("address,article,aside,body,caption,center,cite,footer,header,html,nav,pre,section"),
@@ -8893,7 +8893,7 @@ if (uni.restoreGlobal) {
       }, null, 8, ["childs", "opts"]))
     ], 6);
   }
-  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-a290f043"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/mp-html/components/mp-html/mp-html.vue"]]);
+  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-a290f043"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/mp-html/components/mp-html/mp-html.vue"]]);
   const _sfc_main$d = {
     name: "uniCollapseItems",
     props: {
@@ -9106,7 +9106,7 @@ if (uni.restoreGlobal) {
       ], 6)
     ]);
   }
-  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-c3bf187e"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-collapses/components/uni-collapse-items/uni-collapse-items.vue"]]);
+  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-c3bf187e"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-collapses/components/uni-collapse-items/uni-collapse-items.vue"]]);
   const _sfc_main$c = {
     name: "uniCollapses",
     emits: ["change", "activeItem", "input", "update:modelValue"],
@@ -9221,7 +9221,7 @@ if (uni.restoreGlobal) {
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ]);
   }
-  const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-b091aba3"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-collapses/components/uni-collapses/uni-collapses.vue"]]);
+  const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-b091aba3"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-collapses/components/uni-collapses/uni-collapses.vue"]]);
   const _sfc_main$b = {
     data() {
       return {
@@ -9552,7 +9552,7 @@ if (uni.restoreGlobal) {
       ])
     ], 64);
   }
-  const PagesBlogInfoBlogInfo = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/blog-info/blog-info.vue"]]);
+  const PagesBlogInfoBlogInfo = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/pages/blog-info/blog-info.vue"]]);
   const _sfc_main$a = {
     data() {
       return {
@@ -9640,7 +9640,7 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesSortsSorts = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/sorts/sorts.vue"]]);
+  const PagesSortsSorts = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/pages/sorts/sorts.vue"]]);
   const _sfc_main$9 = {
     data() {
       return {
@@ -9681,7 +9681,7 @@ if (uni.restoreGlobal) {
       ])
     ], 64);
   }
-  const PagesAboutAbout = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/about/about.vue"]]);
+  const PagesAboutAbout = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/pages/about/about.vue"]]);
   const _sfc_main$8 = {
     data() {
       return {
@@ -9740,30 +9740,32 @@ if (uni.restoreGlobal) {
       }, " \u6682\u65E0\u9644\u4EF6 ")) : vue.createCommentVNode("v-if", true)
     ], 64);
   }
-  const PagesDownDown = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/down/down.vue"]]);
+  const PagesDownDown = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/pages/down/down.vue"]]);
   const _sfc_main$7 = {
     data() {
       return {
         id: "",
         page: 1,
-        dataa: ""
+        dataa: "",
+        status: "loading"
       };
     },
     onLoad(option) {
       this.blog(1, option.id);
+      this.id = option.id;
       uni.setNavigationBarTitle({
         title: option.sortname
       });
     },
     onReachBottom() {
       this.page = this.page + 1;
-      this.blog(this.page);
+      this.blog(this.page, this.id);
     },
     onPullDownRefresh() {
       this.dataa = "";
       this.status = "loading";
       this.page = 1;
-      this.blog(this.page);
+      this.blog(this.page, this.id);
       uni.stopPullDownRefresh();
     },
     methods: {
@@ -9914,11 +9916,11 @@ if (uni.restoreGlobal) {
       }), 128)),
       vue.createVNode(_component_uni_load_more, {
         color: "#007AFF",
-        status: _ctx.status
+        status: $data.status
       }, null, 8, ["status"])
     ], 64);
   }
-  const PagesSortInfoSortInfo = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/sort-info/sort-info.vue"]]);
+  const PagesSortInfoSortInfo = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/pages/sort-info/sort-info.vue"]]);
   const _sfc_main$6 = {
     data() {
       return {
@@ -10226,7 +10228,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/home/home.vue"]]);
+  const PagesHomeHome = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/pages/home/home.vue"]]);
   const _sfc_main$5 = {
     name: "UniSegmentedControl",
     emits: ["clickItem"],
@@ -10303,7 +10305,7 @@ if (uni.restoreGlobal) {
       }), 128))
     ], 6);
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-86aa1171"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-86aa1171"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control.vue"]]);
   const _sfc_main$4 = {
     data() {
       return {};
@@ -10339,7 +10341,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-0f04f2a4"], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/components/over/over.vue"]]);
+  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-0f04f2a4"], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/components/over/over.vue"]]);
   getApp();
   const _sfc_main$3 = {
     data() {
@@ -10651,7 +10653,7 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesSearchSearch = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/search/search.vue"]]);
+  const PagesSearchSearch = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/pages/search/search.vue"]]);
   const _sfc_main$2 = {
     data() {
       return {
@@ -10728,7 +10730,7 @@ if (uni.restoreGlobal) {
       }, " \u4FDD\u5B58\u8BBE\u7F6E ")
     ], 64);
   }
-  const PagesSettingAdmin = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/setting/admin.vue"]]);
+  const PagesSettingAdmin = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/pages/setting/admin.vue"]]);
   const _sfc_main$1 = {};
   function _sfc_render(_ctx, _cache) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
@@ -10749,7 +10751,7 @@ if (uni.restoreGlobal) {
       }, "\u6682\u672A\u5F00\u653E")
     ], 64);
   }
-  const PagesAboutHelp = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "/Users/pengsong/Downloads/emlog-wxmini/pages/about/help.vue"]]);
+  const PagesAboutHelp = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "/Users/pengsir/Downloads/emlog-wxmini/pages/about/help.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/xia-editor/xia-editor", PagesXiaEditorXiaEditor);
   __definePage("pages/blog-info/blog-info", PagesBlogInfoBlogInfo);
@@ -10772,7 +10774,7 @@ if (uni.restoreGlobal) {
       formatAppLog("log", "at App.vue:10", "App Hide");
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/pengsong/Downloads/emlog-wxmini/App.vue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/pengsir/Downloads/emlog-wxmini/App.vue"]]);
   function createApp() {
     const app = vue.createVueApp(App);
     return {
