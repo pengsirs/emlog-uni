@@ -69,7 +69,7 @@
 }
 .s-item {
 	display: inline-block !important;
-	width: 47%;
+	min-width: 47%;
 	margin: 3px 10px;
 	border-radius: 5px;
 	font-size: 14px;

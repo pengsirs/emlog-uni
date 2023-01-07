@@ -2400,7 +2400,7 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/index/index.vue:262", res.target);
+        formatAppLog("log", "at pages/index/index.vue:263", res.target);
       }
       return {
         title: "\u5206\u4EAB\u597D\u73A9\u7684\u7A0B\u5E8F\uFF01",
@@ -2848,31 +2848,35 @@ if (uni.restoreGlobal) {
                       })
                     ])
                   ], 8, ["onClick"]),
-                  item == "" ? (vue.openBlock(), vue.createElementBlock("view", {
-                    key: 0,
-                    style: { "text-align": "center", "display": "flex", "flex-direction": "column" }
-                  }, [
-                    vue.createElementVNode("image", {
-                      style: { "width": "80%", "margin": "auto" },
-                      src: "/static/null.png",
-                      mode: "widthFix"
-                    }),
-                    vue.createElementVNode("view", { style: { "margin": "10px" } }, "\u8FD8\u6CA1\u6709\u6587\u7AE0\u54E6\uFF01")
-                  ])) : vue.createCommentVNode("v-if", true),
-                  (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(item, (it, i) => {
-                    return vue.openBlock(), vue.createElementBlock("view", {
-                      class: "s-content",
-                      onClick: ($event) => $options.toInfo(it.id, it.url)
+                  vue.createElementVNode("view", { style: { "height": "120px" } }, [
+                    item == "" ? (vue.openBlock(), vue.createElementBlock("view", {
+                      key: 0,
+                      style: { "height": "120px", "text-align": "center", "display": "flex", "flex-direction": "column" }
                     }, [
-                      vue.createElementVNode("view", { class: "s-content-item" }, [
-                        vue.createElementVNode("image", {
-                          src: "../../static/ph" + (i + 1) + ".png"
-                        }, null, 8, ["src"]),
-                        vue.createElementVNode("view", { class: "ding" }, vue.toDisplayString(i + 1), 1),
-                        vue.createElementVNode("view", { class: "s-text" }, vue.toDisplayString(it.title), 1)
-                      ])
-                    ], 8, ["onClick"]);
-                  }), 256))
+                      vue.createElementVNode("image", {
+                        src: "/static/null.png",
+                        mode: "widthFix"
+                      }),
+                      vue.createElementVNode("view", { style: { "margin": "10px", "text-align": "center" } }, "\u8FD8\u6CA1\u6709\u6587\u7AE0\u54E6\uFF01")
+                    ])) : vue.createCommentVNode("v-if", true),
+                    item != "" ? (vue.openBlock(), vue.createElementBlock("view", {
+                      key: 1,
+                      class: "s-content"
+                    }, [
+                      (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(item, (it, i) => {
+                        return vue.openBlock(), vue.createElementBlock("view", {
+                          class: "s-content-item",
+                          onClick: ($event) => $options.toInfo(it.id, it.url)
+                        }, [
+                          vue.createElementVNode("image", {
+                            src: "../../static/ph" + (i + 1) + ".png"
+                          }, null, 8, ["src"]),
+                          vue.createElementVNode("view", { class: "ding" }, vue.toDisplayString(i + 1), 1),
+                          vue.createElementVNode("view", { class: "s-text" }, vue.toDisplayString(it.title), 1)
+                        ], 8, ["onClick"]);
+                      }), 256))
+                    ])) : vue.createCommentVNode("v-if", true)
+                  ])
                 ]);
               }), 256))
             ]),

@@ -90,18 +90,19 @@
 									<uni-icons color="#fff" type="forward" size="12px"></uni-icons>
 								</view>
 							</view>
-
-							<view v-if="item == ''" style="text-align: center; display: flex; flex-direction: column">
-								<image style="width: 80%; margin: auto" src="../../static/null.png" mode="widthFix" />
-								<view style="margin: 10px">还没有文章哦！</view>
+							<view>
+							<view v-if="item == ''"  style="height:120px;text-align: center; display: flex; flex-direction: column">
+									<image style="width: 50%;height:100%;margin:auto" src="../../static/null.png" mode="widthFix" />
+								<view style="margin: 10px;text-align: center;">还没有文章哦！</view>
 							</view>
 
-							<view class="s-content" v-for="(it,i) in item" @click="toInfo(it.id,it.url)">
-								<view class="s-content-item">
+							<view v-if="item != ''" class="s-content">
+								<view class="s-content-item" v-for="(it,i) in item" @click="toInfo(it.id,it.url)">
 									<image :src="'../../static/ph' + (i + 1) + '.png'" />
 									<view class="ding">{{ i + 1 }}</view>
 									<view class="s-text">{{ it.title }}</view>
 								</view>
+							</view>
 							</view>
 						</view>
 					</scroll-view>
@@ -514,7 +515,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="less">
 	@import "../../uni.css";
 	@import url("sorts.css");
 
@@ -581,7 +582,9 @@
 			color: #fff;
 		}
 	}
-
+/deep/.uni-scroll-view-content{
+	display: flex;
+}
 	.sort-item {
 		padding: 5px 10px;
 		margin: 0px 5px;
@@ -629,7 +632,7 @@
 
 	.lists-img {
 		width: 100%;
-		height: 90px;
+		height: 93px;
 		border-radius: 5px;
 	}
 

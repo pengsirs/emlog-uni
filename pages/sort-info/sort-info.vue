@@ -235,7 +235,7 @@
 	
 	.lists-img {
 		width: 100%;
-		height: 90px;
+		height: 93px;
 		border-radius: 5px;
 	}
 
