@@ -54,18 +54,23 @@
 }
 
 .scroll-view {
+	width:97%;
+	margin: auto;
 	white-space: nowrap;
 	padding: 5px 0px 5px 0px;
 }
 
-.fugai{
+/* .fugai{
 	background: #fff;
 	position: absolute;
-	right: -1px;
+	left: 0px;
 	top: 0;
 	height: 100%;
 	width: 6px;
 	border-radius: 0px 0px 10px 0px;
+} */
+.s-item:first-child{
+	margin-left: 2px;
 }
 .s-item {
 	display: inline-block !important;
@@ -76,6 +81,9 @@
 	background: #fff;
 	box-shadow: 0px 0px 5px #eee;
 }
+/* .s-item:last-child{
+	margin-right: 10px;
+	} */
 
 .s-header-left {
 	margin-right: 5px;

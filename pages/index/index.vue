@@ -106,7 +106,6 @@
 							</view>
 						</view>
 					</scroll-view>
-					<view class="fugai"></view>
 				</view>
 			</view>
 

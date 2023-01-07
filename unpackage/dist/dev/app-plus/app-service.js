@@ -2400,7 +2400,7 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/index/index.vue:263", res.target);
+        formatAppLog("log", "at pages/index/index.vue:262", res.target);
       }
       return {
         title: "\u5206\u4EAB\u597D\u73A9\u7684\u7A0B\u5E8F\uFF01",
@@ -2848,12 +2848,13 @@ if (uni.restoreGlobal) {
                       })
                     ])
                   ], 8, ["onClick"]),
-                  vue.createElementVNode("view", { style: { "height": "120px" } }, [
+                  vue.createElementVNode("view", null, [
                     item == "" ? (vue.openBlock(), vue.createElementBlock("view", {
                       key: 0,
                       style: { "height": "120px", "text-align": "center", "display": "flex", "flex-direction": "column" }
                     }, [
                       vue.createElementVNode("image", {
+                        style: { "width": "50%", "height": "100%", "margin": "auto" },
                         src: "/static/null.png",
                         mode: "widthFix"
                       }),
@@ -2879,8 +2880,7 @@ if (uni.restoreGlobal) {
                   ])
                 ]);
               }), 256))
-            ]),
-            vue.createElementVNode("view", { class: "fugai" })
+            ])
           ])
         ]),
         $data.backTopValue ? (vue.openBlock(), vue.createElementBlock("view", {
