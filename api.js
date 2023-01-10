@@ -78,6 +78,9 @@ export const htRequest = (options) => {
 			data: options.data || {}, 
 			success: (res) => {
 				resolve(res);
+			},
+			fail(){
+				resolve(0);
 			}
 		});
 	})

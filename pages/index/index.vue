@@ -161,9 +161,10 @@
 			</view>
 			<uni-load-more color="#007AFF" :status="status" />
 		</view>
-		<view v-else style="margin-top: 100px">
+		<view v-if='inull' style="margin-top: 100px">
 			<null></null>
 		</view>
+		<zero-loading v-if="!inull&&appData.state!=200" mask="true"></zero-loading>
 	</view>
 </template>
 <script>
@@ -175,8 +176,10 @@
 	} from '@/api.js';
 	import set from '@/setting.js';
 	export default {
+		
 		data() {
 			return {
+				inull:false,
 				dataa: [],
 				avatarUrl: '../../static/logo.png',
 				$req_time: '',
@@ -242,6 +245,7 @@
 			this.blog(this.page);
 		},
 		onPullDownRefresh() {
+			this.null = true
 			this.dataa = ""
 			this.status = "loading"
 			this.page = 1
@@ -338,23 +342,16 @@
 				});
 			},
 			async getData() {
-				uni.showLoading({
-					title: "加载中",
-				})
 				var that = this;
 				const res = await htRequest({
 					url: "/content/plugins/ApiSetting/api.php",
 					method: 'GET',
 					data: {
-						get: 'getApi'
+						route: 'getSetting'
 					},
 				})
-				if (res.data.state > 0) {
-					uni.hideLoading();
+				if (res.data.state>0) {
 					if (this.lunbo.length <= 0) {
-						uni.showLoading({
-							title: "处理中",
-						})
 						var lunbo = res.data.data.lbid.split(",")
 						for (var i = 0; i < lunbo.length; i++) {
 							this.getInitImg(lunbo[i])
@@ -365,14 +362,9 @@
 						key: 'set_data',
 						data: res.data
 					})
-				} else {
-					uni.hideLoading();
-					uni.showToast({
-						icon: 'error',
-						title: "插件出错"
-					})
+				} else if(res) {
+					this.inull = true
 				}
-
 			},
 			async getBaidu(u) {
 				const res = await get({
@@ -508,7 +500,6 @@
 				var a = this.getimg(res.data.data.article.content) || "0"
 				this.lbid.push(e)
 				this.lunbo.push(a)
-				uni.hideLoading();
 			}
 		}
 	}
