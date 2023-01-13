@@ -16,7 +16,7 @@
 				<view style="font-size: 12px;font-weight: 200;">{{i.text}}</view>
 			</view>
 		</view>
-		<view class="baidu-box" v-if="appData.data.tianapi != '0'">
+		<view class="baidu-box" v-if="appData.data.tianapi != ''">
 			<view class="baidu-item">
 				<view class="sl-icon">
 					<uni-icons color="#88CFFF" type="vip-filled" size="30"></uni-icons>

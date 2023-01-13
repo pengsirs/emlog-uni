@@ -24,6 +24,13 @@
 			}
 		},
 		{
+			"path": "pages/setting/setting",
+			"style": {
+				"navigationBarTitleText": "管理员设置",
+				"navigationBarBackgroundColor": "#F17C67"
+			}
+		},
+		{
 			"path": "pages/sorts/sorts",
 			"style": {
 				"navigationBarTitleText": "分类",
