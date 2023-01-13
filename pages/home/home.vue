@@ -51,14 +51,14 @@
 				<view class="home-a-a">关于我们</view>
 				<view class="home-a-c"><uni-icons type="info-filled" color="#666" size="20"></uni-icons></view>
 			</view>
-			<view class="home-b" @click="about()">
+			<view class="home-b" @click="go('../setting/setting')">
 				<view class="home-a-a">接口设置</view>
 				<view class="home-a-c"><uni-icons type="gear-filled" size="20" color="#666"></uni-icons></view>
 			</view>
 		</view>
 		
 		<view class="home-item">
-			<view class="home-a">
+			<view class="home-a" @click="version">
 				<view class="home-a-a">应用更新</view>
 				<view class="home-a-b"><uni-icons type="cloud-upload-filled" size="20"></uni-icons></view>
 			</view>
@@ -75,6 +75,9 @@
 				<view class="home-a-b"><uni-icons type="clear" size="20"></uni-icons></view>
 			</view>
 		</view>
+		<view>
+			<yomolUpgrade :type="upgradeType" theme="red" :url="upgradeUrl" title="发现新版本" :content="upgradeContent" ref="yomolUpgrade" currentVersion="1.0.1" newVersion="1.0.3"></yomolUpgrade>
+		</view>
 	</view>
 </template>
 
@@ -84,12 +87,19 @@
 		apiRequest,
 		htRequest
 	} from '@/api.js';
+	import yomolUpgrade from '@/components/yomol-upgrade/yomol-upgrade.vue';
 	import set from '@/setting.js';
 	export default {
+		components: {
+			yomolUpgrade
+		},
 		data() {
 			return {
 				shoulu: '',
 				sogo: '',
+				upgradeType: '', //pkg 整包 wgt 升级包
+				upgradeContent: '', //更新内容
+				upgradeUrl: '', //更新地址
 				avatarUrl: 'http://cdn.hkiii.cn//img/_2022/06/30/12/54/49/747/6483441/7812966043841394587',
 				homelist: [
 					{
@@ -143,6 +153,12 @@
 			this.height = "height:0%";
 		},
 		methods: {
+			version(){
+				this.upgradeType = 'wgt';
+				this.upgradeContent = '更新内容';
+				this.upgradeUrl = 'http://hkiii.cn';
+				this.$refs.yomolUpgrade.show();
+			},
 			edit(){
 				uni.showModal({
 					title:"退出成功",
