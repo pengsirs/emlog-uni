@@ -99,8 +99,13 @@
 									</view>
 								</uni-collapse-item>
 							</uni-collapse>
-							<view v-if="!blogid" class="fabu" @click="fabu()">发布文章</view>
-							<view v-if="blogid" class="fabu" @click="bianji()">保存编辑</view>
+							<view v-if="flg">
+								<view v-if="!blogid" class="fabu" @click="fabu()">发布文章</view>
+								<view v-if="blogid" class="fabu" @click="bianji()">保存编辑</view>
+							</view>
+							<view v-else>
+								<view class="fabu" @click="setting()">没有权限哦</view>
+							</view>
 							<view style="height: 50px;"></view>
 						</view>
 					</view>
@@ -109,8 +114,13 @@
 			<swiper-item>
 				<scroll-view :scroll-top="scrollTop" :scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
 					@scrolltolower="lower" @scroll="scroll">
-					<textarea  class="textarea uni-input" placeholder="开始写笔记吧!"/>
-					<view class="fabu" @click="fabubj()">发布笔记</view>
+					<textarea @input="bjinput" class="textarea uni-input" placeholder="开始写笔记吧!"/>
+					<view v-if="flg">
+						<view class="fabu" @click="fabubj()">发布笔记</view>
+					</view>
+					<view v-else>
+						<view class="fabu" @click="setting()">没有权限哦</view>
+					</view>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -161,27 +171,17 @@
 				blogid:'',
 				blogSorts: [],
 				swiperCurrent:1,
+				bjcontent:''
 			}
 		},
 		created() {},
 		onShow() {
 			var that = this;
-			uni.getStorage({
-				key: 'appData',
-				success: function(res) {
-					that.appData = res.data
-				}
-			});
+			//获取管理员Key
 			uni.getStorage({
 				key: 'apikey',
 				success: function(res) {
-					console.log('success')
-					if (that.appData.data.apikey == res.data) {
-						that.flg = true
-					}
-				},
-				fail() {
-					that.flg = false
+					that.http(res.data)
 				}
 			});
 		},
@@ -190,21 +190,35 @@
 			uni.getStorage({
 				key: 'apikey',
 				success: function(res) {
-					console.log('success')
-					if (that.appData.data.apikey == res.data) {
-						that.flg = true
-					} else {
-						that.flg = false
-					}
+					that.http(res.data)
 				}
 			});
 			uni.stopPullDownRefresh();
 		},
 		methods: {
+			bjinput(e){
+				this.bjcontent = e.detail.value
+			},
 			editBlog(e){
 				this.swiperCurrent = 1;
 				this.blogid = e
 				this.getOne(e);
+			},
+			async http(key) {
+				const res = await myRequest({
+					url: '/content/plugins/ApiSetting/api.php',
+					method: 'post',
+					data: {
+						admin: "getAdmin",
+						key: key
+					}
+				})
+				if (res.data.state == 200) {
+					this.flg = true
+					this.model = res.data.data
+				}else{
+					this.flg = false
+				}
 			},
 			reblogid(){
 				this.title = ''
@@ -259,7 +273,7 @@
 				var mm = time.getMinutes();
 				var ss = time.getSeconds();
 				var $req_time = String((time.getTime() / 1000).toFixed(0)); // unix时间戳, 单位秒
-				var md = $req_time + '107570bc1b8e6b482055e01030a15685'
+				var md = $req_time + this.model.appkey
 				var $sign = md5(md); // MD5签名
 				const res = await myRequest({
 					url: '/?rest-api=article_post',
@@ -305,7 +319,7 @@
 				var mm = time.getMinutes();
 				var ss = time.getSeconds();
 				var $req_time = String((time.getTime() / 1000).toFixed(0)); // unix时间戳, 单位秒
-				var md = $req_time + '107570bc1b8e6b482055e01030a15685'
+				var md = $req_time + this.model.appkey
 				var $sign = md5(md); // MD5签名
 				const res = await myRequest({
 					url: '/?rest-api=article_update',
@@ -327,6 +341,40 @@
 					uni.showModal({
 						title: '修改成功',
 						content:"大约30秒后刷新首页即可",
+						success() {
+							uni.reLaunch({
+								url: "../index/index"
+							})
+						}
+					});
+				}
+				this.dataa = res.data
+			},
+			async fabubj() {
+				var t = this.bjcontent
+				var time = new Date();
+				var YYYY = time.getFullYear();
+				var MM = time.getMonth() + 1;
+				var DD = time.getDate();
+				var hh = time.getHours();
+				var mm = time.getMinutes();
+				var ss = time.getSeconds();
+				var $req_time = String((time.getTime() / 1000).toFixed(0)); // unix时间戳, 单位秒
+				var md = $req_time + this.model.appkey
+				var $sign = md5(md); // MD5签名
+				const res = await myRequest({
+					url: '/?rest-api=note_post',
+					data: {
+						req_sign: $sign,
+						req_time: $req_time,
+						t: t,
+						author_uid: '1', //用户ID
+					}
+				})
+				if (res.data.msg == "ok") {
+					uni.showModal({
+						title: '发布成功',
+						content:"可在后台查看笔记",
 						success() {
 							uni.reLaunch({
 								url: "../index/index"
@@ -401,9 +449,6 @@
 						uni.showLoading({
 							title: '正在上传...'
 						});
-						console.log(res.tempFilePaths[0])
-						console.log(that.appData.data.accessKey)
-						console.log(that.appData.data.secretKey)
 						uni.uploadFile({
 							url: 'https://tp.hkiii.cn/index.php/index/index/img',
 							filePath: res.tempFilePaths[0],
@@ -411,10 +456,10 @@
 							method: 'POST',
 							fileType: "image",
 							formData: {
-								ak: that.appData.data.accessKey,
-								sk: that.appData.data.secretKey,
-								kj: that.appData.data.bucket,
-								ym: that.appData.data.ym,
+								ak: that.model.qiniuak,
+								sk: that.model.qiniusk,
+								kj: that.model.qiniukj,
+								ym: that.model.qiniuUrl,
 							},
 							success: function(res) {
 								var data = JSON.parse(res.data)

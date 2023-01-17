@@ -24,6 +24,13 @@
 			}
 		},
 		{
+			"path": "pages/baidu/baidu",
+			"style": {
+				"navigationBarTitleText": "链接提交",
+				"navigationBarBackgroundColor": "#F17C67"
+			}
+		},
+		{
 			"path": "pages/setting/setting",
 			"style": {
 				"navigationBarTitleText": "管理员设置",

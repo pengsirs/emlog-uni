@@ -13,7 +13,7 @@
 					@scrolltolower="lower" @scroll="scroll">
 					<view class="page-body">
 						<view class="title">APPkey:</view>
-						<uni-easyinput v-model="model.appkey" placeholder="请输入APPKEY,与emlog接口同" />
+						<uni-easyinput @click="setting" v-model="model.appkey" disabled placeholder="请先设置管理员信息,请点击管理员设置" />
 						<view class="title">轮播图:</view>
 						<uni-easyinput v-model="model.lbid" placeholder="请输入文章ID用英文,隔开" />
 						<view class="title">首页专题:</view>
@@ -76,7 +76,8 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
-		<button class="active fixed" @click="upDataAdmin">保存设置</button>
+		<button v-if="status" class="active fixed" @click="upDataAdmin">保存设置</button>
+		<button v-else class="active fixed" @click="setting">管理员设置</button>
 	</view>
 </template>
 
@@ -164,6 +165,11 @@
 					this.status = true
 					this.model = res.data.data
 				}
+			},
+			setting() {
+				uni.navigateTo({
+					url: "../setting/admin"
+				})
 			},
 			async upDataAdmin() {
 				Object.assign(this.model, {

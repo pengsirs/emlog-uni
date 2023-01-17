@@ -23,13 +23,91 @@
 			<view class="example-body">
 				<uni-drawer ref="showLeft" mode="left" :width="320">
 					<scroll-view style="height: 100%;" scroll-y="true">
-
+						<view style="width: 100%;display: flex;flex-direction: column;">
+							<view class="lervor-card-page">
+								<swiper class="card-swiper"  circular="true" @change="changeCard" previous-margin="45rpx"
+									next-margin="45rpx">
+									<swiper-item v-for="(item, index) in cardList">
+										<view
+											:class="['card-item', currentCardIndex === index ? 'card-item-current' : 'card-item-default']">
+											<image class="card-bg" :src="item.caroLogo" mode="aspectFill"></image>
+										</view>
+									</swiper-item>
+								</swiper>
+								<view class="card-box">
+									<view class="tj-title">站点数据统计</view>
+									<view class="baidu-boxx">
+										<view class="baidu-iteme">
+											<view class="sl-icon" style="background-color: #fff;">
+												<uni-icons color="#666" type="vip" size="30"></uni-icons>
+											</view>
+											<view class="shoulu">
+												<view class="sl-content">文章数量</view>
+												<view class="sl-title">{{toolsData.blogNum}}篇</view>
+											</view>
+										</view>
+										<view class="baidu-iteme">
+											<view class="sl-icon-sg" style="background-color: #fff;">
+												<uni-icons color="#666" type="link" size="30"></uni-icons>
+											</view>
+											<view class="shoulu">
+												<view class="sl-content">友链数量</view>
+												<view class="sl-title">{{toolsData.linkNum}}个</view>
+											</view>
+										</view>
+									</view>
+									<view class="baidu-boxx">
+										<view class="baidu-iteme">
+											<view class="sl-icon" style="background-color: #fff;">
+												<uni-icons color="#666" type="paperclip" size="30"></uni-icons>
+											</view>
+											<view class="shoulu">
+												<view class="sl-content">分类数量</view>
+												<view class="sl-title">{{toolsData.sortNum}}个</view>
+											</view>
+										</view>
+										<view class="baidu-iteme">
+											<view class="sl-icon-sg" style="background-color: #fff;">
+												<uni-icons color="#666" type="fire-filled" size="30"></uni-icons>
+											</view>
+											<view class="shoulu">
+												<view class="sl-content">标签数量</view>
+												<view class="sl-title">{{toolsData.tagNum}}个</view>
+											</view>
+										</view>
+									</view>
+									<view class="baidu-boxx">
+										<view class="baidu-iteme">
+											<view class="sl-icon" style="background-color: #fff;">
+												<uni-icons color="#666" type="staff-filled" size="30"></uni-icons>
+											</view>
+											<view class="shoulu">
+												<view class="sl-content">用户数量</view>
+												<view class="sl-title">{{toolsData.userNum}}个</view>
+											</view>
+										</view>
+										<view class="baidu-iteme">
+											<view class="sl-icon-sg" style="background-color: #fff;">
+												<uni-icons color="#666" type="person-filled" size="30"></uni-icons>
+											</view>
+											<view class="shoulu">
+												<view class="sl-content">管理数量</view>
+												<view class="sl-title">{{toolsData.adminNum}}个</view>
+											</view>
+										</view>
+									</view>
+									<view class="baidu-boxx"
+										style="box-shadow: 0px 0px 5px #eee;padding: 5px 10px;margin: 10px;border-radius: 5px;background: #fff;">
+										最近文章发布时间{{toolsData.overTime}}</view>
+								</view>
+							</view>
+						</view>
 					</scroll-view>
 				</uni-drawer>
 			</view>
 			<view class="swiper-wrap">
 				<swiper class="swiper-box" :indicator-dots="false" autoplay="true" circular="true"
-					previous-margin="10px" next-margin="10px" :circular="true" :vertical="vertical"
+					previous-margin="10px" next-margin="10px" :vertical="vertical"
 					:current="swiperCurrent" @change="swiperChangeCustom">
 					<swiper-item v-for="(item,index) in lunbo" :key="index" @click="toInfo(lbid[index])">
 						<view class="swiper-item" :class="'swiper-item' + index">
@@ -83,26 +161,30 @@
 				<view class="card-area">
 					<scroll-view class="scroll-view" scroll-x>
 						<view class="s-item" v-for="(item,index) in count">
-							<view class="s-title-header" @click="goSortLogs(sorts[index].sid,sorts[index].sortname)">
+							<view class="s-title-header" @click="goSortLogs(item[0].sort_id,item[0].sort_name)">
 								<view class="s-Ftitle">最新文章</view>
 								<view class="s-title">
-									<view>{{ sorts[index].sortname }}</view>
+									<!-- <view>{{ sorts[index].sortname }}</view> -->
+									<view v-if='item.length>0'>{{ item[0].sort_name }}</view>
+									<view v-else>不给你看</view>
 									<uni-icons color="#fff" type="forward" size="12px"></uni-icons>
 								</view>
 							</view>
 							<view>
-							<view v-if="item == ''"  style="height:120px;text-align: center; display: flex; flex-direction: column">
-									<image style="width: 50%;height:100%;margin:auto" src="../../static/null.png" mode="widthFix" />
-								<view style="margin: 10px;text-align: center;">还没有文章哦！</view>
-							</view>
-
-							<view v-if="item != ''" class="s-content">
-								<view class="s-content-item" v-for="(it,i) in item" @click="toInfo(it.id,it.url)">
-									<image :src="'../../static/ph' + (i + 1) + '.png'" />
-									<view class="ding">{{ i + 1 }}</view>
-									<view class="s-text">{{ it.title }}</view>
+								<view v-if="item == ''"
+									style="height:120px;text-align: center; display: flex; flex-direction: column">
+									<image style="width: 50%;height:100%;margin:auto" src="../../static/null.png"
+										mode="widthFix" />
+									<view style="margin: 10px;text-align: center;">这不是Bug!!!</view>
 								</view>
-							</view>
+
+								<view v-if="item != ''" class="s-content">
+									<view class="s-content-item" v-for="(it,i) in item" @click="toInfo(it.id,it.url)">
+										<image :src="'../../static/ph' + (i + 1) + '.png'" />
+										<view class="ding">{{ i + 1 }}</view>
+										<view class="s-text">{{ it.title }}</view>
+									</view>
+								</view>
 							</view>
 						</view>
 					</scroll-view>
@@ -176,10 +258,10 @@
 	} from '@/api.js';
 	import set from '@/setting.js';
 	export default {
-		
+
 		data() {
 			return {
-				inull:false,
+				inull: false,
 				dataa: [],
 				avatarUrl: '../../static/logo.png',
 				$req_time: '',
@@ -191,6 +273,7 @@
 				three: '',
 				four: '',
 				searchKey: '',
+				toolsData: '',
 				sorts: '',
 				count: '',
 				description: 0,
@@ -231,13 +314,25 @@
 				appData: '',
 				lunbo: [],
 				lbid: [],
+				cardList: [{
+						caroLogo: 'https://cdn.hkiii.cn/cg/10.jpeg'
+					},
+					{
+						caroLogo: 'https://cdn.hkiii.cn/cg/11.jpeg'
+					},
+					{
+						caroLogo: 'https://cdn.hkiii.cn/cg/12.jpeg'
+					}
+				],
+				currentCardIndex: 0
 			}
 		},
 		mounted() {},
 		onLoad() {
 			this.blog(1);
 			this.getData();
-			this.getSorts();
+			// this.getSorts();
+			this.getTools();
 		},
 		onShow() {},
 		onReachBottom() {
@@ -249,7 +344,10 @@
 			this.dataa = ""
 			this.status = "loading"
 			this.page = 1
+			this.lunbo = []
+			this.lbid = []
 			this.appData = ''
+			this.count = ''
 			this.blog(this.page);
 			this.getData();
 			uni.stopPullDownRefresh();
@@ -272,6 +370,8 @@
 			}
 		},
 		methods: {
+
+			//专题
 			async getSortsData(sort, sid) {
 				var that = this;
 				var res = await myRequest({
@@ -283,31 +383,8 @@
 					}
 				});
 				var array = [];
-				if (sort == 1) {
-					array.push(res.data.data.articles);
-					that.one = res.data.data.articles
-				} else if (sort == 2) {
-					array.push(res.data.data.articles);
-					that.two = res.data.data.articles
-				} else if (sort == 3) {
-					array.push(res.data.data.articles);
-					that.three = res.data.data.articles
-				} else if (sort == 4) {
-					array.push(res.data.data.articles);
-					that.four = res.data.data.articles
-				}
+				array.push(res.data.data.articles);
 				that.count = [...that.count, ...array]
-			},
-			async getSorts() {
-				var that = this;
-				var res = await myRequest({
-					url: '/?rest-api=sort_list',
-					method: 'GET'
-				});
-				that.sorts = res.data.data.sorts
-				for (var i = 0; i < 4; i++) {
-					this.getSortsData(i + 1, res.data.data.sorts[i].sid);
-				}
 			},
 			goToSorts() {
 				uni.switchTab({
@@ -318,6 +395,9 @@
 				uni.navigateTo({
 					url: "../sort-info/sort-info?id=" + sid + '&sortname=' + sortname
 				})
+			},
+			changeCard(e) {
+				this.currentCardIndex = e.detail.current
 			},
 			copyUrl() {
 				uni.setClipboardData({
@@ -350,26 +430,34 @@
 						route: 'getSetting'
 					},
 				})
-				if (res.data.state>0) {
-					if (this.lunbo.length <= 0) {
-						var lunbo = res.data.data.lbid.split(",")
-						for (var i = 0; i < lunbo.length; i++) {
-							this.getInitImg(lunbo[i])
-						}
+				if (res.data.state > 0) {
+					var lunbo = res.data.data.lbid.split(",")
+					for (var i = 0; i < lunbo.length; i++) {
+						this.getInitImg(lunbo[i])
+					}
+					var sortid = res.data.data.sortid.split(",")
+					for (var i = 0; i < sortid.length; i++) {
+						this.getSortsData(i + 1, sortid[i])
 					}
 					this.appData = res.data
 					uni.setStorage({
 						key: 'set_data',
 						data: res.data
 					})
-				} else if(res) {
+				} else if (res) {
 					this.inull = true
 				}
 			},
-			async getBaidu(u) {
-				const res = await get({
-					url: 'http://data.zz.baidu.com/urls?site=' + u + '&token=GUCdGsUGTM0wkGnH',
+			async getTools() {
+				var that = this;
+				const res = await htRequest({
+					url: "/content/plugins/ApiSetting/api.php",
+					method: 'GET',
+					data: {
+						route: 'getTools'
+					},
 				})
+				this.toolsData = res.data.data
 			},
 			change(index, id) {
 				uni.navigateTo({
@@ -509,6 +597,87 @@
 	@import "../../uni.css";
 	@import url("sorts.css");
 
+	.lervor-card-page {
+		display: flex;
+		flex-direction: column;
+		padding-top: 30rpx;
+
+		view,
+		text,
+		image {
+			box-sizing: border-box;
+		}
+
+		.card-swiper {
+			width: 100%;
+			height: 286rpx; // 轮播图片的高度
+			// background: #FAFAFA;
+
+			.card-item {
+				transition: transform 0.3s; // 缩放动画播放 0.3S
+				border-radius: 10rpx;
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+				height: 100%;
+				padding: 26rpx 36rpx 0;
+				color: #FFFFFF;
+				position: relative;
+
+				.card-bg {
+					position: absolute;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					width: 100%;
+					height: 100%;
+					z-index: -1;
+				}
+
+				.card-title {
+					font-size: 38rpx;
+					font-weight: bold;
+					height: 50rpx;
+					overflow: hidden;
+				}
+
+				.card-tip {
+					font-size: 22rpx;
+					margin-top: 18rpx;
+				}
+
+				.card-price {
+					font-size: 60rpx;
+					font-weight: bold;
+					margin-top: 64rpx;
+
+					&:before {
+						content: '￥';
+						font-size: 20rpx;
+						margin-right: 2rpx;
+						font-weight: normal;
+					}
+				}
+			}
+
+			.card-item-default {
+				transform: scale(0.96, 0.96) translateY(50rpx); // 缩小到原来的 0.96，并沿Y轴向下移动 50rpx
+			}
+		}
+
+		.card-box {
+			z-index: 1;
+			background: #fff;
+			border-top: 1px #eee solid;
+			// box-shadow: 0 0 69rpx 7rpx rgba(0, 0, 0, 0.29);
+			border-radius: 30rpx 30rpx 0rpx 0rpx;
+			margin-top: -20rpx; // 向上遮住部分轮播卡片
+			min-height: 200rpx;
+			padding: 3px 5px;
+		}
+	}
+
 	page {
 		font-size: 16px
 	}
@@ -572,9 +741,11 @@
 			color: #fff;
 		}
 	}
-/deep/.uni-scroll-view-content{
-	display: flex;
-}
+
+	/deep/.uni-scroll-view-content {
+		display: flex;
+	}
+
 	.sort-item {
 		padding: 5px 10px;
 		margin: 0px 5px;

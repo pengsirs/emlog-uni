@@ -21,7 +21,7 @@
 				<view class="num">
 					浏览量:{{item.views}}
 				</view>
-				<view class="caoan" @click.stop="caoan(item.id)">
+				<view class="caoan" @click.stop="caoan(item.id,item.url)">
 					{{xiangqing}}
 				</view>
 			</view>
@@ -83,9 +83,9 @@
 				})
 			},
 			
-			caoan(e){
-				this.$emit("editBlog",e)
-				console.log(this.$emit("editBlog",e))
+			caoan(e,u){
+				this.$emit("editBlog",e,u)
+				// console.log(this.$emit("editBlog",e,u))
 			},
 			taburl(e){
 				uni.navigateTo({

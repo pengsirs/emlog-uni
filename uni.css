@@ -64,6 +64,12 @@
 		margin: auto;
 		margin: 10px;
 	}
+	.baidu-boxx {
+			display: flex;
+			justify-content: space-between;
+			margin: auto;
+			margin: 5px 10px;
+		}
 
 	.baidu-item {
 		width: 43%;
@@ -71,6 +77,15 @@
 		box-shadow: #eeeeee 1px 1px 30px;
 		display: flex;
 		justify-content: space-between;
+		padding: 10px;
+		align-items: center;
+	}
+	.baidu-iteme {
+		width: 48%;
+		border-radius: 10px;
+		box-shadow: #eeeeee 1px 1px 30px;
+		display: flex;
+		justify-content: space-around;
 		padding: 10px;
 		align-items: center;
 	}

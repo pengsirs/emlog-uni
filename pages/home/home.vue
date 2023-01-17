@@ -41,7 +41,7 @@
 		<view class="home-item">
 			<view class="home-a">
 				<view class="home-a-a">版本信息</view>
-				<view class="home-a-b">V1.0.0</view>
+				<view class="home-a-b">V{{banbenhao}}</view>
 			</view>
 			<view class="home-a">
 				<view class="home-a-a">页面开发</view>
@@ -49,34 +49,48 @@
 			</view>
 			<view class="home-b" @click="about(appData.data.about)">
 				<view class="home-a-a">关于我们</view>
-				<view class="home-a-c"><uni-icons type="info-filled" color="#666" size="20"></uni-icons></view>
+				<view class="home-a-c">
+					<uni-icons type="info-filled" color="#666" size="20"></uni-icons>
+				</view>
 			</view>
 			<view class="home-b" @click="go('../setting/setting')">
 				<view class="home-a-a">接口设置</view>
-				<view class="home-a-c"><uni-icons type="gear-filled" size="20" color="#666"></uni-icons></view>
+				<view class="home-a-c">
+					<uni-icons type="gear-filled" size="20" color="#666"></uni-icons>
+				</view>
 			</view>
 		</view>
-		
+
 		<view class="home-item">
 			<view class="home-a" @click="version">
 				<view class="home-a-a">应用更新</view>
-				<view class="home-a-b"><uni-icons type="cloud-upload-filled" size="20"></uni-icons></view>
+				<view class="home-a-b">
+					<uni-icons type="cloud-upload-filled" size="20"></uni-icons>
+				</view>
 			</view>
 			<view class="home-a" @click="ys">
 				<view class="home-a-a">隐私协议</view>
-				<view class="home-a-b"><uni-icons type="map-filled" size="20"></uni-icons></view>
+				<view class="home-a-b">
+					<uni-icons type="map-filled" size="20"></uni-icons>
+				</view>
 			</view>
 			<view class="home-a" @click="clear()">
 				<view class="home-a-a">清除缓存</view>
-				<view class="home-a-b"><uni-icons type="refresh-filled" size="20"></uni-icons></view>
+				<view class="home-a-b">
+					<uni-icons type="refresh-filled" size="20"></uni-icons>
+				</view>
 			</view>
 			<view class="home-a" @click="edit()">
 				<view class="home-a-a">退出登录</view>
-				<view class="home-a-b"><uni-icons type="clear" size="20"></uni-icons></view>
+				<view class="home-a-b">
+					<uni-icons type="clear" size="20"></uni-icons>
+				</view>
 			</view>
 		</view>
 		<view>
-			<yomolUpgrade :type="upgradeType" theme="red" :url="upgradeUrl" title="发现新版本" :content="upgradeContent" ref="yomolUpgrade" currentVersion="1.0.1" newVersion="1.0.3"></yomolUpgrade>
+			<yomolUpgrade :type="upgradeType" theme="red" :url="upgradeUrl" title="发现新版本"
+				:content="appData.data.appContent" ref="yomolUpgrade" :currentVersion="banbenhao"
+				:newVersion="appData.data.appVersion"></yomolUpgrade>
 		</view>
 	</view>
 </template>
@@ -95,14 +109,14 @@
 		},
 		data() {
 			return {
+				banbenhao: '1.0.3', //这个是内置的版本号，新版是要和这个比较的，所以每次更新都要改这里的版本号。
 				shoulu: '',
 				sogo: '',
 				upgradeType: '', //pkg 整包 wgt 升级包
 				upgradeContent: '', //更新内容
 				upgradeUrl: '', //更新地址
 				avatarUrl: 'http://cdn.hkiii.cn//img/_2022/06/30/12/54/49/747/6483441/7812966043841394587',
-				homelist: [
-					{
+				homelist: [{
 						img: "../../static/home/bangzhuzhongxin.png",
 						text: "问题反馈",
 						url: "../about/help"
@@ -153,16 +167,42 @@
 			this.height = "height:0%";
 		},
 		methods: {
-			version(){
-				this.upgradeType = 'wgt';
-				this.upgradeContent = '更新内容';
-				this.upgradeUrl = 'http://hkiii.cn';
-				this.$refs.yomolUpgrade.show();
+			compare(curV, reqV) {
+				if (curV && reqV) {
+					//将两个版本号拆成数字
+					var arr1 = curV.split('.'),
+						arr2 = reqV.split('.');
+					var minLength = Math.min(arr1.length, arr2.length),
+						position = 0,
+						diff = 0;
+					//依次比较版本号每一位大小，当对比得出结果后跳出循环（后文有简单介绍）
+					while (position < minLength && ((diff = parseInt(arr1[position]) - parseInt(arr2[position])) == 0)) {
+						position++;
+					}
+					diff = (diff != 0) ? diff : (arr1.length - arr2.length);
+					//若curV大于reqV，则返回true
+					return diff > 0;
+				} else {
+					return false;
+				}
 			},
-			edit(){
+			version() {
+				var flg = this.compare(this.appData.data.appVersion, this.banbenhao)
+				if (flg) {
+					this.upgradeType = 'pkg';
+					this.upgradeUrl = this.appData.data.appUrl;
+					this.$refs.yomolUpgrade.show();
+				}else{
+					uni.showToast({
+						title:"已经是最新版本",
+						icon:'success'
+					})
+				}
+			},
+			edit() {
 				uni.showModal({
-					title:"退出成功",
-					content:"本地数据请使用清除缓存功能！"
+					title: "退出成功",
+					content: "本地数据请使用清除缓存功能！"
 				})
 			},
 
@@ -193,8 +233,8 @@
 			},
 			ys() {
 				uni.showModal({
-					title:"温馨提示",
-					content:"本程序承诺不保留任何用户信息，用户在使用过程中存留的数据可在本页面（清除缓存）中清理！"
+					title: "温馨提示",
+					content: "本程序承诺不保留任何用户信息，用户在使用过程中存留的数据可在本页面（清除缓存）中清理！"
 				})
 			},
 			shua(b) {
@@ -255,43 +295,50 @@
 
 <style>
 	@import "../../uni.css";
+
 	.box-img {
 		width: 70px;
 		height: 70px;
-		background:#fff;
+		background: #fff;
 		border-radius: 10px;
-		box-shadow:inset 0px 0px 5px #eee;
+		box-shadow: inset 0px 0px 5px #eee;
 		margin: 30px 0px 0px 30px;
 		overflow: hidden;
 		padding: 3px;
 	}
-	.box-img image{
+
+	.box-img image {
 		width: 100%;
 		height: 100%;
 		border-radius: 10px;
 	}
-	.banner-box{
+
+	.banner-box {
 		display: flex;
 		background: #F17C67;
 		border-radius: 0px 0px 30% 30%;
 	}
+
 	page {
 		font-size: 16px;
 	}
-button{
-	margin: 0;
-	padding:0;
-	border: 0;
-	line-height: 1.5;
-	border-radius: 0;
-	display: inline-block;
-	background-color: #fff;
-	color: #000;
-	border: none;
-}
-button::after{
-	border: none;
-}
+
+	button {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		line-height: 1.5;
+		border-radius: 0;
+		display: inline-block;
+		background-color: #fff;
+		color: #000;
+		border: none;
+	}
+
+	button::after {
+		border: none;
+	}
+
 	.login {
 		width: 100%;
 		z-index: 99;
@@ -469,52 +516,56 @@ button::after{
 		font-size: 17px;
 		line-height: 39rpx;
 	}
-	.user-nick{
-	    display: inline-block;
-	    vertical-align: middle;
-	    font-size: 20px;
-	    overflow: hidden;
-	    white-space: nowrap;
-	    text-overflow: ellipsis;
-	    margin-left:20px;
+
+	.user-nick {
+		display: inline-block;
+		vertical-align: middle;
+		font-size: 20px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		margin-left: 20px;
 		margin-top: 30px;
-	    font-weight:800;
-	    line-height: 70px;
-	    height: 70px;
+		font-weight: 800;
+		line-height: 70px;
+		height: 70px;
 		color: #fff;
 	}
-	.user-nick-a{
-	    display: inline-block;
-	    vertical-align: middle;
-	    font-size: 20px;
-	    width: 200rpx;
-	    overflow: hidden;
-	    white-space: nowrap;
-	    text-overflow: ellipsis;
-	    font-weight:800;
-	    line-height: 70px;
-	    height: 70px;
+
+	.user-nick-a {
+		display: inline-block;
+		vertical-align: middle;
+		font-size: 20px;
+		width: 200rpx;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		font-weight: 800;
+		line-height: 70px;
+		height: 70px;
 	}
-	.sorts{
-	    margin:50px 10px 0px 10px;
-	    background-color:#fff;
-	    padding:5px;
-	    font-weight:200;
-	    border-radius:10px 10px 0px 0px;
-	    border-bottom: 2px dotted #eeeeee;
-	    padding:10px 20px 10px 20px;
-	    overflow: hidden;
-	    white-space: nowrap;
-	    text-align:center;
+
+	.sorts {
+		margin: 50px 10px 0px 10px;
+		background-color: #fff;
+		padding: 5px;
+		font-weight: 200;
+		border-radius: 10px 10px 0px 0px;
+		border-bottom: 2px dotted #eeeeee;
+		padding: 10px 20px 10px 20px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-align: center;
 	}
-	.sorts-b{
-	    margin:0px 10px;
-	    background-color:#fff;
-	    padding:5px;
-	    font-weight:100;
-	    padding:10px 20px 10px 20px;
-	    font-size:15px;
-	    border-radius:0px 0px 10px 10px;
-	    margin-bottom:10px;
+
+	.sorts-b {
+		margin: 0px 10px;
+		background-color: #fff;
+		padding: 5px;
+		font-weight: 100;
+		padding: 10px 20px 10px 20px;
+		font-size: 15px;
+		border-radius: 0px 0px 10px 10px;
+		margin-bottom: 10px;
 	}
 </style>
