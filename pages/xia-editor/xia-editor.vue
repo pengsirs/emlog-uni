@@ -5,10 +5,10 @@
 			<view @click="swiperCurrent=1" :class="'tab2 ' + (1 == swiperCurrent ? ' active' : '')">文章</view>
 			<view @click="swiperCurrent=2" :class="'tab3 ' + (2 == swiperCurrent ? ' active' : '')">笔记</view>
 		</view>
-		<swiper class="swiper" :current="swiperCurrent" easing-function="easeInOutCubic"
+		<swiper class="swiper" :current="swiperCurrent" easing-function="easeInOutCubic" circular="true"
 			:duration="500" @change="swiperChangeCustom">
 			<swiper-item>
-				<scroll-view :scroll-top="scrollTop" :scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
+				<scroll-view scroll-top="scrollTop" :scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
 					@scrolltolower="lower" @scroll="scroll">
 					<list @editBlog="editBlog" :List="list" xiangqing="编辑文章" desc="来自文章分类:"></list>
 					<view class="loadmany" @click="loadmany">---加载更多---</view>
@@ -16,7 +16,7 @@
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view :scroll-top="scrollTop" :scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
+				<scroll-view scroll-top="scrollTop" :scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
 					@scrolltolower="lower" @scroll="scroll">
 					<view class="page-body">
 						<view class='wrapper'>
@@ -112,9 +112,9 @@
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view :scroll-top="scrollTop" :scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
+				<scroll-view scroll-top="scrollTop" :scroll-y="true" class="scroll-Y" @scrolltoupper="upper"
 					@scrolltolower="lower" @scroll="scroll">
-					<textarea @input="bjinput" class="textarea uni-input" placeholder="开始写笔记吧!"/>
+					<textarea @input="bjinput" class="textarea uni-input"/>
 					<view v-if="flg">
 						<view class="fabu" @click="fabubj()">发布笔记</view>
 					</view>
@@ -200,9 +200,12 @@
 				this.bjcontent = e.detail.value
 			},
 			editBlog(e){
+				var that = this
 				this.swiperCurrent = 1;
-				this.blogid = e
-				this.getOne(e);
+				setTimeout(()=>{
+					that.blogid = e
+					that.getOne(e);
+				},1000)
 			},
 			async http(key) {
 				const res = await myRequest({

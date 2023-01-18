@@ -5536,7 +5536,7 @@ if (uni.restoreGlobal) {
         }, [
           vue.createElementVNode("swiper-item", null, [
             vue.createElementVNode("scroll-view", {
-              "scroll-top": _ctx.scrollTop,
+              "scroll-top": "scrollTop",
               "scroll-y": true,
               class: "scroll-Y",
               onScrolltoupper: _cache[4] || (_cache[4] = (...args) => _ctx.upper && _ctx.upper(...args)),
@@ -5554,11 +5554,11 @@ if (uni.restoreGlobal) {
                 onClick: _cache[3] || (_cache[3] = (...args) => $options.loadmany && $options.loadmany(...args))
               }, "---\u52A0\u8F7D\u66F4\u591A---"),
               vue.createElementVNode("view", { style: { "height": "50px" } })
-            ], 40, ["scroll-top"])
+            ], 32)
           ]),
           vue.createElementVNode("swiper-item", null, [
             vue.createElementVNode("scroll-view", {
-              "scroll-top": _ctx.scrollTop,
+              "scroll-top": "scrollTop",
               "scroll-y": true,
               class: "scroll-Y",
               onScrolltoupper: _cache[25] || (_cache[25] = (...args) => _ctx.upper && _ctx.upper(...args)),
@@ -5771,11 +5771,11 @@ if (uni.restoreGlobal) {
                   vue.createElementVNode("view", { style: { "height": "50px" } })
                 ])
               ])
-            ], 40, ["scroll-top"])
+            ], 32)
           ]),
           vue.createElementVNode("swiper-item", null, [
             vue.createElementVNode("scroll-view", {
-              "scroll-top": _ctx.scrollTop,
+              "scroll-top": "scrollTop",
               "scroll-y": true,
               class: "scroll-Y",
               onScrolltoupper: _cache[31] || (_cache[31] = (...args) => _ctx.upper && _ctx.upper(...args)),
@@ -5798,7 +5798,7 @@ if (uni.restoreGlobal) {
                   onClick: _cache[30] || (_cache[30] = ($event) => $options.setting())
                 }, "\u6CA1\u6709\u6743\u9650\u54E6")
               ]))
-            ], 40, ["scroll-top"])
+            ], 32)
           ])
         ], 40, ["current"])
       ]),
@@ -11044,7 +11044,11 @@ if (uni.restoreGlobal) {
             url: "../setting/admin"
           }
         ],
-        appData: []
+        appData: {
+          data: {
+            tianapi: ""
+          }
+        }
       };
     },
     mounted() {
@@ -11127,7 +11131,7 @@ if (uni.restoreGlobal) {
                 url: "../index/index"
               });
             } else if (res.cancel) {
-              formatAppLog("log", "at pages/home/home.vue:224", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
+              formatAppLog("log", "at pages/home/home.vue:228", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
             }
           }
         });
@@ -11156,7 +11160,7 @@ if (uni.restoreGlobal) {
                 that.baidu("/sogoupages/index", "sogo");
               }
             } else if (res.cancel) {
-              formatAppLog("log", "at pages/home/home.vue:253", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
+              formatAppLog("log", "at pages/home/home.vue:257", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
             }
           }
         });
@@ -11227,7 +11231,7 @@ if (uni.restoreGlobal) {
           ], 8, ["onClick"]);
         }), 256))
       ]),
-      $data.appData.data.tianapi != "" ? (vue.openBlock(), vue.createElementBlock("view", {
+      ($data.appData.data.tianapi == "" ? true : false) ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
         class: "baidu-box"
       }, [

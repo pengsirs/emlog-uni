@@ -25,6 +25,22 @@
 			this.blog(this.page);
 		},
 		onShow() {
+			 // #ifndef APP-PLUS
+			 uni.showModal({
+			 	title: "提示",
+			 	content: '仅APP可用该功能',
+			 	success: function(res) {
+			 		if (res.confirm) {
+			 			uni.navigateBack(1)
+			 		} else if (res.cancel) {
+			 			uni.navigateBack(1)
+			 		}
+			 	}
+			 })
+			 //#endif
+		},
+		onLoad() {
+			this.blog(1);
 			var that = this;
 			//获取管理员Key
 			uni.getStorage({
@@ -33,9 +49,6 @@
 					that.http(res.data)
 				}
 			});
-		},
-		onLoad() {
-			this.blog(1);
 		},
 		methods: {
 			async http(key) {
@@ -68,17 +81,22 @@
 			async getBaidu(id, u) {
 				// console.log(id,u)
 				const res = await get({
-					url: 'http://data.zz.baidu.com/urls?site=' + u + '&token=' + this.value.baidu,
+					url: 'https://data.zz.baidu.com/urls?site=' + u + '&token=' + this.value.baidu,
 				})
 				if (res.data.error >= 400) {
 					uni.showModal({
 						title: "链接提交失败",
 						content: `${res.data.message}`
 					})
-				} else {
+				} else if (res.data.error <= 400) {
 					uni.showModal({
 						title: "提交成功",
 						content: `剩余的可推送${res.data.remain}条`
+					})
+				}else {
+					uni.showModal({
+						title: "提交失败",
+						content: "请检查配置是否正常"
 					})
 				}
 				// console.log(res.data.error)

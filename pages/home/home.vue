@@ -16,7 +16,7 @@
 				<view style="font-size: 12px;font-weight: 200;">{{i.text}}</view>
 			</view>
 		</view>
-		<view class="baidu-box" v-if="appData.data.tianapi != ''">
+		<view class="baidu-box" v-if="appData.data.tianapi==''?true:false">
 			<view class="baidu-item">
 				<view class="sl-icon">
 					<uni-icons color="#88CFFF" type="vip-filled" size="30"></uni-icons>
@@ -62,12 +62,14 @@
 		</view>
 
 		<view class="home-item">
+			<!-- #ifdef APP-PLUS -->
 			<view class="home-a" @click="version">
 				<view class="home-a-a">应用更新</view>
 				<view class="home-a-b">
 					<uni-icons type="cloud-upload-filled" size="20"></uni-icons>
 				</view>
 			</view>
+			<!-- #endif -->
 			<view class="home-a" @click="ys">
 				<view class="home-a-a">隐私协议</view>
 				<view class="home-a-b">
@@ -88,9 +90,11 @@
 			</view>
 		</view>
 		<view>
+			<!-- #ifdef APP-PLUS -->
 			<yomolUpgrade :type="upgradeType" theme="red" :url="upgradeUrl" title="发现新版本"
 				:content="appData.data.appContent" ref="yomolUpgrade" :currentVersion="banbenhao"
 				:newVersion="appData.data.appVersion"></yomolUpgrade>
+				<!-- #endif -->
 		</view>
 	</view>
 </template>
@@ -132,7 +136,11 @@
 						url: "../setting/admin"
 					}
 				],
-				appData: [],
+				appData: {
+					data:{
+						tianapi:''
+					}
+				},
 			}
 		},
 		mounted() {},
