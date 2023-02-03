@@ -4,7 +4,7 @@
 			<view class="header">
 				<view class="user">
 					<view @click="showDrawer('showLeft')">
-						<image class="user-img" :src="avatarUrl" mode=""></image>
+						<image class="user-img" :src="'http://q2.qlogo.cn/headimg_dl?dst_uin='+appData.data.qq+'&spec=100'" mode=""></image>
 					</view>
 				</view>
 				<view class="secrch">
