@@ -14,6 +14,11 @@
 				"navigationBarTitleText": "发布",
 				"navigationBarBackgroundColor": "#F17C67",
 				"enablePullDownRefresh":true
+			},
+			"mp-baidu": {
+			      "usingSwanComponents": {
+			        "editor": "dynamicLib://editorLib/editor"
+			      }
 			}
 		},
 		{

@@ -1,5 +1,7 @@
 <template>
+	<!-- #ifndef MP-BAIDU -->
 	<uni-transition ref="ani" custom-class="transition" :mode-class="modeClass" :styles="styles" :show="show">
+	<!-- #endif -->
 		<view class="content-box">
 			<view class="title">
 				{{data.title||"没有该文章或加载失败..."}}
@@ -51,7 +53,9 @@
 			</view>
 		</view>
 		<view class="foot-content"></view>
+		<!-- #ifndef MP-BAIDU -->
 	</uni-transition>
+	<!-- #endif -->
 	<!-- #ifdef APP-PLUS -->
 	<view class="footer">
 		<uni-collapses>
@@ -83,6 +87,7 @@
 	<!-- #ifndef APP-PLUS -->
 	<view class="footer">
 		<uni-collapses>
+			<!-- #ifndef MP-BAIDU -->
 			<uni-collapse-items title="文章扩展" :show-animation="true">
 				<view class="ft-content">
 					<view class="homelist" @click="home()">
@@ -111,6 +116,7 @@
 					</button>
 				</view>
 			</uni-collapse-items>
+				<!-- #endif -->
 		</uni-collapses>
 	</view>
 	<!-- #endif -->

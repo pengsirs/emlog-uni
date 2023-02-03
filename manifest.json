@@ -104,7 +104,13 @@
         "usingComponents" : true
     },
     "mp-baidu" : {
-        "usingComponents" : true
+        "usingComponents" : true,
+        "appid" : "29412630",
+        "dynamicLib" : {
+            "myDynamicLib" : {
+                "provider" : "swan-editor"
+            }
+        }
     },
     "mp-toutiao" : {
         "usingComponents" : true

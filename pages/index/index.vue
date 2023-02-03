@@ -129,7 +129,7 @@
 			<uni-notice-bar show-icon scrollable background-color="#fff" color="#000"
 				:text="appData.data.ridingLantern||'获取中...'" />
 			<view class="baidu-box" v-if="appData.data.auditing != 1">
-				<view class="baidu-item">
+				<view class="baidu-item" @click="copyUrl()">
 					<view class="sl-icon">
 						<uni-icons color="#fd7081" type="star-filled" size="30"></uni-icons>
 					</view>
@@ -139,7 +139,7 @@
 					</view>
 					<uni-icons @click="copyUrl()" color="#aaa" type="circle-filled" size="20"></uni-icons>
 				</view>
-				<view class="baidu-item">
+				<view class="baidu-item" @click="copyQQ()">
 					<view class="sl-icon-sg">
 						<uni-icons color="#66ccff" type="qq" size="30"></uni-icons>
 					</view>

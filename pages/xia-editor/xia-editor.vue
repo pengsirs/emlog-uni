@@ -62,11 +62,15 @@
 									class="iconfont icon-format-header-3" data-name="header" :data-value="3"></view>
 									<view class="iconfont icon-shanchu" @click="reblogid"></view>
 							</view>
-				
+							<!-- #ifndef MP-BAIDU -->
 							<editor @input="editText" id="editor" class="ql-container" :placeholder="placeholder"
 								showImgSize showImgToolbar showImgResize @statuschange="onStatusChange"
 								:read-only="readOnly" @ready="onEditorReady">
 							</editor>
+							<!-- #endif -->
+							<!-- #ifdef MP-BAIDU -->
+							<view class="bq ql-container">抱歉，百度小程序暂不支持该组件</view>
+							<!-- #endif -->
 							
 							<view @click="reblogid" v-if="blogid" style="margin: 10px 0px;color:brown;">当前编辑的文章ID是{{blogid}}，点击清空重新编写</view>
 							
@@ -689,5 +693,10 @@
 		background: #38F;
 		box-shadow: 0px 0px 10px #38F!important;
 		transition: all 1s;
+	}
+	.bq{
+		height: 300px;
+		line-height: 300px;
+		text-align: center;
 	}
 </style>
