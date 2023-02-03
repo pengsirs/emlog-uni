@@ -210,7 +210,7 @@
 						<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}</view>
 						<text class="desc">{{delHtmlTag(item.description)}}</text>
 						<view class="many">
-							<view class="sort">{{item.sort_name}}</view>
+							<view class="sort">{{item.sort_name||"暂未分类"}}</view>
 							<view class="right">
 								<view class="read">
 									<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
@@ -228,7 +228,7 @@
 						<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}</view>
 						<text class="desc">{{delHtmlTag(item.description)}}</text>
 						<view class="many">
-							<view class="sort">{{item.sort_name}}</view>
+							<view class="sort">{{item.sort_name||"暂未分类"}}</view>
 							<view class="right">
 								<view class="read">
 									<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
@@ -753,10 +753,10 @@
 
 	.sort {
 		border: #fff solid 1px;
-		padding: 3px;
+		padding: 5px;
 		border-radius: 10px;
 		opacity: 0.5;
-		font-size: 16px;
+		font-size: 13px;
 	}
 
 

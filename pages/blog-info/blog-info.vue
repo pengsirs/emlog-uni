@@ -275,8 +275,8 @@
 					'<h5 class="rich-h5" ');
 				res.data.data.article.content = res.data.data.article.content.replace(/\<h6/gi,
 					'<h6 class="rich-h6" ');
-				// res.data.data.article.content = res.data.data.article.content.replace(/\/content\/upload/gi,
-				// 	set.url+'/content/upload');
+				res.data.data.article.content = res.data.data.article.content.replace(/\.\.\/content\/upload/gi,
+					set.url+'/content/upload');
 				res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, '****');
 				// #ifndef APP-PLUS
 				arrays = res.data.data.article.content.match(/<a (.*)a>/gi) ? res.data.data.article.content.match(
