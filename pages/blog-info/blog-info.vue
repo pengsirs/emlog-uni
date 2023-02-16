@@ -416,7 +416,7 @@
 	}
 	.Info-File{
 		background-color: #fff;
-		box-shodow: 0px 0px 0px 5px #eee;
+		/* box-shadow: 0px 0px 0px 5px #eee; */
 		border-radius: 5px;
 	}
 	.File-content{
