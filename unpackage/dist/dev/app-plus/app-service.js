@@ -2729,7 +2729,7 @@ if (uni.restoreGlobal) {
             }, [
               vue.createElementVNode("image", {
                 class: "user-img",
-                src: $data.avatarUrl,
+                src: "http://q2.qlogo.cn/headimg_dl?dst_uin=" + $data.appData.data.qq + "&spec=100",
                 mode: ""
               }, null, 8, ["src"])
             ])
@@ -2973,7 +2973,10 @@ if (uni.restoreGlobal) {
           key: 0,
           class: "baidu-box"
         }, [
-          vue.createElementVNode("view", { class: "baidu-item" }, [
+          vue.createElementVNode("view", {
+            class: "baidu-item",
+            onClick: _cache[6] || (_cache[6] = ($event) => $options.copyUrl())
+          }, [
             vue.createElementVNode("view", { class: "sl-icon" }, [
               vue.createVNode(_component_uni_icons, {
                 color: "#fd7081",
@@ -2992,7 +2995,10 @@ if (uni.restoreGlobal) {
               size: "20"
             })
           ]),
-          vue.createElementVNode("view", { class: "baidu-item" }, [
+          vue.createElementVNode("view", {
+            class: "baidu-item",
+            onClick: _cache[8] || (_cache[8] = ($event) => $options.copyQQ())
+          }, [
             vue.createElementVNode("view", { class: "sl-icon-sg" }, [
               vue.createVNode(_component_uni_icons, {
                 color: "#66ccff",
@@ -3005,7 +3011,7 @@ if (uni.restoreGlobal) {
               vue.createElementVNode("view", { class: "sl-title" }, "\u590D\u5236QQ")
             ]),
             vue.createVNode(_component_uni_icons, {
-              onClick: _cache[6] || (_cache[6] = ($event) => $options.copyQQ()),
+              onClick: _cache[7] || (_cache[7] = ($event) => $options.copyQQ()),
               color: "#aaa",
               type: "circle-filled",
               size: "20"
@@ -3017,7 +3023,7 @@ if (uni.restoreGlobal) {
             vue.createElementVNode("view", { class: "s-header-right" }, "\u4E13\u9898\u63A8\u8350"),
             vue.createElementVNode("view", {
               class: "s-header-left",
-              onClick: _cache[7] || (_cache[7] = (...args) => $options.goToSorts && $options.goToSorts(...args))
+              onClick: _cache[9] || (_cache[9] = (...args) => $options.goToSorts && $options.goToSorts(...args))
             }, [
               vue.createVNode(_component_uni_icons, {
                 color: "#333",
@@ -3086,7 +3092,7 @@ if (uni.restoreGlobal) {
         $data.backTopValue ? (vue.openBlock(), vue.createElementBlock("view", {
           key: 1,
           class: "xiaohuojian",
-          onClick: _cache[8] || (_cache[8] = (...args) => $options.xhj && $options.xhj(...args))
+          onClick: _cache[10] || (_cache[10] = (...args) => $options.xhj && $options.xhj(...args))
         }, [
           vue.createElementVNode("image", {
             src: "/static/fanhuidingbu.png",
@@ -3118,7 +3124,7 @@ if (uni.restoreGlobal) {
                 ]),
                 vue.createElementVNode("text", { class: "desc" }, vue.toDisplayString($options.delHtmlTag(item.description)), 1),
                 vue.createElementVNode("view", { class: "many" }, [
-                  vue.createElementVNode("view", { class: "sort" }, vue.toDisplayString(item.sort_name), 1),
+                  vue.createElementVNode("view", { class: "sort" }, vue.toDisplayString(item.sort_name || "\u6682\u672A\u5206\u7C7B"), 1),
                   vue.createElementVNode("view", { class: "right" }, [
                     vue.createElementVNode("view", { class: "read" }, [
                       vue.createVNode(_component_uni_icons, {
@@ -3147,7 +3153,7 @@ if (uni.restoreGlobal) {
                 ]),
                 vue.createElementVNode("text", { class: "desc" }, vue.toDisplayString($options.delHtmlTag(item.description)), 1),
                 vue.createElementVNode("view", { class: "many" }, [
-                  vue.createElementVNode("view", { class: "sort" }, vue.toDisplayString(item.sort_name), 1),
+                  vue.createElementVNode("view", { class: "sort" }, vue.toDisplayString(item.sort_name || "\u6682\u672A\u5206\u7C7B"), 1),
                   vue.createElementVNode("view", { class: "right" }, [
                     vue.createElementVNode("view", { class: "read" }, [
                       vue.createVNode(_component_uni_icons, {
@@ -5180,9 +5186,12 @@ if (uni.restoreGlobal) {
         this.bjcontent = e.detail.value;
       },
       editBlog(e) {
+        var that = this;
         this.swiperCurrent = 1;
-        this.blogid = e;
-        this.getOne(e);
+        setTimeout(() => {
+          that.blogid = e;
+          that.getOne(e);
+        }, 1e3);
       },
       async http(key) {
         const res = await myRequest({
@@ -5233,7 +5242,7 @@ if (uni.restoreGlobal) {
         this.$refs.message.open();
       },
       bindPickerChange: function(e) {
-        formatAppLog("log", "at pages/xia-editor/xia-editor.vue:256", "picker\u53D1\u9001\u9009\u62E9\u6539\u53D8\uFF0C\u643A\u5E26\u503C\u4E3A", this.blogSorts[e.detail.value].sid);
+        formatAppLog("log", "at pages/xia-editor/xia-editor.vue:263", "picker\u53D1\u9001\u9009\u62E9\u6539\u53D8\uFF0C\u643A\u5E26\u503C\u4E3A", this.blogSorts[e.detail.value].sid);
         this.sort = e.detail.value;
         this.sid = this.blogSorts[e.detail.value].sid;
       },
@@ -5399,14 +5408,14 @@ if (uni.restoreGlobal) {
       insertDivider() {
         this.editorCtx.insertDivider({
           success: function() {
-            formatAppLog("log", "at pages/xia-editor/xia-editor.vue:421", "insert divider success");
+            formatAppLog("log", "at pages/xia-editor/xia-editor.vue:428", "insert divider success");
           }
         });
       },
       clear() {
         this.editorCtx.clear({
           success: function(res) {
-            formatAppLog("log", "at pages/xia-editor/xia-editor.vue:428", "clear success");
+            formatAppLog("log", "at pages/xia-editor/xia-editor.vue:435", "clear success");
           }
         });
       },
@@ -5444,7 +5453,7 @@ if (uni.restoreGlobal) {
               },
               success: function(res2) {
                 var data2 = JSON.parse(res2.data);
-                formatAppLog("log", "at pages/xia-editor/xia-editor.vue:466", data2.data);
+                formatAppLog("log", "at pages/xia-editor/xia-editor.vue:473", data2.data);
                 that.editorCtx.insertImage({
                   src: data2.data,
                   alt: data2.data,
@@ -5473,7 +5482,7 @@ if (uni.restoreGlobal) {
         for (var i = 0; i <= arr.length; i++) {
           this.blogSortName.push(res.data.data.sorts[i].sortname);
         }
-        formatAppLog("log", "at pages/xia-editor/xia-editor.vue:495", this.blogSortName);
+        formatAppLog("log", "at pages/xia-editor/xia-editor.vue:502", this.blogSortName);
       },
       async blog(page) {
         const res = await myRequest({
@@ -5531,6 +5540,7 @@ if (uni.restoreGlobal) {
           class: "swiper",
           current: $data.swiperCurrent,
           "easing-function": "easeInOutCubic",
+          circular: "true",
           duration: 500,
           onChange: _cache[34] || (_cache[34] = (...args) => $options.swiperChangeCustom && $options.swiperChangeCustom(...args))
         }, [
@@ -5784,8 +5794,7 @@ if (uni.restoreGlobal) {
             }, [
               vue.createElementVNode("textarea", {
                 onInput: _cache[28] || (_cache[28] = (...args) => $options.bjinput && $options.bjinput(...args)),
-                class: "textarea uni-input",
-                placeholder: "\u5F00\u59CB\u5199\u7B14\u8BB0\u5427!"
+                class: "textarea uni-input"
               }, null, 32),
               $data.flg ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
                 vue.createElementVNode("view", {
@@ -9516,7 +9525,7 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/blog-info/blog-info.vue:170", res.target);
+        formatAppLog("log", "at pages/blog-info/blog-info.vue:176", res.target);
       }
       return {
         title: this.data.title,
@@ -9550,10 +9559,10 @@ if (uni.restoreGlobal) {
           imageUrl: this.data.cover || this.appData.data.shareImg,
           summary: "\u6211\u6B63\u5728\u67E5\u770B\u6587\u7AE0" + this.data.title + "\uFF0C\u8D76\u7D27\u8DDF\u6211\u4E00\u8D77\u6765\u4F53\u9A8C\uFF01",
           success: function(res) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:206", "success:" + JSON.stringify(res));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:212", "success:" + JSON.stringify(res));
           },
           fail: function(err) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:209", "fail:" + JSON.stringify(err));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:215", "fail:" + JSON.stringify(err));
           }
         });
       },
@@ -9566,10 +9575,10 @@ if (uni.restoreGlobal) {
           imageUrl: this.data.cover || this.appData.data.shareImg,
           href: this.url,
           success: function(res) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:222", "success:" + JSON.stringify(res));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:228", "success:" + JSON.stringify(res));
           },
           fail: function(err) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:225", "fail:" + JSON.stringify(err));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:231", "fail:" + JSON.stringify(err));
           }
         });
       },
@@ -9629,6 +9638,10 @@ if (uni.restoreGlobal) {
         res.data.data.article.content = res.data.data.article.content.replace(
           /\<h6/gi,
           '<h6 class="rich-h6" '
+        );
+        res.data.data.article.content = res.data.data.article.content.replace(
+          /\.\.\/content\/upload/gi,
+          set.url + "/content/upload"
         );
         res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, "****");
         this.data = res.data.data.article;
@@ -9824,6 +9837,9 @@ if (uni.restoreGlobal) {
       this.blog(this.page);
     },
     onShow() {
+    },
+    onLoad() {
+      this.blog(1);
       var that = this;
       uni.getStorage({
         key: "apikey",
@@ -9831,9 +9847,6 @@ if (uni.restoreGlobal) {
           that.http(res.data);
         }
       });
-    },
-    onLoad() {
-      this.blog(1);
     },
     methods: {
       async http(key) {
@@ -9865,17 +9878,22 @@ if (uni.restoreGlobal) {
       },
       async getBaidu(id, u) {
         const res = await get({
-          url: "http://data.zz.baidu.com/urls?site=" + u + "&token=" + this.value.baidu
+          url: "https://data.zz.baidu.com/urls?site=" + u + "&token=" + this.value.baidu
         });
         if (res.data.error >= 400) {
           uni.showModal({
             title: "\u94FE\u63A5\u63D0\u4EA4\u5931\u8D25",
             content: `${res.data.message}`
           });
-        } else {
+        } else if (res.data.error <= 400) {
           uni.showModal({
             title: "\u63D0\u4EA4\u6210\u529F",
             content: `\u5269\u4F59\u7684\u53EF\u63A8\u9001${res.data.remain}\u6761`
+          });
+        } else {
+          uni.showModal({
+            title: "\u63D0\u4EA4\u5931\u8D25",
+            content: "\u8BF7\u68C0\u67E5\u914D\u7F6E\u662F\u5426\u6B63\u5E38"
           });
         }
       },
@@ -11131,7 +11149,7 @@ if (uni.restoreGlobal) {
                 url: "../index/index"
               });
             } else if (res.cancel) {
-              formatAppLog("log", "at pages/home/home.vue:228", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
+              formatAppLog("log", "at pages/home/home.vue:232", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
             }
           }
         });
@@ -11160,7 +11178,7 @@ if (uni.restoreGlobal) {
                 that.baidu("/sogoupages/index", "sogo");
               }
             } else if (res.cancel) {
-              formatAppLog("log", "at pages/home/home.vue:257", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
+              formatAppLog("log", "at pages/home/home.vue:261", "\u7528\u6237\u70B9\u51FB\u53D6\u6D88");
             }
           }
         });
@@ -11231,7 +11249,7 @@ if (uni.restoreGlobal) {
           ], 8, ["onClick"]);
         }), 256))
       ]),
-      ($data.appData.data.tianapi == "" ? true : false) ? (vue.openBlock(), vue.createElementBlock("view", {
+      ($data.appData.data.tianapi == "" ? false : true) ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
         class: "baidu-box"
       }, [

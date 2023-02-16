@@ -1288,7 +1288,7 @@
 }
 .s-item {
 	display: inline-block !important;
-	min-width: 47%;
+	width: 47%;
 	margin: 3px 10px;
 	border-radius: 5px;
 	font-size: 14px;
@@ -1530,10 +1530,10 @@ body {
 }
 .sort {
   border: #fff solid 1px;
-  padding: 3px;
+  padding: 5px;
   border-radius: 10px;
   opacity: 0.5;
-  font-size: 16px;
+  font-size: 13px;
 }
 .right {
   display: flex;
