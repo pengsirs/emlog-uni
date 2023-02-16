@@ -1,7 +1,7 @@
 <template>
 	<!-- #ifndef MP-BAIDU -->
 	<uni-transition ref="ani" custom-class="transition" :mode-class="modeClass" :styles="styles" :show="show">
-	<!-- #endif -->
+		<!-- #endif -->
 		<view class="content-box">
 			<view class="title">
 				{{data.title||"没有该文章或加载失败..."}}
@@ -16,15 +16,30 @@
 				</view>
 			</view>
 			<view class="openhtml" :style="'height: '+height+';overflow: hidden;'">
-				
 				<mp-html lozy-load="true" container-style="overflow: hidden;" selectable="true" :tag-style="tagStyle"
 					:content="data.content"></mp-html>
-					
-					<view class="over">—— The End ——</view>
+				<view class="over">—— The End ——</view>
 			</view>
-			<view class="htmlbtn" v-if="html" @click="closeHtml">收起<uni-icons style="margin-left: 5px;" type="top" size="16"></uni-icons></view>
-			<view class="htmlbtn" v-if="!html" @click="openHtml">查看更多<uni-icons style="margin-left: 5px;" type="bottom" size="16"></uni-icons></view>
-			<!-- <rich-text :nodes="data.content"></rich-text> -->
+			<view class="htmlbtn" v-if="html" @click="closeHtml">收起<uni-icons style="margin-left: 5px;" type="top"
+					size="16"></uni-icons>
+			</view>
+			<view class="htmlbtn" v-if="!html" @click="openHtml">查看更多<uni-icons style="margin-left: 5px;" type="bottom"
+					size="16"></uni-icons>
+			</view>
+			<!-- 文章附件-->
+			<view class="Info-File" v-if="downTitle!=''">
+				<view class="File-title">
+					文章附件
+				</view>
+				<view class="File-content">
+					<view class="File-left">
+						<uni-icons color="#23c1aa" type="circle-filled" size="20"></uni-icons>资源名称：{{downTitle}}
+					</view>
+					<view class="File-right">
+						<view class="File-btn" @click="copy(downUrl)" >立即获取</view>
+					</view>
+				</view>
+			</view>
 			<view class="Copyright-box">
 				<view class="Copyright-item">
 					<view class="Copyright">
@@ -36,12 +51,6 @@
 					</view>
 				</view>
 			</view>
-
-			<!-- 			<view class="tags">
-			<view v-for="item in data.tags">
-			<view class="tag" @click="search(item.name)">{{item.name}}</view>
-			</view>
-			</view> -->
 
 			<view class="tags" v-if="data.tags!=''">
 				<view class="tag-title">文章标签</view>
@@ -116,7 +125,7 @@
 					</button>
 				</view>
 			</uni-collapse-items>
-				<!-- #endif -->
+			<!-- #endif -->
 		</uni-collapses>
 	</view>
 	<!-- #endif -->
@@ -137,11 +146,13 @@
 					td: 'border:1px #eee solid;text-align:center;',
 					th: 'border:1px #eee solid;background-color:#ffc09f;',
 				},
-				height:"350px",
+				height: "350px",
 				data: {},
 				haibao: "",
-				html:false,
+				html: false,
 				url: '',
+				downTitle: '',
+				downUrl: '',
 				arrays: [0],
 				content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
 					"<div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div>" +
@@ -182,12 +193,23 @@
 			}
 		},
 		methods: {
-			openHtml(){
-				this.height="100%"
+			copy(e) {
+				uni.setClipboardData({
+					data: e,
+					success: function() {
+						uni.showModal({
+							title: "温馨提示",
+							content: "获取成功，设置到剪贴板"
+						})
+					}
+				});
+			},
+			openHtml() {
+				this.height = "100%"
 				this.html = !this.html
 			},
-			closeHtml(){
-				this.height="350px"
+			closeHtml() {
+				this.height = "350px"
 				this.html = !this.html
 			},
 			addll(e) {
@@ -276,7 +298,12 @@
 				res.data.data.article.content = res.data.data.article.content.replace(/\<h6/gi,
 					'<h6 class="rich-h6" ');
 				res.data.data.article.content = res.data.data.article.content.replace(/\.\.\/content\/upload/gi,
-					set.url+'/content/upload');
+					set.url + '/content/upload');
+				//写一个正则表达式提取标签中的内容
+				var reg = /<miniTitle>(.*)<\/miniTitle>/;
+				var regUrl = /<miniUrl>(.*)<\/miniUrl>/;
+				this.downTitle = res.data.data.article.content.match(reg)?res.data.data.article.content.match(reg)[1]:'';
+				this.downUrl = res.data.data.article.content.match(regUrl)?res.data.data.article.content.match(regUrl)[1]:'';
 				res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, '****');
 				// #ifndef APP-PLUS
 				arrays = res.data.data.article.content.match(/<a (.*)a>/gi) ? res.data.data.article.content.match(
@@ -296,7 +323,7 @@
 </script>
 
 <style>
-	.htmlbtn{
+	.htmlbtn {
 		width: 100%;
 		text-align: center;
 		padding-top: 30px;
@@ -306,10 +333,11 @@
 		color: #666;
 		left: 0;
 		position: relative;
-		z-index:99;
+		z-index: 99;
 		background: linear-gradient(360deg, #fff 0%, #fff 50%, rgba(255, 255, 255, 0) 100%);
 	}
-	.openhtml{
+
+	.openhtml {
 		z-index: 1;
 		position: relative;
 	}
@@ -383,6 +411,30 @@
 		margin: 10px 0px;
 		opacity: 0.5;
 	}
+	.File-title{
+		font-size: 16px;
+	}
+	.Info-File{
+		background-color: #fff;
+		box-shodow: 0px 0px 0px 5px #eee;
+		border-radius: 5px;
+	}
+	.File-content{
+		display: flex;
+		justify-content: space-between;
+		height: 20px;
+		line-height: 20px;
+		margin-top: 10px;
+	}
+	.File-left{
+		display: flex;
+		align-items: center;
+	}
+	.File-right .File-btn{
+		background-color: #23c1aa;
+		padding:0px 5px;
+		border-radius: 5px;
+	}
 
 	.tag-item {
 		flex-wrap: wrap;
@@ -399,7 +451,7 @@
 		box-shadow: 0px 0px 5px #eee;
 	}
 
-	.tag-title:before {
+	.File-title:before,.tag-title:before {
 		width: 40px;
 		height: 3px;
 		position: absolute;
@@ -413,7 +465,7 @@
 		box-shadow: 1px 1px 3px -1px #2979ff;
 	}
 
-	.tag-title {
+	.File-title,.tag-title {
 		padding: 2px 5px;
 		font-weight: 600;
 		position: relative;
@@ -434,7 +486,7 @@
 		background: #fff;
 		font-size: 12px;
 		font-weight: 300;
-		color:#555;
+		color: #555;
 		padding: 10px;
 		border-radius: 5px;
 		box-shadow: 0px 0px 2px #fff;

@@ -2488,7 +2488,7 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/index/index.vue:364", res.target);
+        formatAppLog("log", "at pages/index/index.vue:367", res.target);
       }
       return {
         title: "\u5206\u4EAB\u597D\u73A9\u7684\u7A0B\u5E8F\uFF01",
@@ -9502,6 +9502,8 @@ if (uni.restoreGlobal) {
         haibao: "",
         html: false,
         url: "",
+        downTitle: "",
+        downUrl: "",
         arrays: [0],
         content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:70%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:90%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:30%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:250px;width:100%;border-radius:5px;margin:10px auto;'></div>"
       };
@@ -9525,7 +9527,7 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/blog-info/blog-info.vue:176", res.target);
+        formatAppLog("log", "at pages/blog-info/blog-info.vue:187", res.target);
       }
       return {
         title: this.data.title,
@@ -9534,6 +9536,17 @@ if (uni.restoreGlobal) {
       };
     },
     methods: {
+      copy(e) {
+        uni.setClipboardData({
+          data: e,
+          success: function() {
+            uni.showModal({
+              title: "\u6E29\u99A8\u63D0\u793A",
+              content: "\u83B7\u53D6\u6210\u529F\uFF0C\u8BBE\u7F6E\u5230\u526A\u8D34\u677F"
+            });
+          }
+        });
+      },
       openHtml() {
         this.height = "100%";
         this.html = !this.html;
@@ -9559,10 +9572,10 @@ if (uni.restoreGlobal) {
           imageUrl: this.data.cover || this.appData.data.shareImg,
           summary: "\u6211\u6B63\u5728\u67E5\u770B\u6587\u7AE0" + this.data.title + "\uFF0C\u8D76\u7D27\u8DDF\u6211\u4E00\u8D77\u6765\u4F53\u9A8C\uFF01",
           success: function(res) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:212", "success:" + JSON.stringify(res));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:234", "success:" + JSON.stringify(res));
           },
           fail: function(err) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:215", "fail:" + JSON.stringify(err));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:237", "fail:" + JSON.stringify(err));
           }
         });
       },
@@ -9575,10 +9588,10 @@ if (uni.restoreGlobal) {
           imageUrl: this.data.cover || this.appData.data.shareImg,
           href: this.url,
           success: function(res) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:228", "success:" + JSON.stringify(res));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:250", "success:" + JSON.stringify(res));
           },
           fail: function(err) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:231", "fail:" + JSON.stringify(err));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:253", "fail:" + JSON.stringify(err));
           }
         });
       },
@@ -9643,6 +9656,10 @@ if (uni.restoreGlobal) {
           /\.\.\/content\/upload/gi,
           set.url + "/content/upload"
         );
+        var reg2 = /<miniTitle>(.*)<\/miniTitle>/;
+        var regUrl = /<miniUrl>(.*)<\/miniUrl>/;
+        this.downTitle = res.data.data.article.content.match(reg2) ? res.data.data.article.content.match(reg2)[1] : "";
+        this.downUrl = res.data.data.article.content.match(regUrl) ? res.data.data.article.content.match(regUrl)[1] : "";
         res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, "****");
         this.data = res.data.data.article;
       }
@@ -9726,7 +9743,29 @@ if (uni.restoreGlobal) {
                 size: "16"
               })
             ])) : vue.createCommentVNode("v-if", true),
-            vue.createCommentVNode(' <rich-text :nodes="data.content"></rich-text> '),
+            vue.createCommentVNode(" \u6587\u7AE0\u9644\u4EF6"),
+            $data.downTitle != "" ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 2,
+              class: "Info-File"
+            }, [
+              vue.createElementVNode("view", { class: "File-title" }, " \u6587\u7AE0\u9644\u4EF6 "),
+              vue.createElementVNode("view", { class: "File-content" }, [
+                vue.createElementVNode("view", { class: "File-left" }, [
+                  vue.createVNode(_component_uni_icons, {
+                    color: "#23c1aa",
+                    type: "circle-filled",
+                    size: "20"
+                  }),
+                  vue.createTextVNode("\u8D44\u6E90\u540D\u79F0\uFF1A" + vue.toDisplayString($data.downTitle), 1)
+                ]),
+                vue.createElementVNode("view", { class: "File-right" }, [
+                  vue.createElementVNode("view", {
+                    class: "File-btn",
+                    onClick: _cache[2] || (_cache[2] = ($event) => $options.copy($data.downUrl))
+                  }, "\u7ACB\u5373\u83B7\u53D6")
+                ])
+              ])
+            ])) : vue.createCommentVNode("v-if", true),
             vue.createElementVNode("view", { class: "Copyright-box" }, [
               vue.createElementVNode("view", { class: "Copyright-item" }, [
                 vue.createElementVNode("view", { class: "Copyright" }, [
@@ -9742,9 +9781,8 @@ if (uni.restoreGlobal) {
                 ])
               ])
             ]),
-            vue.createCommentVNode(' 			<view class="tags">\n			<view v-for="item in data.tags">\n			<view class="tag" @click="search(item.name)">{{item.name}}</view>\n			</view>\n			</view> '),
             $data.data.tags != "" ? (vue.openBlock(), vue.createElementBlock("view", {
-              key: 2,
+              key: 3,
               class: "tags"
             }, [
               vue.createElementVNode("view", { class: "tag-title" }, "\u6587\u7AE0\u6807\u7B7E"),
@@ -9775,7 +9813,7 @@ if (uni.restoreGlobal) {
                 vue.createElementVNode("view", { class: "ft-content" }, [
                   vue.createElementVNode("view", {
                     class: "homelist",
-                    onClick: _cache[2] || (_cache[2] = ($event) => $options.qq())
+                    onClick: _cache[3] || (_cache[3] = ($event) => $options.qq())
                   }, [
                     vue.createElementVNode("view", { class: "homelist-item" }, [
                       vue.createVNode(_component_uni_icons, {
@@ -9788,7 +9826,7 @@ if (uni.restoreGlobal) {
                   ]),
                   vue.createElementVNode("view", {
                     class: "homelist",
-                    onClick: _cache[3] || (_cache[3] = ($event) => $options.weixin("WXSceneSession"))
+                    onClick: _cache[4] || (_cache[4] = ($event) => $options.weixin("WXSceneSession"))
                   }, [
                     vue.createElementVNode("view", { class: "homelist-item" }, [
                       vue.createVNode(_component_uni_icons, {
@@ -9801,7 +9839,7 @@ if (uni.restoreGlobal) {
                   ]),
                   vue.createElementVNode("view", {
                     class: "homelist",
-                    onClick: _cache[4] || (_cache[4] = ($event) => $options.weixin("WXSceneTimeline"))
+                    onClick: _cache[5] || (_cache[5] = ($event) => $options.weixin("WXSceneTimeline"))
                   }, [
                     vue.createElementVNode("view", { class: "homelist-item" }, [
                       vue.createVNode(_component_uni_icons, {
@@ -11038,7 +11076,7 @@ if (uni.restoreGlobal) {
     },
     data() {
       return {
-        banbenhao: "1.0.3",
+        banbenhao: "1.1.0",
         shoulu: "",
         sogo: "",
         upgradeType: "",

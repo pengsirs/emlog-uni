@@ -200,6 +200,9 @@
 				<!-- #ifdef MP-QQ -->
 				<ad class="ad" v-if="index%5==0 && index!=0" unit-id="675f88c8665f60f30b71804e8ef4707a"></ad>
 				<!-- #endif -->
+				<!-- #ifdef MP-WEIXIN -->
+				<ad class="ad" v-if="index%5==0 && index!=0" unit-id="675f88c8665f60f30b71804e8ef4707a"></ad>
+				<!-- #endif -->
 				<view v-if="getimg(item.description) || item.cover" class="list-items"
 					@click="toInfo(item.id,item.url)">
 					<view class="img-box">
