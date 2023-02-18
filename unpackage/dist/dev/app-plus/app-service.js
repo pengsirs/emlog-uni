@@ -2488,7 +2488,7 @@ if (uni.restoreGlobal) {
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/index/index.vue:367", res.target);
+        formatAppLog("log", "at pages/index/index.vue:427", res.target);
       }
       return {
         title: "\u5206\u4EAB\u597D\u73A9\u7684\u7A0B\u5E8F\uFF01",
@@ -2613,10 +2613,13 @@ if (uni.restoreGlobal) {
       },
       getimg(str) {
         if (str) {
-          var srcReg = /<img.+?src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+          var srcReg = /<img[^>]*src\s*=\s*['"]?([^'"]+)['"]?[^>]*>/gim;
           var result = str.match(srcReg);
           if (result != null) {
-            return result[1];
+            for (var i = 0; i < result.length; i++) {
+              result[i] = result[i].replace(/<img[^>]*src\s*=\s*['"]?([^'"]+)['"]?[^>]*>/gim, "$1");
+            }
+            return result;
           } else {
             return false;
           }
@@ -3101,8 +3104,95 @@ if (uni.restoreGlobal) {
         ])) : vue.createCommentVNode("v-if", true),
         (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList($data.dataa, (item, index2) => {
           return vue.openBlock(), vue.createElementBlock("view", { key: index2 }, [
-            $options.getimg(item.description) || item.cover ? (vue.openBlock(), vue.createElementBlock("view", {
+            vue.createCommentVNode(" \u4E09\u5F20\u6216\u66F4\u591A\u56FE\u7247 "),
+            vue.createCommentVNode(` 				<view v-if="getimg(item.description).length >= 3" class="list-items-many" @click="toInfo(item.id, item.url)">
+					<view class="list-box-null">
+						<view class="list-title"><span v-if="item.top == 'y'" class="top">\u7F6E\u9876</span>{{ item.title }}
+						</view>
+						<view class="img-box-many between">
+							<view class="packaged" v-for="i in 3" style="width: 30%;">
+								<image @error="imageError($event, index)" class="lists-img-many"
+									:src="getimg(item.description)[i-1]" mode="scaleToFill"></image>
+							</view>
+						</view>
+						<view class="many">
+							<view class="sort">{{ item.sort_name || "\u6682\u672A\u5206\u7C7B" }}</view>
+							<view class="right">
+								<view class="read">
+									<uni-icons type="fire-filled" size="17"></uni-icons>{{ item.views }}
+								</view>
+								<view class="comments">
+									{{ getDateBeforeNow(item.date) }}
+								</view>
+							</view>
+						</view>
+					</view>
+				</view> `),
+            vue.createCommentVNode(" \u591A\u5F20\u56FE\u7247 "),
+            $options.getimg(item.description).length > 1 ? (vue.openBlock(), vue.createElementBlock("view", {
               key: 0,
+              class: "list-items-many",
+              onClick: ($event) => $options.toInfo(item.id, item.url)
+            }, [
+              vue.createElementVNode("view", { class: "list-box-null" }, [
+                vue.createElementVNode("view", { class: "list-title" }, [
+                  item.top == "y" ? (vue.openBlock(), vue.createElementBlock("span", {
+                    key: 0,
+                    class: "top"
+                  }, "\u7F6E\u9876")) : vue.createCommentVNode("v-if", true),
+                  vue.createTextVNode(vue.toDisplayString(item.title), 1)
+                ]),
+                $options.getimg(item.description).length == 2 ? (vue.openBlock(), vue.createElementBlock("view", {
+                  key: 0,
+                  class: "img-box-many between"
+                }, [
+                  (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, vue.renderList(2, (i) => {
+                    return vue.createElementVNode("view", { class: "packaged" }, [
+                      vue.createElementVNode("image", {
+                        onError: ($event) => $options.imageError($event, index2),
+                        class: "lists-img-many",
+                        src: $options.getimg(item.description)[i - 1],
+                        mode: "scaleToFill"
+                      }, null, 40, ["onError", "src"])
+                    ]);
+                  }), 64))
+                ])) : vue.createCommentVNode("v-if", true),
+                $options.getimg(item.description).length >= 3 ? (vue.openBlock(), vue.createElementBlock("view", {
+                  key: 1,
+                  class: "img-box-many between"
+                }, [
+                  (vue.openBlock(), vue.createElementBlock(vue.Fragment, null, vue.renderList(3, (i) => {
+                    return vue.createElementVNode("view", {
+                      class: "packaged",
+                      style: { "width": "30%" }
+                    }, [
+                      vue.createElementVNode("image", {
+                        onError: ($event) => $options.imageError($event, index2),
+                        class: "lists-img-many",
+                        src: $options.getimg(item.description)[i - 1],
+                        mode: "scaleToFill"
+                      }, null, 40, ["onError", "src"])
+                    ]);
+                  }), 64))
+                ])) : vue.createCommentVNode("v-if", true),
+                vue.createElementVNode("view", { class: "many" }, [
+                  vue.createElementVNode("view", { class: "sort" }, vue.toDisplayString(item.sort_name || "\u6682\u672A\u5206\u7C7B"), 1),
+                  vue.createElementVNode("view", { class: "right" }, [
+                    vue.createElementVNode("view", { class: "read" }, [
+                      vue.createVNode(_component_uni_icons, {
+                        type: "fire-filled",
+                        size: "17"
+                      }),
+                      vue.createTextVNode(vue.toDisplayString(item.views), 1)
+                    ]),
+                    vue.createElementVNode("view", { class: "comments" }, vue.toDisplayString($options.getDateBeforeNow(item.date)), 1)
+                  ])
+                ])
+              ])
+            ], 8, ["onClick"])) : vue.createCommentVNode("v-if", true),
+            vue.createCommentVNode(" \u53EA\u6709\u4E00\u5F20\u56FE\u7247 "),
+            $options.getimg(item.description).length == 1 ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 1,
               class: "list-items",
               onClick: ($event) => $options.toInfo(item.id, item.url)
             }, [
@@ -3110,7 +3200,7 @@ if (uni.restoreGlobal) {
                 vue.createElementVNode("image", {
                   onError: ($event) => $options.imageError($event, index2),
                   class: "lists-img",
-                  src: item.cover || $options.getimg(item.description),
+                  src: $options.getimg(item.description)[0],
                   mode: "scaleToFill"
                 }, null, 40, ["onError", "src"])
               ]),
@@ -3138,8 +3228,9 @@ if (uni.restoreGlobal) {
                 ])
               ])
             ], 8, ["onClick"])) : vue.createCommentVNode("v-if", true),
-            !$options.getimg(item.description) && item.cover == "" ? (vue.openBlock(), vue.createElementBlock("view", {
-              key: 1,
+            vue.createCommentVNode(" \u6CA1\u6709\u56FE\u7247 "),
+            !$options.getimg(item.description) ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 2,
               class: "list-items",
               onClick: ($event) => $options.toInfo(item.id, item.url)
             }, [
@@ -11320,7 +11411,7 @@ if (uni.restoreGlobal) {
           ]),
           vue.createElementVNode("view", { class: "shoulu" }, [
             vue.createElementVNode("view", { class: "sl-title" }, "\u641C\u72D7\u6536\u5F55"),
-            vue.createElementVNode("view", { class: "sl-content" }, vue.toDisplayString($data.sogo || "\u83B7\u53D6\u4E2D..."), 1)
+            vue.createElementVNode("view", { class: "sl-content" }, vue.toDisplayString($data.sogo == "" ? "\u6682\u65E0\u6536\u5F55" : "\u83B7\u53D6\u4E2D..."), 1)
           ]),
           vue.createVNode(_component_uni_icons, {
             onClick: _cache[2] || (_cache[2] = ($event) => $options.shua("sogo")),

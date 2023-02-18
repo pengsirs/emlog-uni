@@ -1,10 +1,12 @@
 <template>
 	<view>
-		<view class="content" v-if="appData.state==200">
+		<view class="content" v-if="appData.state == 200">
 			<view class="header">
 				<view class="user">
 					<view @click="showDrawer('showLeft')">
-						<image class="user-img" :src="'http://q2.qlogo.cn/headimg_dl?dst_uin='+appData.data.qq+'&spec=100'" mode=""></image>
+						<image class="user-img"
+							:src="'http://q2.qlogo.cn/headimg_dl?dst_uin=' + appData.data.qq + '&spec=100'" mode="">
+						</image>
 					</view>
 				</view>
 				<view class="secrch">
@@ -25,7 +27,7 @@
 					<scroll-view style="height: 100%;" scroll-y="true">
 						<view style="width: 100%;display: flex;flex-direction: column;">
 							<view class="lervor-card-page">
-								<swiper class="card-swiper"  circular="true" @change="changeCard" previous-margin="45rpx"
+								<swiper class="card-swiper" circular="true" @change="changeCard" previous-margin="45rpx"
 									next-margin="45rpx">
 									<swiper-item v-for="(item, index) in cardList">
 										<view
@@ -43,7 +45,7 @@
 											</view>
 											<view class="shoulu">
 												<view class="sl-content">文章数量</view>
-												<view class="sl-title">{{toolsData.blogNum}}篇</view>
+												<view class="sl-title">{{ toolsData.blogNum }}篇</view>
 											</view>
 										</view>
 										<view class="baidu-iteme">
@@ -52,7 +54,7 @@
 											</view>
 											<view class="shoulu">
 												<view class="sl-content">友链数量</view>
-												<view class="sl-title">{{toolsData.linkNum}}个</view>
+												<view class="sl-title">{{ toolsData.linkNum }}个</view>
 											</view>
 										</view>
 									</view>
@@ -63,7 +65,7 @@
 											</view>
 											<view class="shoulu">
 												<view class="sl-content">分类数量</view>
-												<view class="sl-title">{{toolsData.sortNum}}个</view>
+												<view class="sl-title">{{ toolsData.sortNum }}个</view>
 											</view>
 										</view>
 										<view class="baidu-iteme">
@@ -72,7 +74,7 @@
 											</view>
 											<view class="shoulu">
 												<view class="sl-content">标签数量</view>
-												<view class="sl-title">{{toolsData.tagNum}}个</view>
+												<view class="sl-title">{{ toolsData.tagNum }}个</view>
 											</view>
 										</view>
 									</view>
@@ -83,7 +85,7 @@
 											</view>
 											<view class="shoulu">
 												<view class="sl-content">用户数量</view>
-												<view class="sl-title">{{toolsData.userNum}}个</view>
+												<view class="sl-title">{{ toolsData.userNum }}个</view>
 											</view>
 										</view>
 										<view class="baidu-iteme">
@@ -92,13 +94,13 @@
 											</view>
 											<view class="shoulu">
 												<view class="sl-content">管理数量</view>
-												<view class="sl-title">{{toolsData.adminNum}}个</view>
+												<view class="sl-title">{{ toolsData.adminNum }}个</view>
 											</view>
 										</view>
 									</view>
 									<view class="baidu-boxx"
 										style="box-shadow: 0px 0px 5px #eee;padding: 5px 10px;margin: 10px;border-radius: 5px;background: #fff;">
-										最近文章发布时间{{toolsData.overTime}}</view>
+										最近文章发布时间{{ toolsData.overTime }}</view>
 								</view>
 							</view>
 						</view>
@@ -107,11 +109,11 @@
 			</view>
 			<view class="swiper-wrap">
 				<swiper class="swiper-box" :indicator-dots="false" autoplay="true" circular="true"
-					previous-margin="10px" next-margin="10px" :vertical="vertical"
-					:current="swiperCurrent" @change="swiperChangeCustom">
-					<swiper-item v-for="(item,index) in lunbo" :key="index" @click="toInfo(lbid[index])">
+					previous-margin="10px" next-margin="10px" :vertical="vertical" :current="swiperCurrent"
+					@change="swiperChangeCustom">
+					<swiper-item v-for="(item, index) in lunbo" :key="index" @click="toInfo(lbid[index])">
 						<view class="swiper-item" :class="'swiper-item' + index">
-							<img :src="item!='0'?item:'https://cdn.hkiii.cn/cg/' + (index+1) + '.jpeg'"
+							<img :src="item != '0' ? item : 'https://cdn.hkiii.cn/cg/' + (index + 1) + '.jpeg'"
 								class="swiper-img" srcset="">
 						</view>
 					</swiper-item>
@@ -127,7 +129,7 @@
 
 
 			<uni-notice-bar show-icon scrollable background-color="#fff" color="#000"
-				:text="appData.data.ridingLantern||'获取中...'" />
+				:text="appData.data.ridingLantern || '获取中...'" />
 			<view class="baidu-box" v-if="appData.data.auditing != 1">
 				<view class="baidu-item" @click="copyUrl()">
 					<view class="sl-icon">
@@ -160,12 +162,12 @@
 				</view>
 				<view class="card-area">
 					<scroll-view class="scroll-view" scroll-x>
-						<view class="s-item" v-for="(item,index) in count">
-							<view class="s-title-header" @click="goSortLogs(item[0].sort_id,item[0].sort_name)">
+						<view class="s-item" v-for="(item, index) in count">
+							<view class="s-title-header" @click="goSortLogs(item[0].sort_id, item[0].sort_name)">
 								<view class="s-Ftitle">最新文章</view>
 								<view class="s-title">
 									<!-- <view>{{ sorts[index].sortname }}</view> -->
-									<view v-if='item.length>0'>{{ item[0].sort_name }}</view>
+									<view v-if='item.length > 0'>{{ item[0].sort_name }}</view>
 									<view v-else>不给你看</view>
 									<uni-icons color="#fff" type="forward" size="12px"></uni-icons>
 								</view>
@@ -179,7 +181,7 @@
 								</view>
 
 								<view v-if="item != ''" class="s-content">
-									<view class="s-content-item" v-for="(it,i) in item" @click="toInfo(it.id,it.url)">
+									<view class="s-content-item" v-for="(it, i) in item" @click="toInfo(it.id, it.url)">
 										<image :src="'../../static/ph' + (i + 1) + '.png'" />
 										<view class="ding">{{ i + 1 }}</view>
 										<view class="s-text">{{ it.title }}</view>
@@ -196,48 +198,106 @@
 				<image src="../../static/fanhuidingbu.png" mode=""></image>
 			</view>
 
-			<view v-for="(item,index) in dataa" :key="index">
+			<view v-for="(item, index) in dataa" :key="index">
 				<!-- #ifdef MP-QQ -->
-				<ad class="ad" v-if="index%5==0 && index!=0" unit-id="675f88c8665f60f30b71804e8ef4707a"></ad>
+				<ad class="ad" v-if="index % 5 == 0 && index != 0" unit-id="675f88c8665f60f30b71804e8ef4707a"></ad>
 				<!-- #endif -->
 				<!-- #ifdef MP-WEIXIN -->
-				<ad class="ad" v-if="index%5==0 && index!=0" unit-id="675f88c8665f60f30b71804e8ef4707a"></ad>
+				<ad class="ad" v-if="index % 5 == 0 && index != 0" unit-id="675f88c8665f60f30b71804e8ef4707a"></ad>
 				<!-- #endif -->
-				<view v-if="getimg(item.description) || item.cover" class="list-items"
-					@click="toInfo(item.id,item.url)">
-					<view class="img-box">
-						<image @error="imageError($event, index)" class="lists-img"
-							:src="item.cover||getimg(item.description)" mode="scaleToFill"></image>
-					</view>
-					<view class="list-box">
-						<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}</view>
-						<text class="desc">{{delHtmlTag(item.description)}}</text>
+				<!-- 三张或更多图片 -->
+<!-- 				<view v-if="getimg(item.description).length >= 3" class="list-items-many" @click="toInfo(item.id, item.url)">
+					<view class="list-box-null">
+						<view class="list-title"><span v-if="item.top == 'y'" class="top">置顶</span>{{ item.title }}
+						</view>
+						<view class="img-box-many between">
+							<view class="packaged" v-for="i in 3" style="width: 30%;">
+								<image @error="imageError($event, index)" class="lists-img-many"
+									:src="getimg(item.description)[i-1]" mode="scaleToFill"></image>
+							</view>
+						</view>
 						<view class="many">
-							<view class="sort">{{item.sort_name||"暂未分类"}}</view>
+							<view class="sort">{{ item.sort_name || "暂未分类" }}</view>
 							<view class="right">
 								<view class="read">
-									<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
+									<uni-icons type="fire-filled" size="17"></uni-icons>{{ item.views }}
 								</view>
 								<view class="comments">
-									{{getDateBeforeNow(item.date)}}
+									{{ getDateBeforeNow(item.date) }}
+								</view>
+							</view>
+						</view>
+					</view>
+				</view> -->
+				<!-- 多张图片 -->
+				<view v-if="getimg(item.description).length>1" class="list-items-many" @click="toInfo(item.id, item.url)">
+					<view class="list-box-null">
+						<view class="list-title"><span v-if="item.top == 'y'" class="top">置顶</span>{{ item.title }}
+						</view>
+						<view class="img-box-many between" v-if="getimg(item.description).length == 2">
+							<view class="packaged" v-for="i in 2">
+								<image @error="imageError($event, index)" class="lists-img-many"
+									:src="getimg(item.description)[i-1]" mode="scaleToFill"></image>
+							</view>
+						</view>
+						<view class="img-box-many between" v-if="getimg(item.description).length >= 3">
+							<view class="packaged" v-for="i in 3" style="width: 30%;">
+								<image @error="imageError($event, index)" class="lists-img-many"
+									:src="getimg(item.description)[i-1]" mode="scaleToFill"></image>
+							</view>
+						</view>
+						<view class="many">
+							<view class="sort">{{ item.sort_name || "暂未分类" }}</view>
+							<view class="right">
+								<view class="read">
+									<uni-icons type="fire-filled" size="17"></uni-icons>{{ item.views }}
+								</view>
+								<view class="comments">
+									{{ getDateBeforeNow(item.date) }}
 								</view>
 							</view>
 						</view>
 					</view>
 				</view>
-				<view v-if="!getimg(item.description) && item.cover == ''" class="list-items"
-					@click="toInfo(item.id,item.url)">
-					<view class="list-box-null">
-						<view class="list-title"><span v-if="item.top=='y'" class="top">置顶</span>{{item.title}}</view>
-						<text class="desc">{{delHtmlTag(item.description)}}</text>
+				<!-- 只有一张图片 -->
+				<view v-if="getimg(item.description).length == 1" class="list-items"
+					@click="toInfo(item.id, item.url)">
+					<view class="img-box">
+						<image @error="imageError($event, index)" class="lists-img"
+							:src="getimg(item.description)[0]" mode="scaleToFill"></image>
+					</view>
+					<view class="list-box">
+						<view class="list-title"><span v-if="item.top == 'y'" class="top">置顶</span>{{ item.title }}
+						</view>
+						<text class="desc">{{ delHtmlTag(item.description) }}</text>
 						<view class="many">
-							<view class="sort">{{item.sort_name||"暂未分类"}}</view>
+							<view class="sort">{{ item.sort_name || "暂未分类" }}</view>
 							<view class="right">
 								<view class="read">
-									<uni-icons type="fire-filled" size="17"></uni-icons>{{item.views}}
+									<uni-icons type="fire-filled" size="17"></uni-icons>{{ item.views }}
 								</view>
 								<view class="comments">
-									{{getDateBeforeNow(item.date)}}
+									{{ getDateBeforeNow(item.date) }}
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<!-- 没有图片 -->
+				<view v-if="!getimg(item.description)" class="list-items"
+					@click="toInfo(item.id, item.url)">
+					<view class="list-box-null">
+						<view class="list-title"><span v-if="item.top == 'y'" class="top">置顶</span>{{ item.title }}
+						</view>
+						<text class="desc">{{ delHtmlTag(item.description) }}</text>
+						<view class="many">
+							<view class="sort">{{ item.sort_name || "暂未分类" }}</view>
+							<view class="right">
+								<view class="read">
+									<uni-icons type="fire-filled" size="17"></uni-icons>{{ item.views }}
+								</view>
+								<view class="comments">
+									{{ getDateBeforeNow(item.date) }}
 								</view>
 							</view>
 						</view>
@@ -249,7 +309,7 @@
 		<view v-if='inull' style="margin-top: 100px">
 			<null></null>
 		</view>
-		<zero-loading v-if="!inull&&appData.state!=200" mask="true"></zero-loading>
+		<zero-loading v-if="!inull && appData.state != 200" mask="true"></zero-loading>
 	</view>
 </template>
 <script>
@@ -496,11 +556,16 @@
 			},
 			getimg(str) {
 				if (str) {
-					var reg = RegExp(/<img.+?src=('|")?([^'"]+)('|")?(?:\s+|>|\/>)/, "gim");
-					var srcReg = /<img.+?src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+					// var reg = RegExp(/<img.+?src=('|")?([^'"]+)('|")?(?:\s+|>|\/>)/, "gim");
+					// var srcReg = /<img.+?src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+					var srcReg = /<img[^>]*src\s*=\s*['"]?([^'"]+)['"]?[^>]*>/gim;
 					var result = str.match(srcReg);
 					if (result != null) {
-						return result[1];
+						//取出数组里面的图片链接，去除标签
+						for (var i = 0; i < result.length; i++) {
+							result[i] = result[i].replace(/<img[^>]*src\s*=\s*['"]?([^'"]+)['"]?[^>]*>/gim, "$1");
+						}
+						return result;
 					} else {
 						return false;
 					}
@@ -508,6 +573,23 @@
 					return '0'
 				}
 			},
+			// getImgNum(str) {
+			// 	if (str) {
+			// 		var srcReg =/<img[^>]*src\s*=\s*['"]?([^'"]+)['"]?[^>]*>/gim;
+			// 		var result = str.match(srcReg);
+			// 		if (result != null&&result != undefined) {
+			// 			//取出数组里面的图片链接，去除标签
+			// 			for (var i = 0; i < result.length; i++) {
+			// 				result[i] = result[i].replace(/<img[^>]*src\s*=\s*['"]?([^'"]+)['"]?[^>]*>/gim, "$1");
+			// 			}
+			// 			return result.length;
+			// 		} else {
+			// 			return false;
+			// 		}
+			// 	} else {
+			// 		return '0'
+			// 	}
+			// },
 			getDateBeforeNow(stringTime) {
 				stringTime = new Date(stringTime.replace(/-/g, '/'))
 				// 统一单位换算
@@ -565,6 +647,7 @@
 					duration: 300
 				})
 			},
+			//获取文章列表
 			async blog(page) {
 				const res = await myRequest({
 					url: '/?rest-api=article_list',
@@ -574,6 +657,7 @@
 						count: 10
 					}
 				})
+				//如果没有数据 则显示没有更多
 				if (res.data.data.articles == '') {
 					this.status = "no-more"
 				} else {
@@ -793,11 +877,40 @@
 		border-radius: 10px;
 		justify-content: space-between;
 	}
+	.list-items-many {
+		display: flex;
+		height: 150px;
+		margin: 10px 10px 0px 10px;
+		padding: 10px;
+		background-color: #fff;
+		box-shadow: #ddd 1px 1px 30px;
+		border-radius: 10px;
+		justify-content: space-between;
+	}
+
+	.between {
+		display: flex;
+		justify-content: space-between;
+	}
 
 	.lists-img {
 		width: 100%;
 		height: 93px;
 		border-radius: 5px;
+	}
+
+	.lists-img-many {
+		width: 100%;
+		height: 100%;
+	}
+
+	.packaged {
+		width: 47%;
+		height: 80px;
+		border-radius: 5px;
+		padding: 3px;
+		background-color: #fff;
+		box-shadow: inset 1px 1px 2px #ddd, inset -1px -1px 2px #ddd;
 	}
 
 	.list-box {
@@ -820,6 +933,11 @@
 		padding: 3px;
 		background-color: #fff;
 		box-shadow: inset 1px 1px 2px #ddd, inset -1px -1px 2px #ddd;
+	}
+
+	.img-box-two {
+		width: 100%;
+		border-radius: 5px;
 	}
 
 	.list-title {

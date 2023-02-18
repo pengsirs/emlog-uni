@@ -33,7 +33,7 @@
 				</view>
 				<view class="shoulu">
 					<view class="sl-title">搜狗收录</view>
-					<view class="sl-content">{{sogo||'获取中...'}}</view>
+					<view class="sl-content">{{sogo==''?"暂无收录":'获取中...'}}</view>
 				</view>
 				<uni-icons @click="shua('sogo')" color="#aaa" type="refreshempty" size="20"></uni-icons>
 			</view>
