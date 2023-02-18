@@ -479,6 +479,9 @@ export default {
   background-image:linear-gradient(to right ,#967a63,#483c32);
   box-shadow: 1px 1px 3px -1px #483c32;
 }
+/deep/.rich-img {
+ margin-top: 5px;
+}
 	/deep/ .aaa{
 	  color:green;
 	}

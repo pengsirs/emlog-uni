@@ -9583,7 +9583,7 @@ if (uni.restoreGlobal) {
     data() {
       return {
         tagStyle: {
-          blockquote: "max-width:100%;border-radius:5px;background:#eee;padding:5px;",
+          blockquote: "max-width:100%;background:#f9f9f9;padding:5px 10px;border-left:3px solid #42b883;margin:10px 0px;",
           table: "width:100%;border:1px #eee solid;",
           td: "border:1px #eee solid;text-align:center;",
           th: "border:1px #eee solid;background-color:#ffc09f;"
@@ -9595,13 +9595,28 @@ if (uni.restoreGlobal) {
         url: "",
         downTitle: "",
         downUrl: "",
+        appData: {
+          data: {
+            auditing: "0"
+          }
+        },
         arrays: [0],
         content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:70%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:90%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:20px;width:30%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div><div style='background:#eee;height:250px;width:100%;border-radius:5px;margin:10px auto;'></div>"
       };
     },
     onLoad(option) {
-      this.blog(option.id);
       this.id = option.id;
+      var that = this;
+      uni.getStorage({
+        key: "set_data",
+        success: function(res) {
+          that.appData = res.data;
+        },
+        fail() {
+          that.getData();
+        }
+      });
+      this.blog(option.id);
       this.url = decodeURIComponent(option.url);
       this.show = !this.show;
       this.modeClass = "fade";
@@ -9613,12 +9628,15 @@ if (uni.restoreGlobal) {
         key: "set_data",
         success: function(res) {
           that.appData = res.data;
+        },
+        fail() {
+          that.getData();
         }
       });
     },
     onShareAppMessage(res) {
       if (res.from === "button") {
-        formatAppLog("log", "at pages/blog-info/blog-info.vue:187", res.target);
+        formatAppLog("log", "at pages/blog-info/blog-info.vue:205", res.target);
       }
       return {
         title: this.data.title,
@@ -9627,6 +9645,22 @@ if (uni.restoreGlobal) {
       };
     },
     methods: {
+      async getData() {
+        const res = await htRequest({
+          url: "/content/plugins/ApiSetting/api.php",
+          method: "GET",
+          data: {
+            route: "getSetting"
+          }
+        });
+        if (res.data.state > 0) {
+          this.appData = res.data;
+          uni.setStorage({
+            key: "set_data",
+            data: res.data
+          });
+        }
+      },
       copy(e) {
         uni.setClipboardData({
           data: e,
@@ -9663,10 +9697,10 @@ if (uni.restoreGlobal) {
           imageUrl: this.data.cover || this.appData.data.shareImg,
           summary: "\u6211\u6B63\u5728\u67E5\u770B\u6587\u7AE0" + this.data.title + "\uFF0C\u8D76\u7D27\u8DDF\u6211\u4E00\u8D77\u6765\u4F53\u9A8C\uFF01",
           success: function(res) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:234", "success:" + JSON.stringify(res));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:269", "success:" + JSON.stringify(res));
           },
           fail: function(err) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:237", "fail:" + JSON.stringify(err));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:272", "fail:" + JSON.stringify(err));
           }
         });
       },
@@ -9679,10 +9713,10 @@ if (uni.restoreGlobal) {
           imageUrl: this.data.cover || this.appData.data.shareImg,
           href: this.url,
           success: function(res) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:250", "success:" + JSON.stringify(res));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:285", "success:" + JSON.stringify(res));
           },
           fail: function(err) {
-            formatAppLog("log", "at pages/blog-info/blog-info.vue:253", "fail:" + JSON.stringify(err));
+            formatAppLog("log", "at pages/blog-info/blog-info.vue:288", "fail:" + JSON.stringify(err));
           }
         });
       },
@@ -9806,7 +9840,7 @@ if (uni.restoreGlobal) {
                 "container-style": "overflow: hidden;",
                 selectable: "true",
                 "tag-style": $data.tagStyle,
-                content: $data.data.content
+                content: $data.data.content || $data.content
               }, null, 8, ["tag-style", "content"]),
               vue.createElementVNode("view", { class: "over" }, "\u2014\u2014 The End \u2014\u2014")
             ], 4),

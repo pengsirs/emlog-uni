@@ -17,7 +17,7 @@
 			</view>
 			<view class="openhtml" :style="'height: '+height+';overflow: hidden;'">
 				<mp-html lozy-load="true" container-style="overflow: hidden;" selectable="true" :tag-style="tagStyle"
-					:content="data.content"></mp-html>
+					:content="data.content||content"></mp-html>
 				<view class="over">—— The End ——</view>
 			</view>
 			<view class="htmlbtn" v-if="html" @click="closeHtml">收起<uni-icons style="margin-left: 5px;" type="top"
@@ -141,7 +141,7 @@
 		data() {
 			return {
 				tagStyle: {
-					blockquote: 'max-width:100%;border-radius:5px;background:#eee;padding:5px;',
+					blockquote: 'max-width:100%;background:#f9f9f9;padding:5px 10px;border-left:3px solid #42b883;margin:10px 0px;',
 					table: 'width:100%;border:1px #eee solid;',
 					td: 'border:1px #eee solid;text-align:center;',
 					th: 'border:1px #eee solid;background-color:#ffc09f;',
@@ -153,6 +153,11 @@
 				url: '',
 				downTitle: '',
 				downUrl: '',
+				appData:{
+					data:{
+						auditing:"0"
+					}
+				},
 				arrays: [0],
 				content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
 					"<div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div>" +
@@ -165,8 +170,18 @@
 			}
 		},
 		onLoad(option) {
-			this.blog(option.id)
 			this.id = option.id;
+			var that = this
+			uni.getStorage({
+				key: 'set_data',
+				success: function(res) {
+					that.appData = res.data
+				},
+				fail() {
+					that.getData();
+				}
+			});
+			this.blog(option.id)
 			this.url = decodeURIComponent(option.url);
 			this.show = !this.show;
 			this.modeClass = 'fade';
@@ -178,6 +193,9 @@
 				key: 'set_data',
 				success: function(res) {
 					that.appData = res.data
+				},
+				fail() {
+					that.getData();
 				}
 			});
 		},
@@ -193,6 +211,23 @@
 			}
 		},
 		methods: {
+			async getData() {
+				var that = this;
+				const res = await htRequest({
+					url: "/content/plugins/ApiSetting/api.php",
+					method: 'GET',
+					data: {
+						route: 'getSetting'
+					},
+				})
+				if (res.data.state > 0) {
+					this.appData = res.data
+					uni.setStorage({
+						key: 'set_data',
+						data: res.data
+					})
+				}
+			},
 			copy(e) {
 				uni.setClipboardData({
 					data: e,
