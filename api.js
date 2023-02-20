@@ -1,4 +1,6 @@
 import set from '@/setting.js';
+// 导出域名
+export const url = set.url;
 export const myRequest = (options) => {
 	return new Promise((resolve, reject) => {
 		uni.request({

@@ -205,30 +205,6 @@
 				<!-- #ifdef MP-WEIXIN -->
 				<ad class="ad" v-if="index % 5 == 0 && index != 0" unit-id="675f88c8665f60f30b71804e8ef4707a"></ad>
 				<!-- #endif -->
-				<!-- 三张或更多图片 -->
-<!-- 				<view v-if="getimg(item.description).length >= 3" class="list-items-many" @click="toInfo(item.id, item.url)">
-					<view class="list-box-null">
-						<view class="list-title"><span v-if="item.top == 'y'" class="top">置顶</span>{{ item.title }}
-						</view>
-						<view class="img-box-many between">
-							<view class="packaged" v-for="i in 3" style="width: 30%;">
-								<image @error="imageError($event, index)" class="lists-img-many"
-									:src="getimg(item.description)[i-1]" mode="scaleToFill"></image>
-							</view>
-						</view>
-						<view class="many">
-							<view class="sort">{{ item.sort_name || "暂未分类" }}</view>
-							<view class="right">
-								<view class="read">
-									<uni-icons type="fire-filled" size="17"></uni-icons>{{ item.views }}
-								</view>
-								<view class="comments">
-									{{ getDateBeforeNow(item.date) }}
-								</view>
-							</view>
-						</view>
-					</view>
-				</view> -->
 				<!-- 多张图片 -->
 				<view v-if="getimg(item.description).length>1" class="list-items-many" @click="toInfo(item.id, item.url)">
 					<view class="list-box-null">
@@ -573,23 +549,6 @@
 					return '0'
 				}
 			},
-			// getImgNum(str) {
-			// 	if (str) {
-			// 		var srcReg =/<img[^>]*src\s*=\s*['"]?([^'"]+)['"]?[^>]*>/gim;
-			// 		var result = str.match(srcReg);
-			// 		if (result != null&&result != undefined) {
-			// 			//取出数组里面的图片链接，去除标签
-			// 			for (var i = 0; i < result.length; i++) {
-			// 				result[i] = result[i].replace(/<img[^>]*src\s*=\s*['"]?([^'"]+)['"]?[^>]*>/gim, "$1");
-			// 			}
-			// 			return result.length;
-			// 		} else {
-			// 			return false;
-			// 		}
-			// 	} else {
-			// 		return '0'
-			// 	}
-			// },
 			getDateBeforeNow(stringTime) {
 				stringTime = new Date(stringTime.replace(/-/g, '/'))
 				// 统一单位换算

@@ -1,6 +1,6 @@
 <template>
 	<view class="centent">
-		<view class="banner-box">
+		<view class="banner-box" @click="toLogin">
 			<view class="box-img">
 				<image :src="avatarUrl"></image>
 			</view>
@@ -175,6 +175,11 @@
 			this.height = "height:0%";
 		},
 		methods: {
+			toLogin(){
+				uni.navigateTo({
+					url:"/pages/login/login"
+				})
+			},
 			compare(curV, reqV) {
 				if (curV && reqV) {
 					//将两个版本号拆成数字

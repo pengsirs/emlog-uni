@@ -9,6 +9,20 @@
 			}
 		},
 		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationBarBackgroundColor": "#F17C67"
+			}
+		},
+		{
+			"path": "pages/registering/registering",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"navigationBarBackgroundColor": "#F17C67"
+			}
+		},
+		{
 			"path": "pages/xia-editor/xia-editor",
 			"style": {
 				"navigationBarTitleText": "发布",

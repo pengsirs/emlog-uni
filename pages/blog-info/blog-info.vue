@@ -36,7 +36,7 @@
 						<uni-icons color="#23c1aa" type="circle-filled" size="20"></uni-icons>资源名称：{{downTitle}}
 					</view>
 					<view class="File-right">
-						<view class="File-btn" @click="copy(downUrl)" >立即获取</view>
+						<view class="File-btn" @click="copy(downUrl)">立即获取</view>
 					</view>
 				</view>
 			</view>
@@ -60,6 +60,43 @@
 					</view>
 				</view>
 			</view>
+		</view>
+		<view class="comment">
+			<view class="Cheader">
+				<view class="Ctitle">
+					问题反馈
+				</view>
+				<view style="display: flex;align-items: center;" @click="toComment(id)">
+					<uni-icons type="compose" size="18"></uni-icons>去反馈
+				</view>
+			</view>
+			<view class="comment-box" v-for="item in comment" :style="item.parent?'border:none':''">
+				<view style="display: flex;justify-content: space-between;">
+					<view class="comment-header" :style="item.parent?'margin-left:40px;':''">
+						<image :src="'http://q2.qlogo.cn/headimg_dl?dst_uin=' + item.url.host + '&spec=100'" mode=""></image>
+						<view class="comment-title-box">
+							<view class="comment-title">
+								{{item.poster}}
+							</view>
+							<view class="comment-data">
+								{{item.date}}
+							</view>
+						</view>
+					</view>
+					<view style="display: flex;align-items: center;margin-right: 10px;">
+						<view class="Chuifu" @click="toComment(id,item.cid)">
+							<uni-icons type="more-filled" size="18"></uni-icons>
+						</view>
+					</view>
+				</view>
+
+				<view class="comment-content">
+					<view class="comment-content-text" :style="item.parent?'margin-left:40px;':''">
+						{{item.comment}}
+					</view>
+				</view>
+			</view>
+			<uni-load-more color="#007AFF" :status="status" style="border-top: 5px solid #f9f9f9;padding: 10px 0px;" />
 		</view>
 		<view class="foot-content"></view>
 		<!-- #ifndef MP-BAIDU -->
@@ -151,11 +188,15 @@
 				haibao: "",
 				html: false,
 				url: '',
+				status: "loading",
+				id: '',
+				page: 1,
+				comment: '',
 				downTitle: '',
 				downUrl: '',
-				appData:{
-					data:{
-						auditing:"0"
+				appData: {
+					data: {
+						auditing: "0"
 					}
 				},
 				arrays: [0],
@@ -187,7 +228,14 @@
 			this.modeClass = 'fade';
 			this.addll(option.id);
 		},
+		onReachBottom() {
+			this.page = this.page + 1
+			this.getComments(this.page, this.id);
+		},
 		onShow() {
+			this.page = 0
+			this.comment = ''
+			this.getComments(this.page,this.id)
 			var that = this
 			uni.getStorage({
 				key: 'set_data',
@@ -228,6 +276,24 @@
 					})
 				}
 			},
+			//获取评论内容
+			async getComments(page, gid) {
+				const res = await htRequest({
+					url: "/content/plugins/ApiSetting/manyApi.php?route=comments",
+					method: 'get',
+					data: {
+						gid: gid,
+						page: page
+					},
+				})
+				//如果没有数据 则显示没有更多
+				if (res.data.data.list == '') {
+					this.status = "no-more"
+				} else {
+					this.comment = [...this.comment, ...res.data.data.list]
+				}
+
+			},
 			copy(e) {
 				uni.setClipboardData({
 					data: e,
@@ -238,6 +304,11 @@
 						})
 					}
 				});
+			},
+			toComment(id,rid){
+				uni.navigateTo({
+					url:"/pages/about/help?id="+id+'&rid='+rid
+				})	
 			},
 			openHtml() {
 				this.height = "100%"
@@ -337,8 +408,10 @@
 				//写一个正则表达式提取标签中的内容
 				var reg = /<miniTitle>(.*)<\/miniTitle>/;
 				var regUrl = /<miniUrl>(.*)<\/miniUrl>/;
-				this.downTitle = res.data.data.article.content.match(reg)?res.data.data.article.content.match(reg)[1]:'';
-				this.downUrl = res.data.data.article.content.match(regUrl)?res.data.data.article.content.match(regUrl)[1]:'';
+				this.downTitle = res.data.data.article.content.match(reg) ? res.data.data.article.content.match(reg)[
+					1] : '';
+				this.downUrl = res.data.data.article.content.match(regUrl) ? res.data.data.article.content.match(
+					regUrl)[1] : '';
 				res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, '****');
 				// #ifndef APP-PLUS
 				arrays = res.data.data.article.content.match(/<a (.*)a>/gi) ? res.data.data.article.content.match(
@@ -357,7 +430,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	.htmlbtn {
 		width: 100%;
 		text-align: center;
@@ -392,10 +465,78 @@
 
 	.content-box {
 		background-color: #fff;
-		padding: 20px;
+		padding: 20px 20px 1px 20px;
 		border-radius: 30px 30px 0px 0px;
 		margin-top: 10px;
-		min-height: 100vh;
+	}
+
+	.comment {
+		background-color: #fff;
+	}
+
+	.Cheader {
+		background-color: #fff;
+		padding: 10px;
+		border-top: #f9f9f9 solid 15px;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: -10px;
+		z-index: 2;
+		position: relative;
+	}
+
+	.Ctitle {
+		font-size: 20px;
+		font-weight: 600;
+	}
+
+	.Chuifu {
+		padding: 5px 10px;
+		border-radius: 5px;
+		margin-top: -20px;
+	}
+
+	.comment-box {
+		border-top: #f9f9f9 solid 5px;
+	}
+
+	.comment-header {
+		padding: 10px;
+		display: flex;
+
+		image {
+			width: 40px;
+			height: 40px;
+			border-radius: 50px;
+			border: 1px red solid;
+		}
+	}
+
+	.comment-title-box {
+		margin-left: 10px;
+		height: 40px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+
+		.comment-title {
+			font-weight: 800;
+		}
+
+		.comment-data {
+			color: #666;
+		}
+	}
+
+	.comment-content {
+		padding: 0px 10px 10px 10px;
+		margin-left: 50px;
+	}
+
+	.comment-content-text {
+		background-color: #f9f9f9;
+		padding: 3px 5px;
+		border-radius: 3px;
 	}
 
 	page {
@@ -446,28 +587,33 @@
 		margin: 10px 0px;
 		opacity: 0.5;
 	}
-	.File-title{
+
+	.File-title {
 		font-size: 16px;
 	}
-	.Info-File{
+
+	.Info-File {
 		background-color: #fff;
 		/* box-shadow: 0px 0px 0px 5px #eee; */
 		border-radius: 5px;
 	}
-	.File-content{
+
+	.File-content {
 		display: flex;
 		justify-content: space-between;
 		height: 20px;
 		line-height: 20px;
 		margin-top: 10px;
 	}
-	.File-left{
+
+	.File-left {
 		display: flex;
 		align-items: center;
 	}
-	.File-right .File-btn{
+
+	.File-right .File-btn {
 		background-color: #23c1aa;
-		padding:0px 5px;
+		padding: 0px 5px;
 		border-radius: 5px;
 	}
 
@@ -486,7 +632,8 @@
 		box-shadow: 0px 0px 5px #eee;
 	}
 
-	.File-title:before,.tag-title:before {
+	.File-title:before,
+	.tag-title:before {
 		width: 40px;
 		height: 3px;
 		position: absolute;
@@ -500,7 +647,8 @@
 		box-shadow: 1px 1px 3px -1px #2979ff;
 	}
 
-	.File-title,.tag-title {
+	.File-title,
+	.tag-title {
 		padding: 2px 5px;
 		font-weight: 600;
 		position: relative;
