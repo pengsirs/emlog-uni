@@ -16,13 +16,6 @@
 			}
 		},
 		{
-			"path": "pages/demo/demo",
-			"style": {
-				"navigationBarTitleText": "测试页面",
-				"navigationBarBackgroundColor": "#F17C67"
-			}
-		},
-		{
 			"path": "pages/registering/registering",
 			"style": {
 				"navigationBarTitleText": "注册",
