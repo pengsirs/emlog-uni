@@ -13,6 +13,7 @@
         ]
     },
     "dependencies": {
-        "js-md5": "^0.7.3"
+        "js-md5": "^0.7.3",
+        "vuex-persistedstate": "^4.1.0"
     }
 }

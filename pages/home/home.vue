@@ -1,10 +1,16 @@
 <template>
 	<view class="centent">
-		<view class="banner-box" @click="toLogin">
+		<view class="banner-box" @click="toLogin" v-if="isLogin==false">
 			<view class="box-img">
 				<image :src="avatarUrl"></image>
 			</view>
-			<view class="user-nick">您好，欢迎访问</view>
+			<view class="user-nick">您好，请登录</view>
+		</view>
+		<view class="banner-box" v-else>
+			<view class="box-img">
+				<image :src="avatarUrl"></image>
+			</view>
+			<view class="user-nick">您好，已登陆</view>
 		</view>
 		<view class="homelist">
 			<button open-type="openSetting" class="homelist-item" @click="go('setting')">
@@ -81,8 +87,8 @@
 				<view class="home-a-b">
 					<uni-icons type="refresh-filled" size="20"></uni-icons>
 				</view>
-			</view>
-			<view class="home-a" @click="edit()">
+			</view> 
+			<view class="home-a" @click="edit()" v-if="isLogin==true">
 				<view class="home-a-a">退出登录</view>
 				<view class="home-a-b">
 					<uni-icons type="clear" size="20"></uni-icons>
@@ -105,6 +111,7 @@
 		apiRequest,
 		htRequest
 	} from '@/api.js';
+	import {mapState,mapMutations} from "vuex"
 	import yomolUpgrade from '@/components/yomol-upgrade/yomol-upgrade.vue';
 	import set from '@/setting.js';
 	export default {
@@ -143,6 +150,9 @@
 				},
 			}
 		},
+		computed:{
+			...mapState(['isLogin'])
+		},
 		mounted() {},
 		onShow() {
 			var that = this
@@ -175,6 +185,7 @@
 			this.height = "height:0%";
 		},
 		methods: {
+			...mapMutations(['login','loginOut']),
 			toLogin(){
 				uni.navigateTo({
 					url:"/pages/login/login"
@@ -212,11 +223,28 @@
 					})
 				}
 			},
-			edit() {
+			edit(){
+				var that = this
 				uni.showModal({
-					title: "退出成功",
-					content: "本地数据请使用清除缓存功能！"
+					title: '提示',
+					content: '确定要退出登录吗？',
+					success: function (res) {
+						if (res.confirm) {
+							that.editt();
+						} else if (res.cancel) {
+						}
+					}
+				});
+			},
+			async editt() {
+				const res = await htRequest({
+					url: "/admin/account.php?action=logout",
 				})
+				uni.showModal({
+					title: "温馨提示",
+					content: "退出成功！"
+				})
+				this.loginOut();
 			},
 
 			clear() {
