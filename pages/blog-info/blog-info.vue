@@ -36,7 +36,12 @@
 						<uni-icons color="#23c1aa" type="circle-filled" size="20"></uni-icons>资源名称：{{downTitle}}
 					</view>
 					<view class="File-right">
+						<!-- #ifdef MP-WEIXIN -->
 						<view class="File-btn" @click="openVideoAd(downUrl)">立即获取</view>
+						<!-- #endif -->
+						<!-- #ifndef MP-WEIXIN -->
+						<view class="File-btn" @click="copy(downUrl)">立即获取</view>
+						<!-- #endif -->
 					</view>
 				</view>
 			</view>
@@ -295,12 +300,22 @@
 			},
 			openVideoAd: function(e) {
 				this.urll = e
-				if (videoAd) {
-					videoAd.show().catch(err => {
-						// 失败重试
-						videoAd.load().then(() => videoAd.show())
-					})
-				}
+				uni.showModal({
+					title: "温馨提示",
+					content: "您需要先看一段广告",
+					success: function(res) {
+						if (res.confirm) {
+							if (videoAd) {
+								videoAd.show().catch(err => {
+									// 失败重试
+									videoAd.load().then(() => videoAd.show())
+								})
+							}
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				})
 			},
 			async getData() {
 				var that = this;

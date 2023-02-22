@@ -810,6 +810,8 @@
 		border-radius: 10px;
 		opacity: 0.5;
 		font-size: 13px;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 
 
