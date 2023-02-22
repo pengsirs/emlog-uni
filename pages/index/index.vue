@@ -203,10 +203,11 @@
 				<ad class="ad" v-if="index % 5 == 0 && index != 0" unit-id="675f88c8665f60f30b71804e8ef4707a"></ad>
 				<!-- #endif -->
 				<!-- #ifdef MP-WEIXIN -->
-				<ad class="ad" v-if="index % 5 == 0 && index != 0" unit-id="675f88c8665f60f30b71804e8ef4707a"></ad>
+				<ad class="ad" v-if="index % 5 == 0 && index != 0" :unit-id="appData.data.BannerAd"></ad>
 				<!-- #endif -->
 				<!-- 多张图片 -->
-				<view v-if="getimg(item.description).length>1" class="list-items-many" @click="toInfo(item.id, item.url)">
+				<view v-if="getimg(item.description).length>1" class="list-items-many"
+					@click="toInfo(item.id, item.url)">
 					<view class="list-box-null">
 						<view class="list-title"><span v-if="item.top == 'y'" class="top">置顶</span>{{ item.title }}
 						</view>
@@ -236,11 +237,10 @@
 					</view>
 				</view>
 				<!-- 只有一张图片 -->
-				<view v-if="getimg(item.description).length == 1" class="list-items"
-					@click="toInfo(item.id, item.url)">
+				<view v-if="getimg(item.description).length == 1" class="list-items" @click="toInfo(item.id, item.url)">
 					<view class="img-box">
-						<image @error="imageError($event, index)" class="lists-img"
-							:src="getimg(item.description)[0]" mode="scaleToFill"></image>
+						<image @error="imageError($event, index)" class="lists-img" :src="getimg(item.description)[0]"
+							mode="scaleToFill"></image>
 					</view>
 					<view class="list-box">
 						<view class="list-title"><span v-if="item.top == 'y'" class="top">置顶</span>{{ item.title }}
@@ -260,8 +260,7 @@
 					</view>
 				</view>
 				<!-- 没有图片 -->
-				<view v-if="!getimg(item.description)" class="list-items"
-					@click="toInfo(item.id, item.url)">
+				<view v-if="!getimg(item.description)" class="list-items" @click="toInfo(item.id, item.url)">
 					<view class="list-box-null">
 						<view class="list-title"><span v-if="item.top == 'y'" class="top">置顶</span>{{ item.title }}
 						</view>
@@ -296,6 +295,10 @@
 		get
 	} from '@/api.js';
 	import set from '@/setting.js';
+	import {
+		mapState,
+		mapMutations
+	} from "vuex"
 	export default {
 
 		data() {
@@ -320,7 +323,7 @@
 				swiperCurrent: '',
 				backTopValue: false,
 				onRefresh: false,
-				status: "loading",
+				status: "no-more",
 				blogSorts: [],
 				images: [
 					"http://cdn.hkiii.cn//img/_2022/06/21/09/52/42/167/6483441/13482961188039425428",
@@ -350,7 +353,6 @@
 				blogAll: '',
 				current: 0,
 				scrollinto: '',
-				appData: '',
 				lunbo: [],
 				lbid: [],
 				cardList: [{
@@ -367,6 +369,9 @@
 			}
 		},
 		mounted() {},
+		computed: {
+			...mapState(['isLogin', 'appData'])
+		},
 		onLoad() {
 			this.blog(1);
 			this.getData();
@@ -381,11 +386,10 @@
 		onPullDownRefresh() {
 			this.null = true
 			this.dataa = ""
-			this.status = "loading"
 			this.page = 1
 			this.lunbo = []
 			this.lbid = []
-			this.appData = ''
+			// this.appData = ''
 			this.count = ''
 			this.blog(this.page);
 			this.getData();
@@ -409,7 +413,7 @@
 			}
 		},
 		methods: {
-
+			...mapMutations(['login', 'setAppData']),
 			//专题
 			async getSortsData(sort, sid) {
 				var that = this;
@@ -478,11 +482,12 @@
 					for (var i = 0; i < sortid.length; i++) {
 						this.getSortsData(i + 1, sortid[i])
 					}
-					this.appData = res.data
-					uni.setStorage({
-						key: 'set_data',
-						data: res.data
-					})
+					this.setAppData(res.data)
+					// this.appData = res.data		
+					// uni.setStorage({
+					// 	key: 'set_data',
+					// 	data: res.data
+					// })
 				} else if (res) {
 					this.inull = true
 				}
@@ -608,6 +613,7 @@
 			},
 			//获取文章列表
 			async blog(page) {
+				this.status = "loading"
 				const res = await myRequest({
 					url: '/?rest-api=article_list',
 					method: 'GET',
@@ -620,6 +626,7 @@
 				if (res.data.data.articles == '') {
 					this.status = "no-more"
 				} else {
+					this.status = ""
 					this.dataa = [...this.dataa, ...res.data.data.articles]
 				}
 			},
@@ -836,6 +843,7 @@
 		border-radius: 10px;
 		justify-content: space-between;
 	}
+
 	.list-items-many {
 		display: flex;
 		height: 150px;

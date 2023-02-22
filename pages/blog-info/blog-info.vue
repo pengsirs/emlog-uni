@@ -17,7 +17,7 @@
 			</view>
 			<view class="openhtml" :style="'height: '+height+';overflow: hidden;'">
 				<mp-html lozy-load="true" container-style="overflow: hidden;" selectable="true" :tag-style="tagStyle"
-					:content="data.content||content"></mp-html>
+					:content="data.content"></mp-html>
 				<view class="over">—— The End ——</view>
 			</view>
 			<view class="htmlbtn" v-if="html" @click="closeHtml">收起<uni-icons style="margin-left: 5px;" type="top"
@@ -36,7 +36,7 @@
 						<uni-icons color="#23c1aa" type="circle-filled" size="20"></uni-icons>资源名称：{{downTitle}}
 					</view>
 					<view class="File-right">
-						<view class="File-btn" @click="copy(downUrl)">立即获取</view>
+						<view class="File-btn" @click="openVideoAd(downUrl)">立即获取</view>
 					</view>
 				</view>
 			</view>
@@ -61,7 +61,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="comment">
+		<view class="comment" v-if="appData.data.auditing != 1">
 			<view class="Cheader">
 				<view class="Ctitle">
 					问题反馈
@@ -73,7 +73,8 @@
 			<view class="comment-box" v-for="item in comment" :style="item.parent?'border:none':''">
 				<view style="display: flex;justify-content: space-between;">
 					<view class="comment-header" :style="item.parent?'margin-left:40px;':''">
-						<image :src="'http://q2.qlogo.cn/headimg_dl?dst_uin=' + item.url.host + '&spec=100'" mode=""></image>
+						<image :src="'http://q2.qlogo.cn/headimg_dl?dst_uin=' + item.url.host + '&spec=100'" mode="">
+						</image>
 						<view class="comment-title-box">
 							<view class="comment-title">
 								{{item.poster}}
@@ -142,18 +143,18 @@
 							<view style="font-size: 12px;font-weight: 400;">回到首页</view>
 						</view>
 					</view>
-					<view class="homelist" @click="wenti()">
+					<view class="homelist" @click="toComment(id)" v-if="appData.data.auditing != 1">
 						<view class="homelist-item">
 							<uni-icons type="chat-filled" color="#fd7058" size="30"></uni-icons>
 							<view style="font-size: 12px;font-weight: 400;">问题反馈</view>
 						</view>
 					</view>
-					<view class="homelist" v-if="appData.data.auditing != 1" @click="down()">
+					<!-- 					<view class="homelist" v-if="appData.data.auditing != 1" @click="down()">
 						<view class="homelist-item">
 							<uni-icons type="download-filled" color="#fec855" size="30"></uni-icons>
 							<view style="font-size: 12px;font-weight: 400;">附件下载</view>
 						</view>
-					</view>
+					</view> -->
 					<button class="homelist" open-type="share">
 						<view class="homelist-item">
 							<uni-icons type="paperplane-filled" color="#42ff48" size="30"></uni-icons>
@@ -169,11 +170,16 @@
 </template>
 
 <script>
+	var videoAd = null;
 	import {
 		myRequest,
 		htRequest
 	} from '@/api.js';
 	import set from '@/setting.js';
+	import {
+		mapState,
+		mapMutations
+	} from "vuex"
 	export default {
 		data() {
 			return {
@@ -194,34 +200,43 @@
 				comment: '',
 				downTitle: '',
 				downUrl: '',
-				appData: {
-					data: {
-						auditing: "0"
-					}
-				},
+				urll: '', //点击获取时赋值
+				// appData: {
+				// 	data: {
+				// 		auditing: ""
+				// 	}
+				// },
 				arrays: [0],
-				content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
-					"<div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div>" +
-					"<div style='background:#eee;height:20px;width:70%;border-radius:5px;margin-top:10px;'></div>" +
-					"<div style='background:#eee;height:20px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
-					"<div style='background:#eee;height:20px;width:90%;border-radius:5px;margin-top:10px;'></div>" +
-					"<div style='background:#eee;height:20px;width:30%;border-radius:5px;margin-top:10px;'></div>" +
-					"<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
-					"<div style='background:#eee;height:250px;width:100%;border-radius:5px;margin:10px auto;'></div>"
+				content: ""
+				// content: "<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
+				// 	"<div style='background:#eee;height:20px;width:80%;border-radius:5px;margin-top:10px;'></div>" +
+				// 	"<div style='background:#eee;height:20px;width:70%;border-radius:5px;margin-top:10px;'></div>" +
+				// 	"<div style='background:#eee;height:20px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
+				// 	"<div style='background:#eee;height:20px;width:90%;border-radius:5px;margin-top:10px;'></div>" +
+				// 	"<div style='background:#eee;height:20px;width:30%;border-radius:5px;margin-top:10px;'></div>" +
+				// 	"<div style='background:#eee;height:25px;width:50%;border-radius:5px;margin-top:10px;'></div>" +
+				// 	"<div style='background:#eee;height:250px;width:100%;border-radius:5px;margin:10px auto;'></div>"
 			}
 		},
 		onLoad(option) {
 			this.id = option.id;
-			var that = this
-			uni.getStorage({
-				key: 'set_data',
-				success: function(res) {
-					that.appData = res.data
-				},
-				fail() {
-					that.getData();
-				}
-			});
+			// var that = this
+			// uni.getStorage({
+			// 	key: 'set_data',
+			// 	success: function(res) {
+			// 		that.appData = res.data
+			// 	},
+			// 	fail() {
+			// 		that.getData();
+			// 	}
+			// });
+			// #ifdef MP-WEIXIN
+			this.adLoad();
+			// #endif
+
+			if (this.appData == '') {
+				this.getData();
+			}
 			this.blog(option.id)
 			this.url = decodeURIComponent(option.url);
 			this.show = !this.show;
@@ -235,17 +250,17 @@
 		onShow() {
 			this.page = 0
 			this.comment = ''
-			this.getComments(this.page,this.id)
-			var that = this
-			uni.getStorage({
-				key: 'set_data',
-				success: function(res) {
-					that.appData = res.data
-				},
-				fail() {
-					that.getData();
-				}
-			});
+			this.getComments(this.page, this.id)
+			// var that = this
+			// uni.getStorage({
+			// 	key: 'set_data',
+			// 	success: function(res) {
+			// 		that.appData = res.data
+			// 	},
+			// 	fail() {
+			// 		that.getData();
+			// 	}
+			// });
 		},
 		//	小程序分享
 		onShareAppMessage(res) {
@@ -258,7 +273,35 @@
 				path: 'pages/blog-info/blog-info?id=' + this.data.id + "&url=" + this.url
 			}
 		},
+		computed: {
+			...mapState(['isLogin', 'appData'])
+		},
 		methods: {
+			...mapMutations(['login', 'setAppData']),
+			adLoad: function() {
+				var that = this
+				if (wx.createRewardedVideoAd) {
+					videoAd = wx.createRewardedVideoAd({
+						adUnitId: this.appData.data.videoAd //你的广告key
+					})
+					videoAd.onError(err => {})
+					videoAd.onClose((status) => {
+						if (status && status.isEnded || status === undefined) {
+							that.copy(this.urll)
+
+						} else {}
+					})
+				}
+			},
+			openVideoAd: function(e) {
+				this.urll = e
+				if (videoAd) {
+					videoAd.show().catch(err => {
+						// 失败重试
+						videoAd.load().then(() => videoAd.show())
+					})
+				}
+			},
 			async getData() {
 				var that = this;
 				const res = await htRequest({
@@ -269,11 +312,12 @@
 					},
 				})
 				if (res.data.state > 0) {
-					this.appData = res.data
-					uni.setStorage({
-						key: 'set_data',
-						data: res.data
-					})
+					this.setAppData(res.data);
+					// this.appData = res.data
+					// uni.setStorage({
+					// 	key: 'set_data',
+					// 	data: res.data
+					// })
 				}
 			},
 			//获取评论内容
@@ -292,7 +336,6 @@
 				} else {
 					this.comment = [...this.comment, ...res.data.data.list]
 				}
-
 			},
 			copy(e) {
 				uni.setClipboardData({
@@ -305,10 +348,10 @@
 					}
 				});
 			},
-			toComment(id,rid){
+			toComment(id, rid) {
 				uni.navigateTo({
-					url:"/pages/about/help?id="+id+'&rid='+rid
-				})	
+					url: "/pages/about/help?id=" + id + '&rid=' + rid
+				})
 			},
 			openHtml() {
 				this.height = "100%"
@@ -403,6 +446,8 @@
 					'<h5 class="rich-h5" ');
 				res.data.data.article.content = res.data.data.article.content.replace(/\<h6/gi,
 					'<h6 class="rich-h6" ');
+				res.data.data.article.content = res.data.data.article.content.replace(/\<a/gi,
+					'<a class="rich-a" ');
 				res.data.data.article.content = res.data.data.article.content.replace(/\.\.\/content\/upload/gi,
 					set.url + '/content/upload');
 				//写一个正则表达式提取标签中的内容
@@ -412,17 +457,17 @@
 					1] : '';
 				this.downUrl = res.data.data.article.content.match(regUrl) ? res.data.data.article.content.match(
 					regUrl)[1] : '';
-				res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, '****');
+				// res.data.data.article.content = res.data.data.article.content.replace(/百度网盘/gi, '****');
 				// #ifndef APP-PLUS
-				arrays = res.data.data.article.content.match(/<a (.*)a>/gi) ? res.data.data.article.content.match(
-					/<a (.*)a>/gi) : ''
-				for (var i = 0; i < arrays.length; i++) {
-					if (arrays[i].indexOf("<img") == "-1") {
-						console.log(arrays[i].indexOf("<img"))
-						res.data.data.article.content = res.data.data.article.content.replace(arrays[i],
-							'<a class="aaa">请查看附件说明</a> ')
-					}
-				};
+				// arrays = res.data.data.article.content.match(/<a (.*)a>/gi) ? res.data.data.article.content.match(
+				// 	/<a (.*)a>/gi) : ''
+				// for (var i = 0; i < arrays.length; i++) {
+				// 	if (arrays[i].indexOf("<img") == "-1") {
+				// 		console.log(arrays[i].indexOf("<img"))
+				// 		res.data.data.article.content = res.data.data.article.content.replace(arrays[i],
+				// 			'<a class="aaa">请查看附件说明</a> ')
+				// 	}
+				// };
 				// #endif
 				this.data = res.data.data.article
 			}
@@ -430,7 +475,11 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="less">
+	/deep/.rich-a {
+		color: #000;
+	}
+
 	.htmlbtn {
 		width: 100%;
 		text-align: center;

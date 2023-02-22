@@ -266,6 +266,9 @@
 			},
 			change(e) {},
 			async fabu() {
+				uni.showLoading({
+					title: '提交中'
+				})
 				var title = this.$data.title
 				var htmls = this.$data.htmls
 				var excerpt = this.$data.excerpt
@@ -308,9 +311,13 @@
 						}
 					});
 				}
+					uni.hideLoading()
 				this.dataa = res.data
 			},
 			async bianji() {
+				uni.showLoading({
+					title: '提交中'
+				})
 				var id = this.blogid
 				var title = this.$data.title
 				var htmls = this.$data.htmls
@@ -355,9 +362,13 @@
 						}
 					});
 				}
+					uni.hideLoading()
 				this.dataa = res.data
 			},
 			async fabubj() {
+				uni.showLoading({
+					title: '提交中'
+				})
 				var t = this.bjcontent
 				var time = new Date();
 				var YYYY = time.getFullYear();
@@ -389,6 +400,7 @@
 						}
 					});
 				}
+					uni.hideLoading()
 				this.dataa = res.data
 			},
 			editText(res) {

@@ -54,7 +54,7 @@
 				id: '',
 				page: 1,
 				dataa: '',
-				status: "loading",
+				status: "no-more",
 			}
 		},
 		onLoad(option) {
@@ -70,7 +70,6 @@
 		},
 		onPullDownRefresh() {
 			this.dataa = ""
-			this.status = "loading"
 			this.page = 1
 			this.blog(this.page,this.id);
 			uni.stopPullDownRefresh();
@@ -101,6 +100,7 @@
 				})
 			},
 			async blog(page, id) {
+				this.status = "loading"
 				const res = await myRequest({
 					url: '/?rest-api=article_list',
 					method: 'GET',
@@ -113,6 +113,7 @@
 				if (res.data.data.articles == '') {
 					this.status = "no-more"
 				} else {
+					this.status = ""
 					this.dataa = [...this.dataa, ...res.data.data.articles]
 				}
 			},

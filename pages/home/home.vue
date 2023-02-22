@@ -39,7 +39,7 @@
 				</view>
 				<view class="shoulu">
 					<view class="sl-title">搜狗收录</view>
-					<view class="sl-content">{{sogo==''?"暂无收录":'获取中...'}}</view>
+					<view class="sl-content">{{sogo||'获取中...'}}</view>
 				</view>
 				<uni-icons @click="shua('sogo')" color="#aaa" type="refreshempty" size="20"></uni-icons>
 			</view>
@@ -120,7 +120,7 @@
 		},
 		data() {
 			return {
-				banbenhao: '1.1.0', //这个是内置的版本号，新版是要和这个比较的，所以每次更新都要改这里的版本号。
+				banbenhao: '1.1.1', //这个是内置的版本号，新版是要和这个比较的，所以每次更新都要改这里的版本号。
 				shoulu: '',
 				sogo: '',
 				upgradeType: '', //pkg 整包 wgt 升级包
@@ -143,25 +143,19 @@
 						url: "../setting/admin"
 					}
 				],
-				appData: {
-					data:{
-						tianapi:''
-					}
-				},
+				// appData: {
+				// 	data:{
+				// 		tianapi:''
+				// 	}
+				// },
 			}
 		},
 		computed:{
-			...mapState(['isLogin'])
+			...mapState(['isLogin','appData'])
 		},
 		mounted() {},
 		onShow() {
 			var that = this
-			uni.getStorage({
-				key: 'set_data',
-				success: function(res) {
-					that.appData = res.data
-				}
-			});
 			uni.getStorage({
 				key: 'shoulu',
 				success: function(res) {
@@ -230,34 +224,32 @@
 					content: '确定要退出登录吗？',
 					success: function (res) {
 						if (res.confirm) {
-							that.editt();
+							that.editt("退出成功！");
 						} else if (res.cancel) {
 						}
 					}
 				});
 			},
-			async editt() {
+			async editt(e) {
 				const res = await htRequest({
 					url: "/admin/account.php?action=logout",
 				})
-				uni.showModal({
-					title: "温馨提示",
-					content: "退出成功！"
-				})
+				uni.showToast({
+					title: `${e}`,
+					duration: 2000
+				});
 				this.loginOut();
 			},
 
 			clear() {
+				var that = this
 				uni.showModal({
 					title: "温馨提示",
 					content: "这样会清空您的个人设置，请谨慎操作！",
 					success: function(res) {
 						if (res.confirm) {
+							that.editt("清除成功！")
 							uni.clearStorage();
-							uni.showToast({
-								title: '清除成功',
-								duration: 2000
-							});
 							uni.reLaunch({
 								url: "../index/index"
 							})

@@ -47,6 +47,18 @@
 				key: 'apikey',
 				success: function(res) {
 					that.http(res.data)
+				},
+				fail() {
+					uni.showModal({
+						title: "提示",
+						content: '您不是管理员',
+						showCancel:false,
+						success: function(res) {
+							if (res.confirm) {
+								uni.navigateBack(1)
+							}
+						}
+					})
 				}
 			});
 		},
@@ -68,10 +80,9 @@
 					uni.showModal({
 						title: "提示",
 						content: '您不是管理员',
+						showCancel:false,
 						success: function(res) {
 							if (res.confirm) {
-								uni.navigateBack(1)
-							} else if (res.cancel) {
 								uni.navigateBack(1)
 							}
 						}
@@ -79,24 +90,30 @@
 				}
 			},
 			async getBaidu(id, u) {
+				uni.showLoading({
+					title: `提交中`
+				})
 				// console.log(id,u)
 				const res = await get({
 					url: 'https://data.zz.baidu.com/urls?site=' + u + '&token=' + this.value.baidu,
 				})
 				if (res.data.error >= 400) {
+					uni.hideLoading()
 					uni.showModal({
 						title: "链接提交失败",
 						content: `${res.data.message}`
 					})
 				} else if (res.data.error <= 400) {
+					uni.hideLoading()
 					uni.showModal({
 						title: "提交成功",
 						content: `剩余的可推送${res.data.remain}条`
 					})
 				}else {
+					uni.hideLoading()
 					uni.showModal({
 						title: "提交失败",
-						content: "请检查配置是否正常"
+						content: `${res.data.message}`
 					})
 				}
 				// console.log(res.data.error)

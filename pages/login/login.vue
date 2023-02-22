@@ -26,18 +26,20 @@
 		data(){
 			return{
 				imgCode:'',
-				options:'',
 				username:'',
 				loginCode:'',
 				password:''
 			}
+		},
+		computed:{
+			...mapState(['isLogin','appData','options'])
 		},
 		onShow(){
 			this.getImgCode();
 			this.getOpitions();
 		},
 		methods:{
-			...mapMutations(['login']),
+			...mapMutations(['login','setOptions']),
 			//获取系统设置
 			async getOpitions(){
 				const res = await htRequest({
@@ -48,7 +50,7 @@
 					}
 				})
 				if(res.data.state == 1){
-					this.options = res.data.data
+					this.setOptions(res.data.data)
 				}else{
 					uni.showModal({
 						title:"温馨提示",

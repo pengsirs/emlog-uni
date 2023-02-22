@@ -36,30 +36,31 @@
 		htRequest
 	} from '@/api.js';
 	import set from '@/setting.js';
+	import {mapState,mapMutations} from "vuex"
 export default {
     data() {
         return {
             description: '',
             sorts: [],
-            appData: '',
+            // appData: '',
             sid: '',
             sortname: ''
         };
     },
+	computed: {
+		...mapState(['isLogin', 'appData'])
+	},
     onLoad: function (options) {
         this.getSorts();
-        this.getSetting();
     },
     onShareAppMessage: function (res) {
         return {
-            title: '',
+            title: '分类页面',
             imageUrl: 'https://api.ixiaowai.cn/api/api.php',
-            // 图片 URL
             path: ''
         };
     },
     onShow() {
-        this.getSetting();
     },
     methods: {
 		async getSorts() {
@@ -69,16 +70,6 @@ export default {
 			})
 			this.sorts = res.data.data.sorts
 		},
-        getSetting() {
-			var that = this
-			uni.getStorage({
-				key: 'set_data',
-				success: function(res) {
-					that.appData = res.data
-				}
-			});
-        },
-
         goSortLogs: function (sid,sortname) {
             uni.navigateTo({
             	url:"../sort-info/sort-info?id="+sid+'&sortname='+sortname
