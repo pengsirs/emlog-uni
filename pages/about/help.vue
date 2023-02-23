@@ -15,6 +15,10 @@
 		htRequest,
 		url
 	} from '@/api.js';
+	import {
+		mapState,
+		mapMutations
+	} from "vuex"
 	export default {
 		data() {
 			return {
@@ -27,12 +31,17 @@
 			}
 		},
 		onLoad(o) {
-			this.id = o.id;
+			this.id = o.id || this.appData.data.about;
 			this.rid = o.rid || '';
+		},
+		computed: {
+			...mapState(['isLogin', 'appData'])
 		},
 		methods: {
 			async addComment() {
-				uni.showLoading({})
+				uni.showLoading({
+					title: '提交中'
+				})
 				const res = await htRequest({
 					url: "/index.php?action=addcom",
 					method: 'POST',

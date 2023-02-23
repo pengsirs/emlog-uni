@@ -14,7 +14,7 @@
 		</view>
 		<view class="homelist">
 			<button open-type="openSetting" class="homelist-item" @click="go('setting')">
-				<image class="homelist-img" src="../../static/home/xitongshezhi.png"></image>
+				<image class="homelist-img" src="../../static/home/cxsz.png"></image>
 				<view style="font-size: 12px;font-weight: 200;">程序设置</view>
 			</button>
 			<view class="homelist-item" v-for="i in homelist" @click="go(i.url)">
@@ -59,6 +59,12 @@
 					<uni-icons type="info-filled" color="#666" size="20"></uni-icons>
 				</view>
 			</view>
+			<view class="home-b" @click="go('../setting/admin')">
+				<view class="home-a-a">权限管理</view>
+				<view class="home-a-c">
+					<uni-icons type="locked-filled" size="20" color="#666"></uni-icons>
+				</view>
+			</view>
 			<view class="home-b" @click="go('../setting/setting')">
 				<view class="home-a-a">接口设置</view>
 				<view class="home-a-c">
@@ -87,7 +93,7 @@
 				<view class="home-a-b">
 					<uni-icons type="refresh-filled" size="20"></uni-icons>
 				</view>
-			</view> 
+			</view>
 			<view class="home-a" @click="edit()" v-if="isLogin==true">
 				<view class="home-a-a">退出登录</view>
 				<view class="home-a-b">
@@ -100,7 +106,7 @@
 			<yomolUpgrade :type="upgradeType" theme="red" :url="upgradeUrl" title="发现新版本"
 				:content="appData.data.appContent" ref="yomolUpgrade" :currentVersion="banbenhao"
 				:newVersion="appData.data.appVersion"></yomolUpgrade>
-				<!-- #endif -->
+			<!-- #endif -->
 		</view>
 	</view>
 </template>
@@ -111,7 +117,10 @@
 		apiRequest,
 		htRequest
 	} from '@/api.js';
-	import {mapState,mapMutations} from "vuex"
+	import {
+		mapState,
+		mapMutations
+	} from "vuex"
 	import yomolUpgrade from '@/components/yomol-upgrade/yomol-upgrade.vue';
 	import set from '@/setting.js';
 	export default {
@@ -127,20 +136,21 @@
 				upgradeContent: '', //更新内容
 				upgradeUrl: '', //更新地址
 				avatarUrl: 'http://cdn.hkiii.cn//img/_2022/06/30/12/54/49/747/6483441/7812966043841394587',
-				homelist: [{
-						img: "../../static/home/bangzhuzhongxin.png",
+				homelist: [
+					{
+						img: "../../static/home/wtfk.png",
 						text: "问题反馈",
 						url: "../about/help"
 					},
 					{
-						img: "../../static/home/guanyuwomen.png",
+						img: "../../static/home/ljtj.png",
 						text: "链接提交",
 						url: "../baidu/baidu"
 					},
 					{
-						img: "../../static/home/zhanghuguanli.png",
-						text: "程序管理",
-						url: "../setting/admin"
+						img: "../../static/home/tags.png",
+						text: "全部标签",
+						url: "../tags/tags"
 					}
 				],
 				// appData: {
@@ -150,8 +160,8 @@
 				// },
 			}
 		},
-		computed:{
-			...mapState(['isLogin','appData'])
+		computed: {
+			...mapState(['isLogin', 'appData'])
 		},
 		mounted() {},
 		onShow() {
@@ -179,10 +189,10 @@
 			this.height = "height:0%";
 		},
 		methods: {
-			...mapMutations(['login','loginOut']),
-			toLogin(){
+			...mapMutations(['login', 'loginOut']),
+			toLogin() {
 				uni.navigateTo({
-					url:"/pages/login/login"
+					url: "/pages/login/login"
 				})
 			},
 			compare(curV, reqV) {
@@ -210,23 +220,22 @@
 					this.upgradeType = 'pkg';
 					this.upgradeUrl = this.appData.data.appUrl;
 					this.$refs.yomolUpgrade.show();
-				}else{
+				} else {
 					uni.showToast({
-						title:"已经是最新版本",
-						icon:'success'
+						title: "已经是最新版本",
+						icon: 'success'
 					})
 				}
 			},
-			edit(){
+			edit() {
 				var that = this
 				uni.showModal({
 					title: '提示',
 					content: '确定要退出登录吗？',
-					success: function (res) {
+					success: function(res) {
 						if (res.confirm) {
 							that.editt("退出成功！");
-						} else if (res.cancel) {
-						}
+						} else if (res.cancel) {}
 					}
 				});
 			},
@@ -507,7 +516,10 @@
 		z-index: 2;
 		box-shadow: 0px 0px 5px #eee;
 	}
-
+	.homelist-img{
+		width: 38px;
+		height: 40px!important;
+	}
 	.home-item {
 		margin: 10px;
 		padding: 10px;

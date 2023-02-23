@@ -99,6 +99,13 @@
 				"navigationBarTitleText": "搜索",
 				"navigationBarBackgroundColor": "#F17C67"
 			}
+		},		
+		{
+			"path": "pages/tags/tags",
+			"style": {
+				"navigationBarTitleText": "标签云",
+				"navigationBarBackgroundColor": "#F17C67"
+			}
 		},
 		{
 			"path": "pages/setting/admin",

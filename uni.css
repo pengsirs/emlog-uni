@@ -105,3 +105,93 @@
 	.sl-content {
 		font-weight: 800;
 	}
+
+/* 登录注册 */
+	.zai-box{
+		position: relative;
+		background-color: #F17C67;
+	}
+	.zai-logo{
+		width: 100%;
+		height: 150px;
+		margin: 50px 0px;
+	}
+	.zai-form{
+		background-color: #fff;
+		border-radius:30px 30px 0px 0px;
+		padding: 30px 50px;
+	}
+	.zai-title{
+		position: absolute;
+		top: 0;
+		line-height: 360upx;
+		margin: 50px 0px;
+		font-size: 68upx;
+		color: #fff;
+		text-align: center;
+		width: 100%;
+	}
+	.zai-input{
+		background: #f9f9f9;
+		margin-top: 30upx;
+		border-radius: 100upx;
+		padding: 20upx 40upx;
+		font-size: 36upx;
+	}
+	.input-placeholder, .zai-input{
+		color: #000;
+	}
+	.zai-label{
+		padding: 60upx 0;
+		text-align: center;
+		font-size: 30upx;
+		color: #a7b6d0;
+	}
+	.zai-btn{
+		background: #F17C67;
+		color: #fff;
+		border: 0;
+		border-radius: 100upx;
+		font-size: 36upx;
+	}
+	.zai-btn:after{
+		border: 0;
+	}
+	/*验证码输入框*/
+	.zai-input-btn{
+		position: relative;
+	}
+	.zai-input-btn .zai-input{
+		padding-right: 260upx;
+	}
+	.zai-checking{
+		position: absolute;
+		right: 0;
+		top: 0;
+		background: #F17C67;
+		color: #fff;
+		border: 0;
+		border-radius: 110upx;
+		font-size: 36upx;
+		height: 85upx;
+		line-height: 85upx;
+		margin-left: auto;
+		margin-right: auto;
+		padding-left: 28upx;
+		padding-right: 28upx;
+		box-sizing: border-box;
+		text-align: center;
+		text-decoration: none;
+		-webkit-tap-highlight-color: transparent;
+		overflow: hidden;
+		padding-top: 2upx;
+		padding-bottom: 2upx;
+	}
+
+	.zai-checking.zai-time{
+		background: #a7b6d0;
+	}
+	/*按钮点击效果*/
+	.zai-btn.button-hover{
+		transform: translate(1upx, 1upx);
+	}
