@@ -1,7 +1,13 @@
 <template>
 	<view class="zai-box">
-		<image src="../../static/login.png" mode='aspectFit' class="zai-logo"></image>
-		<view class="zai-title">欢迎登录</view>
+		
+		<view class="login-logo">
+			<image :src="options.user_avatar" mode='aspectFit' class="login-logo-img"></image>
+			<view class="login-logo-title">
+				{{options.blogname}}
+			</view>
+		</view>
+		
 		<view class="zai-form">
 			<input class="zai-input" v-model="username" placeholder-class placeholder="请输入用户名" />
 			<input class="zai-input" v-model="password" placeholder-class password placeholder="请输入密码"/>
@@ -12,6 +18,9 @@
 			<view class="zai-label"></view>
 			<button class="zai-btn" @click="tologin">立即登录</button>
 			<navigator url="../registering/registering" hover-class="none" class="zai-label">还没有账号？点此注册.</navigator>
+			<view class="zai-label">
+				您好，登录功能暂无用途，正在开发中...
+			</view>
 		</view>
 	</view>
 </template>

@@ -53,12 +53,6 @@
 				<view class="home-a-a">页面开发</view>
 				<view class="home-a-b">大彭Sir</view>
 			</view>
-			<view class="home-b" @click="about(appData.data.about)">
-				<view class="home-a-a">关于我们</view>
-				<view class="home-a-c">
-					<uni-icons type="info-filled" color="#666" size="20"></uni-icons>
-				</view>
-			</view>
 			<view class="home-b" @click="go('../setting/admin')">
 				<view class="home-a-a">权限管理</view>
 				<view class="home-a-c">
@@ -82,6 +76,12 @@
 				</view>
 			</view>
 			<!-- #endif -->
+			<view class="home-a" @click="about(appData.data.about)">
+				<view class="home-a-a">关于我们</view>
+				<view class="home-a-c">
+					<uni-icons type="info-filled" color="#666" size="20"></uni-icons>
+				</view>
+			</view>
 			<view class="home-a" @click="ys">
 				<view class="home-a-a">隐私协议</view>
 				<view class="home-a-b">
@@ -129,7 +129,7 @@
 		},
 		data() {
 			return {
-				banbenhao: '1.1.1', //这个是内置的版本号，新版是要和这个比较的，所以每次更新都要改这里的版本号。
+				banbenhao: '1.2.0', //这个是内置的版本号，新版是要和这个比较的，所以每次更新都要改这里的版本号。
 				shoulu: '',
 				sogo: '',
 				upgradeType: '', //pkg 整包 wgt 升级包

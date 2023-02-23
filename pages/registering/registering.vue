@@ -1,7 +1,11 @@
 <template>
 	<view class="zai-box">
-		<image src="../../static/login.png" mode='aspectFit' class="zai-logo"></image>
-		<view class="zai-title">欢迎注册</view>
+		<view class="login-logo">
+			<image :src="options.user_avatar" mode='aspectFit' class="login-logo-img"></image>
+			<view class="login-logo-title">
+				{{options.blogname}}
+			</view>
+		</view>
 		<view class="zai-form">
 			<input class="zai-input" v-model="email" placeholder-class placeholder="请输入邮箱" />
 			<view class="zai-input-btn" v-if="options.email_code == 'y'">
@@ -18,6 +22,7 @@
 			<button class="zai-btn" @click="login">立即注册</button>
 			<navigator url="../login/login" open-type='navigateBack' hover-class="none" class="zai-label">已有账号，点此去登录.
 			</navigator>
+			
 		</view>
 	</view>
 </template>
