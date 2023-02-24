@@ -141,11 +141,12 @@
 			},
 			//发送邮箱验证码
 			async sendMailCode() {
+var that =this
 				const res = await htRequest({
 					url: "/admin/account.php?action=send_email_code",
 					method: 'POST',
 					data: {
-						mail: 'hk@hkiii.cn'
+						mail: that.email
 					}
 				})
 			},
