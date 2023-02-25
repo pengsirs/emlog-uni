@@ -22,7 +22,7 @@
                     </view>
             </block>
         </view>
-        <view v-else>
+        <view v-else style="margin-top: -50px;">
             <null></null>
         </view>
     </view>

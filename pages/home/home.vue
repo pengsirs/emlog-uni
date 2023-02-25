@@ -22,92 +22,99 @@
 				<view style="font-size: 12px;font-weight: 200;">{{i.text}}</view>
 			</view>
 		</view>
-		<view class="baidu-box" v-if="appData.data.tianapi==''?false:true">
-			<view class="baidu-item">
-				<view class="sl-icon">
-					<uni-icons color="#88CFFF" type="vip-filled" size="30"></uni-icons>
+		<template v-if="appData != ''">
+			<view class="baidu-box" v-if="appData.data.tianapi==''?false:true">
+				<view class="baidu-item">
+					<view class="sl-icon">
+						<uni-icons color="#88CFFF" type="vip-filled" size="30"></uni-icons>
+					</view>
+					<view class="shoulu">
+						<view class="sl-title">百度收录</view>
+						<view class="sl-content">{{shoulu||'获取中...'}}</view>
+					</view>
+					<uni-icons @click="shua('baidu')" color="#aaa" type="refreshempty" size="20"></uni-icons>
 				</view>
-				<view class="shoulu">
-					<view class="sl-title">百度收录</view>
-					<view class="sl-content">{{shoulu||'获取中...'}}</view>
-				</view>
-				<uni-icons @click="shua('baidu')" color="#aaa" type="refreshempty" size="20"></uni-icons>
-			</view>
-			<view class="baidu-item">
-				<view class="sl-icon-sg">
-					<uni-icons color="#E3BDA4" type="color-filled" size="30"></uni-icons>
-				</view>
-				<view class="shoulu">
-					<view class="sl-title">搜狗收录</view>
-					<view class="sl-content">{{sogo||'获取中...'}}</view>
-				</view>
-				<uni-icons @click="shua('sogo')" color="#aaa" type="refreshempty" size="20"></uni-icons>
-			</view>
-		</view>
-		<view class="home-item">
-			<view class="home-a">
-				<view class="home-a-a">版本信息</view>
-				<view class="home-a-b">V{{banbenhao}}</view>
-			</view>
-			<view class="home-a">
-				<view class="home-a-a">页面开发</view>
-				<view class="home-a-b">大彭Sir</view>
-			</view>
-			<view class="home-b" @click="go('../setting/admin')">
-				<view class="home-a-a">权限管理</view>
-				<view class="home-a-c">
-					<uni-icons type="locked-filled" size="20" color="#666"></uni-icons>
+				<view class="baidu-item">
+					<view class="sl-icon-sg">
+						<uni-icons color="#E3BDA4" type="color-filled" size="30"></uni-icons>
+					</view>
+					<view class="shoulu">
+						<view class="sl-title">搜狗收录</view>
+						<view class="sl-content">{{sogo||'获取中...'}}</view>
+					</view>
+					<uni-icons @click="shua('sogo')" color="#aaa" type="refreshempty" size="20"></uni-icons>
 				</view>
 			</view>
-			<view class="home-b" @click="go('../setting/setting')">
-				<view class="home-a-a">接口设置</view>
-				<view class="home-a-c">
-					<uni-icons type="gear-filled" size="20" color="#666"></uni-icons>
-				</view>
-			</view>
-		</view>
 
-		<view class="home-item">
-			<!-- #ifdef APP-PLUS -->
-			<view class="home-a" @click="version">
-				<view class="home-a-a">应用更新</view>
-				<view class="home-a-b">
-					<uni-icons type="cloud-upload-filled" size="20"></uni-icons>
+			<view class="home-item">
+				<view class="home-a">
+					<view class="home-a-a">版本信息</view>
+					<view class="home-a-b">V{{banbenhao}}</view>
+				</view>
+				<view class="home-a">
+					<view class="home-a-a">页面开发</view>
+					<view class="home-a-b">大彭Sir</view>
+				</view>
+				<view class="home-b" @click="go('../setting/admin')">
+					<view class="home-a-a">权限管理</view>
+					<view class="home-a-c">
+						<uni-icons type="locked-filled" size="20" color="#666"></uni-icons>
+					</view>
+				</view>
+				<view class="home-b" @click="go('../setting/setting')">
+					<view class="home-a-a">接口设置</view>
+					<view class="home-a-c">
+						<uni-icons type="gear-filled" size="20" color="#666"></uni-icons>
+					</view>
 				</view>
 			</view>
-			<!-- #endif -->
-			<view class="home-a" @click="about(appData.data.about)">
-				<view class="home-a-a">关于我们</view>
-				<view class="home-a-c">
-					<uni-icons type="info-filled" color="#666" size="20"></uni-icons>
+
+			<view class="home-item">
+				<!-- #ifdef APP-PLUS -->
+				<view class="home-a" @click="version">
+					<view class="home-a-a">应用更新</view>
+					<view class="home-a-b">
+						<uni-icons type="cloud-upload-filled" size="20"></uni-icons>
+					</view>
+				</view>
+				<!-- #endif -->
+				<view class="home-a" @click="about(appData.data.about)">
+					<view class="home-a-a">关于我们</view>
+					<view class="home-a-c">
+						<uni-icons type="info-filled" color="#666" size="20"></uni-icons>
+					</view>
+				</view>
+				<view class="home-a" @click="ys">
+					<view class="home-a-a">隐私协议</view>
+					<view class="home-a-b">
+						<uni-icons type="map-filled" size="20"></uni-icons>
+					</view>
+				</view>
+				<view class="home-a" @click="clear()">
+					<view class="home-a-a">清除缓存</view>
+					<view class="home-a-b">
+						<uni-icons type="refresh-filled" size="20"></uni-icons>
+					</view>
+				</view>
+				<view class="home-a" @click="edit()" v-if="isLogin==true">
+					<view class="home-a-a">退出登录</view>
+					<view class="home-a-b">
+						<uni-icons type="clear" size="20"></uni-icons>
+					</view>
 				</view>
 			</view>
-			<view class="home-a" @click="ys">
-				<view class="home-a-a">隐私协议</view>
-				<view class="home-a-b">
-					<uni-icons type="map-filled" size="20"></uni-icons>
-				</view>
+			<view>
+				<!-- #ifdef APP-PLUS -->
+				<yomolUpgrade :type="upgradeType" theme="red" :url="upgradeUrl" title="发现新版本"
+					:content="appData.data.appContent" ref="yomolUpgrade" :currentVersion="banbenhao"
+					:newVersion="appData.data.appVersion"></yomolUpgrade>
+				<!-- #endif -->
 			</view>
-			<view class="home-a" @click="clear()">
-				<view class="home-a-a">清除缓存</view>
-				<view class="home-a-b">
-					<uni-icons type="refresh-filled" size="20"></uni-icons>
-				</view>
-			</view>
-			<view class="home-a" @click="edit()" v-if="isLogin==true">
-				<view class="home-a-a">退出登录</view>
-				<view class="home-a-b">
-					<uni-icons type="clear" size="20"></uni-icons>
-				</view>
-			</view>
-		</view>
-		<view>
-			<!-- #ifdef APP-PLUS -->
-			<yomolUpgrade :type="upgradeType" theme="red" :url="upgradeUrl" title="发现新版本"
-				:content="appData.data.appContent" ref="yomolUpgrade" :currentVersion="banbenhao"
-				:newVersion="appData.data.appVersion"></yomolUpgrade>
-			<!-- #endif -->
-		</view>
+
+		</template>
+	</view>
+	<view v-if="appData == ''" style="margin-top: -80px;">
+		<null></null>
 	</view>
 </template>
 
@@ -136,8 +143,7 @@
 				upgradeContent: '', //更新内容
 				upgradeUrl: '', //更新地址
 				avatarUrl: 'http://cdn.hkiii.cn//img/_2022/06/30/12/54/49/747/6483441/7812966043841394587',
-				homelist: [
-					{
+				homelist: [{
 						img: "../../static/home/wtfk.png",
 						text: "问题反馈",
 						url: "../about/help"
@@ -189,7 +195,10 @@
 			this.height = "height:0%";
 		},
 		methods: {
-			...mapMutations(['login', 'loginOut']),
+			...mapMutations(['login', 'loginOut', 'clearStorages']),
+			flg() {
+
+			},
 			toLogin() {
 				uni.navigateTo({
 					url: "/pages/login/login"
@@ -259,6 +268,7 @@
 						if (res.confirm) {
 							that.editt("清除成功！")
 							uni.clearStorage();
+							that.clearStorages();
 							uni.reLaunch({
 								url: "../index/index"
 							})
@@ -516,10 +526,12 @@
 		z-index: 2;
 		box-shadow: 0px 0px 5px #eee;
 	}
-	.homelist-img{
+
+	.homelist-img {
 		width: 38px;
-		height: 40px!important;
+		height: 40px !important;
 	}
+
 	.home-item {
 		margin: 10px;
 		padding: 10px;

@@ -109,7 +109,7 @@
 			</view>
 			<view class="swiper-wrap">
 				<swiper class="swiper-box" :indicator-dots="false" autoplay="true" circular="true"
-					previous-margin="10px" next-margin="10px" :vertical="vertical" :current="swiperCurrent"
+					previous-margin="10px" next-margin="10px" :current="swiperCurrent"
 					@change="swiperChangeCustom">
 					<swiper-item v-for="(item, index) in lunbo" :key="index" @click="toInfo(lbid[index])">
 						<view class="swiper-item" :class="'swiper-item' + index">
@@ -412,8 +412,15 @@
 				path: 'pages/index/index'
 			}
 		},
+		onShareTimeline(){
+			return {
+				title: '分享好玩的程序！',
+				imageUrl: this.appData.data.shareImg,
+				path: 'pages/index/index'
+			}
+		},
 		methods: {
-			...mapMutations(['login', 'setAppData']),
+			...mapMutations(['login', 'setAppData','clearStorages']),
 			//专题
 			async getSortsData(sort, sid) {
 				var that = this;
@@ -490,6 +497,7 @@
 					// })
 				} else if (res) {
 					this.inull = true
+					this.clearStorages();
 				}
 			},
 			async getTools() {

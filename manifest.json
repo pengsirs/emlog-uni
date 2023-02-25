@@ -49,7 +49,9 @@
             },
             /* SDK配置 */
             "sdkConfigs" : {
-                "ad" : {},
+                "ad" : {
+                    "gdt" : {}
+                },
                 "oauth" : {},
                 "share" : {}
             },

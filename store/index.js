@@ -14,8 +14,8 @@ export default createStore({
 	],
 	state: {
 		//公共的变量，这里的变量不能随便修改，只能通过触发mutations的方法才能改变
-		isLogin: false,//登录信息
-		options:"",//系统设置信息
+		isLogin: false, //登录信息
+		options: "", //系统设置信息
 		//api设置信息
 		appData: {
 			data: {
@@ -33,11 +33,16 @@ export default createStore({
 		loginOut(state) {
 			state.isLogin = false
 		},
-		setAppData(state,e){
+		setAppData(state, e) {
 			state.appData = e
 		},
-		setOptions(state,e){
+		setOptions(state, e) {
 			state.options = e
+		},
+		clearStorages(state) {
+			state.options = 1;
+			state.appData= '';
+			// state = Object.assign({}, state, {});
 		}
 	},
 	actions: {

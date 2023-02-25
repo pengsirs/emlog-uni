@@ -27,7 +27,7 @@
 					size="16"></uni-icons>
 			</view>
 			<!-- 文章附件-->
-			<view class="Info-File" v-if="downTitle!=''">
+			<view class="Info-File" v-if="downTitle!='' && appData.data.auditing != 1">
 				<view class="File-title">
 					文章附件
 				</view>
@@ -37,7 +37,9 @@
 					</view>
 					<view class="File-right">
 						<!-- #ifdef MP-WEIXIN -->
-						<view class="File-btn" @click="openVideoAd(downUrl)">立即获取</view>
+						<view v-if="appData.data.videoAd != ''" class="File-btn" @click="openVideoAd(downUrl)">立即获取
+						</view>
+						<view v-else class="File-btn" @click="copy(downUrl)">立即获取</view>
 						<!-- #endif -->
 						<!-- #ifndef MP-WEIXIN -->
 						<view class="File-btn" @click="copy(downUrl)">立即获取</view>
@@ -199,7 +201,7 @@
 				haibao: "",
 				html: false,
 				url: '',
-				status: "loading",
+				status: "no-more",
 				id: '',
 				page: 1,
 				comment: '',
@@ -278,6 +280,13 @@
 				path: 'pages/blog-info/blog-info?id=' + this.data.id + "&url=" + this.url
 			}
 		},
+		onShareTimeline() {
+			return {
+				title: this.data.title,
+				imageUrl: this.data.cover || this.appData.data.shareImg,
+				path: 'pages/blog-info/blog-info?id=' + this.data.id + "&url=" + this.url
+			}
+		},
 		computed: {
 			...mapState(['isLogin', 'appData'])
 		},
@@ -349,6 +358,7 @@
 				if (res.data.data.list == '') {
 					this.status = "no-more"
 				} else {
+					this.status = ''
 					this.comment = [...this.comment, ...res.data.data.list]
 				}
 			},
