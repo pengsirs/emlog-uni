@@ -99,6 +99,17 @@
 							}
 						}
 					})
+				} else {
+					uni.showModal({
+						title: "温馨提示",
+						content: `${res.data.msg}`,
+						showCancel: false,
+						success(res) {
+							if (res.confirm) {
+								uni.navigateBack()
+							}
+						}
+					})
 				}
 			},
 			async tologin() {
