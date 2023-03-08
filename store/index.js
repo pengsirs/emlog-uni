@@ -16,6 +16,8 @@ export default createStore({
 		//公共的变量，这里的变量不能随便修改，只能通过触发mutations的方法才能改变
 		isLogin: false, //登录信息
 		options: "", //系统设置信息
+		cookie:'',
+		user:"",
 		//api设置信息
 		appData: {
 			data: {
@@ -26,8 +28,9 @@ export default createStore({
 	mutations: {
 		// 定义mutations，用于修改状态(同步)
 		// 登录
-		login(state) {
+		login(state,cookie) {
 			state.isLogin = true
+			state.cookie = cookie
 		},
 		// 退出登录
 		loginOut(state) {
@@ -35,6 +38,9 @@ export default createStore({
 		},
 		setAppData(state, e) {
 			state.appData = e
+		},
+		setUser(state,e){
+			state.user = e
 		},
 		setOptions(state, e) {
 			state.options = e

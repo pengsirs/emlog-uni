@@ -8,9 +8,9 @@
 		</view>
 		<view class="banner-box" v-else>
 			<view class="box-img">
-				<image :src="avatarUrl"></image>
+				<image :src="reg(user.photo)"></image>
 			</view>
-			<view class="user-nick">您好，已登陆</view>
+			<view class="user-nick">您好，{{user.nickname}}</view>
 		</view>
 		<view class="homelist">
 			<button open-type="openSetting" class="homelist-item" @click="go('setting')">
@@ -167,7 +167,7 @@
 			}
 		},
 		computed: {
-			...mapState(['isLogin', 'appData'])
+			...mapState(['isLogin', 'appData','user','options'])
 		},
 		mounted() {},
 		onShow() {
@@ -196,8 +196,14 @@
 		},
 		methods: {
 			...mapMutations(['login', 'loginOut', 'clearStorages']),
-			flg() {
-
+			reg(e) {
+				if(e == ''){
+					return this.options.blogurl + 'admin/views/images/avatar.svg'
+				}else{
+					e = e.replace(/\.\.\/content\/upload/gi,
+					this.options.blogurl + 'content/upload');
+					return e
+				}
 			},
 			toLogin() {
 				uni.navigateTo({
