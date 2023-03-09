@@ -4,7 +4,7 @@
 		<view class="login-logo">
 			<image :src="options.user_avatar" mode='aspectFit' class="login-logo-img"></image>
 			<view class="login-logo-title">
-				{{options.blogname}}{{cookie}}
+				{{options.blogname}}
 			</view>
 		</view>
 

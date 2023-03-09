@@ -363,8 +363,7 @@
 					},
 					{
 						caroLogo: 'https://cdn.hkiii.cn/cg/12.jpeg'
-					}
-				],
+					}],
 				currentCardIndex: 0
 			}
 		},
